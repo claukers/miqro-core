@@ -104,7 +104,7 @@ export abstract class Util {
   public static checkEnvVariables(requiredEnvVariables: string[]) {
     requiredEnvVariables.forEach((envName) => {
       if (process.env[envName] === undefined) {
-        throw new Error(`Env variable [${envName}!] not defined`);
+        throw new Error(`Env variable [${envName}!] not defined. Consider adding it to [${process.env.MIQRO_DIRNAME}/config/${process.env.NODE_ENV}.env].`);
       }
     });
   }
