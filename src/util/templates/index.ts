@@ -103,9 +103,12 @@ LOG_LEVEL_Sequelize="error"
 `;
 
 export const gitignore = `config/log.js
+config/db.js
 logs/
+db/models/index.js
 node_modules/
 *.sqlite3
+.sequelizerc
 `;
 
 export const templates = {
