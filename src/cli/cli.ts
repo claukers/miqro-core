@@ -6,6 +6,7 @@ const logger = console;
 
 const cmds: ISimpleMap<{ module: string; description: string }> = {
   init: { module: "./init", description: "inits your config folder (MIQRO_DIRNAME)" },
+  createservice: { module: "./create", description: "create a service." },
   reset: { module: "./reset", description: "delete custom made config files." }
 };
 

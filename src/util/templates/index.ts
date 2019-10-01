@@ -13,7 +13,7 @@ const {
 
 ["LOG_FILE", "LOG_FILE_TRACE"].forEach((envName) => {
   if (process.env[envName] === undefined) {
-    throw new Error(\`Env variable [\${envName}!] not defined\`);
+    throw new Error(\`Env variable [\${envName}!] not defined. Maybe you are missing Util.loadConfig(); call on your app.\`);
   }
 });
 
@@ -160,8 +160,31 @@ module.exports = async (app) => {
 `;
 };
 
+const servicejs = (serviceName: string)=>{
+  return `const { Util } = require("miqro-core");
+
+class ${serviceName}Service {
+  static getInstance() {
+    ${serviceName}Service.instance = ${serviceName}Service.instance ? ${serviceName}Service.instance : new ${serviceName}Service();
+    return ${serviceName}Service.instance;
+  }
+  constructor() {
+    this.logger = Util.getLogger("${serviceName}Service");
+  }
+  async myFunction({ body, params, query, session, headers }) {
+    this.logger.info("myFunction has been called!");
+    return null;
+  }
+}
+
+module.exports.${serviceName}Service = ${serviceName}Service;
+
+`;
+};
+
 export const templates = {
   gitignore,
+  servicejs,
   indexjs,
   mainjs,
   defaultEnvFile,
