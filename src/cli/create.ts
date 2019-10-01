@@ -19,7 +19,7 @@ if (typeof serviceName !== "string") {
 }
 
 const servicesFolderPath = path.resolve(path.dirname(path.resolve(modulePath)), "services");
-if(!fs.existsSync(servicesFolderPath)) {
+if (!fs.existsSync(servicesFolderPath)) {
   logger.warn(`services folder [${servicesFolderPath}] dont exists!`);
   logger.warn(`creating [${servicesFolderPath}]!`);
   fs.mkdirSync(servicesFolderPath);

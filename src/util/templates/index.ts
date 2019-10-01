@@ -112,7 +112,7 @@ node_modules/
 .sequelizerc
 `;
 
-export const mainjs = (servicejs) => {
+export const mainjs = (servicePath) => {
   return `const express = require("express");
 const { Util } = require("miqro-core");
 const { setupMiddleware } = require("miqro-express");
@@ -120,7 +120,7 @@ process.env.MIQRO_DIRNAME = process.env.MIQRO_DIRNAME ? process.env.MIQRO_DIRNAM
 Util.loadConfig();
 
 const logger = Util.getLogger("main.js");
-const service = require("./${servicejs}");
+const service = require("./${servicePath}");
 
 const app = express();
 setupMiddleware(app, logger);
@@ -160,7 +160,7 @@ module.exports = async (app) => {
 `;
 };
 
-const servicejs = (serviceName: string)=>{
+const servicejs = (serviceName: string) => {
   return `const { Util } = require("miqro-core");
 
 class ${serviceName}Service {
