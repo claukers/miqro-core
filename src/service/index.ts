@@ -1,3 +1,4 @@
+import { ISession } from "./common";
 export * from "./common";
 
 export interface IVerifyTokenService {
