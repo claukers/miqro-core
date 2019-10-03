@@ -1,6 +1,7 @@
 export { Util, ISimpleMap } from "./util";
 import { ISession } from "../service/common";
 import { ParseOptionsError, Util } from "./";
+import { ForbidenError } from "./error";
 
 export * from "./stopwatch";
 export * from "./error";
@@ -69,7 +70,7 @@ export abstract class GroupPolicy {
     if (!ret) {
       logger.warn(`unauthorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` not on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
-      throw new ParseOptionsError(`Not on the correct groups!`);
+      throw new ForbidenError(`Invalid session. You are not permitted to do this!`);
     } else {
       logger.debug(`authorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
