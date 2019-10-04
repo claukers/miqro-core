@@ -15,7 +15,6 @@ export type IGroupPolicyItem = string | string[];
 export interface IGroupPolicyOptions {
   groups: IGroupPolicyItem[];
   groupPolicy: IGroupPolicy;
-  name?: string;
 }
 
 const policyCheck = (session: ISession, options: IGroupPolicyOptions): boolean => {
@@ -61,8 +60,7 @@ const policyCheck = (session: ISession, options: IGroupPolicyOptions): boolean =
 };
 
 export abstract class GroupPolicy {
-  public static async validateSession(session: ISession, options: IGroupPolicyOptions): Promise<boolean> {
-    const logger = Util.getLogger(`${options.name}${options.name ? "::" : ""}GroupPolicy`);
+  public static async validateSession(session: ISession, options: IGroupPolicyOptions, logger): Promise<boolean> {
     if (!session || !session.account || !session.username) {
       throw new ParseOptionsError(`Invalid authentication!`);
     }
