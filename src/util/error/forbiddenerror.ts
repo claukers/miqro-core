@@ -1,8 +1,8 @@
 import {NamedError} from "./named";
 
-export class ParseOptionsError extends NamedError {
+export class ForbiddenError extends NamedError {
   constructor(message: string) {
     super(message);
-    this.name = "ParseOptionsError";
+    this.name = "ForbiddenError";
   }
 }

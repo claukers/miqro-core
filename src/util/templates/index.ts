@@ -1,3 +1,4 @@
+// noinspection SpellCheckingInspection,SpellCheckingInspection
 const logjs =
   `const path = require("path");
 const winston = require("winston");
@@ -58,6 +59,7 @@ module.exports = (identifier) => {
 };
 `;
 
+// noinspection SpellCheckingInspection
 export const defaultEnvFile = `####################
 ## logging
 LOG_LEVEL="debug"
@@ -103,6 +105,7 @@ LOG_LEVEL_Sequelize="error"
 ####################
 `;
 
+// noinspection SpellCheckingInspection,SpellCheckingInspection
 export const gitignore = `config/log.js
 config/db.js
 logs/
@@ -112,6 +115,7 @@ node_modules/
 .sequelizerc
 `;
 
+// noinspection SpellCheckingInspection
 export const mainjs = (servicePath) => {
   return `const express = require("express");
 const { Util } = require("miqro-core");
@@ -132,6 +136,7 @@ service(app).then((server) => {
 `;
 };
 
+// noinspection SpellCheckingInspection
 export const indexjs = () => {
   return `const {
   APIResponse
@@ -160,6 +165,7 @@ module.exports = async (app) => {
 `;
 };
 
+// noinspection SpellCheckingInspection
 const servicejs = (serviceName: string) => {
   return `const { Util } = require("miqro-core");
 
@@ -182,6 +188,7 @@ module.exports.${serviceName}Service = ${serviceName}Service;
 `;
 };
 
+// noinspection SpellCheckingInspection
 export const templates = {
   gitignore,
   servicejs,

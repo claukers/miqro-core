@@ -1,6 +1,8 @@
-export class UnAuthorizedError extends Error {
-  public isUnAuthorizeError = true; // fucking instanceof of transpiled typescript!
+import {NamedError} from "./named";
+
+export class UnAuthorizedError extends NamedError {
   constructor(message: string) {
     super(message);
+    this.name = "UnAuthorizedError";
   }
 }

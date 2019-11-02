@@ -1,7 +1,6 @@
-import * as fs from "fs";
-import * as path from "path";
-import { Util } from "../util";
-import { templates } from "../util/templates";
+import {existsSync, mkdirSync, writeFileSync} from "fs";
+import {dirname, resolve} from "path";
+import {templates} from "../util/templates";
 
 const logger = console;
 const modulePath = process.argv[3];
@@ -18,16 +17,16 @@ if (typeof serviceName !== "string") {
   throw new Error(`<servicename> must be a string!`);
 }
 
-const servicesFolderPath = path.resolve(path.dirname(path.resolve(modulePath)), "services");
-if (!fs.existsSync(servicesFolderPath)) {
+const servicesFolderPath = resolve(dirname(resolve(modulePath)), "services");
+if (!existsSync(servicesFolderPath)) {
   logger.warn(`services folder [${servicesFolderPath}] dont exists!`);
   logger.warn(`creating [${servicesFolderPath}]!`);
-  fs.mkdirSync(servicesFolderPath);
+  mkdirSync(servicesFolderPath);
 }
-const servicePath = path.resolve(servicesFolderPath, `${serviceName.toLowerCase()}.js`);
+const servicePath = resolve(servicesFolderPath, `${serviceName.toLowerCase()}.js`);
 
-if (fs.existsSync(servicePath)) {
+if (existsSync(servicePath)) {
   throw new Error(`${servicePath} already exists!`);
 }
 logger.info(`creating [${servicePath}]!`);
-fs.writeFileSync(servicePath, templates.servicejs(serviceName));
+writeFileSync(servicePath, templates.servicejs(serviceName));

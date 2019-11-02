@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Util } from "../util";
+import {Util} from "../util";
 
 const modulePath = process.argv[3];
 const logger = console;
@@ -15,15 +15,19 @@ if (typeof modulePath !== "string") {
 const service = path.resolve(modulePath);
 
 if (!fs.existsSync(service)) {
+  // noinspection SpellCheckingInspection
   throw new Error(`microservice [${service}] doesnt exists!`);
 }
 
+// noinspection SpellCheckingInspection
 Util.setupInstanceEnv("automigrate", service);
 const dbFolder = path.resolve(process.env.MIQRO_DIRNAME, "db");
 const dbConfigFolder = path.resolve(process.env.MIQRO_DIRNAME, "config");
 const modelsFolder = path.resolve(dbFolder, "models");
+// noinspection SpellCheckingInspection
 const sequelizercPath = path.resolve(process.env.MIQRO_DIRNAME, ".sequelizerc");
 const modelLoaderPath = path.resolve(modelsFolder, "index.js");
+// noinspection SpellCheckingInspection
 const logjsPath = path.resolve(process.env.MIQRO_DIRNAME, "config", "log.js");
 const dbConfigFilePath = path.resolve(dbConfigFolder, "db.js");
 

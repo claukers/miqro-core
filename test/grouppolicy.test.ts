@@ -6,7 +6,7 @@ describe('grouppolicy func tests', function () {
     const { GroupPolicy } = require("../src");
     GroupPolicy.validateSession({ account: "a", username: "u", groups: ["1", "2", "3"] }, {
       groups: [["5", "1"], ["3", "4"], "5"],
-      groupPolicy: "at_leats_one"
+      groupPolicy: "at_least_one"
     }, {
       info: console.log,
       debug: console.log,
@@ -21,7 +21,7 @@ describe('grouppolicy func tests', function () {
     const { GroupPolicy } = require("../src");
     GroupPolicy.validateSession({ account: "a", username: "u", groups: ["1", "4", "3"] }, {
       groups: [["5", "1"], ["3", "4"], "5"],
-      groupPolicy: "at_leats_one"
+      groupPolicy: "at_least_one"
     }, {
       info: console.log,
       debug: console.log,
@@ -36,7 +36,7 @@ describe('grouppolicy func tests', function () {
     const { GroupPolicy } = require("../src");
     GroupPolicy.validateSession({ account: "a", username: "u", groups: ["6", "4", "3"] }, {
       groups: [["5", "1"], ["3", "4", "6"], "5"],
-      groupPolicy: "at_leats_one"
+      groupPolicy: "at_least_one"
     }, {
       info: console.log,
       debug: console.log,
@@ -51,7 +51,7 @@ describe('grouppolicy func tests', function () {
     const { GroupPolicy } = require("../src");
     GroupPolicy.validateSession({ account: "a", username: "u", groups: ["6", "0", "3"] }, {
       groups: [["5", "1"], ["3", "4", "6"], "5"],
-      groupPolicy: "at_leats_one"
+      groupPolicy: "at_least_one"
     }, {
       info: console.log,
       debug: console.log,

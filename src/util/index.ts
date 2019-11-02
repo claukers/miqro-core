@@ -1,14 +1,15 @@
 export { Util, ISimpleMap } from "./util";
 import { ISession } from "../service/common";
 import { ParseOptionsError, Util } from "./";
-import { ForbidenError } from "./error";
+import { ForbiddenError } from "./error";
 
 export * from "./stopwatch";
 export * from "./error";
+export * from "./cli";
 export * from "./loader";
 export * from "./featuretoggle";
 
-export type IGroupPolicy = "at_leats_one" | "all";
+export type IGroupPolicy = "at_least_one" | "all";
 
 export type IGroupPolicyItem = string | string[];
 
@@ -19,7 +20,7 @@ export interface IGroupPolicyOptions {
 
 const policyCheck = (session: ISession, options: IGroupPolicyOptions): boolean => {
   switch (options.groupPolicy) {
-    case "at_leats_one":
+    case "at_least_one":
       for (const group of options.groups) {
         if (group instanceof Array) {
           let ret = true;
@@ -68,7 +69,7 @@ export abstract class GroupPolicy {
     if (!ret) {
       logger.warn(`unauthorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` not on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
-      throw new ForbidenError(`Invalid session. You are not permitted to do this!`);
+      throw new ForbiddenError(`Invalid session. You are not permitted to do this!`);
     } else {
       logger.debug(`authorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);

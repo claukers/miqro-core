@@ -11,6 +11,7 @@ const logContainer = new winston.Container();
 
 const logger = console;
 
+// noinspection SpellCheckingInspection
 export type IOPTIONPARSER = "remove_extra" | "add_extra" | "no_extra";
 export type IParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
 export type IParseType = "string" | "boolean" | "number" | "array" | "any";
@@ -43,8 +44,7 @@ export abstract class Util {
   public static sha256 = (data) => crypto.createHash("sha256").update(data, "utf8").digest("base64");
   public static setupSimpleEnv() {
     Util.checkEnvVariables(["MIQRO_DIRNAME"]);
-    const NODE_ENV = process.env.NODE_ENV || "development";
-    process.env.NODE_ENV = NODE_ENV;
+    process.env.NODE_ENV = process.env.NODE_ENV || "development";
     const logsFolder = path.resolve(process.env.MIQRO_DIRNAME, "logs");
     process.env.LOG_FILE = path.resolve(logsFolder, `${process.env.NODE_ENV}.log`);
     process.env.LOG_FILE_TRACE = path.resolve(logsFolder, `${process.env.NODE_ENV}-trace.log`);
@@ -84,7 +84,9 @@ export abstract class Util {
         path: configPath
       });
       const logsFolder = path.resolve(process.env.MIQRO_DIRNAME, "logs");
+      // noinspection SpellCheckingInspection
       const gitignorePath = path.resolve(process.env.MIQRO_DIRNAME, ".gitignore");
+      // noinspection SpellCheckingInspection
       const logjsPath = path.resolve(process.env.MIQRO_DIRNAME, "config", "log.js");
       if (!fs.existsSync(gitignorePath)) {
         fs.writeFileSync(gitignorePath, templates.gitignore);
@@ -158,7 +160,6 @@ export abstract class Util {
       } else if (parserOption === "add_extra") {
         return arg;
       } else if (parserOption === "no_extra") {
-        const extra = {};
         retKeys.forEach((key) => {
           const index = argKeys.indexOf(key);
           if (index !== -1) {
@@ -181,7 +182,7 @@ export abstract class Util {
     }
     const loggerO = logContainer.get(identifier);
     (loggerO as any).stream = {
-      write: (message, encoding) => {
+      write: (message) => {
         // use the 'info' log level so the output will be picked up by both transports (file and console)
         loggerO.info(message.trim());
       }
