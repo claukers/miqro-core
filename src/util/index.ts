@@ -1,7 +1,7 @@
-export { Util, ISimpleMap } from "./util";
-import { ISession } from "../service/common";
-import { ParseOptionsError, Util } from "./";
-import { ForbiddenError } from "./error";
+export {Util, ISimpleMap} from "./util";
+import {ISession} from "../service/common";
+import {ParseOptionsError, Util} from "./";
+import {ForbiddenError} from "./error";
 
 export * from "./stopwatch";
 export * from "./error";
@@ -62,7 +62,7 @@ const policyCheck = (session: ISession, options: IGroupPolicyOptions): boolean =
 
 export abstract class GroupPolicy {
   public static async validateSession(session: ISession, options: IGroupPolicyOptions, logger): Promise<boolean> {
-    if (!session || !session.account || !session.username) {
+    if (session === undefined || session.account === undefined || session.username === undefined) {
       throw new ParseOptionsError(`Invalid authentication!`);
     }
     const ret = policyCheck(session, options);
