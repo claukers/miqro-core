@@ -8,6 +8,7 @@ export * from "./error";
 export * from "./cli";
 export * from "./loader";
 export * from "./featuretoggle";
+export * from "./config";
 
 export type IGroupPolicy = "at_least_one" | "all";
 
