@@ -48,12 +48,12 @@ export abstract class Util {
 
   public static setupInstanceEnv(serviceName: string, scriptPath: string) {
     const microDirname = path.resolve(path.dirname(scriptPath));
-    process.chdir(microDirname);
     if (!process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined") {
       process.env.MIQRO_DIRNAME = microDirname;
     } else {
       logger.warn(`NOT changing to MIQRO_DIRNAME[${microDirname}] because already defined as ${process.env.MIQRO_DIRNAME}!`);
     }
+    process.chdir(microDirname);
     process.env.MICRO_NAME = serviceName;
     Util.setupSimpleEnv();
   }
@@ -65,7 +65,7 @@ export abstract class Util {
       const configPath = ConfigPathResolver.getConfigFilePath();
       if (!fs.existsSync(configPath)) {
         if (!initEnv) {
-          logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists!`);
+          logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists! Maybe you miss to run miqro-core init.`);
         } else {
           logger.warn(`[${configPath}] env file doesnt exists!`);
           if (!fs.existsSync(configFolder)) {
