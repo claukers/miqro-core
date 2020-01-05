@@ -1,14 +1,14 @@
-import * as crypto from "crypto";
+import {createHash} from "crypto";
 import {config} from "dotenv";
-import * as fs from "fs";
-import * as path from "path";
-import * as winston from "winston";
+import {existsSync, mkdirSync, writeFileSync} from "fs";
+import {dirname, resolve} from "path";
+import {Container} from "winston";
 import {ConfigPathResolver} from "./config";
-import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
+import {ParseOptionsError} from "./error/";
 import {winstonConfig} from "./loader";
 import {templates} from "./templates";
 
-const logContainer = new winston.Container();
+const logContainer = new Container();
 
 // noinspection SpellCheckingInspection
 export type IOPTIONPARSER = "remove_extra" | "add_extra" | "no_extra";
@@ -40,14 +40,14 @@ export interface ISimpleMap<T2> {
 }
 
 export abstract class Util {
-  public static sha256 = (data) => crypto.createHash("sha256").update(data, "utf8").digest("base64");
+  public static sha256 = (data) => createHash("sha256").update(data, "utf8").digest("base64");
 
   public static setupSimpleEnv() {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
   public static setupInstanceEnv(serviceName: string, scriptPath: string) {
-    const microDirname = path.resolve(path.dirname(scriptPath));
+    const microDirname = resolve(dirname(scriptPath));
     if (!process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined") {
       process.env.MIQRO_DIRNAME = microDirname;
     } else {
@@ -63,22 +63,22 @@ export abstract class Util {
       Util.setupSimpleEnv();
       const configFolder = ConfigPathResolver.getConfigDirname();
       const configPath = ConfigPathResolver.getConfigFilePath();
-      if (!fs.existsSync(configPath)) {
+      if (!existsSync(configPath)) {
         if (!initEnv) {
           logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists! Maybe you miss to run miqro-core init.`);
         } else {
           logger.warn(`[${configPath}] env file doesnt exists!`);
-          if (!fs.existsSync(configFolder)) {
-            fs.mkdirSync(configFolder);
+          if (!existsSync(configFolder)) {
+            mkdirSync(configFolder);
           }
           logger.warn(`creating a new ${configPath} env file`);
-          fs.writeFileSync(configPath, templates.defaultEnvFile);
+          writeFileSync(configPath, templates.defaultEnvFile);
 
           // noinspection SpellCheckingInspection
-          const gitignorePath = path.resolve(ConfigPathResolver.getBaseDirname(), ".gitignore");
+          const gitignorePath = resolve(ConfigPathResolver.getBaseDirname(), ".gitignore");
           // noinspection SpellCheckingInspection
-          if (!fs.existsSync(gitignorePath)) {
-            fs.writeFileSync(gitignorePath, templates.gitignore);
+          if (!existsSync(gitignorePath)) {
+            writeFileSync(gitignorePath, templates.gitignore);
             logger.warn(`creating ${gitignorePath} file`);
           }
 
