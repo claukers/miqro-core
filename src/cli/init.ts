@@ -1,34 +1,30 @@
-import * as fs from "fs";
-import * as path from "path";
-import { Util } from "../util";
-import { templates } from "../util/templates";
+import {existsSync, writeFileSync} from "fs";
+import {basename, dirname, resolve} from "path";
+import {Util} from "../util";
+import {ConfigPathResolver} from "../util/config";
+import {templates} from "../util/templates";
 
 const logger = console;
-const modulePath = process.argv[3];
 
-if (process.argv.length !== 4) {
-  throw new Error(`usage: miqro-core init <microservice.js>`);
-}
-if (typeof modulePath !== "string") {
-  // noinspection SpellCheckingInspection
-  throw new Error(`<microservice.js> must be a string!\nusage: miqro-core automigrate <microservice.js>`);
+if (process.argv.length !== 3) {
+  throw new Error(`usage: miqro-core init`);
 }
 
-const service = path.resolve(modulePath);
+const service = resolve(ConfigPathResolver.getBaseDirname(), `index.js`);
 
-if (!fs.existsSync(service)) {
+if (!existsSync(service)) {
   // noinspection SpellCheckingInspection
   logger.warn(`microservice [${service}] doesnt exists!`);
   logger.warn(`creating [${service}]!`);
   // noinspection SpellCheckingInspection
-  const mainjsPath = path.resolve(path.dirname(service), "main.js");
-  fs.writeFileSync(service, templates.indexjs());
+  const mainjsPath = resolve(dirname(service), "main.js");
+  writeFileSync(service, templates.indexjs());
   // noinspection SpellCheckingInspection
-  if (!fs.existsSync(mainjsPath)) {
+  if (!existsSync(mainjsPath)) {
     // noinspection SpellCheckingInspection
-    fs.writeFileSync(mainjsPath, templates.mainjs(path.basename(service)));
+    writeFileSync(mainjsPath, templates.mainjs(basename(service)));
   }
 }
 
-Util.setupInstanceEnv("automigrate", service);
+Util.setupInstanceEnv("init", service);
 Util.loadConfig(true);

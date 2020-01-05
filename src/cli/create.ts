@@ -1,23 +1,20 @@
 import {existsSync, mkdirSync, writeFileSync} from "fs";
-import {dirname, resolve} from "path";
+import {resolve} from "path";
+import {ConfigPathResolver} from "../util/config";
 import {templates} from "../util/templates";
 
 const logger = console;
-const modulePath = process.argv[3];
-const serviceName = process.argv[4];
+const serviceName = process.argv[3];
 
-if (process.argv.length !== 5) {
-  throw new Error(`usage: miqro-core createservice <microservice.js> <servicename>`);
-}
-if (typeof modulePath !== "string") {
-  throw new Error(`<microservice.js> must be a string!`);
+if (process.argv.length !== 4) {
+  throw new Error(`usage: miqro-core createservice <servicename>`);
 }
 
 if (typeof serviceName !== "string") {
   throw new Error(`<servicename> must be a string!`);
 }
 
-const servicesFolderPath = resolve(dirname(resolve(modulePath)), "services");
+const servicesFolderPath = ConfigPathResolver.getServiceDirname();
 if (!existsSync(servicesFolderPath)) {
   logger.warn(`services folder [${servicesFolderPath}] dont exists!`);
   logger.warn(`creating [${servicesFolderPath}]!`);

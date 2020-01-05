@@ -1,15 +1,14 @@
 import * as crypto from "crypto";
-import { config } from "dotenv";
+import {config} from "dotenv";
 import * as fs from "fs";
 import * as path from "path";
 import * as winston from "winston";
-import { ParseOptionsError } from "./error/";
-import { winstonConfig } from "./loader";
-import { templates } from "./templates";
+import {ConfigPathResolver} from "./config";
+import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
+import {winstonConfig} from "./loader";
+import {templates} from "./templates";
 
 const logContainer = new winston.Container();
-
-const logger = console;
 
 // noinspection SpellCheckingInspection
 export type IOPTIONPARSER = "remove_extra" | "add_extra" | "no_extra";
@@ -42,13 +41,11 @@ export interface ISimpleMap<T2> {
 
 export abstract class Util {
   public static sha256 = (data) => crypto.createHash("sha256").update(data, "utf8").digest("base64");
+
   public static setupSimpleEnv() {
-    Util.checkEnvVariables(["MIQRO_DIRNAME"]);
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
-    const logsFolder = path.resolve(process.env.MIQRO_DIRNAME, "logs");
-    process.env.LOG_FILE = path.resolve(logsFolder, `${process.env.NODE_ENV}.log`);
-    process.env.LOG_FILE_TRACE = path.resolve(logsFolder, `${process.env.NODE_ENV}-trace.log`);
   }
+
   public static setupInstanceEnv(serviceName: string, scriptPath: string) {
     const microDirname = path.resolve(path.dirname(scriptPath));
     process.chdir(microDirname);
@@ -60,15 +57,15 @@ export abstract class Util {
     process.env.MICRO_NAME = serviceName;
     Util.setupSimpleEnv();
   }
+
   public static loadConfig(initEnv?: boolean) {
-    Util.checkEnvVariables(["MIQRO_DIRNAME"]);
     if (!Util.configLoaded) {
       Util.setupSimpleEnv();
-      const configFolder = path.resolve(process.env.MIQRO_DIRNAME, "config");
-      const configPath = path.resolve(process.env.MIQRO_DIRNAME, "config", `${process.env.NODE_ENV}.env`);
+      const configFolder = ConfigPathResolver.getConfigDirname();
+      const configPath = ConfigPathResolver.getConfigFilePath();
       if (!fs.existsSync(configPath)) {
         if (!initEnv) {
-          throw new Error(`[${configPath}] env file doesnt exists!`);
+          logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists!`);
         } else {
           logger.warn(`[${configPath}] env file doesnt exists!`);
           if (!fs.existsSync(configFolder)) {
@@ -76,45 +73,42 @@ export abstract class Util {
           }
           logger.warn(`creating a new ${configPath} env file`);
           fs.writeFileSync(configPath, templates.defaultEnvFile);
+
+          // noinspection SpellCheckingInspection
+          const gitignorePath = path.resolve(ConfigPathResolver.getBaseDirname(), ".gitignore");
+          // noinspection SpellCheckingInspection
+          if (!fs.existsSync(gitignorePath)) {
+            fs.writeFileSync(gitignorePath, templates.gitignore);
+            logger.warn(`creating ${gitignorePath} file`);
+          }
+
+          config({
+            path: configPath
+          });
         }
       } else {
-        logger.log(`loading ${configPath}`);
-      }
-      config({
-        path: configPath
-      });
-      const logsFolder = path.resolve(process.env.MIQRO_DIRNAME, "logs");
-      // noinspection SpellCheckingInspection
-      const gitignorePath = path.resolve(process.env.MIQRO_DIRNAME, ".gitignore");
-      // noinspection SpellCheckingInspection
-      const logjsPath = path.resolve(process.env.MIQRO_DIRNAME, "config", "log.js");
-      if (!fs.existsSync(gitignorePath)) {
-        fs.writeFileSync(gitignorePath, templates.gitignore);
-      }
-      if (!fs.existsSync(configFolder)) {
-        fs.mkdirSync(configFolder);
-      }
-      if (!fs.existsSync(logjsPath)) {
-        fs.writeFileSync(logjsPath, templates.logjs);
-      }
-      if (!fs.existsSync(logsFolder)) {
-        fs.mkdirSync(logsFolder);
+        logger.info(`loading ${configPath}`);
+        config({
+          path: configPath
+        });
       }
       Util.configLoaded = true;
     }
   }
+
   public static checkEnvVariables(requiredEnvVariables: string[]) {
     requiredEnvVariables.forEach((envName) => {
       if (process.env[envName] === undefined) {
-        throw new Error(`Env variable [${envName}!] not defined. Consider adding it to [${process.env.MIQRO_DIRNAME}/config/${process.env.NODE_ENV}.env].`);
+        throw new Error(`Env variable [${envName}!] not defined. Consider adding it to [${ConfigPathResolver.getConfigFilePath()}].`);
       }
     });
   }
+
   public static parseOptions(argName,
                              arg: { [name: string]: any },
                              optionsArray: Array<{
-      name: string, type: string, arrayType?: string, required: boolean
-    }>,
+                               name: string, type: string, arrayType?: string, required: boolean
+                             }>,
                              parserOption: IOPTIONPARSER = "no_extra"): { [name: string]: any } {
     const ret = {};
     if (typeof arg !== "object" || !arg) {
@@ -171,6 +165,7 @@ export abstract class Util {
       }
     }
   }
+
   public static getLogger(identifier: string) {
     if (typeof identifier !== "string") {
       throw new Error("Bad log identifier");
@@ -189,5 +184,8 @@ export abstract class Util {
     };
     return loggerO;
   }
+
   private static configLoaded: boolean = false;
 }
+
+const logger = Util.getLogger("Util");
