@@ -1,0 +1,56 @@
+[miqro-core](../README.md) › [Globals](../globals.md) › ["util/config"](../modules/_util_config_.md) › [ConfigPathResolver](_util_config_.configpathresolver.md)
+
+# Class: ConfigPathResolver
+
+## Hierarchy
+
+* **ConfigPathResolver**
+
+## Index
+
+### Methods
+
+* [getBaseDirname](_util_config_.configpathresolver.md#static-getbasedirname)
+* [getConfigDirname](_util_config_.configpathresolver.md#static-getconfigdirname)
+* [getConfigFilePath](_util_config_.configpathresolver.md#static-getconfigfilepath)
+* [getServiceDirname](_util_config_.configpathresolver.md#static-getservicedirname)
+
+## Methods
+
+### `Static` getBaseDirname
+
+▸ **getBaseDirname**(): *string*
+
+*Defined in [src/util/config.ts:17](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/config.ts#L17)*
+
+**Returns:** *string*
+
+___
+
+### `Static` getConfigDirname
+
+▸ **getConfigDirname**(): *string*
+
+*Defined in [src/util/config.ts:13](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/config.ts#L13)*
+
+**Returns:** *string*
+
+___
+
+### `Static` getConfigFilePath
+
+▸ **getConfigFilePath**(): *string*
+
+*Defined in [src/util/config.ts:5](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/config.ts#L5)*
+
+**Returns:** *string*
+
+___
+
+### `Static` getServiceDirname
+
+▸ **getServiceDirname**(): *string*
+
+*Defined in [src/util/config.ts:9](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/config.ts#L9)*
+
+**Returns:** *string*

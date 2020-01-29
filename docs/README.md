@@ -1,3 +1,7 @@
+[miqro-core](README.md) › [Globals](globals.md)
+
+# miqro-core
+
 # miqro-core
 
 **in early development not to use in production**
@@ -32,7 +36,6 @@ logger.debug("debuglog");
 if(FeatureToggle.isFeatureEnabled("bodyparser")) {
   logger.info("bodyparser feature enabled");
 }
-
 
 const data = {
   name: "aa",
