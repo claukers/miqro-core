@@ -7,7 +7,11 @@ export abstract class ConfigPathResolver {
   }
 
   public static getServiceDirname() {
-    return resolve(ConfigPathResolver.getBaseDirname(), `services`);
+    return resolve(ConfigPathResolver.getSrcDirname(), `services`);
+  }
+
+  public static getSrcDirname() {
+    return resolve(ConfigPathResolver.getBaseDirname(), `src`);
   }
 
   public static getConfigDirname() {
