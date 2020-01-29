@@ -24,7 +24,7 @@
 
 Ƭ **IOPTIONPARSER**: *"remove_extra" | "add_extra" | "no_extra"*
 
-*Defined in [src/util/util.ts:14](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/util.ts#L14)*
+*Defined in [src/util/util.ts:14](https://github.com/claukers/miqro-core/blob/45acabd/src/util/util.ts#L14)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 Ƭ **IParseSimpleType**: *"string" | "boolean" | "number" | "object" | "any"*
 
-*Defined in [src/util/util.ts:15](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/util.ts#L15)*
+*Defined in [src/util/util.ts:15](https://github.com/claukers/miqro-core/blob/45acabd/src/util/util.ts#L15)*
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 Ƭ **IParseType**: *"string" | "boolean" | "number" | "array" | "any"*
 
-*Defined in [src/util/util.ts:16](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/util.ts#L16)*
+*Defined in [src/util/util.ts:16](https://github.com/claukers/miqro-core/blob/45acabd/src/util/util.ts#L16)*

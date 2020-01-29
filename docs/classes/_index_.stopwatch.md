@@ -28,7 +28,7 @@
 
 \+ **new StopWatch**(): *[StopWatch](_index_.stopwatch.md)*
 
-*Defined in [src/util/stopwatch.ts:3](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/stopwatch.ts#L3)*
+*Defined in [src/util/stopwatch.ts:3](https://github.com/claukers/miqro-core/blob/45acabd/src/util/stopwatch.ts#L3)*
 
 **Returns:** *[StopWatch](_index_.stopwatch.md)*
 
@@ -38,7 +38,7 @@
 
 • **lastMS**: *number* = null
 
-*Defined in [src/util/stopwatch.ts:2](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/stopwatch.ts#L2)*
+*Defined in [src/util/stopwatch.ts:2](https://github.com/claukers/miqro-core/blob/45acabd/src/util/stopwatch.ts#L2)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • **startMS**: *number* = null
 
-*Defined in [src/util/stopwatch.ts:3](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/stopwatch.ts#L3)*
+*Defined in [src/util/stopwatch.ts:3](https://github.com/claukers/miqro-core/blob/45acabd/src/util/stopwatch.ts#L3)*
 
 ## Methods
 
@@ -54,7 +54,7 @@ ___
 
 ▸ **lap**(): *number*
 
-*Defined in [src/util/stopwatch.ts:8](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/stopwatch.ts#L8)*
+*Defined in [src/util/stopwatch.ts:8](https://github.com/claukers/miqro-core/blob/45acabd/src/util/stopwatch.ts#L8)*
 
 **Returns:** *number*
 
@@ -64,6 +64,6 @@ ___
 
 ▸ **stop**(): *number*
 
-*Defined in [src/util/stopwatch.ts:14](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/stopwatch.ts#L14)*
+*Defined in [src/util/stopwatch.ts:14](https://github.com/claukers/miqro-core/blob/45acabd/src/util/stopwatch.ts#L14)*
 
 **Returns:** *number*
