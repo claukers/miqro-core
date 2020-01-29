@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/named"](_util_error_named_.md)
 
-# External module: "util/error/named"
+# Module: "util/error/named"
 
 ## Index
 

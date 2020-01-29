@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/stopwatch"](_util_stopwatch_.md)
 
-# External module: "util/stopwatch"
+# Module: "util/stopwatch"
 
 ## Index
 

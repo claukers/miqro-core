@@ -26,7 +26,7 @@
 
 \+ **new ForbiddenError**(`message`: string): *[ForbiddenError](_util_error_forbiddenerror_.forbiddenerror.md)*
 
-*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/error/forbiddenerror.ts#L3)*
+*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/error/forbiddenerror.ts#L3)*
 
 **Parameters:**
 
@@ -42,7 +42,7 @@ Name | Type |
 
 • **message**: *string*
 
-*Inherited from [NamedError](_util_error_named_.namederror.md).[message](_util_error_named_.namederror.md#message)*
+*Inherited from [ParseOptionsError](_index_.parseoptionserror.md).[message](_index_.parseoptionserror.md#message)*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:974
 
@@ -52,11 +52,11 @@ ___
 
 • **name**: *string* = "NamedError"
 
-*Inherited from [NamedError](_util_error_named_.namederror.md).[name](_util_error_named_.namederror.md#name)*
+*Inherited from [ParseOptionsError](_index_.parseoptionserror.md).[name](_index_.parseoptionserror.md#name)*
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/error/named.ts#L2)*
 
 ___
 
@@ -64,6 +64,6 @@ ___
 
 • **stack**? : *string*
 
-*Inherited from [NamedError](_util_error_named_.namederror.md).[stack](_util_error_named_.namederror.md#optional-stack)*
+*Inherited from [ParseOptionsError](_index_.parseoptionserror.md).[stack](_index_.parseoptionserror.md#optional-stack)*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:975

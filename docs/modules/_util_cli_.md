@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/cli"](_util_cli_.md)
 
-# External module: "util/cli"
+# Module: "util/cli"
 
 ## Index
 

@@ -1,0 +1,50 @@
+[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [CLIUtil](_index_.cliutil.md)
+
+# Class: CLIUtil
+
+## Hierarchy
+
+* **CLIUtil**
+
+## Index
+
+### Methods
+
+* [cliFlow](_index_.cliutil.md#static-cliflow)
+* [routeCMDModule](_index_.cliutil.md#static-routecmdmodule)
+
+## Methods
+
+### `Static` cliFlow
+
+▸ **cliFlow**(`cmds`: [ICMDMap](../interfaces/_index_.icmdmap.md), `identifier`: string, `logger`: any): *void*
+
+*Defined in [src/util/cli.ts:9](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/cli.ts#L9)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`cmds` | [ICMDMap](../interfaces/_index_.icmdmap.md) |
+`identifier` | string |
+`logger` | any |
+
+**Returns:** *void*
+
+___
+
+### `Static` routeCMDModule
+
+▸ **routeCMDModule**(`cmds`: [ICMDMap](../interfaces/_index_.icmdmap.md), `identifier`: string, `logger`: any): *void*
+
+*Defined in [src/util/cli.ts:20](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/cli.ts#L20)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`cmds` | [ICMDMap](../interfaces/_index_.icmdmap.md) |
+`identifier` | string |
+`logger` | any |
+
+**Returns:** *void*

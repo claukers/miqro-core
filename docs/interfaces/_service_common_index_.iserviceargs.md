@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* [ISimpleMap](_util_util_.isimplemap.md)‹any›
+* [ISimpleMap](_index_.isimplemap.md)‹any›
 
   ↳ **IServiceArgs**
 
@@ -26,38 +26,38 @@
 
 ###  body
 
-• **body**: *[ISimpleMap](_util_util_.isimplemap.md)‹any›*
+• **body**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:17](https://github.com/claukers/miqro-core/blob/4847fd5/src/service/common/index.ts#L17)*
+*Defined in [src/service/common/index.ts:17](https://github.com/claukers/miqro-core/blob/d98b47c/src/service/common/index.ts#L17)*
 
 ___
 
 ###  headers
 
-• **headers**: *[ISimpleMap](_util_util_.isimplemap.md)‹any›*
+• **headers**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:18](https://github.com/claukers/miqro-core/blob/4847fd5/src/service/common/index.ts#L18)*
+*Defined in [src/service/common/index.ts:18](https://github.com/claukers/miqro-core/blob/d98b47c/src/service/common/index.ts#L18)*
 
 ___
 
 ###  params
 
-• **params**: *[ISimpleMap](_util_util_.isimplemap.md)‹any›*
+• **params**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:15](https://github.com/claukers/miqro-core/blob/4847fd5/src/service/common/index.ts#L15)*
+*Defined in [src/service/common/index.ts:15](https://github.com/claukers/miqro-core/blob/d98b47c/src/service/common/index.ts#L15)*
 
 ___
 
 ###  query
 
-• **query**: *[ISimpleMap](_util_util_.isimplemap.md)‹any›*
+• **query**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:16](https://github.com/claukers/miqro-core/blob/4847fd5/src/service/common/index.ts#L16)*
+*Defined in [src/service/common/index.ts:16](https://github.com/claukers/miqro-core/blob/d98b47c/src/service/common/index.ts#L16)*
 
 ___
 
 ###  session
 
-• **session**: *[ISession](_service_common_index_.isession.md)*
+• **session**: *[ISession](_index_.isession.md)*
 
-*Defined in [src/service/common/index.ts:14](https://github.com/claukers/miqro-core/blob/4847fd5/src/service/common/index.ts#L14)*
+*Defined in [src/service/common/index.ts:14](https://github.com/claukers/miqro-core/blob/d98b47c/src/service/common/index.ts#L14)*

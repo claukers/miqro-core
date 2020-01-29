@@ -1,33 +1,12 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["service/index"](_service_index_.md)
 
-# External module: "service/index"
+# Module: "service/index"
 
 ## Index
 
-### References
-
-* [INoTokenSession](_service_index_.md#inotokensession)
-* [IServiceArgs](_service_index_.md#iserviceargs)
-* [ISession](_service_index_.md#isession)
-
 ### Interfaces
 
+* [INoTokenSession](../interfaces/_service_index_.inotokensession.md)
+* [IServiceArgs](../interfaces/_service_index_.iserviceargs.md)
+* [ISession](../interfaces/_service_index_.isession.md)
 * [IVerifyTokenService](../interfaces/_service_index_.iverifytokenservice.md)
-
-## References
-
-###  INoTokenSession
-
-• **INoTokenSession**:
-
-___
-
-###  IServiceArgs
-
-• **IServiceArgs**:
-
-___
-
-###  ISession
-
-• **ISession**:

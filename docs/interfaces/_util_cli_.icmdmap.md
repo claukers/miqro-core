@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* [ISimpleMap](_util_util_.isimplemap.md)‹object›
+* [ISimpleMap](_index_.isimplemap.md)‹object›
 
   ↳ **ICMDMap**
 

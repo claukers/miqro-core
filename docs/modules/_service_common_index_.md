@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["service/common/index"](_service_common_index_.md)
 
-# External module: "service/common/index"
+# Module: "service/common/index"
 
 ## Index
 

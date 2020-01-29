@@ -8,15 +8,45 @@
 
   ↳ **NamedError**
 
+  ↳ [ParseOptionsError](_index_.parseoptionserror.md)
+
+  ↳ [UnAuthorizedError](_index_.unauthorizederror.md)
+
+  ↳ [ForbiddenError](_index_.forbiddenerror.md)
+
+  ↳ [MethodNotImplementedError](_index_.methodnotimplementederror.md)
+
+  ↳ [ConfigFileNotFoundError](_index_.configfilenotfounderror.md)
+
+  ↳ [ConfigFileNotFoundError](_util_error_configfilenotfound_.configfilenotfounderror.md)
+
+  ↳ [ForbiddenError](_util_error_forbiddenerror_.forbiddenerror.md)
+
+  ↳ [ParseOptionsError](_util_error_index_.parseoptionserror.md)
+
+  ↳ [UnAuthorizedError](_util_error_index_.unauthorizederror.md)
+
+  ↳ [ForbiddenError](_util_error_index_.forbiddenerror.md)
+
+  ↳ [MethodNotImplementedError](_util_error_index_.methodnotimplementederror.md)
+
+  ↳ [ConfigFileNotFoundError](_util_error_index_.configfilenotfounderror.md)
+
+  ↳ [MethodNotImplementedError](_util_error_notimplemented_.methodnotimplementederror.md)
+
   ↳ [ParseOptionsError](_util_error_parsererror_.parseoptionserror.md)
 
   ↳ [UnAuthorizedError](_util_error_unauthorizederror_.unauthorizederror.md)
 
-  ↳ [ForbiddenError](_util_error_forbiddenerror_.forbiddenerror.md)
+  ↳ [ParseOptionsError](_util_index_.parseoptionserror.md)
 
-  ↳ [MethodNotImplementedError](_util_error_notimplemented_.methodnotimplementederror.md)
+  ↳ [UnAuthorizedError](_util_index_.unauthorizederror.md)
 
-  ↳ [ConfigFileNotFoundError](_util_error_configfilenotfound_.configfilenotfounderror.md)
+  ↳ [ForbiddenError](_util_index_.forbiddenerror.md)
+
+  ↳ [MethodNotImplementedError](_util_index_.methodnotimplementederror.md)
+
+  ↳ [ConfigFileNotFoundError](_util_index_.configfilenotfounderror.md)
 
 ## Index
 
@@ -33,7 +63,7 @@
 
 • **message**: *string*
 
-*Inherited from [NamedError](_util_error_named_.namederror.md).[message](_util_error_named_.namederror.md#message)*
+*Inherited from [ParseOptionsError](_index_.parseoptionserror.md).[message](_index_.parseoptionserror.md#message)*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:974
 
@@ -45,7 +75,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/error/named.ts#L2)*
 
 ___
 
@@ -53,9 +83,9 @@ ___
 
 • **stack**? : *string*
 
-*Inherited from [NamedError](_util_error_named_.namederror.md).[stack](_util_error_named_.namederror.md#optional-stack)*
+*Inherited from [ParseOptionsError](_index_.parseoptionserror.md).[stack](_index_.parseoptionserror.md#optional-stack)*
 
-*Overrides [NamedError](_util_error_named_.namederror.md).[stack](_util_error_named_.namederror.md#optional-stack)*
+*Overrides [ParseOptionsError](_index_.parseoptionserror.md).[stack](_index_.parseoptionserror.md#optional-stack)*
 
 Defined in node_modules/typescript/lib/lib.es5.d.ts:975
 

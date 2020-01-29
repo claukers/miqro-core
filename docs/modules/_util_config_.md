@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/config"](_util_config_.md)
 
-# External module: "util/config"
+# Module: "util/config"
 
 ## Index
 

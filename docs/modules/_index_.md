@@ -1,169 +1,114 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["index"](_index_.md)
 
-# External module: "index"
+# Module: "index"
 
 ## Index
 
-### References
+### Classes
 
-* [CLIUtil](_index_.md#cliutil)
-* [ConfigFileNotFoundError](_index_.md#configfilenotfounderror)
-* [ConfigPathResolver](_index_.md#configpathresolver)
-* [FeatureToggle](_index_.md#featuretoggle)
-* [ForbiddenError](_index_.md#forbiddenerror)
-* [GroupPolicy](_index_.md#grouppolicy)
-* [ICMDMap](_index_.md#icmdmap)
+* [CLIUtil](../classes/_index_.cliutil.md)
+* [ConfigFileNotFoundError](../classes/_index_.configfilenotfounderror.md)
+* [ConfigPathResolver](../classes/_index_.configpathresolver.md)
+* [FeatureToggle](../classes/_index_.featuretoggle.md)
+* [ForbiddenError](../classes/_index_.forbiddenerror.md)
+* [GroupPolicy](../classes/_index_.grouppolicy.md)
+* [MethodNotImplementedError](../classes/_index_.methodnotimplementederror.md)
+* [ParseOptionsError](../classes/_index_.parseoptionserror.md)
+* [StopWatch](../classes/_index_.stopwatch.md)
+* [UnAuthorizedError](../classes/_index_.unauthorizederror.md)
+* [Util](../classes/_index_.util.md)
+
+### Interfaces
+
+* [ICMDMap](../interfaces/_index_.icmdmap.md)
+* [IGroupPolicyOptions](../interfaces/_index_.igrouppolicyoptions.md)
+* [INoTokenSession](../interfaces/_index_.inotokensession.md)
+* [IServiceArgs](../interfaces/_index_.iserviceargs.md)
+* [ISession](../interfaces/_index_.isession.md)
+* [ISimpleMap](../interfaces/_index_.isimplemap.md)
+* [IVerifyTokenService](../interfaces/_index_.iverifytokenservice.md)
+
+### Type aliases
+
 * [IGroupPolicy](_index_.md#igrouppolicy)
 * [IGroupPolicyItem](_index_.md#igrouppolicyitem)
-* [IGroupPolicyOptions](_index_.md#igrouppolicyoptions)
-* [INoTokenSession](_index_.md#inotokensession)
-* [IServiceArgs](_index_.md#iserviceargs)
-* [ISession](_index_.md#isession)
-* [ISimpleMap](_index_.md#isimplemap)
-* [IVerifyTokenService](_index_.md#iverifytokenservice)
-* [MethodNotImplementedError](_index_.md#methodnotimplementederror)
-* [ParseOptionsError](_index_.md#parseoptionserror)
-* [StopWatch](_index_.md#stopwatch)
-* [UnAuthorizedError](_index_.md#unauthorizederror)
-* [Util](_index_.md#util)
-* [defaultLogFormat](_index_.md#defaultlogformat)
-* [defaultLoggerFactory](_index_.md#defaultloggerfactory)
-* [winstonConfig](_index_.md#winstonconfig)
 
-## References
+### Variables
 
-###  CLIUtil
+* [defaultLogFormat](_index_.md#const-defaultlogformat)
 
-• **CLIUtil**:
+### Functions
 
-___
+* [defaultLoggerFactory](_index_.md#const-defaultloggerfactory)
+* [winstonConfig](_index_.md#const-winstonconfig)
 
-###  ConfigFileNotFoundError
-
-• **ConfigFileNotFoundError**:
-
-___
-
-###  ConfigPathResolver
-
-• **ConfigPathResolver**:
-
-___
-
-###  FeatureToggle
-
-• **FeatureToggle**:
-
-___
-
-###  ForbiddenError
-
-• **ForbiddenError**:
-
-___
-
-###  GroupPolicy
-
-• **GroupPolicy**:
-
-___
-
-###  ICMDMap
-
-• **ICMDMap**:
-
-___
+## Type aliases
 
 ###  IGroupPolicy
 
-• **IGroupPolicy**:
+Ƭ **IGroupPolicy**: *"at_least_one" | "all"*
+
+*Defined in [src/util/index.ts:13](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/index.ts#L13)*
 
 ___
 
 ###  IGroupPolicyItem
 
-• **IGroupPolicyItem**:
+Ƭ **IGroupPolicyItem**: *string | string[]*
+
+*Defined in [src/util/index.ts:15](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/index.ts#L15)*
+
+## Variables
+
+### `Const` defaultLogFormat
+
+• **defaultLogFormat**: *Format‹›* = printf((info) => {
+  const pid = process.pid;
+  const envString = pid;
+  const component = info.label;
+  const level = info.level;
+  const text = info.message;
+  const ret = `${new Date(info.timestamp).getTime()} ${envString} ` +
+    `[${component}] ` +
+    `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
+    `${text}`;
+  return ret;
+})
+
+*Defined in [src/util/loader.ts:14](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/loader.ts#L14)*
+
+## Functions
+
+### `Const` defaultLoggerFactory
+
+▸ **defaultLoggerFactory**(`identifier`: any): *object*
+
+*Defined in [src/util/loader.ts:27](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/loader.ts#L27)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`identifier` | any |
+
+**Returns:** *object*
+
+* **format**: *Format‹›* = combine(
+      label({
+        label: identifier
+      }),
+      timestamp(),
+      logFormat
+    )
+
+* **transports**: *any[]* = transportList
 
 ___
 
-###  IGroupPolicyOptions
+### `Const` winstonConfig
 
-• **IGroupPolicyOptions**:
+▸ **winstonConfig**(): *any*
 
-___
+*Defined in [src/util/loader.ts:61](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/loader.ts#L61)*
 
-###  INoTokenSession
-
-• **INoTokenSession**:
-
-___
-
-###  IServiceArgs
-
-• **IServiceArgs**:
-
-___
-
-###  ISession
-
-• **ISession**:
-
-___
-
-###  ISimpleMap
-
-• **ISimpleMap**:
-
-___
-
-###  IVerifyTokenService
-
-• **IVerifyTokenService**:
-
-___
-
-###  MethodNotImplementedError
-
-• **MethodNotImplementedError**:
-
-___
-
-###  ParseOptionsError
-
-• **ParseOptionsError**:
-
-___
-
-###  StopWatch
-
-• **StopWatch**:
-
-___
-
-###  UnAuthorizedError
-
-• **UnAuthorizedError**:
-
-___
-
-###  Util
-
-• **Util**:
-
-___
-
-###  defaultLogFormat
-
-• **defaultLogFormat**:
-
-___
-
-###  defaultLoggerFactory
-
-• **defaultLoggerFactory**:
-
-___
-
-###  winstonConfig
-
-• **winstonConfig**:
+**Returns:** *any*

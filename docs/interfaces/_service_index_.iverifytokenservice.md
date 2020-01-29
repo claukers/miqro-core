@@ -16,9 +16,9 @@
 
 ###  verify
 
-▸ **verify**(`args`: object): *Promise‹[ISession](_service_common_index_.isession.md)›*
+▸ **verify**(`args`: object): *Promise‹[ISession](_index_.isession.md)›*
 
-*Defined in [src/service/index.ts:5](https://github.com/claukers/miqro-core/blob/4847fd5/src/service/index.ts#L5)*
+*Defined in [src/service/index.ts:5](https://github.com/claukers/miqro-core/blob/d98b47c/src/service/index.ts#L5)*
 
 **Parameters:**
 
@@ -28,4 +28,4 @@ Name | Type |
 ------ | ------ |
 `token` | string |
 
-**Returns:** *Promise‹[ISession](_service_common_index_.isession.md)›*
+**Returns:** *Promise‹[ISession](_index_.isession.md)›*

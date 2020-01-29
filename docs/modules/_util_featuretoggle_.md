@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/featuretoggle"](_util_featuretoggle_.md)
 
-# External module: "util/featuretoggle"
+# Module: "util/featuretoggle"
 
 ## Index
 

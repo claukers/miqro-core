@@ -10,10 +10,6 @@
 
 * **ISimpleMap**
 
-  ↳ [IServiceArgs](_service_common_index_.iserviceargs.md)
-
-  ↳ [ICMDMap](_util_cli_.icmdmap.md)
-
 ## Indexable
 
 * \[ **word**: *string*\]: T2

@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/notimplemented"](_util_error_notimplemented_.md)
 
-# External module: "util/error/notimplemented"
+# Module: "util/error/notimplemented"
 
 ## Index
 

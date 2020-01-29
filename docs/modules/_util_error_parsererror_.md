@@ -1,6 +1,6 @@
 [miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/parsererror"](_util_error_parsererror_.md)
 
-# External module: "util/error/parsererror"
+# Module: "util/error/parsererror"
 
 ## Index
 

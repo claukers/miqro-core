@@ -16,16 +16,16 @@
 
 ### `Static` validateSession
 
-▸ **validateSession**(`session`: [ISession](../interfaces/_service_common_index_.isession.md), `options`: [IGroupPolicyOptions](../interfaces/_util_index_.igrouppolicyoptions.md), `logger`: any): *Promise‹boolean›*
+▸ **validateSession**(`session`: [ISession](../interfaces/_index_.isession.md), `options`: [IGroupPolicyOptions](../interfaces/_index_.igrouppolicyoptions.md), `logger`: any): *Promise‹boolean›*
 
-*Defined in [src/util/index.ts:65](https://github.com/claukers/miqro-core/blob/4847fd5/src/util/index.ts#L65)*
+*Defined in [src/util/index.ts:65](https://github.com/claukers/miqro-core/blob/d98b47c/src/util/index.ts#L65)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`session` | [ISession](../interfaces/_service_common_index_.isession.md) |
-`options` | [IGroupPolicyOptions](../interfaces/_util_index_.igrouppolicyoptions.md) |
+`session` | [ISession](../interfaces/_index_.isession.md) |
+`options` | [IGroupPolicyOptions](../interfaces/_index_.igrouppolicyoptions.md) |
 `logger` | any |
 
 **Returns:** *Promise‹boolean›*
