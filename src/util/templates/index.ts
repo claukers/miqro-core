@@ -62,8 +62,8 @@ node_modules/
 // noinspection SpellCheckingInspection
 export const mainjs = (servicePath) => {
   return `const express = require("express");
-const { Util } = require("miqro-core");
-const { setupMiddleware } = require("miqro-express");
+const { Util } = require("@miqro/core");
+const { setupMiddleware } = require("@miqro/handlers");
 Util.loadConfig();
 
 const logger = Util.getLogger("main.js");
@@ -83,13 +83,13 @@ service(app).then((server) => {
 export const indexjs = () => {
   return `const {
   APIResponse
-} = require("miqro-express");
+} = require("@miqro/handlers");
 const {
   Database
-} = require("miqro-sequelize");
+} = require("@miqro/database");
 const {
   Util
-} = require("miqro-core");
+} = require("@miqro/core");
 const path = require("path");
 
 module.exports = async (app) => {
@@ -110,7 +110,7 @@ module.exports = async (app) => {
 
 // noinspection SpellCheckingInspection
 const servicejs = (serviceName: string) => {
-  return `const { Util } = require("miqro-core");
+  return `const { Util } = require("@miqro/core");
 
 class ${serviceName}Service {
   static getInstance() {
