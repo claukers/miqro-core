@@ -18,7 +18,7 @@
 
 ▸ **verify**(`args`: object): *Promise‹[ISession](_index_.isession.md)›*
 
-*Defined in [src/service/index.ts:5](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/index.ts#L5)*
+*Defined in [src/service/index.ts:5](https://github.com/claukers/miqro-core/blob/05bc2b3/src/service/index.ts#L5)*
 
 **Parameters:**
 

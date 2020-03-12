@@ -29,7 +29,7 @@
 
 ▪ **configLoaded**: *boolean* = false
 
-*Defined in [src/util/util.ts:212](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L212)*
+*Defined in [src/util/util.ts:212](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L212)*
 
 ## Methods
 
@@ -37,7 +37,7 @@
 
 ▸ **checkEnvVariables**(`requiredEnvVariables`: string[]): *void*
 
-*Defined in [src/util/util.ts:123](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L123)*
+*Defined in [src/util/util.ts:123](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L123)*
 
 **Parameters:**
 
@@ -53,7 +53,7 @@ ___
 
 ▸ **getLogger**(`identifier`: string): *Logger‹›*
 
-*Defined in [src/util/util.ts:193](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L193)*
+*Defined in [src/util/util.ts:193](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L193)*
 
 **Parameters:**
 
@@ -69,7 +69,7 @@ ___
 
 ▸ **loadConfig**(`initEnv?`: boolean): *void*
 
-*Defined in [src/util/util.ts:78](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L78)*
+*Defined in [src/util/util.ts:78](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L78)*
 
 **Parameters:**
 
@@ -85,7 +85,7 @@ ___
 
 ▸ **overrrideConfig**(`path`: string): *void*
 
-*Defined in [src/util/util.ts:61](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L61)*
+*Defined in [src/util/util.ts:61](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L61)*
 
 **Parameters:**
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **parseOptions**(`argName`: any, `arg`: object, `optionsArray`: Array‹object›, `parserOption`: [IOPTIONPARSER](../modules/_util_util_.md#ioptionparser)): *object*
 
-*Defined in [src/util/util.ts:131](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L131)*
+*Defined in [src/util/util.ts:131](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L131)*
 
 **Parameters:**
 
@@ -122,7 +122,7 @@ ___
 
 ▸ **setupInstanceEnv**(`serviceName`: string, `scriptPath`: string): *void*
 
-*Defined in [src/util/util.ts:49](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L49)*
+*Defined in [src/util/util.ts:49](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L49)*
 
 **Parameters:**
 
@@ -139,7 +139,7 @@ ___
 
 ▸ **setupSimpleEnv**(): *void*
 
-*Defined in [src/util/util.ts:45](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L45)*
+*Defined in [src/util/util.ts:45](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L45)*
 
 **Returns:** *void*
 
@@ -149,7 +149,7 @@ ___
 
 ▸ **sha256**(`data`: any): *string*
 
-*Defined in [src/util/util.ts:43](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/util.ts#L43)*
+*Defined in [src/util/util.ts:43](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L43)*
 
 **Parameters:**
 

@@ -23,7 +23,7 @@
 
 ▸ **getBaseDirname**(): *string*
 
-*Defined in [src/util/config.ts:30](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/config.ts#L30)*
+*Defined in [src/util/config.ts:30](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/config.ts#L30)*
 
 **Returns:** *string*
 
@@ -33,7 +33,7 @@ ___
 
 ▸ **getConfigDirname**(): *string*
 
-*Defined in [src/util/config.ts:26](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/config.ts#L26)*
+*Defined in [src/util/config.ts:26](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/config.ts#L26)*
 
 **Returns:** *string*
 
@@ -43,7 +43,7 @@ ___
 
 ▸ **getConfigFilePath**(): *string*
 
-*Defined in [src/util/config.ts:14](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/config.ts#L14)*
+*Defined in [src/util/config.ts:14](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/config.ts#L14)*
 
 **Returns:** *string*
 
@@ -53,7 +53,7 @@ ___
 
 ▸ **getOverrideConfigFilePath**(): *string*
 
-*Defined in [src/util/config.ts:6](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/config.ts#L6)*
+*Defined in [src/util/config.ts:6](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/config.ts#L6)*
 
 **Returns:** *string*
 
@@ -63,7 +63,7 @@ ___
 
 ▸ **getServiceDirname**(): *string*
 
-*Defined in [src/util/config.ts:18](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/config.ts#L18)*
+*Defined in [src/util/config.ts:18](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/config.ts#L18)*
 
 **Returns:** *string*
 
@@ -73,6 +73,6 @@ ___
 
 ▸ **getSrcDirname**(): *string*
 
-*Defined in [src/util/config.ts:22](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/config.ts#L22)*
+*Defined in [src/util/config.ts:22](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/config.ts#L22)*
 
 **Returns:** *string*
