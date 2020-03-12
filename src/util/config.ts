@@ -1,6 +1,15 @@
+import {existsSync} from "fs";
 import {resolve} from "path";
 
 export abstract class ConfigPathResolver {
+
+  public static getOverrideConfigFilePath() {
+    if (!process.env.MIQRO_OVERRIDE_CONFIG_PATH) {
+      return null;
+    } else {
+      return resolve(ConfigPathResolver.getConfigDirname(), `${process.env.MIQRO_OVERRIDE_CONFIG_PATH}`);
+    }
+  }
 
   public static getConfigFilePath() {
     return resolve(ConfigPathResolver.getConfigDirname(), `${process.env.NODE_ENV}.env`);

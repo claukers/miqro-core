@@ -78,6 +78,7 @@ export abstract class Util {
   public static loadConfig(initEnv?: boolean) {
     if (!Util.configLoaded) {
       Util.setupSimpleEnv();
+      const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
       const configFolder = ConfigPathResolver.getConfigDirname();
       const configPath = ConfigPathResolver.getConfigFilePath();
       if (!existsSync(configPath)) {
@@ -108,6 +109,12 @@ export abstract class Util {
         config({
           path: configPath
         });
+      }
+
+      if (overridePath && existsSync(overridePath)) {
+        Util.overrrideConfig(overridePath);
+      } else if (overridePath) {
+        logger.warn(`nothing loaded from [${process.env.MIQRO_OVERRIDE_CONFIG_PATH}] env file doesnt exists!`);
       }
       Util.configLoaded = true;
     }
