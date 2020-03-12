@@ -4,7 +4,7 @@ import {existsSync, mkdirSync, writeFileSync} from "fs";
 import {dirname, resolve} from "path";
 import {Container} from "winston";
 import {ConfigPathResolver} from "./config";
-import {ParseOptionsError} from "./error/";
+import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {winstonConfig} from "./loader";
 import {templates} from "./templates";
 
@@ -56,6 +56,23 @@ export abstract class Util {
     process.chdir(microDirname);
     process.env.MICRO_NAME = serviceName;
     Util.setupSimpleEnv();
+  }
+
+  public static overrrideConfig(path: string) {
+    if (!existsSync(path)) {
+      throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
+    } else {
+      logger.warn(`overriding config with [${path}].`);
+      const overrideConfig = config({
+        path
+      });
+      if (overrideConfig.parsed) {
+        const keys = Object.keys(overrideConfig.parsed);
+        for (const key of keys) {
+          process.env[key] = overrideConfig.parsed[key];
+        }
+      }
+    }
   }
 
   public static loadConfig(initEnv?: boolean) {
