@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/cli"](_util_cli_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/cli"](_util_cli_.md)
 
 # Module: "util/cli"
 

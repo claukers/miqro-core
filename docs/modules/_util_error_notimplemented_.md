@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/notimplemented"](_util_error_notimplemented_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/error/notimplemented"](_util_error_notimplemented_.md)
 
 # Module: "util/error/notimplemented"
 

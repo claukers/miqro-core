@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["service/index"](../modules/_service_index_.md) › [IServiceArgs](_service_index_.iserviceargs.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["service/index"](../modules/_service_index_.md) › [IServiceArgs](_service_index_.iserviceargs.md)
 
 # Interface: IServiceArgs
 
@@ -28,7 +28,7 @@
 
 • **body**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:17](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L17)*
+*Defined in [src/service/common/index.ts:17](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L17)*
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • **headers**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:18](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L18)*
+*Defined in [src/service/common/index.ts:18](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L18)*
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • **params**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:15](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L15)*
+*Defined in [src/service/common/index.ts:15](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L15)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **query**: *[ISimpleMap](_index_.isimplemap.md)‹any›*
 
-*Defined in [src/service/common/index.ts:16](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L16)*
+*Defined in [src/service/common/index.ts:16](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L16)*
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 • **session**: *[ISession](_index_.isession.md)*
 
-*Defined in [src/service/common/index.ts:14](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L14)*
+*Defined in [src/service/common/index.ts:14](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L14)*

@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ICMDMap](_index_.icmdmap.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ICMDMap](_index_.icmdmap.md)
 
 # Interface: ICMDMap
 

@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/index"](../modules/_util_error_index_.md) › [MethodNotImplementedError](_util_error_index_.methodnotimplementederror.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/error/index"](../modules/_util_error_index_.md) › [MethodNotImplementedError](_util_error_index_.methodnotimplementederror.md)
 
 # Class: MethodNotImplementedError
 
@@ -26,7 +26,7 @@
 
 \+ **new MethodNotImplementedError**(`method`: string): *[MethodNotImplementedError](_util_error_index_.methodnotimplementederror.md)*
 
-*Defined in [src/util/error/notimplemented.ts:3](https://github.com/claukers/miqro-core/blob/45acabd/src/util/error/notimplemented.ts#L3)*
+*Defined in [src/util/error/notimplemented.ts:3](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/error/notimplemented.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/45acabd/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/error/named.ts#L2)*
 
 ___
 

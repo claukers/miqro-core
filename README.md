@@ -1,4 +1,4 @@
-# miqro-core
+# @miqro/core
 
 **in early development not to use in production**
 
@@ -13,7 +13,7 @@ this is a part of the ```miqro``` module and provides logging, config and option
 const {
   Util,
   FeatureToggle
-} = require("miqro-core");
+} = require("@miqro/core");
 
 // this should load the correct env file
 Util.loadConfig();
@@ -63,6 +63,10 @@ const resultWithoutExtra = Util.parseOptions("person", data, [
 ```
 
 # env files
+
+TODO
+
+# override env files
 
 TODO
 

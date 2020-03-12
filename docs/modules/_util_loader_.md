@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/loader"](_util_loader_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/loader"](_util_loader_.md)
 
 # Module: "util/loader"
 
@@ -30,7 +30,7 @@
   return ret;
 })
 
-*Defined in [src/util/loader.ts:14](https://github.com/claukers/miqro-core/blob/45acabd/src/util/loader.ts#L14)*
+*Defined in [src/util/loader.ts:14](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/loader.ts#L14)*
 
 ## Functions
 
@@ -38,7 +38,7 @@
 
 ▸ **defaultLoggerFactory**(`identifier`: any): *object*
 
-*Defined in [src/util/loader.ts:27](https://github.com/claukers/miqro-core/blob/45acabd/src/util/loader.ts#L27)*
+*Defined in [src/util/loader.ts:27](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/loader.ts#L27)*
 
 **Parameters:**
 
@@ -64,6 +64,6 @@ ___
 
 ▸ **winstonConfig**(): *any*
 
-*Defined in [src/util/loader.ts:61](https://github.com/claukers/miqro-core/blob/45acabd/src/util/loader.ts#L61)*
+*Defined in [src/util/loader.ts:61](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/loader.ts#L61)*
 
 **Returns:** *any*

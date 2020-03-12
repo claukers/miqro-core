@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/named"](../modules/_util_error_named_.md) › [NamedError](_util_error_named_.namederror.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/error/named"](../modules/_util_error_named_.md) › [NamedError](_util_error_named_.namederror.md)
 
 # Class: NamedError
 
@@ -75,7 +75,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/45acabd/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/error/named.ts#L2)*
 
 ___
 

@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [IGroupPolicyOptions](_index_.igrouppolicyoptions.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [IGroupPolicyOptions](_index_.igrouppolicyoptions.md)
 
 # Interface: IGroupPolicyOptions
 
@@ -19,7 +19,7 @@
 
 • **groupPolicy**: *[IGroupPolicy](../modules/_index_.md#igrouppolicy)*
 
-*Defined in [src/util/index.ts:19](https://github.com/claukers/miqro-core/blob/45acabd/src/util/index.ts#L19)*
+*Defined in [src/util/index.ts:19](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/index.ts#L19)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **groups**: *[IGroupPolicyItem](../modules/_index_.md#igrouppolicyitem)[]*
 
-*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/45acabd/src/util/index.ts#L18)*
+*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/index.ts#L18)*

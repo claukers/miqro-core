@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ForbiddenError](_index_.forbiddenerror.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ForbiddenError](_index_.forbiddenerror.md)
 
 # Class: ForbiddenError
 
@@ -26,7 +26,7 @@
 
 \+ **new ForbiddenError**(`message`: string): *[ForbiddenError](_index_.forbiddenerror.md)*
 
-*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/45acabd/src/util/error/forbiddenerror.ts#L3)*
+*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/error/forbiddenerror.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/45acabd/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/01b49b2/src/util/error/named.ts#L2)*
 
 ___
 

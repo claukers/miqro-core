@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/stopwatch"](_util_stopwatch_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/stopwatch"](_util_stopwatch_.md)
 
 # Module: "util/stopwatch"
 

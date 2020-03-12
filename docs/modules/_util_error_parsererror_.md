@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/parsererror"](_util_error_parsererror_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/error/parsererror"](_util_error_parsererror_.md)
 
 # Module: "util/error/parsererror"
 

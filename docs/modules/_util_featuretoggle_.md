@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/featuretoggle"](_util_featuretoggle_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/featuretoggle"](_util_featuretoggle_.md)
 
 # Module: "util/featuretoggle"
 

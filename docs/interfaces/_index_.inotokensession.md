@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [INoTokenSession](_index_.inotokensession.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [INoTokenSession](_index_.inotokensession.md)
 
 # Interface: INoTokenSession
 
@@ -26,7 +26,7 @@
 
 • **account**: *string*
 
-*Defined in [src/service/common/index.ts:4](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L4)*
+*Defined in [src/service/common/index.ts:4](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L4)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **groups**: *string[]*
 
-*Defined in [src/service/common/index.ts:6](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L6)*
+*Defined in [src/service/common/index.ts:6](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L6)*
 
 ___
 
@@ -42,4 +42,4 @@ ___
 
 • **username**: *string*
 
-*Defined in [src/service/common/index.ts:5](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L5)*
+*Defined in [src/service/common/index.ts:5](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L5)*

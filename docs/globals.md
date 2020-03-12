@@ -1,6 +1,6 @@
-[miqro-core](README.md) › [Globals](globals.md)
+[@miqro/core](README.md) › [Globals](globals.md)
 
-# miqro-core
+# @miqro/core
 
 ## Index
 

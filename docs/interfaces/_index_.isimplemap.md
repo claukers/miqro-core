@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ISimpleMap](_index_.isimplemap.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ISimpleMap](_index_.isimplemap.md)
 
 # Interface: ISimpleMap <**T2**>
 

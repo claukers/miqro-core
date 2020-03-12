@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ISession](_index_.isession.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["index"](../modules/_index_.md) › [ISession](_index_.isession.md)
 
 # Interface: ISession
 
@@ -25,7 +25,7 @@
 
 *Inherited from [INoTokenSession](_index_.inotokensession.md).[account](_index_.inotokensession.md#account)*
 
-*Defined in [src/service/common/index.ts:4](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L4)*
+*Defined in [src/service/common/index.ts:4](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L4)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 *Inherited from [INoTokenSession](_index_.inotokensession.md).[groups](_index_.inotokensession.md#groups)*
 
-*Defined in [src/service/common/index.ts:6](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L6)*
+*Defined in [src/service/common/index.ts:6](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L6)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 • **token**: *string*
 
-*Defined in [src/service/common/index.ts:10](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L10)*
+*Defined in [src/service/common/index.ts:10](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L10)*
 
 ___
 
@@ -53,4 +53,4 @@ ___
 
 *Inherited from [INoTokenSession](_index_.inotokensession.md).[username](_index_.inotokensession.md#username)*
 
-*Defined in [src/service/common/index.ts:5](https://github.com/claukers/miqro-core/blob/45acabd/src/service/common/index.ts#L5)*
+*Defined in [src/service/common/index.ts:5](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/common/index.ts#L5)*

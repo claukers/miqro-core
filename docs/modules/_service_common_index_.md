@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["service/common/index"](_service_common_index_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["service/common/index"](_service_common_index_.md)
 
 # Module: "service/common/index"
 

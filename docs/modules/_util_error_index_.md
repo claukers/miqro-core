@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/index"](_util_error_index_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/error/index"](_util_error_index_.md)
 
 # Module: "util/error/index"
 

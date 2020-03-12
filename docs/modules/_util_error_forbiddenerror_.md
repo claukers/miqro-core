@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["util/error/forbiddenerror"](_util_error_forbiddenerror_.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/error/forbiddenerror"](_util_error_forbiddenerror_.md)
 
 # Module: "util/error/forbiddenerror"
 

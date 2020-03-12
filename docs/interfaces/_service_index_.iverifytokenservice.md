@@ -1,4 +1,4 @@
-[miqro-core](../README.md) › [Globals](../globals.md) › ["service/index"](../modules/_service_index_.md) › [IVerifyTokenService](_service_index_.iverifytokenservice.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["service/index"](../modules/_service_index_.md) › [IVerifyTokenService](_service_index_.iverifytokenservice.md)
 
 # Interface: IVerifyTokenService
 
@@ -18,7 +18,7 @@
 
 ▸ **verify**(`args`: object): *Promise‹[ISession](_index_.isession.md)›*
 
-*Defined in [src/service/index.ts:5](https://github.com/claukers/miqro-core/blob/45acabd/src/service/index.ts#L5)*
+*Defined in [src/service/index.ts:5](https://github.com/claukers/miqro-core/blob/01b49b2/src/service/index.ts#L5)*
 
 **Parameters:**
 
