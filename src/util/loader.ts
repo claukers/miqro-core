@@ -3,8 +3,8 @@ import {existsSync} from "fs";
 import {resolve} from "path";
 import {format, transports} from "winston";
 import {ConfigPathResolver} from "./config";
-import {inspect} from "util";
 
+// noinspection SpellCheckingInspection
 const {
   combine,
   label,
@@ -14,11 +14,10 @@ const {
 
 export const defaultLogFormat = printf((info) => {
   const pid = process.pid;
-  const envString = pid;
   const component = info.label;
   const level = info.level;
-  const text = typeof info.message === "string" ? info.message : inspect(info.message);
-  return `${new Date(info.timestamp).getTime()} ${envString} ` +
+  const text = info.message;
+  return `${new Date(info.timestamp).getTime()} ${pid} ` +
     `[${component}] ` +
     `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
     `${text}`;
