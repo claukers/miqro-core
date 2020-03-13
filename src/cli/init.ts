@@ -1,5 +1,5 @@
 import {existsSync, mkdirSync, writeFileSync} from "fs";
-import {basename, dirname, resolve} from "path";
+import {resolve} from "path";
 import {ConfigPathResolver, Util} from "../util";
 import {templates} from "../util/templates";
 
@@ -15,19 +15,19 @@ const service = resolve(ConfigPathResolver.getBaseDirname(), `index.js`);
 if (!existsSync(service)) {
   logger.warn(`microservice [${service}] doesnt exists!`);
   logger.warn(`creating [${service}]!`);
-  const mainJSPath = resolve(dirname(service), "main.js");
   writeFileSync(service, templates.indexjs());
-  if (!existsSync(mainJSPath)) {
-    writeFileSync(mainJSPath, templates.mainjs(basename(service)));
-  }
 }
 
-const configFolder = ConfigPathResolver.getConfigDirname();
 const configPath = ConfigPathResolver.getConfigFilePath();
 if (!existsSync(configPath)) {
   logger.warn(`[${configPath}] env file doesnt exists!`);
+  const configFolder = ConfigPathResolver.getConfigDirname();
   if (!existsSync(configFolder)) {
-    mkdirSync(configFolder);
+    logger.warn(`[${configFolder}] folder doesnt exists!`);
+    logger.warn(`creating ${configFolder} folder`);
+    mkdirSync(configFolder, {
+      recursive: true
+    });
   }
   logger.warn(`creating a new ${configPath} env file`);
   writeFileSync(configPath, templates.defaultEnvFile);

@@ -76,7 +76,6 @@ export abstract class Util {
 
   public static loadConfig() {
     if (!Util.configLoaded) {
-      Util.setupSimpleEnv();
       const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
       const configPath = ConfigPathResolver.getConfigFilePath();
       if (!existsSync(configPath)) {

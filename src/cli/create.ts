@@ -15,17 +15,13 @@ if (typeof serviceName !== "string") {
   throw new Error(`<servicename> must be a string!`);
 }
 
-const srcFolderPath = ConfigPathResolver.getSrcDirname();
-if (!existsSync(srcFolderPath)) {
-  logger.warn(`src folder [${srcFolderPath}] dont exists!`);
-  logger.warn(`creating [${srcFolderPath}]!`);
-  mkdirSync(srcFolderPath);
-}
 const servicesFolderPath = ConfigPathResolver.getServiceDirname();
 if (!existsSync(servicesFolderPath)) {
   logger.warn(`services folder [${servicesFolderPath}] dont exists!`);
   logger.warn(`creating [${servicesFolderPath}]!`);
-  mkdirSync(servicesFolderPath);
+  mkdirSync(servicesFolderPath, {
+    recursive: true
+  });
 }
 const servicePath = resolve(servicesFolderPath, `${serviceName.toLowerCase()}.js`);
 
