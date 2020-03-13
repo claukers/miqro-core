@@ -1,19 +1,17 @@
 import {createHash} from "crypto";
 import {config} from "dotenv";
-import {existsSync, mkdirSync, writeFileSync} from "fs";
+import {existsSync} from "fs";
 import {dirname, resolve} from "path";
 import {Container} from "winston";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {winstonConfig} from "./loader";
-import {templates} from "./templates";
 
 const logContainer = new Container();
 
 // noinspection SpellCheckingInspection
 export type IOPTIONPARSER = "remove_extra" | "add_extra" | "no_extra";
 export type IParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
-export type IParseType = "string" | "boolean" | "number" | "array" | "any";
 
 const isParseSimpleOption = (type: string): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
@@ -51,6 +49,7 @@ export abstract class Util {
     if (!process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined") {
       process.env.MIQRO_DIRNAME = microDirname;
     } else {
+      // noinspection SpellCheckingInspection
       logger.warn(`NOT changing to MIQRO_DIRNAME[${microDirname}] because already defined as ${process.env.MIQRO_DIRNAME}!`);
     }
     process.chdir(microDirname);
@@ -58,7 +57,7 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrrideConfig(path: string) {
+  public static overrideConfig(path: string) {
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
@@ -81,6 +80,7 @@ export abstract class Util {
       const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
       const configPath = ConfigPathResolver.getConfigFilePath();
       if (!existsSync(configPath)) {
+        // noinspection SpellCheckingInspection
         logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists! Maybe you miss to run miqro-core init.`);
       } else {
         logger.info(`loading ${configPath}`);
@@ -90,7 +90,7 @@ export abstract class Util {
       }
 
       if (overridePath && existsSync(overridePath)) {
-        Util.overrrideConfig(overridePath);
+        Util.overrideConfig(overridePath);
       } else if (overridePath) {
         logger.warn(`nothing loaded from [${process.env.MIQRO_OVERRIDE_CONFIG_PATH}] env file doesnt exists!`);
       }

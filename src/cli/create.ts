@@ -1,12 +1,13 @@
 import {existsSync, mkdirSync, writeFileSync} from "fs";
 import {resolve} from "path";
-import {ConfigPathResolver} from "../util/config";
+import {ConfigPathResolver} from "../util";
 import {templates} from "../util/templates";
 
 const logger = console;
 const serviceName = process.argv[3];
 
 if (process.argv.length !== 4) {
+  // noinspection SpellCheckingInspection
   throw new Error(`usage: miqro-core createservice <servicename>`);
 }
 

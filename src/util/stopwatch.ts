@@ -5,6 +5,7 @@ export class StopWatch {
     this.lastMS = new Date().getTime();
     this.startMS = this.lastMS;
   }
+  // noinspection JSUnusedGlobalSymbols
   public lap() {
     const now = new Date().getTime();
     const ret = now - this.lastMS;

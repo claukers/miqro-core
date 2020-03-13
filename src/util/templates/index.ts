@@ -61,6 +61,7 @@ node_modules/
 
 // noinspection SpellCheckingInspection
 export const mainjs = (servicePath) => {
+  // noinspection SpellCheckingInspection
   return `const express = require("express");
 const { Util } = require("@miqro/core");
 const { setupMiddleware } = require("@miqro/handlers");
@@ -81,6 +82,7 @@ service(app).then((server) => {
 
 // noinspection SpellCheckingInspection
 export const indexjs = () => {
+  // noinspection SpellCheckingInspection
   return `const {
   APIResponse
 } = require("@miqro/handlers");
@@ -110,6 +112,7 @@ module.exports = async (app) => {
 
 // noinspection SpellCheckingInspection
 const servicejs = (serviceName: string) => {
+  // noinspection SpellCheckingInspection
   return `const { Util } = require("@miqro/core");
 
 class ${serviceName}Service {
