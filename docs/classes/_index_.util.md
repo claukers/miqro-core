@@ -17,7 +17,7 @@
 * [checkEnvVariables](_index_.util.md#static-checkenvvariables)
 * [getLogger](_index_.util.md#static-getlogger)
 * [loadConfig](_index_.util.md#static-loadconfig)
-* [overrrideConfig](_index_.util.md#static-overrrideconfig)
+* [overrideConfig](_index_.util.md#static-overrideconfig)
 * [parseOptions](_index_.util.md#static-parseoptions)
 * [setupInstanceEnv](_index_.util.md#static-setupinstanceenv)
 * [setupSimpleEnv](_index_.util.md#static-setupsimpleenv)
@@ -29,7 +29,7 @@
 
 ▪ **configLoaded**: *boolean* = false
 
-*Defined in [src/util/util.ts:212](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L212)*
+*Defined in [src/util/util.ts:189](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L189)*
 
 ## Methods
 
@@ -37,7 +37,7 @@
 
 ▸ **checkEnvVariables**(`requiredEnvVariables`: string[]): *void*
 
-*Defined in [src/util/util.ts:123](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L123)*
+*Defined in [src/util/util.ts:100](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L100)*
 
 **Parameters:**
 
@@ -53,7 +53,7 @@ ___
 
 ▸ **getLogger**(`identifier`: string): *Logger‹›*
 
-*Defined in [src/util/util.ts:193](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L193)*
+*Defined in [src/util/util.ts:170](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L170)*
 
 **Parameters:**
 
@@ -67,25 +67,19 @@ ___
 
 ### `Static` loadConfig
 
-▸ **loadConfig**(`initEnv?`: boolean): *void*
+▸ **loadConfig**(): *void*
 
-*Defined in [src/util/util.ts:78](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L78)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`initEnv?` | boolean |
+*Defined in [src/util/util.ts:77](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L77)*
 
 **Returns:** *void*
 
 ___
 
-### `Static` overrrideConfig
+### `Static` overrideConfig
 
-▸ **overrrideConfig**(`path`: string): *void*
+▸ **overrideConfig**(`path`: string): *void*
 
-*Defined in [src/util/util.ts:61](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L61)*
+*Defined in [src/util/util.ts:60](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L60)*
 
 **Parameters:**
 
@@ -101,7 +95,7 @@ ___
 
 ▸ **parseOptions**(`argName`: any, `arg`: object, `optionsArray`: Array‹object›, `parserOption`: [IOPTIONPARSER](../modules/_util_util_.md#ioptionparser)): *object*
 
-*Defined in [src/util/util.ts:131](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L131)*
+*Defined in [src/util/util.ts:108](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L108)*
 
 **Parameters:**
 
@@ -122,7 +116,7 @@ ___
 
 ▸ **setupInstanceEnv**(`serviceName`: string, `scriptPath`: string): *void*
 
-*Defined in [src/util/util.ts:49](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L49)*
+*Defined in [src/util/util.ts:47](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L47)*
 
 **Parameters:**
 
@@ -139,7 +133,7 @@ ___
 
 ▸ **setupSimpleEnv**(): *void*
 
-*Defined in [src/util/util.ts:45](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L45)*
+*Defined in [src/util/util.ts:43](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L43)*
 
 **Returns:** *void*
 
@@ -149,7 +143,7 @@ ___
 
 ▸ **sha256**(`data`: any): *string*
 
-*Defined in [src/util/util.ts:43](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L43)*
+*Defined in [src/util/util.ts:41](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L41)*
 
 **Parameters:**
 

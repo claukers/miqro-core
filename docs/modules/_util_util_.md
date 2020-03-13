@@ -16,7 +16,6 @@
 
 * [IOPTIONPARSER](_util_util_.md#ioptionparser)
 * [IParseSimpleType](_util_util_.md#iparsesimpletype)
-* [IParseType](_util_util_.md#iparsetype)
 
 ## Type aliases
 
@@ -24,7 +23,7 @@
 
 Ƭ **IOPTIONPARSER**: *"remove_extra" | "add_extra" | "no_extra"*
 
-*Defined in [src/util/util.ts:14](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L14)*
+*Defined in [src/util/util.ts:13](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L13)*
 
 ___
 
@@ -32,12 +31,4 @@ ___
 
 Ƭ **IParseSimpleType**: *"string" | "boolean" | "number" | "object" | "any"*
 
-*Defined in [src/util/util.ts:15](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L15)*
-
-___
-
-###  IParseType
-
-Ƭ **IParseType**: *"string" | "boolean" | "number" | "array" | "any"*
-
-*Defined in [src/util/util.ts:16](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/util.ts#L16)*
+*Defined in [src/util/util.ts:14](https://github.com/claukers/miqro-core/blob/6562042/src/util/util.ts#L14)*

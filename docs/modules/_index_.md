@@ -48,7 +48,7 @@
 
 Ƭ **IGroupPolicy**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:13](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/index.ts#L13)*
+*Defined in [src/util/index.ts:13](https://github.com/claukers/miqro-core/blob/6562042/src/util/index.ts#L13)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 Ƭ **IGroupPolicyItem**: *string | string[]*
 
-*Defined in [src/util/index.ts:15](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/index.ts#L15)*
+*Defined in [src/util/index.ts:15](https://github.com/claukers/miqro-core/blob/6562042/src/util/index.ts#L15)*
 
 ## Variables
 
@@ -64,18 +64,16 @@ ___
 
 • **defaultLogFormat**: *Format‹›* = printf((info) => {
   const pid = process.pid;
-  const envString = pid;
   const component = info.label;
   const level = info.level;
   const text = info.message;
-  const ret = `${new Date(info.timestamp).getTime()} ${envString} ` +
+  return `${new Date(info.timestamp).getTime()} ${pid} ` +
     `[${component}] ` +
     `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
     `${text}`;
-  return ret;
 })
 
-*Defined in [src/util/loader.ts:14](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/loader.ts#L14)*
+*Defined in [src/util/loader.ts:15](https://github.com/claukers/miqro-core/blob/6562042/src/util/loader.ts#L15)*
 
 ## Functions
 
@@ -83,7 +81,7 @@ ___
 
 ▸ **defaultLoggerFactory**(`identifier`: any): *object*
 
-*Defined in [src/util/loader.ts:27](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/loader.ts#L27)*
+*Defined in [src/util/loader.ts:26](https://github.com/claukers/miqro-core/blob/6562042/src/util/loader.ts#L26)*
 
 **Parameters:**
 
@@ -109,6 +107,6 @@ ___
 
 ▸ **winstonConfig**(): *any*
 
-*Defined in [src/util/loader.ts:61](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/loader.ts#L61)*
+*Defined in [src/util/loader.ts:60](https://github.com/claukers/miqro-core/blob/6562042/src/util/loader.ts#L60)*
 
 **Returns:** *any*

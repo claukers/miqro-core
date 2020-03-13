@@ -26,7 +26,7 @@
 
 \+ **new ForbiddenError**(`message`: string): *[ForbiddenError](_util_error_index_.forbiddenerror.md)*
 
-*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/error/forbiddenerror.ts#L3)*
+*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/6562042/src/util/error/forbiddenerror.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/05bc2b3/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/6562042/src/util/error/named.ts#L2)*
 
 ___
 
