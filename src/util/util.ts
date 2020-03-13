@@ -75,35 +75,13 @@ export abstract class Util {
     }
   }
 
-  public static loadConfig(initEnv?: boolean) {
+  public static loadConfig() {
     if (!Util.configLoaded) {
       Util.setupSimpleEnv();
       const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
-      const configFolder = ConfigPathResolver.getConfigDirname();
       const configPath = ConfigPathResolver.getConfigFilePath();
       if (!existsSync(configPath)) {
-        if (!initEnv) {
-          logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists! Maybe you miss to run miqro-core init.`);
-        } else {
-          logger.warn(`[${configPath}] env file doesnt exists!`);
-          if (!existsSync(configFolder)) {
-            mkdirSync(configFolder);
-          }
-          logger.warn(`creating a new ${configPath} env file`);
-          writeFileSync(configPath, templates.defaultEnvFile);
-
-          // noinspection SpellCheckingInspection
-          const gitignorePath = resolve(ConfigPathResolver.getBaseDirname(), ".gitignore");
-          // noinspection SpellCheckingInspection
-          if (!existsSync(gitignorePath)) {
-            writeFileSync(gitignorePath, templates.gitignore);
-            logger.warn(`creating ${gitignorePath} file`);
-          }
-
-          config({
-            path: configPath
-          });
-        }
+        logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists! Maybe you miss to run miqro-core init.`);
       } else {
         logger.info(`loading ${configPath}`);
         config({
