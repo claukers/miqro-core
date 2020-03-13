@@ -3,6 +3,7 @@ import {existsSync} from "fs";
 import {resolve} from "path";
 import {format, transports} from "winston";
 import {ConfigPathResolver} from "./config";
+import {inspect} from "util";
 
 const {
   combine,
@@ -16,12 +17,11 @@ export const defaultLogFormat = printf((info) => {
   const envString = pid;
   const component = info.label;
   const level = info.level;
-  const text = info.message;
-  const ret = `${new Date(info.timestamp).getTime()} ${envString} ` +
+  const text = typeof info.message === "string" ? info.message : inspect(info.message);
+  return `${new Date(info.timestamp).getTime()} ${envString} ` +
     `[${component}] ` +
     `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
     `${text}`;
-  return ret;
 });
 
 export const defaultLoggerFactory = (identifier) => {
