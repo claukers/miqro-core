@@ -6,6 +6,7 @@ import {Container} from "winston";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {winstonConfig} from "./loader";
+import {v4} from "uuid";
 
 const logContainer = new Container();
 
@@ -38,7 +39,13 @@ export interface ISimpleMap<T2> {
 }
 
 export abstract class Util {
-  public static sha256 = (data) => createHash("sha256").update(data, "utf8").digest("base64");
+  public static sha256(data) {
+    return createHash("sha256").update(data, "utf8").digest("base64");
+  }
+
+  public static uuid() {
+    return v4();
+  }
 
   public static setupSimpleEnv() {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
