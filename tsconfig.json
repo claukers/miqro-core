@@ -2,8 +2,8 @@
   "compileOnSave": true,
   "compilerOptions": {
     "outDir": "./dist/",
-    "removeComments": false,
-    "sourceMap": true,
+    "removeComments": true,
+    "sourceMap": false,
     "declaration": true,
     "moduleResolution": "node",
     "module": "commonjs",
@@ -13,8 +13,7 @@
     ]
   },
   "include": [
-    "src/**/*",
-    "test/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
