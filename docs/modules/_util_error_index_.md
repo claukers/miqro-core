@@ -4,10 +4,40 @@
 
 ## Index
 
-### Classes
+### References
 
-* [ConfigFileNotFoundError](../classes/_util_error_index_.configfilenotfounderror.md)
-* [ForbiddenError](../classes/_util_error_index_.forbiddenerror.md)
-* [MethodNotImplementedError](../classes/_util_error_index_.methodnotimplementederror.md)
-* [ParseOptionsError](../classes/_util_error_index_.parseoptionserror.md)
-* [UnAuthorizedError](../classes/_util_error_index_.unauthorizederror.md)
+* [ConfigFileNotFoundError](_util_error_index_.md#configfilenotfounderror)
+* [ForbiddenError](_util_error_index_.md#forbiddenerror)
+* [MethodNotImplementedError](_util_error_index_.md#methodnotimplementederror)
+* [ParseOptionsError](_util_error_index_.md#parseoptionserror)
+* [UnAuthorizedError](_util_error_index_.md#unauthorizederror)
+
+## References
+
+###  ConfigFileNotFoundError
+
+• **ConfigFileNotFoundError**:
+
+___
+
+###  ForbiddenError
+
+• **ForbiddenError**:
+
+___
+
+###  MethodNotImplementedError
+
+• **MethodNotImplementedError**:
+
+___
+
+###  ParseOptionsError
+
+• **ParseOptionsError**:
+
+___
+
+###  UnAuthorizedError
+
+• **UnAuthorizedError**:

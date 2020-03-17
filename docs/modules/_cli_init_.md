@@ -2,4 +2,43 @@
 
 # Module: "cli/init"
 
+## Index
 
+### Variables
+
+* [configPath](_cli_init_.md#const-configpath)
+* [gitIgnorePath](_cli_init_.md#const-gitignorepath)
+* [logger](_cli_init_.md#const-logger)
+* [service](_cli_init_.md#const-service)
+
+## Variables
+
+### `Const` configPath
+
+• **configPath**: *string* = ConfigPathResolver.getConfigFilePath()
+
+*Defined in [src/cli/init.ts:21](https://github.com/claukers/miqro-core/blob/b8b0d57/src/cli/init.ts#L21)*
+
+___
+
+### `Const` gitIgnorePath
+
+• **gitIgnorePath**: *string* = resolve(ConfigPathResolver.getBaseDirname(), ".gitignore")
+
+*Defined in [src/cli/init.ts:37](https://github.com/claukers/miqro-core/blob/b8b0d57/src/cli/init.ts#L37)*
+
+___
+
+### `Const` logger
+
+• **logger**: *Console* = console
+
+*Defined in [src/cli/init.ts:6](https://github.com/claukers/miqro-core/blob/b8b0d57/src/cli/init.ts#L6)*
+
+___
+
+### `Const` service
+
+• **service**: *string* = resolve(ConfigPathResolver.getBaseDirname(), `index.js`)
+
+*Defined in [src/cli/init.ts:13](https://github.com/claukers/miqro-core/blob/b8b0d57/src/cli/init.ts#L13)*

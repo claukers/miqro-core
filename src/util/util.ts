@@ -107,9 +107,9 @@ export abstract class Util {
 
   public static parseOptions(argName,
                              arg: { [name: string]: any },
-                             optionsArray: Array<{
+                             optionsArray: {
                                name: string, type: string, arrayType?: string, required: boolean
-                             }>,
+                             }[],
                              parserOption: IOPTIONPARSER = "no_extra"): { [name: string]: any } {
     const ret = {};
     if (typeof arg !== "object" || !arg) {
