@@ -15,5 +15,7 @@ apidoc/
 docs/
 src/
 test/
+tslint.json
 tsconfig.json
 .editorconfig
+.nycrc
