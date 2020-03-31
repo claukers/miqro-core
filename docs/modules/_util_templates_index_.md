@@ -65,11 +65,10 @@ HTTPS_ENABLE=false
 # should be loadad from a secret manager into process.env.HTTPS_CERT
 #HTTPS_CERT=
 ####################
-## jsonwebtoken
-JWT_HEADER=Authorization
-# should be loadad from a secret manager into process.env.JWT_SECRET
-#JWT_SECRET=
-#JWT_EXPIRATION=3d
+## Auth
+TOKEN_HEADER=Authorization
+#TOKEN_VERIFY_ENDPOINT=
+TOKEN_VERIFY_ENDPOINT_METHOD=GET
 ####################
 "* = `####################
 ## logging
@@ -113,15 +112,14 @@ HTTPS_ENABLE=false
 # should be loadad from a secret manager into process.env.HTTPS_CERT
 #HTTPS_CERT=
 ####################
-## jsonwebtoken
-JWT_HEADER=Authorization
-# should be loadad from a secret manager into process.env.JWT_SECRET
-#JWT_SECRET=
-#JWT_EXPIRATION=3d
+## Auth
+TOKEN_HEADER=Authorization
+#TOKEN_VERIFY_ENDPOINT=
+TOKEN_VERIFY_ENDPOINT_METHOD=GET
 ####################
 `
 
-*Defined in [src/util/templates/index.ts:2](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L2)*
+*Defined in [src/util/templates/index.ts:2](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L2)*
 
 ___
 
@@ -143,7 +141,7 @@ node_modules/
 .sequelizerc
 `
 
-*Defined in [src/util/templates/index.ts:53](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L53)*
+*Defined in [src/util/templates/index.ts:52](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L52)*
 
 ## Functions
 
@@ -151,7 +149,7 @@ node_modules/
 
 ▸ **indexjs**(): *string*
 
-*Defined in [src/util/templates/index.ts:84](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L84)*
+*Defined in [src/util/templates/index.ts:83](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L83)*
 
 **Returns:** *string*
 
@@ -161,7 +159,7 @@ ___
 
 ▸ **mainjs**(`servicePath`: any): *string*
 
-*Defined in [src/util/templates/index.ts:63](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L63)*
+*Defined in [src/util/templates/index.ts:62](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L62)*
 
 **Parameters:**
 
@@ -177,7 +175,7 @@ ___
 
 ▸ **servicejs**(`serviceName`: string): *string*
 
-*Defined in [src/util/templates/index.ts:114](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L114)*
+*Defined in [src/util/templates/index.ts:113](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L113)*
 
 **Parameters:**
 
@@ -193,34 +191,34 @@ Name | Type |
 
 ### ▪ **templates**: *object*
 
-*Defined in [src/util/templates/index.ts:138](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L138)*
+*Defined in [src/util/templates/index.ts:137](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L137)*
 
 ###  defaultEnvFile
 
 • **defaultEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:143](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L143)*
+*Defined in [src/util/templates/index.ts:142](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L142)*
 
 ###  gitignore
 
 • **gitignore**: *string*
 
-*Defined in [src/util/templates/index.ts:139](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L139)*
+*Defined in [src/util/templates/index.ts:138](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L138)*
 
 ###  indexjs
 
 • **indexjs**: *indexjs*
 
-*Defined in [src/util/templates/index.ts:141](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L141)*
+*Defined in [src/util/templates/index.ts:140](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L140)*
 
 ###  mainjs
 
 • **mainjs**: *mainjs*
 
-*Defined in [src/util/templates/index.ts:142](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L142)*
+*Defined in [src/util/templates/index.ts:141](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L141)*
 
 ###  servicejs
 
 • **servicejs**: *[servicejs](_util_templates_index_.md#const-servicejs)*
 
-*Defined in [src/util/templates/index.ts:140](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/templates/index.ts#L140)*
+*Defined in [src/util/templates/index.ts:139](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L139)*

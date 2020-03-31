@@ -41,11 +41,10 @@ HTTPS_ENABLE=false
 # should be loadad from a secret manager into process.env.HTTPS_CERT
 #HTTPS_CERT=
 ####################
-## jsonwebtoken
-JWT_HEADER=Authorization
-# should be loadad from a secret manager into process.env.JWT_SECRET
-#JWT_SECRET=
-#JWT_EXPIRATION=3d
+## Auth
+TOKEN_HEADER=Authorization
+#TOKEN_VERIFY_ENDPOINT=
+TOKEN_VERIFY_ENDPOINT_METHOD=GET
 ####################
 `;
 

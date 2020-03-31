@@ -18,7 +18,7 @@
 
 ▸ **isFeatureEnabled**(`feature`: string): *boolean*
 
-*Defined in [src/util/featuretoggle.ts:4](https://github.com/claukers/miqro-core/blob/b8b0d57/src/util/featuretoggle.ts#L4)*
+*Defined in [src/util/featuretoggle.ts:4](https://github.com/claukers/miqro-core/blob/c08f824/src/util/featuretoggle.ts#L4)*
 
 **Parameters:**
 

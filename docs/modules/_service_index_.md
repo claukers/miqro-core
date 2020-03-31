@@ -10,6 +10,10 @@
 * [IServiceArgs](_service_index_.md#iserviceargs)
 * [ISession](_service_index_.md#isession)
 
+### Classes
+
+* [VerifyJWTEndpointService](../classes/_service_index_.verifyjwtendpointservice.md)
+
 ### Interfaces
 
 * [IVerifyTokenService](../interfaces/_service_index_.iverifytokenservice.md)

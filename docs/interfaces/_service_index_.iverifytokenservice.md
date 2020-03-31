@@ -6,6 +6,10 @@
 
 * **IVerifyTokenService**
 
+## Implemented by
+
+* [VerifyJWTEndpointService](../classes/_service_index_.verifyjwtendpointservice.md)
+
 ## Index
 
 ### Methods
@@ -18,7 +22,7 @@
 
 ▸ **verify**(`args`: object): *Promise‹[ISession](_service_common_index_.isession.md)›*
 
-*Defined in [src/service/index.ts:6](https://github.com/claukers/miqro-core/blob/b8b0d57/src/service/index.ts#L6)*
+*Defined in [src/service/index.ts:10](https://github.com/claukers/miqro-core/blob/c08f824/src/service/index.ts#L10)*
 
 **Parameters:**
 

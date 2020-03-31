@@ -26,6 +26,7 @@
 * [StopWatch](_index_.md#stopwatch)
 * [UnAuthorizedError](_index_.md#unauthorizederror)
 * [Util](_index_.md#util)
+* [VerifyJWTEndpointService](_index_.md#verifyjwtendpointservice)
 * [defaultLogFormat](_index_.md#defaultlogformat)
 * [defaultLoggerFactory](_index_.md#defaultloggerfactory)
 * [winstonConfig](_index_.md#winstonconfig)
@@ -149,6 +150,12 @@ ___
 ###  Util
 
 • **Util**:
+
+___
+
+###  VerifyJWTEndpointService
+
+• **VerifyJWTEndpointService**:
 
 ___
 

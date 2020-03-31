@@ -7,6 +7,8 @@ import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {winstonConfig} from "./loader";
 import {v4} from "uuid";
+import {decode, sign, verify} from "jsonwebtoken";
+import request, {AxiosPromise, AxiosRequestConfig} from "axios";
 
 const logContainer = new Container();
 
@@ -46,6 +48,14 @@ export abstract class Util {
   public static uuid() {
     return v4();
   }
+
+  public static request(options: AxiosRequestConfig): AxiosPromise {
+    return request(options);
+  }
+
+  public static jwt = {
+    decode, sign, verify
+  };
 
   public static setupSimpleEnv() {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
