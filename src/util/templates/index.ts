@@ -41,6 +41,12 @@ HTTPS_ENABLE=false
 #HTTPS_KEY=
 # should be loadad from a secret manager into process.env.HTTPS_CERT
 #HTTPS_CERT=
+####################
+## body-parser
+BODYPARSER_INFLATE=true
+BODYPARSER_LIMIT="100kb"
+BODYPARSER_STRICT=true
+BODYPARSER_TYPE="application/json"
 `;
 
 export const authEnvFile = `####################
