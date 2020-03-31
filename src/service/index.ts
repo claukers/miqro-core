@@ -24,8 +24,8 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
 
   constructor() {
     Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD"]);
-    Util.checkEnvVariables(["TOKEN_LOCATION"]);
-    switch (process.env.TOKEN_LOCATION) {
+    Util.checkEnvVariables(["TOKEN_VERIFY_LOCATION"]);
+    switch (process.env.TOKEN_VERIFY_LOCATION) {
       case "header":
         Util.checkEnvVariables(["TOKEN_HEADER"]);
         break;
@@ -33,7 +33,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
         Util.checkEnvVariables(["TOKEN_QUERY"]);
         break;
       default:
-        throw new Error(`TOKEN_LOCATION=${process.env.TOKEN_LOCATION} not supported use (header or query)`);
+        throw new Error(`TOKEN_VERIFY_LOCATION=${process.env.TOKEN_VERIFY_LOCATION} not supported use (header or query)`);
     }
     this.logger = Util.getLogger("VerifyTokenEndpointService");
   }
@@ -42,7 +42,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
     try {
       this.logger.debug(`verifying [${token}] on [${process.env.TOKEN_VERIFY_ENDPOINT}].header[${process.env.TOKEN_HEADER}]`);
       let response = null;
-      switch (process.env.TOKEN_LOCATION) {
+      switch (process.env.TOKEN_VERIFY_LOCATION) {
         case "header":
           response = await Util.request({
             url: `${process.env.TOKEN_VERIFY_ENDPOINT}`,
@@ -59,7 +59,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
           });
           break;
         default:
-          throw new Error(`TOKEN_LOCATION=${process.env.TOKEN_LOCATION} not supported use (header or query)`);
+          throw new Error(`TOKEN_VERIFY_LOCATION=${process.env.TOKEN_VERIFY_LOCATION} not supported use (header or query)`);
       }
       if (response) {
         const session = Util.jwt.decode(token) as INoTokenSession;

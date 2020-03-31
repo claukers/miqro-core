@@ -26,7 +26,7 @@
 
 \+ **new MethodNotImplementedError**(`method`: string): *[MethodNotImplementedError](_util_error_notimplemented_.methodnotimplementederror.md)*
 
-*Defined in [src/util/error/notimplemented.ts:3](https://github.com/claukers/miqro-core/blob/c08f824/src/util/error/notimplemented.ts#L3)*
+*Defined in [src/util/error/notimplemented.ts:3](https://github.com/claukers/miqro-core/blob/6617130/src/util/error/notimplemented.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/c08f824/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/6617130/src/util/error/named.ts#L2)*
 
 ___
 

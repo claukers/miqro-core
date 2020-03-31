@@ -6,8 +6,12 @@
 
 ### Variables
 
-* [defaultEnvFile](_util_templates_index_.md#const-defaultenvfile)
+* [authEnvFile](_util_templates_index_.md#const-authenvfile)
+* [dbEnvFile](_util_templates_index_.md#const-dbenvfile)
+* [expressEnvFile](_util_templates_index_.md#const-expressenvfile)
+* [featuresEnvFile](_util_templates_index_.md#const-featuresenvfile)
 * [gitignore](_util_templates_index_.md#const-gitignore)
+* [logEnvFile](_util_templates_index_.md#const-logenvfile)
 
 ### Functions
 
@@ -21,127 +25,147 @@
 
 ## Variables
 
-### `Const` defaultEnvFile
+### `Const` authEnvFile
 
-• **defaultEnvFile**: *"####################
-## logging
-LOG_LEVEL="debug"
-LOG_LEVEL_Sequelize="error"
-LOG_FILE=./logs/development.log
-#LOG_FILE_TRACE=./logs/development-trace.log
-####################
-## features
-FEATURE_TOGGLE_BODYPARSER=true
-#FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
-####################
-## body-parser
-BODYPARSER_INFLATE=true
-BODYPARSER_LIMIT="100kb"
-BODYPARSER_STRICT=true
-BODYPARSER_TYPE="application/json"
-####################
-## db
-DB_NAME=devdb
-DB_HOST=localhost
-DB_PORT=3306
-# should be loadad from a secret manager into process.env.DB_USER
-DB_USER=
-# should be loadad from a secret manager into process.env.DB_PASS
-DB_PASS=
-DB_DIALECT=sqlite
-DB_DIALECT_SSL="true"
-DB_POOL_MAX=5
-DB_POOL_MIN=0
-DB_POOL_ACQUIRE=30000
-DB_POOL_IDDLE=10000
-DB_STORAGE=./dev.sqlite3
-DB_DROPTABLES=false
-####################
-## express
-PORT=8080
-HTTPS_ENABLE=false
-# should be loadad from a secret manager into process.env.HTTPS_KEY
-#HTTPS_KEY=
-# should be loadad from a secret manager into process.env.HTTPS_CERT
-#HTTPS_CERT=
-####################
+• **authEnvFile**: *"####################
 ## Auth
+TOKEN_LOCATION=header
+#TOKEN_LOCATION=query
+TOKEN_VERIFY_LOCATION=header
+#TOKEN_VERIFY_LOCATION=query
 TOKEN_HEADER=Authorization
+#TOKEN_QUERY=Authorization
 #TOKEN_VERIFY_ENDPOINT=
 TOKEN_VERIFY_ENDPOINT_METHOD=GET
-####################
 "* = `####################
-## logging
-LOG_LEVEL="debug"
-LOG_LEVEL_Sequelize="error"
-LOG_FILE=./logs/development.log
-#LOG_FILE_TRACE=./logs/development-trace.log
-####################
-## features
-FEATURE_TOGGLE_BODYPARSER=true
-#FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
-####################
-## body-parser
-BODYPARSER_INFLATE=true
-BODYPARSER_LIMIT="100kb"
-BODYPARSER_STRICT=true
-BODYPARSER_TYPE="application/json"
-####################
-## db
-DB_NAME=devdb
-DB_HOST=localhost
-DB_PORT=3306
-# should be loadad from a secret manager into process.env.DB_USER
-DB_USER=
-# should be loadad from a secret manager into process.env.DB_PASS
-DB_PASS=
-DB_DIALECT=sqlite
-DB_DIALECT_SSL="true"
-DB_POOL_MAX=5
-DB_POOL_MIN=0
-DB_POOL_ACQUIRE=30000
-DB_POOL_IDDLE=10000
-DB_STORAGE=./dev.sqlite3
-DB_DROPTABLES=false
-####################
-## express
-PORT=8080
-HTTPS_ENABLE=false
-# should be loadad from a secret manager into process.env.HTTPS_KEY
-#HTTPS_KEY=
-# should be loadad from a secret manager into process.env.HTTPS_CERT
-#HTTPS_CERT=
-####################
 ## Auth
+TOKEN_LOCATION=header
+#TOKEN_LOCATION=query
+TOKEN_VERIFY_LOCATION=header
+#TOKEN_VERIFY_LOCATION=query
 TOKEN_HEADER=Authorization
+#TOKEN_QUERY=Authorization
 #TOKEN_VERIFY_ENDPOINT=
 TOKEN_VERIFY_ENDPOINT_METHOD=GET
-####################
 `
 
-*Defined in [src/util/templates/index.ts:2](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L2)*
+*Defined in [src/util/templates/index.ts:46](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L46)*
+
+___
+
+### `Const` dbEnvFile
+
+• **dbEnvFile**: *"####################
+## db
+DB_NAME=devdb
+DB_HOST=localhost
+DB_PORT=3306
+# should be loadad from a secret manager into process.env.DB_USER
+DB_USER=
+# should be loadad from a secret manager into process.env.DB_PASS
+DB_PASS=
+DB_DIALECT=sqlite
+DB_DIALECT_SSL="true"
+DB_POOL_MAX=5
+DB_POOL_MIN=0
+DB_POOL_ACQUIRE=30000
+DB_POOL_IDDLE=10000
+DB_STORAGE=./dev.sqlite3
+DB_DROPTABLES=false
+"* = `####################
+## db
+DB_NAME=devdb
+DB_HOST=localhost
+DB_PORT=3306
+# should be loadad from a secret manager into process.env.DB_USER
+DB_USER=
+# should be loadad from a secret manager into process.env.DB_PASS
+DB_PASS=
+DB_DIALECT=sqlite
+DB_DIALECT_SSL="true"
+DB_POOL_MAX=5
+DB_POOL_MIN=0
+DB_POOL_ACQUIRE=30000
+DB_POOL_IDDLE=10000
+DB_STORAGE=./dev.sqlite3
+DB_DROPTABLES=false
+`
+
+*Defined in [src/util/templates/index.ts:17](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L17)*
+
+___
+
+### `Const` expressEnvFile
+
+• **expressEnvFile**: *"####################
+## express
+PORT=8080
+HTTPS_ENABLE=false
+# should be loadad from a secret manager into process.env.HTTPS_KEY
+#HTTPS_KEY=
+# should be loadad from a secret manager into process.env.HTTPS_CERT
+#HTTPS_CERT=
+"* = `####################
+## express
+PORT=8080
+HTTPS_ENABLE=false
+# should be loadad from a secret manager into process.env.HTTPS_KEY
+#HTTPS_KEY=
+# should be loadad from a secret manager into process.env.HTTPS_CERT
+#HTTPS_CERT=
+`
+
+*Defined in [src/util/templates/index.ts:36](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L36)*
+
+___
+
+### `Const` featuresEnvFile
+
+• **featuresEnvFile**: *"####################
+## features
+FEATURE_TOGGLE_BODYPARSER=true
+#FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
+"* = `####################
+## features
+FEATURE_TOGGLE_BODYPARSER=true
+#FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
+`
+
+*Defined in [src/util/templates/index.ts:11](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L11)*
 
 ___
 
 ### `Const` gitignore
 
-• **gitignore**: *"config/log.js
-config/db.js
-logs/
-db/models/index.js
+• **gitignore**: *"logs/
 node_modules/
 *.sqlite3
-.sequelizerc
-"* = `config/log.js
-config/db.js
-logs/
-db/models/index.js
+"* = `logs/
 node_modules/
 *.sqlite3
-.sequelizerc
 `
 
-*Defined in [src/util/templates/index.ts:52](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L52)*
+*Defined in [src/util/templates/index.ts:60](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L60)*
+
+___
+
+### `Const` logEnvFile
+
+• **logEnvFile**: *"####################
+## logging
+LOG_LEVEL="info"
+LOG_LEVEL_Sequelize="error"
+LOG_FILE=./logs/dev.log
+#LOG_FILE_TRACE=./logs/dev-trace.log
+"* = `####################
+## logging
+LOG_LEVEL="info"
+LOG_LEVEL_Sequelize="error"
+LOG_FILE=./logs/dev.log
+#LOG_FILE_TRACE=./logs/dev-trace.log
+`
+
+*Defined in [src/util/templates/index.ts:3](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L3)*
 
 ## Functions
 
@@ -149,7 +173,7 @@ node_modules/
 
 ▸ **indexjs**(): *string*
 
-*Defined in [src/util/templates/index.ts:83](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L83)*
+*Defined in [src/util/templates/index.ts:87](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L87)*
 
 **Returns:** *string*
 
@@ -159,7 +183,7 @@ ___
 
 ▸ **mainjs**(`servicePath`: any): *string*
 
-*Defined in [src/util/templates/index.ts:62](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L62)*
+*Defined in [src/util/templates/index.ts:66](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L66)*
 
 **Parameters:**
 
@@ -175,7 +199,7 @@ ___
 
 ▸ **servicejs**(`serviceName`: string): *string*
 
-*Defined in [src/util/templates/index.ts:113](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L113)*
+*Defined in [src/util/templates/index.ts:117](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L117)*
 
 **Parameters:**
 
@@ -191,34 +215,58 @@ Name | Type |
 
 ### ▪ **templates**: *object*
 
-*Defined in [src/util/templates/index.ts:137](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L137)*
+*Defined in [src/util/templates/index.ts:141](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L141)*
 
-###  defaultEnvFile
+###  authEnvFile
 
-• **defaultEnvFile**: *string*
+• **authEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:142](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L142)*
+*Defined in [src/util/templates/index.ts:147](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L147)*
+
+###  dbEnvFile
+
+• **dbEnvFile**: *string*
+
+*Defined in [src/util/templates/index.ts:148](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L148)*
+
+###  expressEnvFile
+
+• **expressEnvFile**: *string*
+
+*Defined in [src/util/templates/index.ts:149](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L149)*
+
+###  featuresEnvFile
+
+• **featuresEnvFile**: *string*
+
+*Defined in [src/util/templates/index.ts:150](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L150)*
 
 ###  gitignore
 
 • **gitignore**: *string*
 
-*Defined in [src/util/templates/index.ts:138](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L138)*
+*Defined in [src/util/templates/index.ts:142](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L142)*
 
 ###  indexjs
 
 • **indexjs**: *indexjs*
 
-*Defined in [src/util/templates/index.ts:140](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L140)*
+*Defined in [src/util/templates/index.ts:144](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L144)*
+
+###  logEnvFile
+
+• **logEnvFile**: *string*
+
+*Defined in [src/util/templates/index.ts:146](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L146)*
 
 ###  mainjs
 
 • **mainjs**: *mainjs*
 
-*Defined in [src/util/templates/index.ts:141](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L141)*
+*Defined in [src/util/templates/index.ts:145](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L145)*
 
 ###  servicejs
 
 • **servicejs**: *[servicejs](_util_templates_index_.md#const-servicejs)*
 
-*Defined in [src/util/templates/index.ts:139](https://github.com/claukers/miqro-core/blob/c08f824/src/util/templates/index.ts#L139)*
+*Defined in [src/util/templates/index.ts:143](https://github.com/claukers/miqro-core/blob/6617130/src/util/templates/index.ts#L143)*

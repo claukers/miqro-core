@@ -38,6 +38,7 @@ describe(`verifytokenendpointservice func tests`, () => {
             fakeValidate(req, res);
           });
           server = fakeAuthServer.listen(9999);
+          process.env.TOKEN_VERIFY_LOCATION = TOKENVARS.location;
           process.env.TOKEN_LOCATION = TOKENVARS.location;
           if (TOKENVARS.location === "header") {
             process.env.TOKEN_HEADER = TOKENVARS.locationRef;

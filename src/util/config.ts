@@ -33,7 +33,7 @@ export abstract class ConfigPathResolver {
   public static getConfigDirname() {
     ConfigPathResolver.loadMiqroRC();
     if (miqroRCConfig) {
-      return miqroRCConfig.configDirname;
+      return resolve(miqroRCConfig.configDirname, `${process.env.NODE_ENV}`);
     } else {
       return resolve(ConfigPathResolver.getBaseDirname(), `config`, `${process.env.NODE_ENV}`);
     }

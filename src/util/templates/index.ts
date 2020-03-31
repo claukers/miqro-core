@@ -47,6 +47,8 @@ export const authEnvFile = `####################
 ## Auth
 TOKEN_LOCATION=header
 #TOKEN_LOCATION=query
+TOKEN_VERIFY_LOCATION=header
+#TOKEN_VERIFY_LOCATION=query
 TOKEN_HEADER=Authorization
 #TOKEN_QUERY=Authorization
 #TOKEN_VERIFY_ENDPOINT=

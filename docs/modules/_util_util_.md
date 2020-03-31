@@ -33,7 +33,7 @@
 
 Ƭ **IOPTIONPARSER**: *"remove_extra" | "add_extra" | "no_extra"*
 
-*Defined in [src/util/util.ts:16](https://github.com/claukers/miqro-core/blob/c08f824/src/util/util.ts#L16)*
+*Defined in [src/util/util.ts:16](https://github.com/claukers/miqro-core/blob/6617130/src/util/util.ts#L16)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 Ƭ **IParseSimpleType**: *"string" | "boolean" | "number" | "object" | "any"*
 
-*Defined in [src/util/util.ts:17](https://github.com/claukers/miqro-core/blob/c08f824/src/util/util.ts#L17)*
+*Defined in [src/util/util.ts:17](https://github.com/claukers/miqro-core/blob/6617130/src/util/util.ts#L17)*
 
 ## Variables
 
@@ -49,7 +49,7 @@ ___
 
 • **logContainer**: *Container* = new Container()
 
-*Defined in [src/util/util.ts:13](https://github.com/claukers/miqro-core/blob/c08f824/src/util/util.ts#L13)*
+*Defined in [src/util/util.ts:13](https://github.com/claukers/miqro-core/blob/6617130/src/util/util.ts#L13)*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 • **logger**: *Logger‹›* = Util.getLogger("Util")
 
-*Defined in [src/util/util.ts:209](https://github.com/claukers/miqro-core/blob/c08f824/src/util/util.ts#L209)*
+*Defined in [src/util/util.ts:220](https://github.com/claukers/miqro-core/blob/6617130/src/util/util.ts#L220)*
 
 ## Functions
 
@@ -65,7 +65,7 @@ ___
 
 ▸ **isParseSimpleOption**(`type`: string): *boolean*
 
-*Defined in [src/util/util.ts:19](https://github.com/claukers/miqro-core/blob/c08f824/src/util/util.ts#L19)*
+*Defined in [src/util/util.ts:19](https://github.com/claukers/miqro-core/blob/6617130/src/util/util.ts#L19)*
 
 **Parameters:**
 
@@ -81,7 +81,7 @@ ___
 
 ▸ **parseSimpleOption**(`type`: [IParseSimpleType](_util_util_.md#iparsesimpletype), `value`: any): *boolean*
 
-*Defined in [src/util/util.ts:23](https://github.com/claukers/miqro-core/blob/c08f824/src/util/util.ts#L23)*
+*Defined in [src/util/util.ts:23](https://github.com/claukers/miqro-core/blob/6617130/src/util/util.ts#L23)*
 
 **Parameters:**
 

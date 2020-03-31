@@ -96,20 +96,24 @@ export abstract class Util {
       const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
 
       const configDirname = ConfigPathResolver.getConfigDirname();
-      const configFiles = readdirSync(configDirname);
-      for (const configFile of configFiles) {
-        const configFilePath = resolve(configDirname, configFile);
-        const ext = extname(configFilePath);
-        if (ext === ".env") {
-          logger.info(`loading ${configFilePath}`);
-          config({
-            path: configFilePath
-          });
+      if (existsSync(configDirname)) {
+        const configFiles = readdirSync(configDirname);
+        for (const configFile of configFiles) {
+          const configFilePath = resolve(configDirname, configFile);
+          const ext = extname(configFilePath);
+          if (ext === ".env") {
+            logger.info(`loading ${configFilePath}`);
+            config({
+              path: configFilePath
+            });
+          }
         }
-      }
 
-      if (configFiles.length === 0) {
-        logger.warn(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
+        if (configFiles.length === 0) {
+          logger.warn(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
+        }
+      } else {
+        logger.warn(`Util.loadConfig nothing loaded [${configDirname}] dirname dont exist! Maybe you miss to run miqro-core init.`);
       }
 
       if (overridePath && existsSync(overridePath)) {
