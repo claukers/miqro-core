@@ -24,19 +24,43 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
 
   constructor() {
     Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD"]);
+    Util.checkEnvVariables(["TOKEN_LOCATION"]);
+    switch (process.env.TOKEN_LOCATION) {
+      case "header":
+        Util.checkEnvVariables(["TOKEN_HEADER"]);
+        break;
+      case "query":
+        Util.checkEnvVariables(["TOKEN_QUERY"]);
+        break;
+      default:
+        throw new Error(`TOKEN_LOCATION=${process.env.TOKEN_LOCATION} not supported use (header or query)`);
+    }
     this.logger = Util.getLogger("VerifyTokenEndpointService");
   }
 
   public async verify({token}: { token: string }): Promise<ISession> {
     try {
       this.logger.debug(`verifying [${token}] on [${process.env.TOKEN_VERIFY_ENDPOINT}].header[${process.env.TOKEN_HEADER}]`);
-      const response = await Util.request({
-        url: `${process.env.TOKEN_VERIFY_ENDPOINT}`,
-        headers: {
-          [process.env.TOKEN_HEADER]: token
-        },
-        method: `${process.env.TOKEN_VERIFY_ENDPOINT_METHOD}` as any
-      });
+      let response = null;
+      switch (process.env.TOKEN_LOCATION) {
+        case "header":
+          response = await Util.request({
+            url: `${process.env.TOKEN_VERIFY_ENDPOINT}`,
+            headers: {
+              [process.env.TOKEN_HEADER]: token
+            },
+            method: `${process.env.TOKEN_VERIFY_ENDPOINT_METHOD}` as any
+          });
+          break;
+        case "query":
+          response = await Util.request({
+            url: `${process.env.TOKEN_VERIFY_ENDPOINT}?${process.env.TOKEN_QUERY}=${token}`,
+            method: `${process.env.TOKEN_VERIFY_ENDPOINT_METHOD}` as any
+          });
+          break;
+        default:
+          throw new Error(`TOKEN_LOCATION=${process.env.TOKEN_LOCATION} not supported use (header or query)`);
+      }
       if (response) {
         const session = Util.jwt.decode(token) as INoTokenSession;
         Util.parseOptions("session", session, [
