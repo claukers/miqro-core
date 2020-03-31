@@ -1,5 +1,5 @@
 import {INoTokenSession, ISession} from "./common";
-import {Util} from "../util";
+import {UnAuthorizedError, Util} from "../util";
 
 export * from "./common";
 import {decode} from "jsonwebtoken";
@@ -55,7 +55,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
       }
     } catch (e) {
       this.logger.error(`error verifying [${token}] [${inspect(e)}]`);
-      throw e;
+      throw new UnAuthorizedError(`Fail to authenticate token!`);
     }
   }
 }
