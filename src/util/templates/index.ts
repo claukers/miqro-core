@@ -42,7 +42,10 @@ HTTPS_ENABLE=false
 #HTTPS_CERT=
 ####################
 ## Auth
+TOKEN_LOCATION=header
+#TOKEN_LOCATION=query
 TOKEN_HEADER=Authorization
+#TOKEN_QUERY=Authorization
 #TOKEN_VERIFY_ENDPOINT=
 TOKEN_VERIFY_ENDPOINT_METHOD=GET
 ####################
