@@ -4,8 +4,8 @@ export const logEnvFile = `####################
 ## logging
 LOG_LEVEL="info"
 LOG_LEVEL_Sequelize="error"
-LOG_FILE=./logs/$NODE_ENV.log
-#LOG_FILE_TRACE=./logs/$NODE_ENV-trace.log
+LOG_FILE=./logs/dev.log
+#LOG_FILE_TRACE=./logs/dev-trace.log
 `;
 
 export const featuresEnvFile = `####################
@@ -29,7 +29,7 @@ DB_POOL_MAX=5
 DB_POOL_MIN=0
 DB_POOL_ACQUIRE=30000
 DB_POOL_IDDLE=10000
-DB_STORAGE=./$NODE_ENV.sqlite3
+DB_STORAGE=./dev.sqlite3
 DB_DROPTABLES=false
 `;
 
