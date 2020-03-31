@@ -39,6 +39,11 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
       });
       if (response) {
         const session = Util.jwt.decode(token) as INoTokenSession;
+        Util.parseOptions("session", session, [
+          {name: "username", required: true, type: "string"},
+          {name: "account", required: true, type: "string"},
+          {name: "groups", required: true, type: "array", arrayType: "string"}
+        ], "add_extra");
         this.logger.debug(`authorized token[${token}] with session[${inspect(session)}]`);
         return {
           token,
