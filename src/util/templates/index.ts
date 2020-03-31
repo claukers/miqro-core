@@ -1,21 +1,20 @@
 // noinspection SpellCheckingInspection
-export const defaultEnvFile = `####################
+
+export const logEnvFile = `####################
 ## logging
-LOG_LEVEL="debug"
+LOG_LEVEL="info"
 LOG_LEVEL_Sequelize="error"
-LOG_FILE=./logs/development.log
-#LOG_FILE_TRACE=./logs/development-trace.log
-####################
+LOG_FILE=./logs/$NODE_ENV.log
+#LOG_FILE_TRACE=./logs/$NODE_ENV-trace.log
+`;
+
+export const featuresEnvFile = `####################
 ## features
 FEATURE_TOGGLE_BODYPARSER=true
 #FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
-####################
-## body-parser
-BODYPARSER_INFLATE=true
-BODYPARSER_LIMIT="100kb"
-BODYPARSER_STRICT=true
-BODYPARSER_TYPE="application/json"
-####################
+`;
+
+export const dbEnvFile = `####################
 ## db
 DB_NAME=devdb
 DB_HOST=localhost
@@ -30,9 +29,11 @@ DB_POOL_MAX=5
 DB_POOL_MIN=0
 DB_POOL_ACQUIRE=30000
 DB_POOL_IDDLE=10000
-DB_STORAGE=./dev.sqlite3
+DB_STORAGE=./$NODE_ENV.sqlite3
 DB_DROPTABLES=false
-####################
+`;
+
+export const expressEnvFile = `####################
 ## express
 PORT=8080
 HTTPS_ENABLE=false
@@ -40,7 +41,9 @@ HTTPS_ENABLE=false
 #HTTPS_KEY=
 # should be loadad from a secret manager into process.env.HTTPS_CERT
 #HTTPS_CERT=
-####################
+`;
+
+export const authEnvFile = `####################
 ## Auth
 TOKEN_LOCATION=header
 #TOKEN_LOCATION=query
@@ -48,17 +51,13 @@ TOKEN_HEADER=Authorization
 #TOKEN_QUERY=Authorization
 #TOKEN_VERIFY_ENDPOINT=
 TOKEN_VERIFY_ENDPOINT_METHOD=GET
-####################
 `;
 
+
 // noinspection SpellCheckingInspection,SpellCheckingInspection
-export const gitignore = `config/log.js
-config/db.js
-logs/
-db/models/index.js
+export const gitignore = `logs/
 node_modules/
 *.sqlite3
-.sequelizerc
 `;
 
 // noinspection SpellCheckingInspection
@@ -142,5 +141,9 @@ export const templates = {
   servicejs,
   indexjs,
   mainjs,
-  defaultEnvFile
+  logEnvFile,
+  authEnvFile,
+  dbEnvFile,
+  expressEnvFile,
+  featuresEnvFile
 };

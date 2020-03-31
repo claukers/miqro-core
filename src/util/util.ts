@@ -1,7 +1,7 @@
 import {createHash} from "crypto";
 import {config} from "dotenv";
-import {existsSync} from "fs";
-import {dirname, resolve} from "path";
+import {existsSync, readdirSync} from "fs";
+import {dirname, resolve, extname} from "path";
 import {Container} from "winston";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
@@ -94,15 +94,22 @@ export abstract class Util {
   public static loadConfig() {
     if (!Util.configLoaded) {
       const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
-      const configPath = ConfigPathResolver.getConfigFilePath();
-      if (!existsSync(configPath)) {
-        // noinspection SpellCheckingInspection
-        logger.warn(`Util.loadConfig nothing loaded [${configPath}] env file doesnt exists! Maybe you miss to run miqro-core init.`);
-      } else {
-        logger.info(`loading ${configPath}`);
-        config({
-          path: configPath
-        });
+
+      const configDirname = ConfigPathResolver.getConfigDirname();
+      const configFiles = readdirSync(configDirname);
+      for (const configFile of configFiles) {
+        const configFilePath = resolve(configDirname, configFile);
+        const ext = extname(configFilePath);
+        if (ext === ".env") {
+          logger.info(`loading ${configFilePath}`);
+          config({
+            path: configFilePath
+          });
+        }
+      }
+
+      if (configFiles.length === 0) {
+        logger.warn(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
       }
 
       if (overridePath && existsSync(overridePath)) {
@@ -117,7 +124,7 @@ export abstract class Util {
   public static checkEnvVariables(requiredEnvVariables: string[]) {
     requiredEnvVariables.forEach((envName) => {
       if (process.env[envName] === undefined) {
-        throw new Error(`Env variable [${envName}!] not defined. Consider adding it to [${ConfigPathResolver.getConfigFilePath()}].`);
+        throw new Error(`Env variable [${envName}!] not defined. Consider adding it to a env file located in [${ConfigPathResolver.getConfigDirname()}].`);
       }
     });
   }

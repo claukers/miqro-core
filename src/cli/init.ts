@@ -18,19 +18,24 @@ if (!existsSync(service)) {
   writeFileSync(service, templates.indexjs());
 }
 
-const configPath = ConfigPathResolver.getConfigFilePath();
+const configPath = ConfigPathResolver.getConfigDirname();
 if (!existsSync(configPath)) {
-  logger.warn(`[${configPath}] env file doesnt exists!`);
-  const configFolder = ConfigPathResolver.getConfigDirname();
-  if (!existsSync(configFolder)) {
-    logger.warn(`[${configFolder}] folder doesnt exists!`);
-    logger.warn(`creating ${configFolder} folder`);
-    mkdirSync(configFolder, {
-      recursive: true
-    });
-  }
-  logger.warn(`creating a new ${configPath} env file`);
-  writeFileSync(configPath, templates.defaultEnvFile);
+  logger.warn(`[${configPath}] doesnt exists!`);
+  mkdirSync(configPath, {
+    recursive: true
+  });
+
+  const initEnvFile = (path, template) => {
+    if (!existsSync(path)) {
+      logger.warn(`creating ${path} env file`);
+      writeFileSync(path, template);
+    }
+  };
+  initEnvFile(resolve(configPath, `log.env`), templates.logEnvFile);
+  initEnvFile(resolve(configPath, `db.env`), templates.dbEnvFile);
+  initEnvFile(resolve(configPath, `auth.env`), templates.authEnvFile);
+  initEnvFile(resolve(configPath, `express.env`), templates.expressEnvFile);
+  initEnvFile(resolve(configPath, `features.env`), templates.featuresEnvFile);
 }
 
 // noinspection SpellCheckingInspection

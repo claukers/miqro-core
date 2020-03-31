@@ -13,16 +13,12 @@ export abstract class ConfigPathResolver {
     if (!process.env.MIQRO_OVERRIDE_CONFIG_PATH) {
       return null;
     } else {
-      return resolve(ConfigPathResolver.getConfigDirname(), `${process.env.MIQRO_OVERRIDE_CONFIG_PATH}`);
+      return resolve(ConfigPathResolver.getBaseDirname(), `${process.env.MIQRO_OVERRIDE_CONFIG_PATH}`);
     }
   }
 
   public static getMiqroRCFilePath() {
     return resolve(ConfigPathResolver.getBaseDirname(), `.miqrorc`);
-  }
-
-  public static getConfigFilePath() {
-    return resolve(ConfigPathResolver.getConfigDirname(), `${process.env.NODE_ENV}.env`);
   }
 
   public static getServiceDirname() {
@@ -39,7 +35,7 @@ export abstract class ConfigPathResolver {
     if (miqroRCConfig) {
       return miqroRCConfig.configDirname;
     } else {
-      return resolve(ConfigPathResolver.getBaseDirname(), `config`);
+      return resolve(ConfigPathResolver.getBaseDirname(), `config`, `${process.env.NODE_ENV}`);
     }
   }
 
