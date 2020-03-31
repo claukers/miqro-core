@@ -12,7 +12,7 @@ export interface IVerifyTokenService {
 
 export class VerifyJWTEndpointService implements IVerifyTokenService {
 
-  private static instance: VerifyJWTEndpointService = null;
+  protected static instance: VerifyJWTEndpointService = null;
 
   public static getInstance(): VerifyJWTEndpointService {
     VerifyJWTEndpointService.instance =
@@ -20,7 +20,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
     return VerifyJWTEndpointService.instance;
   }
 
-  private logger: any = null;
+  protected logger: any = null;
 
   constructor() {
     Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD"]);
