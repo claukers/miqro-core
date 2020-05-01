@@ -1,52 +1,7 @@
-import { describe, it, before, after } from 'mocha';
+import { describe, it } from 'mocha';
 import * as chai from 'chai';
-import * as sinon from 'sinon';
-import * as rewiremock from 'rewiremock';
 
 describe('lib.Util.parseOptions unit tests', function () {
-  this.timeout(100000);
-  const fakeLogger = {
-
-  };
-  const fakeSetupDBRet = {
-    sequelize: {
-      authenticate: sinon.fake(async () => {
-
-      }),
-      close: sinon.fake(async () => {
-
-      })
-    },
-    Sequelize: null
-  };
-  const fakeSetupDB = sinon.fake(() => {
-    return fakeSetupDBRet;
-  });
-  const fakeUtil = {
-    getLogger: sinon.fake((name) => {
-      return fakeLogger;
-    }),
-    checkEnvVariables: sinon.fake(() => {
-
-    })
-  };
-  before((done) => {
-    rewiremock.default.disable();
-    rewiremock.default.enable();
-    rewiremock.default.disable();
-    rewiremock.default("../util/loader").with({
-      setupDB: fakeSetupDB
-    });
-    rewiremock.default("../util").with({
-      Util: fakeUtil
-    });
-    rewiremock.default.enable();
-    done();
-  });
-  after((done) => {
-    rewiremock.default.disable();
-    done();
-  });
   it('simple valid check no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
