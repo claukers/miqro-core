@@ -9,7 +9,7 @@ let miqroRCConfig: {
 
 export abstract class ConfigPathResolver {
 
-  public static getOverrideConfigFilePath() {
+  public static getOverrideConfigFilePath(): string {
     if (!process.env.MIQRO_OVERRIDE_CONFIG_PATH) {
       return null;
     } else {
@@ -17,11 +17,11 @@ export abstract class ConfigPathResolver {
     }
   }
 
-  public static getMiqroRCFilePath() {
+  public static getMiqroRCFilePath(): string {
     return resolve(ConfigPathResolver.getBaseDirname(), `.miqrorc`);
   }
 
-  public static getServiceDirname() {
+  public static getServiceDirname(): string {
     ConfigPathResolver.loadMiqroRC();
     if (miqroRCConfig) {
       return miqroRCConfig.serviceDirname;
@@ -30,7 +30,7 @@ export abstract class ConfigPathResolver {
     }
   }
 
-  public static getConfigDirname() {
+  public static getConfigDirname(): string {
     ConfigPathResolver.loadMiqroRC();
     if (miqroRCConfig) {
       return resolve(miqroRCConfig.configDirname, `${process.env.NODE_ENV}`);
@@ -39,7 +39,7 @@ export abstract class ConfigPathResolver {
     }
   }
 
-  public static getBaseDirname() {
+  public static getBaseDirname(): string {
     if (process.env.MIQRO_DIRNAME) {
       return process.env.MIQRO_DIRNAME;
     } else {
@@ -47,13 +47,13 @@ export abstract class ConfigPathResolver {
     }
   }
 
-  private static rcLoaded: boolean = false;
+  private static rcLoaded = false;
 
-  private static getSrcDirname() {
+  private static getSrcDirname(): string {
     return resolve(ConfigPathResolver.getBaseDirname(), `src`);
   }
 
-  private static loadMiqroRC() {
+  private static loadMiqroRC(): void {
     if (!ConfigPathResolver.rcLoaded) {
       Util.setupSimpleEnv();
       const path = ConfigPathResolver.getMiqroRCFilePath();

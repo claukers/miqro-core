@@ -6,13 +6,13 @@ export class StopWatch {
     this.startMS = this.lastMS;
   }
   // noinspection JSUnusedGlobalSymbols
-  public lap() {
+  public lap(): number {
     const now = new Date().getTime();
     const ret = now - this.lastMS;
     this.lastMS = new Date().getTime();
     return ret;
   }
-  public stop() {
+  public stop(): number {
     const now = new Date().getTime();
     const ret = now - this.startMS;
     this.lastMS = new Date().getTime();

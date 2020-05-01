@@ -25,10 +25,12 @@ if (!existsSync(configPath)) {
     recursive: true
   });
 
-  const initEnvFile = (path, template) => {
+  const initEnvFile = (path, template): void => {
     if (!existsSync(path)) {
       logger.warn(`creating ${path} env file`);
       writeFileSync(path, template);
+    } else {
+      logger.warn(`${path} already exists!. init will not create it.`);
     }
   };
   initEnvFile(resolve(configPath, `log.env`), templates.logEnvFile);

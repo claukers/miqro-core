@@ -1,6 +1,6 @@
-export {Util, ISimpleMap} from "./util";
-import {ISession} from "../service/common";
-import {ParseOptionsError, Util} from "./";
+export {Util, SimpleMapInterface} from "./util";
+import {SessionInterface} from "../service/common";
+import {ParseOptionsError} from "./";
 import {ForbiddenError} from "./error";
 
 export * from "./stopwatch";
@@ -10,16 +10,16 @@ export * from "./loader";
 export * from "./featuretoggle";
 export * from "./config";
 
-export type IGroupPolicy = "at_least_one" | "all";
+export type GroupPolicyInterface = "at_least_one" | "all";
 
-export type IGroupPolicyItem = string | string[];
+export type GroupPolicyItemInterface = string | string[];
 
-export interface IGroupPolicyOptions {
-  groups: IGroupPolicyItem[];
-  groupPolicy: IGroupPolicy;
+export interface GroupPolicyOptionsInterface {
+  groups: GroupPolicyItemInterface[];
+  groupPolicy: GroupPolicyInterface;
 }
 
-const policyCheck = (session: ISession, options: IGroupPolicyOptions): boolean => {
+const policyCheck = (session: SessionInterface, options: GroupPolicyOptionsInterface): boolean => {
   switch (options.groupPolicy) {
     case "at_least_one":
       for (const group of options.groups) {
@@ -62,7 +62,7 @@ const policyCheck = (session: ISession, options: IGroupPolicyOptions): boolean =
 };
 
 export abstract class GroupPolicy {
-  public static async validateSession(session: ISession, options: IGroupPolicyOptions, logger): Promise<boolean> {
+  public static async validateSession(session: SessionInterface, options: GroupPolicyOptionsInterface, logger): Promise<boolean> {
     if (session === undefined || session.account === undefined || session.username === undefined) {
       throw new ParseOptionsError(`Invalid authentication!`);
     }

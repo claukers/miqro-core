@@ -1,16 +1,16 @@
-import {INoTokenSession, ISession} from "./common";
+import {SessionInterface} from "./common";
 import {UnAuthorizedError, Util} from "../util";
 
 export * from "./common";
-import {decode} from "jsonwebtoken";
 import {inspect} from "util";
+import {Logger} from "winston";
 
 // noinspection JSUnusedGlobalSymbols
-export interface IVerifyTokenService {
-  verify(args: { token: string }): Promise<ISession>;
+export interface VerifyTokenServiceInterface {
+  verify(args: { token: string }): Promise<SessionInterface>;
 }
 
-export class VerifyJWTEndpointService implements IVerifyTokenService {
+export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
 
   protected static instance: VerifyJWTEndpointService = null;
 
@@ -20,7 +20,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
     return VerifyJWTEndpointService.instance;
   }
 
-  protected logger: any = null;
+  protected logger: Logger = null;
 
   constructor() {
     Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD"]);
@@ -38,7 +38,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
     this.logger = Util.getLogger("VerifyTokenEndpointService");
   }
 
-  public async verify({token}: { token: string }): Promise<ISession> {
+  public async verify({token}: { token: string }): Promise<SessionInterface> {
     try {
       this.logger.debug(`verifying [${token}] on [${process.env.TOKEN_VERIFY_ENDPOINT}].header[${process.env.TOKEN_HEADER}]`);
       let response = null;
@@ -62,7 +62,7 @@ export class VerifyJWTEndpointService implements IVerifyTokenService {
           throw new Error(`TOKEN_VERIFY_LOCATION=${process.env.TOKEN_VERIFY_LOCATION} not supported use (header or query)`);
       }
       if (response) {
-        const session = Util.jwt.decode(token) as INoTokenSession;
+        const session = Util.jwt.decode(token);
         Util.parseOptions("session", session, [
           {name: "username", required: true, type: "string"},
           {name: "account", required: true, type: "string"},

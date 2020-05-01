@@ -2,6 +2,8 @@ import {describe, it} from "mocha";
 import {expect} from "chai";
 import {resolve} from "path";
 
+process.env.NODE_ENV = "test";
+
 describe("Util loader tests", () => {
 
   it("getLogger without log.js and without loadConfig should work", (done) => {

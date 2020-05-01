@@ -2,7 +2,7 @@ import {createHash} from "crypto";
 import {config} from "dotenv";
 import {existsSync, readdirSync} from "fs";
 import {dirname, resolve, extname} from "path";
-import {Container} from "winston";
+import {Container, Logger} from "winston";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {winstonConfig} from "./loader";
@@ -13,14 +13,14 @@ import request, {AxiosPromise, AxiosRequestConfig} from "axios";
 const logContainer = new Container();
 
 // noinspection SpellCheckingInspection
-export type IOPTIONPARSER = "remove_extra" | "add_extra" | "no_extra";
-export type IParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
+export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
+export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
 
 const isParseSimpleOption = (type: string): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
 };
 
-const parseSimpleOption = (type: IParseSimpleType, value): boolean => {
+const parseSimpleOption = (type: ParseSimpleType, value): boolean => {
   let isType;
   if (type === "any") {
     isType = true;
@@ -36,16 +36,18 @@ const parseSimpleOption = (type: IParseSimpleType, value): boolean => {
   return isType;
 };
 
-export interface ISimpleMap<T2> {
+export interface SimpleMapInterface<T2> {
   [word: string]: T2;
 }
 
+let logger = null;
+
 export abstract class Util {
-  public static sha256(data) {
+  public static sha256(data): string {
     return createHash("sha256").update(data, "utf8").digest("base64");
   }
 
-  public static uuid() {
+  public static uuid(): string {
     return v4();
   }
 
@@ -57,11 +59,11 @@ export abstract class Util {
     decode, sign, verify
   };
 
-  public static setupSimpleEnv() {
+  public static setupSimpleEnv(): void {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
-  public static setupInstanceEnv(serviceName: string, scriptPath: string) {
+  public static setupInstanceEnv(serviceName: string, scriptPath: string): void {
     const microDirname = resolve(dirname(scriptPath));
     if (!process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined") {
       process.env.MIQRO_DIRNAME = microDirname;
@@ -74,7 +76,7 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrideConfig(path: string) {
+  public static overrideConfig(path: string): void {
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
@@ -91,7 +93,7 @@ export abstract class Util {
     }
   }
 
-  public static loadConfig() {
+  public static loadConfig(): void {
     if (!Util.configLoaded) {
       const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
 
@@ -125,7 +127,7 @@ export abstract class Util {
     }
   }
 
-  public static checkEnvVariables(requiredEnvVariables: string[]) {
+  public static checkEnvVariables(requiredEnvVariables: string[]): void {
     requiredEnvVariables.forEach((envName) => {
       if (process.env[envName] === undefined) {
         throw new Error(`Env variable [${envName}!] not defined. Consider adding it to a env file located in [${ConfigPathResolver.getConfigDirname()}].`);
@@ -136,9 +138,9 @@ export abstract class Util {
   public static parseOptions(argName,
                              arg: { [name: string]: any },
                              optionsArray: {
-                               name: string, type: string, arrayType?: string, required: boolean
+                               name: string; type: string; arrayType?: string; required: boolean;
                              }[],
-                             parserOption: IOPTIONPARSER = "no_extra"): { [name: string]: any } {
+                             parserOption: OPTIONPARSERType = "no_extra"): SimpleMapInterface<any> {
     const ret = {};
     if (typeof arg !== "object" || !arg) {
       throw new ParseOptionsError(`${argName} not valid`);
@@ -152,13 +154,13 @@ export abstract class Util {
       const value = arg[name];
       let isType;
       if (isParseSimpleOption(type)) {
-        const sType = type as IParseSimpleType;
+        const sType = type as ParseSimpleType;
         isType = parseSimpleOption(sType, value);
       } else if (type === "array") {
         isType = value instanceof Array && isParseSimpleOption(arrayType);
         if (isType) {
           value.forEach((valueItem) => {
-            const sType = arrayType as IParseSimpleType;
+            const sType = arrayType as ParseSimpleType;
             isType = isType && parseSimpleOption(sType, valueItem);
           });
         }
@@ -195,7 +197,7 @@ export abstract class Util {
     }
   }
 
-  public static getLogger(identifier: string) {
+  public static getLogger(identifier: string): Logger {
     if (typeof identifier !== "string") {
       throw new Error("Bad log identifier");
     }
@@ -206,7 +208,7 @@ export abstract class Util {
     }
     const loggerO = logContainer.get(identifier);
     (loggerO as any).stream = {
-      write: (message) => {
+      write: (message): void => {
         // use the 'info' log level so the output will be picked up by both transports (file and console)
         loggerO.info(message.trim());
       }
@@ -214,7 +216,7 @@ export abstract class Util {
     return loggerO;
   }
 
-  private static configLoaded: boolean = false;
+  private static configLoaded = false;
 }
 
-const logger = Util.getLogger("Util");
+logger = Util.getLogger("Util");

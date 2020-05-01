@@ -69,7 +69,7 @@ node_modules/
 `;
 
 // noinspection SpellCheckingInspection
-export const mainjs = (servicePath) => {
+export const mainjs = (servicePath): string => {
   // noinspection SpellCheckingInspection
   return `const express = require("express");
 const { Util } = require("@miqro/core");
@@ -90,7 +90,7 @@ service(app).then((server) => {
 };
 
 // noinspection SpellCheckingInspection
-export const indexjs = () => {
+export const indexjs = (): string => {
   // noinspection SpellCheckingInspection
   return `const {
   APIResponse
@@ -120,7 +120,7 @@ module.exports = async (app) => {
 };
 
 // noinspection SpellCheckingInspection
-const servicejs = (serviceName: string) => {
+const servicejs = (serviceName: string): string => {
   // noinspection SpellCheckingInspection
   return `const { Util } = require("@miqro/core");
 

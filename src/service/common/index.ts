@@ -1,19 +1,9 @@
-import { ISimpleMap } from "../../util";
-
-export interface INoTokenSession {
+export interface NoTokenSessionInterface {
   account: string;
   username: string;
   groups: string[];
 }
 
-export interface ISession extends INoTokenSession {
+export interface SessionInterface extends NoTokenSessionInterface {
   token: string;
-}
-
-export interface IServiceArgs extends ISimpleMap<any> {
-  session: ISession;
-  params: ISimpleMap<any>;
-  query: ISimpleMap<any>;
-  body: ISimpleMap<any>;
-  headers: ISimpleMap<any>;
 }

@@ -1,12 +1,11 @@
-import {ISimpleMap} from "./util";
+import {SimpleMapInterface} from "./util";
 
 // noinspection SpellCheckingInspection
-export interface ICMDMap extends ISimpleMap<{ module: string; description: string }> {
-}
+export type ICMDMap = SimpleMapInterface<{ module: string; description: string }>
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
-  public static cliFlow(cmds: ICMDMap, identifier: string, logger) {
+  public static cliFlow(cmds: ICMDMap, identifier: string, logger): void {
     try {
       CLIUtil.routeCMDModule(cmds, identifier, logger);
     } catch (e) {
@@ -17,7 +16,7 @@ export abstract class CLIUtil {
   }
 
   // noinspection SpellCheckingInspection
-  public static routeCMDModule(cmds: ICMDMap, identifier: string, logger) {
+  public static routeCMDModule(cmds: ICMDMap, identifier: string, logger): void {
     const cmdArg = process.argv[2];
     if (!cmdArg) {
       logger.info(`usage: ${identifier} <command> [args]`);

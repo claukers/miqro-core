@@ -23,7 +23,7 @@ export const defaultLogFormat = printf((info) => {
     `${text}`;
 });
 
-export const defaultLoggerFactory = (identifier) => {
+export const defaultLoggerFactory = (identifier): any => {
   const level = process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL;
   const logFormat = defaultLogFormat;
   const transportList: any[] = [
@@ -57,7 +57,7 @@ export const defaultLoggerFactory = (identifier) => {
   };
 };
 
-export const winstonConfig = () => {
+export const winstonConfig = (): any => {
   const logPath = resolve(ConfigPathResolver.getConfigDirname(), `log.js`);
   if (existsSync(logPath)) {
     return require(logPath);

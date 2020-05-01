@@ -1,6 +1,6 @@
 import {describe, it, before, after} from 'mocha';
 import {expect} from 'chai';
-import {INoTokenSession} from "../src/service/common";
+import {NoTokenSessionInterface} from "../src/service/common";
 import {sign} from "jsonwebtoken";
 import * as express from "express";
 import {Util} from "../src/util";
@@ -21,7 +21,7 @@ describe(`verifytokenendpointservice func tests`, () => {
     describe(`verifytokenendpointservice [${TOKENVARS.location}]func tests`, () => {
       let fakeAuthServer = null;
       let server = null;
-      const fakeSession1: INoTokenSession = {
+      const fakeSession1 = {
         username: "usera",
         account: "ble",
         groups: ["aldf", "sd2"]
