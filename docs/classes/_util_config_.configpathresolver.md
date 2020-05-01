@@ -28,7 +28,7 @@
 
 ▪ **rcLoaded**: *boolean* = false
 
-*Defined in [src/util/config.ts:50](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L50)*
+*Defined in [src/util/config.ts:50](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L50)*
 
 ## Methods
 
@@ -36,7 +36,7 @@
 
 ▸ **getBaseDirname**(): *string*
 
-*Defined in [src/util/config.ts:42](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L42)*
+*Defined in [src/util/config.ts:42](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L42)*
 
 **Returns:** *string*
 
@@ -46,7 +46,7 @@ ___
 
 ▸ **getConfigDirname**(): *string*
 
-*Defined in [src/util/config.ts:33](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L33)*
+*Defined in [src/util/config.ts:33](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L33)*
 
 **Returns:** *string*
 
@@ -56,7 +56,7 @@ ___
 
 ▸ **getMiqroRCFilePath**(): *string*
 
-*Defined in [src/util/config.ts:20](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L20)*
+*Defined in [src/util/config.ts:20](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L20)*
 
 **Returns:** *string*
 
@@ -66,7 +66,7 @@ ___
 
 ▸ **getOverrideConfigFilePath**(): *string*
 
-*Defined in [src/util/config.ts:12](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L12)*
+*Defined in [src/util/config.ts:12](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L12)*
 
 **Returns:** *string*
 
@@ -76,7 +76,7 @@ ___
 
 ▸ **getServiceDirname**(): *string*
 
-*Defined in [src/util/config.ts:24](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L24)*
+*Defined in [src/util/config.ts:24](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L24)*
 
 **Returns:** *string*
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **getSrcDirname**(): *string*
 
-*Defined in [src/util/config.ts:52](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L52)*
+*Defined in [src/util/config.ts:52](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L52)*
 
 **Returns:** *string*
 
@@ -96,6 +96,6 @@ ___
 
 ▸ **loadMiqroRC**(): *void*
 
-*Defined in [src/util/config.ts:56](https://github.com/claukers/miqro-core/blob/6617130/src/util/config.ts#L56)*
+*Defined in [src/util/config.ts:56](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L56)*
 
 **Returns:** *void*

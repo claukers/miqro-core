@@ -6,9 +6,8 @@
 
 ### References
 
-* [INoTokenSession](_service_index_.md#inotokensession)
-* [IServiceArgs](_service_index_.md#iserviceargs)
-* [ISession](_service_index_.md#isession)
+* [NoTokenSessionInterface](_service_index_.md#notokensessioninterface)
+* [SessionInterface](_service_index_.md#sessioninterface)
 
 ### Classes
 
@@ -16,22 +15,16 @@
 
 ### Interfaces
 
-* [IVerifyTokenService](../interfaces/_service_index_.iverifytokenservice.md)
+* [VerifyTokenServiceInterface](../interfaces/_service_index_.verifytokenserviceinterface.md)
 
 ## References
 
-###  INoTokenSession
+###  NoTokenSessionInterface
 
-• **INoTokenSession**:
-
-___
-
-###  IServiceArgs
-
-• **IServiceArgs**:
+• **NoTokenSessionInterface**:
 
 ___
 
-###  ISession
+###  SessionInterface
 
-• **ISession**:
+• **SessionInterface**:

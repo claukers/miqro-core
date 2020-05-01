@@ -6,6 +6,5 @@
 
 ### Interfaces
 
-* [INoTokenSession](../interfaces/_service_common_index_.inotokensession.md)
-* [IServiceArgs](../interfaces/_service_common_index_.iserviceargs.md)
-* [ISession](../interfaces/_service_common_index_.isession.md)
+* [NoTokenSessionInterface](../interfaces/_service_common_index_.notokensessioninterface.md)
+* [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md)

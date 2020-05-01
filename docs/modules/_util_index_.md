@@ -7,14 +7,14 @@
 ### References
 
 * [CLIUtil](_util_index_.md#cliutil)
+* [CMDMapType](_util_index_.md#cmdmaptype)
 * [ConfigFileNotFoundError](_util_index_.md#configfilenotfounderror)
 * [ConfigPathResolver](_util_index_.md#configpathresolver)
 * [FeatureToggle](_util_index_.md#featuretoggle)
 * [ForbiddenError](_util_index_.md#forbiddenerror)
-* [ICMDMap](_util_index_.md#icmdmap)
-* [ISimpleMap](_util_index_.md#isimplemap)
 * [MethodNotImplementedError](_util_index_.md#methodnotimplementederror)
 * [ParseOptionsError](_util_index_.md#parseoptionserror)
+* [SimpleMapInterface](_util_index_.md#simplemapinterface)
 * [StopWatch](_util_index_.md#stopwatch)
 * [UnAuthorizedError](_util_index_.md#unauthorizederror)
 * [Util](_util_index_.md#util)
@@ -28,12 +28,12 @@
 
 ### Interfaces
 
-* [IGroupPolicyOptions](../interfaces/_util_index_.igrouppolicyoptions.md)
+* [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)
 
 ### Type aliases
 
-* [IGroupPolicy](_util_index_.md#igrouppolicy)
-* [IGroupPolicyItem](_util_index_.md#igrouppolicyitem)
+* [GroupPolicyInterface](_util_index_.md#grouppolicyinterface)
+* [GroupPolicyItemInterface](_util_index_.md#grouppolicyiteminterface)
 
 ### Functions
 
@@ -44,6 +44,12 @@
 ###  CLIUtil
 
 • **CLIUtil**:
+
+___
+
+###  CMDMapType
+
+• **CMDMapType**:
 
 ___
 
@@ -71,18 +77,6 @@ ___
 
 ___
 
-###  ICMDMap
-
-• **ICMDMap**:
-
-___
-
-###  ISimpleMap
-
-• **ISimpleMap**:
-
-___
-
 ###  MethodNotImplementedError
 
 • **MethodNotImplementedError**:
@@ -92,6 +86,12 @@ ___
 ###  ParseOptionsError
 
 • **ParseOptionsError**:
+
+___
+
+###  SimpleMapInterface
+
+• **SimpleMapInterface**:
 
 ___
 
@@ -131,33 +131,33 @@ ___
 
 ## Type aliases
 
-###  IGroupPolicy
+###  GroupPolicyInterface
 
-Ƭ **IGroupPolicy**: *"at_least_one" | "all"*
+Ƭ **GroupPolicyInterface**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:13](https://github.com/claukers/miqro-core/blob/6617130/src/util/index.ts#L13)*
+*Defined in [src/util/index.ts:13](https://github.com/claukers/miqro-core/blob/b302c87/src/util/index.ts#L13)*
 
 ___
 
-###  IGroupPolicyItem
+###  GroupPolicyItemInterface
 
-Ƭ **IGroupPolicyItem**: *string | string[]*
+Ƭ **GroupPolicyItemInterface**: *string | string[]*
 
-*Defined in [src/util/index.ts:15](https://github.com/claukers/miqro-core/blob/6617130/src/util/index.ts#L15)*
+*Defined in [src/util/index.ts:15](https://github.com/claukers/miqro-core/blob/b302c87/src/util/index.ts#L15)*
 
 ## Functions
 
 ### `Const` policyCheck
 
-▸ **policyCheck**(`session`: [ISession](../interfaces/_service_common_index_.isession.md), `options`: [IGroupPolicyOptions](../interfaces/_util_index_.igrouppolicyoptions.md)): *boolean*
+▸ **policyCheck**(`session`: [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)): *boolean*
 
-*Defined in [src/util/index.ts:22](https://github.com/claukers/miqro-core/blob/6617130/src/util/index.ts#L22)*
+*Defined in [src/util/index.ts:22](https://github.com/claukers/miqro-core/blob/b302c87/src/util/index.ts#L22)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`session` | [ISession](../interfaces/_service_common_index_.isession.md) |
-`options` | [IGroupPolicyOptions](../interfaces/_util_index_.igrouppolicyoptions.md) |
+`session` | [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md) |
+`options` | [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md) |
 
 **Returns:** *boolean*

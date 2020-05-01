@@ -7,26 +7,25 @@
 ### References
 
 * [CLIUtil](_index_.md#cliutil)
+* [CMDMapType](_index_.md#cmdmaptype)
 * [ConfigFileNotFoundError](_index_.md#configfilenotfounderror)
 * [ConfigPathResolver](_index_.md#configpathresolver)
 * [FeatureToggle](_index_.md#featuretoggle)
 * [ForbiddenError](_index_.md#forbiddenerror)
 * [GroupPolicy](_index_.md#grouppolicy)
-* [ICMDMap](_index_.md#icmdmap)
-* [IGroupPolicy](_index_.md#igrouppolicy)
-* [IGroupPolicyItem](_index_.md#igrouppolicyitem)
-* [IGroupPolicyOptions](_index_.md#igrouppolicyoptions)
-* [INoTokenSession](_index_.md#inotokensession)
-* [IServiceArgs](_index_.md#iserviceargs)
-* [ISession](_index_.md#isession)
-* [ISimpleMap](_index_.md#isimplemap)
-* [IVerifyTokenService](_index_.md#iverifytokenservice)
+* [GroupPolicyInterface](_index_.md#grouppolicyinterface)
+* [GroupPolicyItemInterface](_index_.md#grouppolicyiteminterface)
+* [GroupPolicyOptionsInterface](_index_.md#grouppolicyoptionsinterface)
 * [MethodNotImplementedError](_index_.md#methodnotimplementederror)
+* [NoTokenSessionInterface](_index_.md#notokensessioninterface)
 * [ParseOptionsError](_index_.md#parseoptionserror)
+* [SessionInterface](_index_.md#sessioninterface)
+* [SimpleMapInterface](_index_.md#simplemapinterface)
 * [StopWatch](_index_.md#stopwatch)
 * [UnAuthorizedError](_index_.md#unauthorizederror)
 * [Util](_index_.md#util)
 * [VerifyJWTEndpointService](_index_.md#verifyjwtendpointservice)
+* [VerifyTokenServiceInterface](_index_.md#verifytokenserviceinterface)
 * [defaultLogFormat](_index_.md#defaultlogformat)
 * [defaultLoggerFactory](_index_.md#defaultloggerfactory)
 * [winstonConfig](_index_.md#winstonconfig)
@@ -36,6 +35,12 @@
 ###  CLIUtil
 
 • **CLIUtil**:
+
+___
+
+###  CMDMapType
+
+• **CMDMapType**:
 
 ___
 
@@ -69,57 +74,21 @@ ___
 
 ___
 
-###  ICMDMap
+###  GroupPolicyInterface
 
-• **ICMDMap**:
-
-___
-
-###  IGroupPolicy
-
-• **IGroupPolicy**:
+• **GroupPolicyInterface**:
 
 ___
 
-###  IGroupPolicyItem
+###  GroupPolicyItemInterface
 
-• **IGroupPolicyItem**:
-
-___
-
-###  IGroupPolicyOptions
-
-• **IGroupPolicyOptions**:
+• **GroupPolicyItemInterface**:
 
 ___
 
-###  INoTokenSession
+###  GroupPolicyOptionsInterface
 
-• **INoTokenSession**:
-
-___
-
-###  IServiceArgs
-
-• **IServiceArgs**:
-
-___
-
-###  ISession
-
-• **ISession**:
-
-___
-
-###  ISimpleMap
-
-• **ISimpleMap**:
-
-___
-
-###  IVerifyTokenService
-
-• **IVerifyTokenService**:
+• **GroupPolicyOptionsInterface**:
 
 ___
 
@@ -129,9 +98,27 @@ ___
 
 ___
 
+###  NoTokenSessionInterface
+
+• **NoTokenSessionInterface**:
+
+___
+
 ###  ParseOptionsError
 
 • **ParseOptionsError**:
+
+___
+
+###  SessionInterface
+
+• **SessionInterface**:
+
+___
+
+###  SimpleMapInterface
+
+• **SimpleMapInterface**:
 
 ___
 
@@ -156,6 +143,12 @@ ___
 ###  VerifyJWTEndpointService
 
 • **VerifyJWTEndpointService**:
+
+___
+
+###  VerifyTokenServiceInterface
+
+• **VerifyTokenServiceInterface**:
 
 ___
 

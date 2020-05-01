@@ -8,6 +8,14 @@
 
 * [CLIUtil](../classes/_util_cli_.cliutil.md)
 
-### Interfaces
+### Type aliases
 
-* [ICMDMap](../interfaces/_util_cli_.icmdmap.md)
+* [CMDMapType](_util_cli_.md#cmdmaptype)
+
+## Type aliases
+
+###  CMDMapType
+
+Ƭ **CMDMapType**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹object›*
+
+*Defined in [src/util/cli.ts:4](https://github.com/claukers/miqro-core/blob/b302c87/src/util/cli.ts#L4)*
