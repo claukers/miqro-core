@@ -216,6 +216,11 @@ export abstract class Util {
     return loggerO;
   }
 
+  public static getComponentLogger(component?: string): Logger {
+    const serviceName = ConfigPathResolver.getServiceName();
+    return Util.getLogger(`${serviceName ? `${serviceName}${component ? "." : ""}` : ""}${component ? component : ""}`);
+  }
+
   private static configLoaded = false;
 }
 
