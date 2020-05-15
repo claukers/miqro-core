@@ -37,6 +37,37 @@ describe("Util loader tests", () => {
     })().then(done).catch(done);
   });
 
+  it("loadConfig with multiple env files should override", (done) => {
+    (async () => {
+      const lib = require("../src");
+      lib.Util.configLoaded = false;
+      const old = process.env.MIQRO_DIRNAME;
+      process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
+      lib.Util.loadConfig();
+      expect(process.env.one).to.be.equals("0");
+      expect(process.env.two).to.be.equals("2");
+      delete process.env.MIQRO_DIRNAME;
+    })().then(done).catch(done);
+  });
+
+  it("getConfig with multiple env files should override", (done) => {
+    (async () => {
+      const lib = require("../src");
+      lib.Util.configLoaded = false;
+      const old = process.env.MIQRO_DIRNAME;
+      process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
+      const list = lib.Util.getConfig();
+      expect(process.env.one).to.be.equals("0");
+      expect(process.env.two).to.be.equals("2");
+      expect(list.outputs.length).to.be.equals(2);
+      expect(list.combined.one).to.be.equals("0");
+      expect(list.combined.two).to.be.equals("2");
+      expect(list.outputs[0].parsed.one).to.be.equals("1");
+      expect(list.outputs[1].parsed.one).to.be.equals("0");
+      delete process.env.MIQRO_DIRNAME;
+    })().then(done).catch(done);
+  });
+
   it("loadConfig with .miqrorc file should change defaults con ConfigPathLoader", (done) => {
     (async () => {
       const lib = require("../src");

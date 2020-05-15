@@ -1,5 +1,5 @@
 import {createHash} from "crypto";
-import {config} from "dotenv";
+import {config, DotenvConfigOutput} from "dotenv";
 import {existsSync, readdirSync} from "fs";
 import {dirname, resolve, extname} from "path";
 import {Container, Logger} from "winston";
@@ -76,53 +76,69 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrideConfig(path: string): void {
+  public static overrideConfig(path: string, silent = false, combined?: SimpleMapInterface<string>): DotenvConfigOutput[] {
+    const outputs: DotenvConfigOutput[] = [];
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
-      logger.warn(`overriding config with [${path}].`);
+      if (!silent)
+        logger.warn(`overriding config with [${path}].`);
       const overrideConfig = config({
         path
       });
+      outputs.push(overrideConfig);
       if (overrideConfig.parsed) {
         const keys = Object.keys(overrideConfig.parsed);
         for (const key of keys) {
+          if (combined) {
+            combined[key] = overrideConfig.parsed[key];
+          }
           process.env[key] = overrideConfig.parsed[key];
         }
       }
     }
+    return outputs;
   }
 
-  public static loadConfig(): void {
-    if (!Util.configLoaded) {
-      const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
+  public static getConfig(silent = true): { combined: SimpleMapInterface<string>; outputs: DotenvConfigOutput[] } {
+    const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
 
-      const configDirname = ConfigPathResolver.getConfigDirname();
-      if (existsSync(configDirname)) {
-        const configFiles = readdirSync(configDirname);
-        for (const configFile of configFiles) {
-          const configFilePath = resolve(configDirname, configFile);
-          const ext = extname(configFilePath);
-          if (ext === ".env") {
+    let outputs: DotenvConfigOutput[] = [];
+    const combined = {};
+
+    const configDirname = ConfigPathResolver.getConfigDirname();
+    if (existsSync(configDirname)) {
+      const configFiles = readdirSync(configDirname);
+      for (const configFile of configFiles) {
+        const configFilePath = resolve(configDirname, configFile);
+        const ext = extname(configFilePath);
+        if (ext === ".env") {
+          if (!silent)
             logger.info(`loading ${configFilePath}`);
-            config({
-              path: configFilePath
-            });
-          }
+          outputs = outputs.concat(Util.overrideConfig(configFilePath, silent, combined));
         }
+      }
 
-        if (configFiles.length === 0) {
+      if (configFiles.length === 0) {
+        if (!silent)
           logger.warn(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
-        }
-      } else {
+      }
+    } else {
+      if (!silent)
         logger.warn(`Util.loadConfig nothing loaded [${configDirname}] dirname dont exist! Maybe you miss to run miqro-core init.`);
-      }
+    }
 
-      if (overridePath && existsSync(overridePath)) {
-        Util.overrideConfig(overridePath);
-      } else if (overridePath) {
-        logger.warn(`nothing loaded from [${process.env.MIQRO_OVERRIDE_CONFIG_PATH}] env file doesnt exists!`);
-      }
+    if (overridePath && existsSync(overridePath)) {
+      outputs = outputs.concat(Util.overrideConfig(overridePath, silent, combined));
+    } else if (overridePath) {
+      logger.warn(`nothing loaded from [${process.env.MIQRO_OVERRIDE_CONFIG_PATH}] env file doesnt exists!`);
+    }
+    return {combined, outputs};
+  }
+
+  public static loadConfig(silent = false): void {
+    if (!Util.configLoaded) {
+      Util.getConfig(silent);
       Util.configLoaded = true;
     }
   }
