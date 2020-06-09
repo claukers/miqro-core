@@ -7,6 +7,7 @@
 ### Modules
 
 * ["cli/cli"](modules/_cli_cli_.md)
+* ["cli/config"](modules/_cli_config_.md)
 * ["cli/create"](modules/_cli_create_.md)
 * ["cli/init"](modules/_cli_init_.md)
 * ["index"](modules/_index_.md)

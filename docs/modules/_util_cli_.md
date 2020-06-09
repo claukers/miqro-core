@@ -18,4 +18,4 @@
 
 Ƭ **CMDMapType**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹object›*
 
-*Defined in [src/util/cli.ts:4](https://github.com/claukers/miqro-core/blob/b302c87/src/util/cli.ts#L4)*
+*Defined in [src/util/cli.ts:5](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/cli.ts#L5)*

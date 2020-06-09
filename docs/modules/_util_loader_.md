@@ -23,7 +23,7 @@
 
 • **combine**: *combine*
 
-*Defined in [src/util/loader.ts:9](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L9)*
+*Defined in [src/util/loader.ts:9](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L9)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
     `${text}`;
 })
 
-*Defined in [src/util/loader.ts:15](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L15)*
+*Defined in [src/util/loader.ts:15](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L15)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **label**: *label*
 
-*Defined in [src/util/loader.ts:10](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L10)*
+*Defined in [src/util/loader.ts:10](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L10)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 • **printf**: *printf*
 
-*Defined in [src/util/loader.ts:11](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L11)*
+*Defined in [src/util/loader.ts:11](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L11)*
 
 ___
 
@@ -64,21 +64,21 @@ ___
 
 • **timestamp**: *timestamp*
 
-*Defined in [src/util/loader.ts:12](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L12)*
+*Defined in [src/util/loader.ts:12](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L12)*
 
 ## Functions
 
 ### `Const` defaultLoggerFactory
 
-▸ **defaultLoggerFactory**(`identifier`: any): *any*
+▸ **defaultLoggerFactory**(`identifier`: string): *any*
 
-*Defined in [src/util/loader.ts:26](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L26)*
+*Defined in [src/util/loader.ts:26](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L26)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`identifier` | any |
+`identifier` | string |
 
 **Returns:** *any*
 
@@ -88,6 +88,6 @@ ___
 
 ▸ **winstonConfig**(): *any*
 
-*Defined in [src/util/loader.ts:60](https://github.com/claukers/miqro-core/blob/b302c87/src/util/loader.ts#L60)*
+*Defined in [src/util/loader.ts:60](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/loader.ts#L60)*
 
 **Returns:** *any*

@@ -18,7 +18,7 @@
 
 • **miqroRCConfig**: *object* = null
 
-*Defined in [src/util/config.ts:5](https://github.com/claukers/miqro-core/blob/b302c87/src/util/config.ts#L5)*
+*Defined in [src/util/config.ts:5](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/config.ts#L5)*
 
 #### Type declaration:
 

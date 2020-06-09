@@ -16,9 +16,9 @@
 
 ### `Static` validateSession
 
-▸ **validateSession**(`session`: [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md), `logger`: any): *Promise‹boolean›*
+▸ **validateSession**(`session`: [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md), `logger`: Logger): *Promise‹boolean›*
 
-*Defined in [src/util/index.ts:65](https://github.com/claukers/miqro-core/blob/b302c87/src/util/index.ts#L65)*
+*Defined in [src/util/index.ts:67](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/index.ts#L67)*
 
 **Parameters:**
 
@@ -26,6 +26,6 @@ Name | Type |
 ------ | ------ |
 `session` | [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md) |
 `options` | [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md) |
-`logger` | any |
+`logger` | Logger |
 
 **Returns:** *Promise‹boolean›*

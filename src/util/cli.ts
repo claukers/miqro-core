@@ -6,7 +6,7 @@ export type CMDMapType = SimpleMapInterface<{ module: string; description: strin
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
-  public static cliFlow(cmds: CMDMapType, identifier: string, logger: Logger): void {
+  public static cliFlow(cmds: CMDMapType, identifier: string, logger: Logger | Console): void {
     try {
       CLIUtil.routeCMDModule(cmds, identifier, logger);
     } catch (e) {
@@ -17,7 +17,7 @@ export abstract class CLIUtil {
   }
 
   // noinspection SpellCheckingInspection
-  public static routeCMDModule(cmds: CMDMapType, identifier: string, logger: Logger): void {
+  public static routeCMDModule(cmds: CMDMapType, identifier: string, logger: Logger | Console): void {
     const cmdArg = process.argv[2];
     if (!cmdArg) {
       logger.info(`usage: ${identifier} <command> [args]`);
