@@ -1,11 +1,12 @@
 import {SimpleMapInterface} from "./util";
+import {Logger} from "winston";
 
 // noinspection SpellCheckingInspection
 export type CMDMapType = SimpleMapInterface<{ module: string; description: string }>
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
-  public static cliFlow(cmds: CMDMapType, identifier: string, logger): void {
+  public static cliFlow(cmds: CMDMapType, identifier: string, logger: Logger): void {
     try {
       CLIUtil.routeCMDModule(cmds, identifier, logger);
     } catch (e) {
@@ -16,7 +17,7 @@ export abstract class CLIUtil {
   }
 
   // noinspection SpellCheckingInspection
-  public static routeCMDModule(cmds: CMDMapType, identifier: string, logger): void {
+  public static routeCMDModule(cmds: CMDMapType, identifier: string, logger: Logger): void {
     const cmdArg = process.argv[2];
     if (!cmdArg) {
       logger.info(`usage: ${identifier} <command> [args]`);

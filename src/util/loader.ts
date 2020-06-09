@@ -23,7 +23,7 @@ export const defaultLogFormat = printf((info) => {
     `${text}`;
 });
 
-export const defaultLoggerFactory = (identifier): any => {
+export const defaultLoggerFactory = (identifier: string): any => {
   const level = process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL;
   const logFormat = defaultLogFormat;
   const transportList: any[] = [

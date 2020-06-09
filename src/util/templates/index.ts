@@ -69,7 +69,7 @@ node_modules/
 `;
 
 // noinspection SpellCheckingInspection
-export const mainjs = (servicePath): string => {
+export const mainjs = (servicePath: string): string => {
   // noinspection SpellCheckingInspection
   return `const express = require("express");
 const { Util } = require("@miqro/core");

@@ -1,7 +1,9 @@
-export {Util, SimpleMapInterface} from "./util";
 import {SessionInterface} from "../service/common";
 import {ParseOptionsError} from "./";
 import {ForbiddenError} from "./error";
+import {Logger} from "winston";
+
+export {Util, SimpleMapInterface} from "./util";
 
 export * from "./stopwatch";
 export * from "./error";
@@ -62,7 +64,7 @@ const policyCheck = (session: SessionInterface, options: GroupPolicyOptionsInter
 };
 
 export abstract class GroupPolicy {
-  public static async validateSession(session: SessionInterface, options: GroupPolicyOptionsInterface, logger): Promise<boolean> {
+  public static async validateSession(session: SessionInterface, options: GroupPolicyOptionsInterface, logger: Logger): Promise<boolean> {
     if (session === undefined || session.account === undefined || session.username === undefined) {
       throw new ParseOptionsError(`Invalid authentication!`);
     }

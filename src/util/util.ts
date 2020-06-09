@@ -1,7 +1,7 @@
 import {createHash} from "crypto";
 import {config, DotenvConfigOutput} from "dotenv";
 import {existsSync, readdirSync} from "fs";
-import {dirname, resolve, extname} from "path";
+import {dirname, extname, resolve} from "path";
 import {Container, Logger} from "winston";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
@@ -43,7 +43,7 @@ export interface SimpleMapInterface<T2> {
 let logger = null;
 
 export abstract class Util {
-  public static sha256(data): string {
+  public static sha256(data: string): string {
     return createHash("sha256").update(data, "utf8").digest("base64");
   }
 
@@ -151,7 +151,7 @@ export abstract class Util {
     });
   }
 
-  public static parseOptions(argName,
+  public static parseOptions(argName: string,
                              arg: { [name: string]: any },
                              optionsArray: {
                                name: string; type: string; arrayType?: string; required: boolean;
