@@ -1,9 +1,9 @@
 import {SessionInterface} from "./common";
 import {UnAuthorizedError, Util} from "../util";
-
-export * from "./common";
 import {inspect} from "util";
 import {Logger} from "winston";
+
+export * from "./common";
 
 // noinspection JSUnusedGlobalSymbols
 export interface VerifyTokenServiceInterface {
@@ -78,7 +78,7 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
         return null;
       }
     } catch (e) {
-      this.logger.error(`error verifying [${token}] [${inspect(e)}]`);
+      this.logger.error(`error verifying [${token}] [${e.response ? e.response.status : ""}][${e.config ? e.config.url : ""}][${e.message}]`);
       throw new UnAuthorizedError(`Fail to authenticate token!`);
     }
   }
