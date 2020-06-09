@@ -37,7 +37,7 @@
 
 ▪ **configLoaded**: *boolean* = false
 
-*Defined in [src/util/util.ts:240](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L240)*
+*Defined in [src/util/util.ts:240](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L240)*
 
 ## Methods
 
@@ -45,7 +45,7 @@
 
 ▸ **checkEnvVariables**(`requiredEnvVariables`: string[]): *void*
 
-*Defined in [src/util/util.ts:146](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L146)*
+*Defined in [src/util/util.ts:146](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L146)*
 
 **Parameters:**
 
@@ -61,7 +61,7 @@ ___
 
 ▸ **getComponentLogger**(`component?`: string): *Logger*
 
-*Defined in [src/util/util.ts:235](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L235)*
+*Defined in [src/util/util.ts:235](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L235)*
 
 **Parameters:**
 
@@ -77,7 +77,7 @@ ___
 
 ▸ **getConfig**(`silent`: boolean): *object*
 
-*Defined in [src/util/util.ts:103](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L103)*
+*Defined in [src/util/util.ts:103](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L103)*
 
 **Parameters:**
 
@@ -97,7 +97,7 @@ ___
 
 ▸ **getLogger**(`identifier`: string): *Logger*
 
-*Defined in [src/util/util.ts:216](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L216)*
+*Defined in [src/util/util.ts:216](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L216)*
 
 **Parameters:**
 
@@ -113,7 +113,7 @@ ___
 
 ▸ **loadConfig**(`silent`: boolean): *void*
 
-*Defined in [src/util/util.ts:139](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L139)*
+*Defined in [src/util/util.ts:139](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L139)*
 
 **Parameters:**
 
@@ -129,7 +129,7 @@ ___
 
 ▸ **overrideConfig**(`path`: string, `silent`: boolean, `combined?`: [SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string›): *DotenvConfigOutput[]*
 
-*Defined in [src/util/util.ts:79](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L79)*
+*Defined in [src/util/util.ts:79](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L79)*
 
 **Parameters:**
 
@@ -147,7 +147,7 @@ ___
 
 ▸ **parseOptions**(`argName`: string, `arg`: object, `optionsArray`: object[], `parserOption`: [OPTIONPARSERType](../modules/_util_util_.md#optionparsertype)): *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹any›*
 
-*Defined in [src/util/util.ts:154](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L154)*
+*Defined in [src/util/util.ts:154](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L154)*
 
 **Parameters:**
 
@@ -166,7 +166,7 @@ ___
 
 ▸ **request**(`options`: AxiosRequestConfig): *AxiosPromise*
 
-*Defined in [src/util/util.ts:54](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L54)*
+*Defined in [src/util/util.ts:54](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L54)*
 
 **Parameters:**
 
@@ -182,7 +182,7 @@ ___
 
 ▸ **setupInstanceEnv**(`serviceName`: string, `scriptPath`: string): *void*
 
-*Defined in [src/util/util.ts:66](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L66)*
+*Defined in [src/util/util.ts:66](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L66)*
 
 **Parameters:**
 
@@ -199,7 +199,7 @@ ___
 
 ▸ **setupSimpleEnv**(): *void*
 
-*Defined in [src/util/util.ts:62](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L62)*
+*Defined in [src/util/util.ts:62](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L62)*
 
 **Returns:** *void*
 
@@ -209,7 +209,7 @@ ___
 
 ▸ **sha256**(`data`: string): *string*
 
-*Defined in [src/util/util.ts:46](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L46)*
+*Defined in [src/util/util.ts:46](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L46)*
 
 **Parameters:**
 
@@ -225,7 +225,7 @@ ___
 
 ▸ **uuid**(): *string*
 
-*Defined in [src/util/util.ts:50](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L50)*
+*Defined in [src/util/util.ts:50](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L50)*
 
 **Returns:** *string*
 
@@ -235,22 +235,22 @@ ___
 
 ### ▪ **jwt**: *object*
 
-*Defined in [src/util/util.ts:58](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L58)*
+*Defined in [src/util/util.ts:58](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L58)*
 
 ###  decode
 
 • **decode**: *any*
 
-*Defined in [src/util/util.ts:59](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L59)*
+*Defined in [src/util/util.ts:59](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L59)*
 
 ###  sign
 
 • **sign**: *any*
 
-*Defined in [src/util/util.ts:59](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L59)*
+*Defined in [src/util/util.ts:59](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L59)*
 
 ###  verify
 
 • **verify**: *any*
 
-*Defined in [src/util/util.ts:59](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/util.ts#L59)*
+*Defined in [src/util/util.ts:59](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/util.ts#L59)*

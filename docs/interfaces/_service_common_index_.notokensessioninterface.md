@@ -22,7 +22,7 @@
 
 • **account**: *string*
 
-*Defined in [src/service/common/index.ts:2](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/common/index.ts#L2)*
+*Defined in [src/service/common/index.ts:2](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/common/index.ts#L2)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **groups**: *string[]*
 
-*Defined in [src/service/common/index.ts:4](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/common/index.ts#L4)*
+*Defined in [src/service/common/index.ts:4](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/common/index.ts#L4)*
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **username**: *string*
 
-*Defined in [src/service/common/index.ts:3](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/common/index.ts#L3)*
+*Defined in [src/service/common/index.ts:3](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/common/index.ts#L3)*

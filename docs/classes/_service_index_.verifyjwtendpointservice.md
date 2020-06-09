@@ -32,7 +32,7 @@
 
 \+ **new VerifyJWTEndpointService**(): *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*
 
-*Defined in [src/service/index.ts:23](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/index.ts#L23)*
+*Defined in [src/service/index.ts:23](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/index.ts#L23)*
 
 **Returns:** *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*
 
@@ -42,7 +42,7 @@
 
 • **logger**: *Logger* = null
 
-*Defined in [src/service/index.ts:23](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/index.ts#L23)*
+*Defined in [src/service/index.ts:23](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/index.ts#L23)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 ▪ **instance**: *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)* = null
 
-*Defined in [src/service/index.ts:15](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/index.ts#L15)*
+*Defined in [src/service/index.ts:15](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/index.ts#L15)*
 
 ## Methods
 
@@ -58,7 +58,7 @@ ___
 
 ▸ **verify**(`__namedParameters`: object): *Promise‹[SessionInterface](../interfaces/_service_common_index_.sessioninterface.md)›*
 
-*Defined in [src/service/index.ts:41](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/index.ts#L41)*
+*Defined in [src/service/index.ts:41](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/index.ts#L41)*
 
 **Parameters:**
 
@@ -76,6 +76,6 @@ ___
 
 ▸ **getInstance**(): *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*
 
-*Defined in [src/service/index.ts:17](https://github.com/claukers/miqro-core/blob/4ce290b/src/service/index.ts#L17)*
+*Defined in [src/service/index.ts:17](https://github.com/claukers/miqro-core/blob/c1853a2/src/service/index.ts#L17)*
 
 **Returns:** *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*

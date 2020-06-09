@@ -26,7 +26,7 @@
 
 \+ **new ParseOptionsError**(`message`: string): *[ParseOptionsError](_util_error_parsererror_.parseoptionserror.md)*
 
-*Defined in [src/util/error/parsererror.ts:3](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/error/parsererror.ts#L3)*
+*Defined in [src/util/error/parsererror.ts:3](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/error/parsererror.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/4ce290b/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/error/named.ts#L2)*
 
 ___
 
