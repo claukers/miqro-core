@@ -76,13 +76,12 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrideConfig(path: string, silent = false, combined?: SimpleMapInterface<string>): DotenvConfigOutput[] {
+  public static overrideConfig(path: string, combined?: SimpleMapInterface<string>): DotenvConfigOutput[] {
     const outputs: DotenvConfigOutput[] = [];
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
-      if (!silent)
-        logger.warn(`overriding config with [${path}].`);
+      logger.debug(`overriding config with [${path}].`);
       const overrideConfig = config({
         path
       });
@@ -100,7 +99,7 @@ export abstract class Util {
     return outputs;
   }
 
-  public static getConfig(silent = true): { combined: SimpleMapInterface<string>; outputs: DotenvConfigOutput[] } {
+  public static getConfig(): { combined: SimpleMapInterface<string>; outputs: DotenvConfigOutput[] } {
     const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
 
     let outputs: DotenvConfigOutput[] = [];
@@ -113,32 +112,29 @@ export abstract class Util {
         const configFilePath = resolve(configDirname, configFile);
         const ext = extname(configFilePath);
         if (ext === ".env") {
-          if (!silent)
-            logger.info(`loading ${configFilePath}`);
-          outputs = outputs.concat(Util.overrideConfig(configFilePath, silent, combined));
+          logger.debug(`loading ${configFilePath}`);
+          outputs = outputs.concat(Util.overrideConfig(configFilePath, combined));
         }
       }
 
       if (configFiles.length === 0) {
-        if (!silent)
-          logger.warn(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
+        logger.debug(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
       }
     } else {
-      if (!silent)
-        logger.warn(`Util.loadConfig nothing loaded [${configDirname}] dirname dont exist! Maybe you miss to run miqro-core init.`);
+      logger.debug(`Util.loadConfig nothing loaded [${configDirname}] dirname dont exist! Maybe you miss to run miqro-core init.`);
     }
 
     if (overridePath && existsSync(overridePath)) {
-      outputs = outputs.concat(Util.overrideConfig(overridePath, silent, combined));
+      outputs = outputs.concat(Util.overrideConfig(overridePath, combined));
     } else if (overridePath) {
       logger.warn(`nothing loaded from [${process.env.MIQRO_OVERRIDE_CONFIG_PATH}] env file doesnt exists!`);
     }
     return {combined, outputs};
   }
 
-  public static loadConfig(silent = false): void {
+  public static loadConfig(): void {
     if (!Util.configLoaded) {
-      Util.getConfig(silent);
+      Util.getConfig();
       Util.configLoaded = true;
     }
   }

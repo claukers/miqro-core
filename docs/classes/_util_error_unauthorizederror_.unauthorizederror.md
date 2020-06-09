@@ -26,7 +26,7 @@
 
 \+ **new UnAuthorizedError**(`message`: string): *[UnAuthorizedError](_util_error_unauthorizederror_.unauthorizederror.md)*
 
-*Defined in [src/util/error/unauthorizederror.ts:3](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/error/unauthorizederror.ts#L3)*
+*Defined in [src/util/error/unauthorizederror.ts:3](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/error/unauthorizederror.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/error/named.ts#L2)*
 
 ___
 

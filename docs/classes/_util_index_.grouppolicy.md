@@ -18,7 +18,7 @@
 
 ▸ **validateSession**(`session`: [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md), `logger`: Logger): *Promise‹boolean›*
 
-*Defined in [src/util/index.ts:67](https://github.com/claukers/miqro-core/blob/c1853a2/src/util/index.ts#L67)*
+*Defined in [src/util/index.ts:67](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/index.ts#L67)*
 
 **Parameters:**
 

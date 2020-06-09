@@ -7,7 +7,7 @@ if (process.argv.length !== 3) {
   throw new Error(`usage: miqro-core config`);
 }
 
-const configOut = Util.getConfig(true);
+const configOut = Util.getConfig();
 
 const config = configOut.combined;
 
