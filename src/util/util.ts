@@ -2,15 +2,13 @@ import {createHash} from "crypto";
 import {config, DotenvConfigOutput} from "dotenv";
 import {existsSync, readdirSync} from "fs";
 import {dirname, extname, resolve} from "path";
-import {Container, Logger} from "winston";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
-import {winstonConfig} from "./loader";
+import {getLoggerFactory} from "./loader";
 import {v4} from "uuid";
 import {decode, sign, verify} from "jsonwebtoken";
 import request, {AxiosPromise, AxiosRequestConfig} from "axios";
-
-const logContainer = new Container();
+import {Logger} from "./logger";
 
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
@@ -19,6 +17,8 @@ export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any"
 const isParseSimpleOption = (type: string): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
 };
+
+const logContainer = new Map<string, Logger>();
 
 const parseSimpleOption = (type: ParseSimpleType, value): boolean => {
   let isType;
@@ -214,18 +214,10 @@ export abstract class Util {
       throw new Error("Bad log identifier");
     }
     if (!logContainer.has(identifier)) {
-      const configMaker = winstonConfig();
-      const configO = configMaker(identifier);
-      logContainer.add(identifier, configO);
+      const factory = getLoggerFactory();
+      logContainer.set(identifier, factory(identifier));
     }
-    const loggerO = logContainer.get(identifier);
-    (loggerO as any).stream = {
-      write: (message): void => {
-        // use the 'info' log level so the output will be picked up by both transports (file and console)
-        loggerO.info(message.trim());
-      }
-    };
-    return loggerO;
+    return logContainer.get(identifier);
   }
 
   public static getComponentLogger(component?: string): Logger {

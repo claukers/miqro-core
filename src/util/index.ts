@@ -1,7 +1,7 @@
 import {SessionInterface} from "../service/common";
 import {ParseOptionsError} from "./";
 import {ForbiddenError} from "./error";
-import {Logger} from "winston";
+import {Logger} from "./logger";
 
 export {Util, SimpleMapInterface} from "./util";
 

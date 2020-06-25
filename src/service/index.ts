@@ -1,7 +1,7 @@
 import {SessionInterface} from "./common";
 import {UnAuthorizedError, Util} from "../util";
 import {inspect} from "util";
-import {Logger} from "winston";
+import {Logger} from "../util/logger";
 
 export * from "./common";
 
