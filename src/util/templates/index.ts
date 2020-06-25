@@ -10,7 +10,7 @@ LOG_FILE=./logs/dev.log
 
 export const featuresEnvFile = `####################
 ## features
-FEATURE_TOGGLE_BODYPARSER=true
+FEATURE_TOGGLE_BODY_PARSER=true
 #FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
 `;
 
@@ -43,10 +43,10 @@ HTTPS_ENABLE=false
 #HTTPS_CERT=
 ####################
 ## body-parser
-BODYPARSER_INFLATE=true
-BODYPARSER_LIMIT="100kb"
-BODYPARSER_STRICT=true
-BODYPARSER_TYPE="application/json"
+BODY_PARSER_INFLATE=true
+BODY_PARSER_LIMIT="100kb"
+BODY_PARSER_STRICT=true
+BODY_PARSER_TYPE="application/json"
 `;
 
 export const authEnvFile = `####################
