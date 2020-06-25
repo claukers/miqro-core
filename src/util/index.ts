@@ -6,6 +6,7 @@ import {Logger} from "./logger";
 export {Util, SimpleMapInterface} from "./util";
 
 export * from "./stopwatch";
+export * from "./logger";
 export * from "./error";
 export * from "./cli";
 export * from "./loader";
