@@ -1,9 +1,6 @@
-import {describe, it, before, after} from 'mocha';
+import {after, before, describe, it} from 'mocha';
 import {expect} from 'chai';
-import {NoTokenSessionInterface} from "../src/service/common";
-import {sign} from "jsonwebtoken";
 import * as express from "express";
-import {Util} from "../src/util";
 
 process.env.TOKEN_HEADER = "Authorization";
 
@@ -27,7 +24,8 @@ describe(`verifytokenendpointservice func tests`, () => {
         groups: ["aldf", "sd2"]
       };
       const fakeSecret = "secret";
-      const goodToken1 = Util.jwt.sign(fakeSession1, fakeSecret);
+      const jwt = require("jsonwebtoken");
+      const goodToken1 = jwt.sign(fakeSession1, fakeSecret);
 
       let fakeValidate = null;
 
@@ -65,7 +63,7 @@ describe(`verifytokenendpointservice func tests`, () => {
               req.headers[process.env.TOKEN_HEADER.toLowerCase()] :
               req.query[process.env.TOKEN_QUERY];
             expect(token).to.be.equals(goodToken1);
-            const verified = Util.jwt.verify(token, fakeSecret);
+            const verified = jwt.verify(token, fakeSecret);
             expect(verified.username).to.be.equals(fakeSession1.username);
             expect(verified.account).to.be.equals(fakeSession1.account);
             expect(verified.groups.length).to.be.equals(fakeSession1.groups.length);

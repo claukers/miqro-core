@@ -5,6 +5,9 @@ import {Logger} from "../util/logger";
 
 export * from "./common";
 
+const jwtModule = "jsonwebtoken";
+const requestModule = "axios";
+
 // noinspection JSUnusedGlobalSymbols
 export interface VerifyTokenServiceInterface {
   verify(args: { token: string }): Promise<SessionInterface>;
@@ -25,6 +28,7 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
   constructor() {
     Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD"]);
     Util.checkEnvVariables(["TOKEN_VERIFY_LOCATION"]);
+    Util.checkModules([jwtModule, requestModule]);
     switch (process.env.TOKEN_VERIFY_LOCATION) {
       case "header":
         Util.checkEnvVariables(["TOKEN_HEADER"]);
@@ -40,11 +44,12 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
 
   public async verify({token}: { token: string }): Promise<SessionInterface> {
     try {
+      const {request} = require(requestModule);
       this.logger.debug(`verifying [${token}] on [${process.env.TOKEN_VERIFY_ENDPOINT}].header[${process.env.TOKEN_HEADER}]`);
       let response = null;
       switch (process.env.TOKEN_VERIFY_LOCATION) {
         case "header":
-          response = await Util.request({
+          response = await request({
             url: `${process.env.TOKEN_VERIFY_ENDPOINT}`,
             headers: {
               [process.env.TOKEN_HEADER]: token
@@ -53,7 +58,7 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
           });
           break;
         case "query":
-          response = await Util.request({
+          response = await request({
             url: `${process.env.TOKEN_VERIFY_ENDPOINT}?${process.env.TOKEN_QUERY}=${token}`,
             method: `${process.env.TOKEN_VERIFY_ENDPOINT_METHOD}` as any
           });
@@ -62,7 +67,8 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
           throw new Error(`TOKEN_VERIFY_LOCATION=${process.env.TOKEN_VERIFY_LOCATION} not supported use (header or query)`);
       }
       if (response) {
-        const session = Util.jwt.decode(token);
+        const jwt = require(jwtModule);
+        const session = jwt.decode(token);
         Util.parseOptions("session", session, [
           {name: "username", required: true, type: "string"},
           {name: "account", required: true, type: "string"},

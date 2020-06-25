@@ -1,18 +1,19 @@
-import {createHash} from "crypto";
-import {config, DotenvConfigOutput} from "dotenv";
 import {existsSync, readdirSync} from "fs";
 import {dirname, extname, resolve} from "path";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {getLoggerFactory} from "./loader";
-import {v4} from "uuid";
-import {decode, sign, verify} from "jsonwebtoken";
-import request, {AxiosPromise, AxiosRequestConfig} from "axios";
 import {Logger} from "./logger";
+
+const configModule = "dotenv";
 
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
 export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
+
+export interface ConfigOutput {
+
+}
 
 const isParseSimpleOption = (type: string): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
@@ -43,22 +44,6 @@ export interface SimpleMapInterface<T2> {
 let logger = null;
 
 export abstract class Util {
-  public static sha256(data: string): string {
-    return createHash("sha256").update(data, "utf8").digest("base64");
-  }
-
-  public static uuid(): string {
-    return v4();
-  }
-
-  public static request(options: AxiosRequestConfig): AxiosPromise {
-    return request(options);
-  }
-
-  public static jwt = {
-    decode, sign, verify
-  };
-
   public static setupSimpleEnv(): void {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
@@ -76,8 +61,10 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrideConfig(path: string, combined?: SimpleMapInterface<string>): DotenvConfigOutput[] {
-    const outputs: DotenvConfigOutput[] = [];
+  public static overrideConfig(path: string, combined?: SimpleMapInterface<string>): ConfigOutput[] {
+    const outputs: ConfigOutput[] = [];
+    Util.checkModules([configModule]);
+    const {config} = require(configModule);
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
@@ -99,10 +86,10 @@ export abstract class Util {
     return outputs;
   }
 
-  public static getConfig(): { combined: SimpleMapInterface<string>; outputs: DotenvConfigOutput[] } {
+  public static getConfig(): { combined: SimpleMapInterface<string>; outputs: ConfigOutput[] } {
     const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
 
-    let outputs: DotenvConfigOutput[] = [];
+    let outputs: ConfigOutput[] = [];
     const combined = {};
 
     const configDirname = ConfigPathResolver.getConfigDirname();
@@ -137,6 +124,16 @@ export abstract class Util {
       Util.getConfig();
       Util.configLoaded = true;
     }
+  }
+
+  public static checkModules(requiredModules: string[]): void {
+    requiredModules.forEach((module) => {
+      try {
+        require(module);
+      } catch (e) {
+        throw new Error(`module [${module}] not installed!`);
+      }
+    });
   }
 
   public static checkEnvVariables(requiredEnvVariables: string[]): void {
