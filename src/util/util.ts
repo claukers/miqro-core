@@ -131,7 +131,7 @@ export abstract class Util {
       try {
         require(module);
       } catch (e) {
-        throw new Error(`module [${module}] not installed!. [${e.message}]`);
+        throw new ConfigFileNotFoundError(`module [${module}] not installed!. [${e.message}].`);
       }
     });
   }
