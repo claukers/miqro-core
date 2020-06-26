@@ -21,6 +21,10 @@ export abstract class ConfigPathResolver {
     return resolve(ConfigPathResolver.getBaseDirname(), `.miqrorc`);
   }
 
+  public static getSequelizeRCFilePath(): string {
+    return resolve(ConfigPathResolver.getBaseDirname(), `.sequelizerc`);
+  }
+
   public static getServiceDirname(): string {
     ConfigPathResolver.loadMiqroRC();
     if (miqroRCConfig) {
@@ -29,6 +33,7 @@ export abstract class ConfigPathResolver {
       return resolve(ConfigPathResolver.getSrcDirname(), `services`);
     }
   }
+
 
   public static getConfigDirname(): string {
     ConfigPathResolver.loadMiqroRC();
