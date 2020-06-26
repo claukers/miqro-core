@@ -17,9 +17,9 @@
 
 ### `Static` cliFlow
 
-▸ **cliFlow**(`cmds`: [CMDMapType](../modules/_util_cli_.md#cmdmaptype), `identifier`: string, `logger`: Logger | Console): *void*
+▸ **cliFlow**(`cmds`: [CMDMapType](../modules/_util_cli_.md#cmdmaptype), `identifier`: string, `logger`: [Logger](../interfaces/_util_logger_.logger.md) | Console): *void*
 
-*Defined in [src/util/cli.ts:9](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/cli.ts#L9)*
+*Defined in [src/util/cli.ts:9](https://github.com/claukers/miqro-core/blob/65c3631/src/util/cli.ts#L9)*
 
 **Parameters:**
 
@@ -27,7 +27,7 @@ Name | Type |
 ------ | ------ |
 `cmds` | [CMDMapType](../modules/_util_cli_.md#cmdmaptype) |
 `identifier` | string |
-`logger` | Logger &#124; Console |
+`logger` | [Logger](../interfaces/_util_logger_.logger.md) &#124; Console |
 
 **Returns:** *void*
 
@@ -35,9 +35,9 @@ ___
 
 ### `Static` routeCMDModule
 
-▸ **routeCMDModule**(`cmds`: [CMDMapType](../modules/_util_cli_.md#cmdmaptype), `identifier`: string, `logger`: Logger | Console): *void*
+▸ **routeCMDModule**(`cmds`: [CMDMapType](../modules/_util_cli_.md#cmdmaptype), `identifier`: string, `logger`: [Logger](../interfaces/_util_logger_.logger.md) | Console): *void*
 
-*Defined in [src/util/cli.ts:20](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/cli.ts#L20)*
+*Defined in [src/util/cli.ts:24](https://github.com/claukers/miqro-core/blob/65c3631/src/util/cli.ts#L24)*
 
 **Parameters:**
 
@@ -45,6 +45,6 @@ Name | Type |
 ------ | ------ |
 `cmds` | [CMDMapType](../modules/_util_cli_.md#cmdmaptype) |
 `identifier` | string |
-`logger` | Logger &#124; Console |
+`logger` | [Logger](../interfaces/_util_logger_.logger.md) &#124; Console |
 
 **Returns:** *void*

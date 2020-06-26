@@ -10,17 +10,23 @@
 * [CMDMapType](_util_index_.md#cmdmaptype)
 * [ConfigFileNotFoundError](_util_index_.md#configfilenotfounderror)
 * [ConfigPathResolver](_util_index_.md#configpathresolver)
+* [ConsoleLogger](_util_index_.md#consolelogger)
 * [FeatureToggle](_util_index_.md#featuretoggle)
 * [ForbiddenError](_util_index_.md#forbiddenerror)
+* [Formatter](_util_index_.md#formatter)
+* [LogLevel](_util_index_.md#loglevel)
+* [Logger](_util_index_.md#logger)
+* [LoggerFactory](_util_index_.md#loggerfactory)
 * [MethodNotImplementedError](_util_index_.md#methodnotimplementederror)
 * [ParseOptionsError](_util_index_.md#parseoptionserror)
 * [SimpleMapInterface](_util_index_.md#simplemapinterface)
 * [StopWatch](_util_index_.md#stopwatch)
 * [UnAuthorizedError](_util_index_.md#unauthorizederror)
 * [Util](_util_index_.md#util)
-* [defaultLogFormat](_util_index_.md#defaultlogformat)
 * [defaultLoggerFactory](_util_index_.md#defaultloggerfactory)
-* [winstonConfig](_util_index_.md#winstonconfig)
+* [defaultLoggerFormat](_util_index_.md#defaultloggerformat)
+* [getLoggerFactory](_util_index_.md#getloggerfactory)
+* [loadSequelizeRC](_util_index_.md#loadsequelizerc)
 
 ### Classes
 
@@ -65,6 +71,12 @@ ___
 
 ___
 
+###  ConsoleLogger
+
+• **ConsoleLogger**:
+
+___
+
 ###  FeatureToggle
 
 • **FeatureToggle**:
@@ -74,6 +86,30 @@ ___
 ###  ForbiddenError
 
 • **ForbiddenError**:
+
+___
+
+###  Formatter
+
+• **Formatter**:
+
+___
+
+###  LogLevel
+
+• **LogLevel**:
+
+___
+
+###  Logger
+
+• **Logger**:
+
+___
+
+###  LoggerFactory
+
+• **LoggerFactory**:
 
 ___
 
@@ -113,21 +149,27 @@ ___
 
 ___
 
-###  defaultLogFormat
-
-• **defaultLogFormat**:
-
-___
-
 ###  defaultLoggerFactory
 
 • **defaultLoggerFactory**:
 
 ___
 
-###  winstonConfig
+###  defaultLoggerFormat
 
-• **winstonConfig**:
+• **defaultLoggerFormat**:
+
+___
+
+###  getLoggerFactory
+
+• **getLoggerFactory**:
+
+___
+
+###  loadSequelizeRC
+
+• **loadSequelizeRC**:
 
 ## Type aliases
 
@@ -135,7 +177,7 @@ ___
 
 Ƭ **GroupPolicyInterface**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:15](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/index.ts#L15)*
+*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/65c3631/src/util/index.ts#L16)*
 
 ___
 
@@ -143,7 +185,7 @@ ___
 
 Ƭ **GroupPolicyItemInterface**: *string | string[]*
 
-*Defined in [src/util/index.ts:17](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/index.ts#L17)*
+*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/65c3631/src/util/index.ts#L18)*
 
 ## Functions
 
@@ -151,7 +193,7 @@ ___
 
 ▸ **policyCheck**(`session`: [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)): *boolean*
 
-*Defined in [src/util/index.ts:24](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/index.ts#L24)*
+*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/65c3631/src/util/index.ts#L25)*
 
 **Parameters:**
 

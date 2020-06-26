@@ -4,75 +4,27 @@
 
 ## Index
 
-### Variables
+### Type aliases
 
-* [combine](_util_loader_.md#combine)
-* [defaultLogFormat](_util_loader_.md#const-defaultlogformat)
-* [label](_util_loader_.md#label)
-* [printf](_util_loader_.md#printf)
-* [timestamp](_util_loader_.md#timestamp)
+* [LoggerFactory](_util_loader_.md#loggerfactory)
 
 ### Functions
 
 * [defaultLoggerFactory](_util_loader_.md#const-defaultloggerfactory)
-* [winstonConfig](_util_loader_.md#const-winstonconfig)
+* [getLoggerFactory](_util_loader_.md#const-getloggerfactory)
+* [loadSequelizeRC](_util_loader_.md#const-loadsequelizerc)
 
-## Variables
+## Type aliases
 
-###  combine
+###  LoggerFactory
 
-• **combine**: *combine*
+Ƭ **LoggerFactory**: *function*
 
-*Defined in [src/util/loader.ts:9](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L9)*
+*Defined in [src/util/loader.ts:11](https://github.com/claukers/miqro-core/blob/65c3631/src/util/loader.ts#L11)*
 
-___
+#### Type declaration:
 
-### `Const` defaultLogFormat
-
-• **defaultLogFormat**: *Format‹›* = printf((info) => {
-  const pid = process.pid;
-  const component = info.label;
-  const level = info.level;
-  const text = info.message;
-  return `${new Date(info.timestamp).getTime()} ${pid} ` +
-    `[${component}] ` +
-    `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
-    `${text}`;
-})
-
-*Defined in [src/util/loader.ts:15](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L15)*
-
-___
-
-###  label
-
-• **label**: *label*
-
-*Defined in [src/util/loader.ts:10](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L10)*
-
-___
-
-###  printf
-
-• **printf**: *printf*
-
-*Defined in [src/util/loader.ts:11](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L11)*
-
-___
-
-###  timestamp
-
-• **timestamp**: *timestamp*
-
-*Defined in [src/util/loader.ts:12](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L12)*
-
-## Functions
-
-### `Const` defaultLoggerFactory
-
-▸ **defaultLoggerFactory**(`identifier`: string): *any*
-
-*Defined in [src/util/loader.ts:26](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L26)*
+▸ (`identifier`: string): *[Logger](../interfaces/_util_logger_.logger.md)*
 
 **Parameters:**
 
@@ -80,14 +32,48 @@ Name | Type |
 ------ | ------ |
 `identifier` | string |
 
-**Returns:** *any*
+## Functions
+
+### `Const` defaultLoggerFactory
+
+▸ **defaultLoggerFactory**(`identifier`: string): *[Logger](../interfaces/_util_logger_.logger.md)*
+
+*Defined in [src/util/loader.ts:13](https://github.com/claukers/miqro-core/blob/65c3631/src/util/loader.ts#L13)*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`identifier` | string |
+
+**Returns:** *[Logger](../interfaces/_util_logger_.logger.md)*
 
 ___
 
-### `Const` winstonConfig
+### `Const` getLoggerFactory
 
-▸ **winstonConfig**(): *any*
+▸ **getLoggerFactory**(): *[LoggerFactory](_util_loader_.md#loggerfactory)*
 
-*Defined in [src/util/loader.ts:60](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/loader.ts#L60)*
+*Defined in [src/util/loader.ts:52](https://github.com/claukers/miqro-core/blob/65c3631/src/util/loader.ts#L52)*
 
-**Returns:** *any*
+**Returns:** *[LoggerFactory](_util_loader_.md#loggerfactory)*
+
+___
+
+### `Const` loadSequelizeRC
+
+▸ **loadSequelizeRC**(): *object*
+
+*Defined in [src/util/loader.ts:19](https://github.com/claukers/miqro-core/blob/65c3631/src/util/loader.ts#L19)*
+
+**Returns:** *object*
+
+* **dbConfigFilePath**: *string*
+
+* **migrationsFolder**: *string*
+
+* **modelsFolder**: *string*
+
+* **seedersFolder**: *string*
+
+* **sequelizercPath**: *any*

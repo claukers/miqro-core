@@ -16,7 +16,7 @@
 
 • **config**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string›* = configOut.combined
 
-*Defined in [src/cli/config.ts:12](https://github.com/claukers/miqro-core/blob/45c7f28/src/cli/config.ts#L12)*
+*Defined in [src/cli/config.ts:12](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/config.ts#L12)*
 
 ___
 
@@ -24,13 +24,13 @@ ___
 
 • **configOut**: *object* = Util.getConfig()
 
-*Defined in [src/cli/config.ts:10](https://github.com/claukers/miqro-core/blob/45c7f28/src/cli/config.ts#L10)*
+*Defined in [src/cli/config.ts:10](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/config.ts#L10)*
 
 #### Type declaration:
 
 * **combined**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string›*
 
-* **outputs**: *DotenvConfigOutput[]*
+* **outputs**: *[ConfigOutput](_util_util_.md#configoutput)[]*
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **logger**: *Console* = console
 
-*Defined in [src/cli/config.ts:3](https://github.com/claukers/miqro-core/blob/45c7f28/src/cli/config.ts#L3)*
+*Defined in [src/cli/config.ts:3](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/config.ts#L3)*

@@ -49,7 +49,7 @@ TOKEN_HEADER=Authorization
 TOKEN_VERIFY_ENDPOINT_METHOD=GET
 `
 
-*Defined in [src/util/templates/index.ts:52](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L52)*
+*Defined in [src/util/templates/index.ts:55](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L55)*
 
 ___
 
@@ -91,7 +91,7 @@ DB_STORAGE=./dev.sqlite3
 DB_DROPTABLES=false
 `
 
-*Defined in [src/util/templates/index.ts:17](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L17)*
+*Defined in [src/util/templates/index.ts:20](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L20)*
 
 ___
 
@@ -107,10 +107,10 @@ HTTPS_ENABLE=false
 #HTTPS_CERT=
 ####################
 ## body-parser
-BODYPARSER_INFLATE=true
-BODYPARSER_LIMIT="100kb"
-BODYPARSER_STRICT=true
-BODYPARSER_TYPE="application/json"
+BODY_PARSER_INFLATE=true
+BODY_PARSER_LIMIT="100kb"
+BODY_PARSER_STRICT=true
+BODY_PARSER_TYPE="application/json"
 "* = `####################
 ## express
 PORT=8080
@@ -121,13 +121,13 @@ HTTPS_ENABLE=false
 #HTTPS_CERT=
 ####################
 ## body-parser
-BODYPARSER_INFLATE=true
-BODYPARSER_LIMIT="100kb"
-BODYPARSER_STRICT=true
-BODYPARSER_TYPE="application/json"
+BODY_PARSER_INFLATE=true
+BODY_PARSER_LIMIT="100kb"
+BODY_PARSER_STRICT=true
+BODY_PARSER_TYPE="application/json"
 `
 
-*Defined in [src/util/templates/index.ts:36](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L36)*
+*Defined in [src/util/templates/index.ts:39](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L39)*
 
 ___
 
@@ -135,15 +135,21 @@ ___
 
 • **featuresEnvFile**: *"####################
 ## features
-FEATURE_TOGGLE_BODYPARSER=true
+FEATURE_TOGGLE_DISABLE_POWERED=true
+FEATURE_TOGGLE_REQUEST_UUID=true
+FEATURE_TOGGLE_MORGAN=true
+FEATURE_TOGGLE_BODY_PARSER=true
 #FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
 "* = `####################
 ## features
-FEATURE_TOGGLE_BODYPARSER=true
+FEATURE_TOGGLE_DISABLE_POWERED=true
+FEATURE_TOGGLE_REQUEST_UUID=true
+FEATURE_TOGGLE_MORGAN=true
+FEATURE_TOGGLE_BODY_PARSER=true
 #FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
 `
 
-*Defined in [src/util/templates/index.ts:11](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L11)*
+*Defined in [src/util/templates/index.ts:11](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L11)*
 
 ___
 
@@ -157,7 +163,7 @@ node_modules/
 *.sqlite3
 `
 
-*Defined in [src/util/templates/index.ts:66](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L66)*
+*Defined in [src/util/templates/index.ts:69](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L69)*
 
 ___
 
@@ -177,7 +183,7 @@ LOG_FILE=./logs/dev.log
 #LOG_FILE_TRACE=./logs/dev-trace.log
 `
 
-*Defined in [src/util/templates/index.ts:3](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L3)*
+*Defined in [src/util/templates/index.ts:3](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L3)*
 
 ## Functions
 
@@ -185,7 +191,7 @@ LOG_FILE=./logs/dev.log
 
 ▸ **indexjs**(): *string*
 
-*Defined in [src/util/templates/index.ts:93](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L93)*
+*Defined in [src/util/templates/index.ts:96](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L96)*
 
 **Returns:** *string*
 
@@ -195,7 +201,7 @@ ___
 
 ▸ **mainjs**(`servicePath`: string): *string*
 
-*Defined in [src/util/templates/index.ts:72](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L72)*
+*Defined in [src/util/templates/index.ts:75](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L75)*
 
 **Parameters:**
 
@@ -211,7 +217,7 @@ ___
 
 ▸ **servicejs**(`serviceName`: string): *string*
 
-*Defined in [src/util/templates/index.ts:123](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L123)*
+*Defined in [src/util/templates/index.ts:126](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L126)*
 
 **Parameters:**
 
@@ -227,58 +233,58 @@ Name | Type |
 
 ### ▪ **templates**: *object*
 
-*Defined in [src/util/templates/index.ts:147](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L147)*
+*Defined in [src/util/templates/index.ts:150](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L150)*
 
 ###  authEnvFile
 
 • **authEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:153](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L153)*
+*Defined in [src/util/templates/index.ts:156](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L156)*
 
 ###  dbEnvFile
 
 • **dbEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:154](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L154)*
+*Defined in [src/util/templates/index.ts:157](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L157)*
 
 ###  expressEnvFile
 
 • **expressEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:155](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L155)*
+*Defined in [src/util/templates/index.ts:158](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L158)*
 
 ###  featuresEnvFile
 
 • **featuresEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:156](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L156)*
+*Defined in [src/util/templates/index.ts:159](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L159)*
 
 ###  gitignore
 
 • **gitignore**: *string*
 
-*Defined in [src/util/templates/index.ts:148](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L148)*
+*Defined in [src/util/templates/index.ts:151](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L151)*
 
 ###  indexjs
 
 • **indexjs**: *indexjs*
 
-*Defined in [src/util/templates/index.ts:150](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L150)*
+*Defined in [src/util/templates/index.ts:153](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L153)*
 
 ###  logEnvFile
 
 • **logEnvFile**: *string*
 
-*Defined in [src/util/templates/index.ts:152](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L152)*
+*Defined in [src/util/templates/index.ts:155](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L155)*
 
 ###  mainjs
 
 • **mainjs**: *mainjs*
 
-*Defined in [src/util/templates/index.ts:151](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L151)*
+*Defined in [src/util/templates/index.ts:154](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L154)*
 
 ###  servicejs
 
 • **servicejs**: *[servicejs](_util_templates_index_.md#const-servicejs)*
 
-*Defined in [src/util/templates/index.ts:149](https://github.com/claukers/miqro-core/blob/45c7f28/src/util/templates/index.ts#L149)*
+*Defined in [src/util/templates/index.ts:152](https://github.com/claukers/miqro-core/blob/65c3631/src/util/templates/index.ts#L152)*
