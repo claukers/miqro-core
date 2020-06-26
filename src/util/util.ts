@@ -11,10 +11,6 @@ const configModule = "dotenv";
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
 export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
 
-export interface ConfigOutput {
-
-}
-
 const isParseSimpleOption = (type: string): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
 };
@@ -41,6 +37,8 @@ export interface SimpleMapInterface<T2> {
   [word: string]: T2;
 }
 
+export type ConfigOutput = SimpleMapInterface<string>;
+
 let logger = null;
 
 export abstract class Util {
@@ -63,6 +61,7 @@ export abstract class Util {
 
   public static overrideConfig(path: string, combined?: SimpleMapInterface<string>): ConfigOutput[] {
     const outputs: ConfigOutput[] = [];
+    /* eslint-disable  @typescript-eslint/no-var-requires */
     Util.checkModules([configModule]);
     const {config} = require(configModule);
     if (!existsSync(path)) {

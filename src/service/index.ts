@@ -49,6 +49,7 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
 
   public async verify({token}: { token: string }): Promise<SessionInterface> {
     try {
+      /* eslint-disable  @typescript-eslint/no-var-requires */
       const {request} = require(requestModule);
       this.logger.debug(`verifying [${token}] on [${process.env.TOKEN_VERIFY_ENDPOINT}].header[${process.env.TOKEN_HEADER}]`);
       let response = null;
@@ -72,6 +73,7 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
           throw new Error(`TOKEN_VERIFY_LOCATION=${process.env.TOKEN_VERIFY_LOCATION} not supported use (header or query)`);
       }
       if (response) {
+        /* eslint-disable  @typescript-eslint/no-var-requires */
         const jwt = require(jwtModule);
         const session = jwt.decode(token);
         Util.parseOptions("session", session, [

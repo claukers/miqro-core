@@ -10,6 +10,9 @@ LOG_FILE=./logs/dev.log
 
 export const featuresEnvFile = `####################
 ## features
+FEATURE_TOGGLE_DISABLE_POWERED=true
+FEATURE_TOGGLE_REQUEST_UUID=true
+FEATURE_TOGGLE_MORGAN=true
 FEATURE_TOGGLE_BODY_PARSER=true
 #FEATURE_TOGGLE_MY_CUSTOM_FEATURE=true
 `;

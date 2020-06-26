@@ -47,26 +47,32 @@ export class ConsoleLogger implements Logger {
     });
   }
 
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public debug(message?: any, ...optionalParams: any[]): void {
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP["debug"] ? console.debug(this._formatter("debug", format(message, ...optionalParams))) : undefined;
   }
 
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public error(message?: any, ...optionalParams: any[]): void {
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP["error"] ? console.debug(this._formatter("error", format(message, ...optionalParams))) : undefined;
   }
 
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public info(message?: any, ...optionalParams: any[]): void {
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP["info"] ? console.debug(this._formatter("info", format(message, ...optionalParams))) : undefined;
   }
 
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public log(message?: any, ...optionalParams: any[]): void {
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP["info"] ? console.debug(this._formatter("info", format(message, ...optionalParams))) : undefined;
   }
 
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public trace(message?: any, ...optionalParams: any[]): void {
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP["trace"] ? console.debug(this._formatter("trace", format(message, ...optionalParams))) : undefined;
   }
 
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public warn(message?: any, ...optionalParams: any[]): void {
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP["warn"] ? console.debug(this._formatter("warn", format(message, ...optionalParams))) : undefined;
   }

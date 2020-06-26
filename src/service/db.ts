@@ -37,8 +37,10 @@ export class Database extends EventEmitter {
     Util.checkEnvVariables(requiredEnvVariables);
     const paths = loadSequelizeRC();
     Util.checkModules([sequelizeModule, paths.modelsFolder]);
+    /* eslint-disable  @typescript-eslint/no-var-requires */
     const models = require(paths.modelsFolder);
     this.sequelize = models.sequelize;
+    /* eslint-disable  @typescript-eslint/no-var-requires */
     const {Op} = require(sequelizeModule);
     this.Op = Op;
     (this.sequelize as any).log = (text): void => {
