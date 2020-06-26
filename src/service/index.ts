@@ -5,6 +5,10 @@ import {Logger} from "../util/logger";
 
 export * from "./common";
 export * from "./db";
+export * from "./model";
+export * from "./deleted";
+export * from "./postlist";
+
 
 const jwtModule = "jsonwebtoken";
 const requestModule = "axios";

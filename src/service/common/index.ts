@@ -7,3 +7,5 @@ export interface NoTokenSessionInterface {
 export interface SessionInterface extends NoTokenSessionInterface {
   token: string;
 }
+export * from "./model";
+export * from "./amodel";
