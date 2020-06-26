@@ -4,6 +4,7 @@ import {inspect} from "util";
 import {Logger} from "../util/logger";
 
 export * from "./common";
+export * from "./db";
 
 const jwtModule = "jsonwebtoken";
 const requestModule = "axios";
