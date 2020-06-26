@@ -39,7 +39,8 @@ export class Database extends EventEmitter {
     Util.checkModules([sequelizeModule, paths.modelsFolder]);
     const models = require(paths.modelsFolder);
     this.sequelize = models.sequelize;
-    this.Op = models.Sequelize.Op;
+    const {Op} = require(sequelizeModule);
+    this.Op = Op;
     (this.sequelize as any).log = (text): void => {
       logger.debug(text);
     };
