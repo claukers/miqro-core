@@ -31,8 +31,7 @@ export class VerifyJWTEndpointService implements VerifyTokenServiceInterface {
   protected logger: Logger = null;
 
   constructor() {
-    Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD"]);
-    Util.checkEnvVariables(["TOKEN_VERIFY_LOCATION"]);
+    Util.checkEnvVariables(["TOKEN_VERIFY_ENDPOINT", "TOKEN_VERIFY_ENDPOINT_METHOD", "TOKEN_VERIFY_LOCATION"]);
     Util.checkModules([jwtModule, requestModule]);
     switch (process.env.TOKEN_VERIFY_LOCATION) {
       case "header":
