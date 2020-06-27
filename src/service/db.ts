@@ -35,8 +35,9 @@ export class Database extends EventEmitter {
     // noinspection SpellCheckingInspection
     const requiredEnvVariables = ["DB_DROPTABLES"];
     Util.checkEnvVariables(requiredEnvVariables);
+    Util.checkModules([sequelizeModule]);
     const paths = loadSequelizeRC();
-    Util.checkModules([sequelizeModule, paths.modelsFolder]);
+    Util.checkModules([paths.modelsFolder]);
     /* eslint-disable  @typescript-eslint/no-var-requires */
     const models = require(paths.modelsFolder);
     this.sequelize = models.sequelize;
