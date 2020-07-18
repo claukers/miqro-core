@@ -2,8 +2,8 @@
 
 export const logEnvFile = `####################
 ## logging
-LOG_LEVEL="info"
-LOG_LEVEL_Sequelize="error"
+LOG_LEVEL=info
+LOG_LEVEL_Sequelize=error
 LOG_FILE=./logs/dev.log
 `;
 
@@ -26,7 +26,7 @@ DB_USER=
 # should be loadad from a secret manager into process.env.DB_PASS
 DB_PASS=
 DB_DIALECT=sqlite
-DB_DIALECT_SSL="true"
+DB_DIALECT_SSL=true
 DB_POOL_MAX=5
 DB_POOL_MIN=0
 DB_POOL_ACQUIRE=30000
@@ -46,9 +46,9 @@ HTTPS_ENABLE=false
 ####################
 ## body-parser
 BODY_PARSER_INFLATE=true
-BODY_PARSER_LIMIT="100kb"
+BODY_PARSER_LIMIT=100kb
 BODY_PARSER_STRICT=true
-BODY_PARSER_TYPE="application/json"
+BODY_PARSER_TYPE=application/json
 `;
 
 export const authEnvFile = `####################
