@@ -3,7 +3,7 @@ import {existsSync} from "fs";
 import {resolve} from "path";
 import {Util} from "./util";
 import {ConfigPathResolver} from "./config";
-import {ConsoleLogger, Logger, LogLevel} from "./logger";
+import {DefaultLogger, Logger, LogLevel} from "./logger";
 import {ConfigFileNotFoundError} from "./error";
 
 // noinspection SpellCheckingInspection
@@ -12,7 +12,7 @@ export type LoggerFactory = (identifier: string) => Logger;
 
 export const defaultLoggerFactory: LoggerFactory = (identifier: string): Logger => {
   const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info") as LogLevel;
-  return new ConsoleLogger(identifier, level);
+  return new DefaultLogger(identifier, level);
 };
 
 // noinspection SpellCheckingInspection

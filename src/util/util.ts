@@ -1,11 +1,9 @@
-import {existsSync, readdirSync} from "fs";
+import {existsSync, readdirSync, readFileSync} from "fs";
 import {dirname, extname, resolve} from "path";
 import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {getLoggerFactory} from "./loader";
 import {Logger} from "./logger";
-
-const configModule = "dotenv";
 
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
@@ -61,25 +59,24 @@ export abstract class Util {
 
   public static overrideConfig(path: string, combined?: SimpleMapInterface<string>): ConfigOutput[] {
     const outputs: ConfigOutput[] = [];
-    /* eslint-disable  @typescript-eslint/no-var-requires */
-    Util.checkModules([configModule]);
-    const {config} = require(configModule);
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
       logger.debug(`overriding config with [${path}].`);
-      const overrideConfig = config({
-        path
-      });
+      const overrideConfig: ConfigOutput = {};
+      readFileSync(path).toString().split("\n")
+        .filter(value => value && value.length > 0 && value.substr(0, 1) !== "#")
+        .forEach((line) => {
+          const [key, val] = line.split("=");
+          overrideConfig[key] = val;
+        });
       outputs.push(overrideConfig);
-      if (overrideConfig.parsed) {
-        const keys = Object.keys(overrideConfig.parsed);
-        for (const key of keys) {
-          if (combined) {
-            combined[key] = overrideConfig.parsed[key];
-          }
-          process.env[key] = overrideConfig.parsed[key];
+      const keys = Object.keys(overrideConfig);
+      for (const key of keys) {
+        if (combined) {
+          combined[key] = overrideConfig[key];
         }
+        process.env[key] = overrideConfig[key];
       }
     }
     return outputs;

@@ -62,8 +62,8 @@ describe("Util loader tests", () => {
       expect(list.outputs.length).to.be.equals(2);
       expect(list.combined.one).to.be.equals("0");
       expect(list.combined.two).to.be.equals("2");
-      expect(list.outputs[0].parsed.one).to.be.equals("1");
-      expect(list.outputs[1].parsed.one).to.be.equals("0");
+      expect(list.outputs[0].one).to.be.equals("1");
+      expect(list.outputs[1].one).to.be.equals("0");
       delete process.env.MIQRO_DIRNAME;
     })().then(done).catch(done);
   });

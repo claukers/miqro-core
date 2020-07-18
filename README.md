@@ -4,10 +4,10 @@
 
 this is a part of the ```@miqro``` modules and provides logging, config and option parsing.
 
-- Utility for loading a **dotenv** files located at ```<MIQRO_DIRNAME>config/<NODE_ENV>/*.env```.
+- Utility for loading a environment variables located at ```<MIQRO_DIRNAME>config/<NODE_ENV>/*.env```.
 - Utility for creating loggers.
-- Utility for parsing option objects attribute types.
-- Utility for FeatureToggling.
+- Utility for parsing option.
+- Utility for feature toggling.
 
 ```javascript
 const {
@@ -15,10 +15,10 @@ const {
   FeatureToggle
 } = require("@miqro/core");
 
-// this should load the correct dotenv files
+// this should load the correct env variables in process.env
 Util.loadConfig();
 
-// this logger will use the transports configured in config/log.js
+// this logger will be created using the factory in config/log.js if the file exists.
 // also this logger will respect LOG_LEVEL_MyIdentifier=debug|warn|info|error Env var as its log level
 const logger = Util.getLogger("MyIdentifier");
 logger.info("infolog");
@@ -26,11 +26,11 @@ logger.warn("warnlog");
 logger.error("errorlog");
 logger.debug("debuglog");
 
-// this will check if FEATURE_TOGGLE_BODYPARSER env var is set to true.
-// this will crash your app if FEATURE_TOGGLE_BODYPARSER is not set.
+// this will check if FEATURE_TOGGLE_BODY_PARSER env var is set to true.
+// this will crash your app if FEATURE_TOGGLE_BODY_PARSER is not set.
 // consider adding FEATURE_TOGGLE_<yourfeature>=true|false in your config/<NODE_ENV>.env file
-if(FeatureToggle.isFeatureEnabled("bodyparser")) {
-  logger.info("bodyparser feature enabled");
+if(FeatureToggle.isFeatureEnabled("body_parser")) {
+  logger.info("body_parser feature enabled");
 }
 
 

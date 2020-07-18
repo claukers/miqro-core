@@ -5,7 +5,6 @@ export const logEnvFile = `####################
 LOG_LEVEL="info"
 LOG_LEVEL_Sequelize="error"
 LOG_FILE=./logs/dev.log
-#LOG_FILE_TRACE=./logs/dev-trace.log
 `;
 
 export const featuresEnvFile = `####################
