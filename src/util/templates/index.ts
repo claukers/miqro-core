@@ -4,7 +4,7 @@ export const logEnvFile = `####################
 ## logging
 LOG_LEVEL=info
 LOG_LEVEL_Sequelize=error
-LOG_FILE=./logs/dev.log
+#LOG_FILE=./logs/dev.log
 `;
 
 export const featuresEnvFile = `####################
