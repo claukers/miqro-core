@@ -58,7 +58,7 @@
 
 *Overrides void*
 
-*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L28)*
+*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L28)*
 
 **Returns:** *[Database](_service_db_.database.md)*
 
@@ -68,7 +68,7 @@
 
 • **Op**: *any*
 
-*Defined in [src/service/db.ts:27](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L27)*
+*Defined in [src/service/db.ts:27](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L27)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **models**: *[IModelMap](../modules/_service_db_.md#imodelmap)*
 
-*Defined in [src/service/db.ts:25](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L25)*
+*Defined in [src/service/db.ts:25](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L25)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • **sequelize**: *any*
 
-*Defined in [src/service/db.ts:26](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L26)*
+*Defined in [src/service/db.ts:26](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L26)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 • **state**: *[DataBaseState](../modules/_service_db_.md#databasestate)* = "stopped"
 
-*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L28)*
+*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L28)*
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 ▪ **events**: *[DataBaseState](../modules/_service_db_.md#databasestate)[]* = ["stopped", "starting", "started", "startstop", "error"]
 
-*Defined in [src/service/db.ts:15](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L15)*
+*Defined in [src/service/db.ts:15](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L15)*
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 ▪ **instance**: *[Database](_service_db_.database.md)* = null
 
-*Defined in [src/service/db.ts:24](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L24)*
+*Defined in [src/service/db.ts:24](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L24)*
 
 ## Methods
 
@@ -379,7 +379,7 @@ ___
 
 ▸ **query**(`q`: object, `t?`: any): *Promise‹any›*
 
-*Defined in [src/service/db.ts:64](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L64)*
+*Defined in [src/service/db.ts:64](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L64)*
 
 **Parameters:**
 
@@ -480,7 +480,7 @@ ___
 
 ▸ **start**(): *Promise‹void›*
 
-*Defined in [src/service/db.ts:72](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L72)*
+*Defined in [src/service/db.ts:72](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L72)*
 
 **Returns:** *Promise‹void›*
 
@@ -490,7 +490,7 @@ ___
 
 ▸ **stateChange**(`state`: [DataBaseState](../modules/_service_db_.md#databasestate), `args?`: any): *void*
 
-*Defined in [src/service/db.ts:117](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L117)*
+*Defined in [src/service/db.ts:117](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L117)*
 
 **Parameters:**
 
@@ -507,7 +507,7 @@ ___
 
 ▸ **stop**(): *Promise‹void›*
 
-*Defined in [src/service/db.ts:100](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L100)*
+*Defined in [src/service/db.ts:100](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L100)*
 
 **Returns:** *Promise‹void›*
 
@@ -517,7 +517,7 @@ ___
 
 ▸ **transaction**(`transactionCB`: function): *Promise‹any›*
 
-*Defined in [src/service/db.ts:57](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L57)*
+*Defined in [src/service/db.ts:57](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L57)*
 
 **Parameters:**
 
@@ -539,7 +539,7 @@ ___
 
 ▸ **getInstance**(): *[Database](_service_db_.database.md)*
 
-*Defined in [src/service/db.ts:17](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L17)*
+*Defined in [src/service/db.ts:17](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L17)*
 
 **Returns:** *[Database](_service_db_.database.md)*
 

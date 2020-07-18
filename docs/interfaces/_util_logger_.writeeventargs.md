@@ -25,7 +25,7 @@
 
 *Inherited from [WriteArgs](_util_logger_.writeargs.md).[level](_util_logger_.writeargs.md#level)*
 
-*Defined in [src/util/logger.ts:47](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L47)*
+*Defined in [src/util/logger.ts:47](https://github.com/claukers/miqro-core/blob/64522a7/src/util/logger.ts#L47)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 *Inherited from [WriteArgs](_util_logger_.writeargs.md).[message](_util_logger_.writeargs.md#optional-message)*
 
-*Defined in [src/util/logger.ts:48](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L48)*
+*Defined in [src/util/logger.ts:48](https://github.com/claukers/miqro-core/blob/64522a7/src/util/logger.ts#L48)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 *Inherited from [WriteArgs](_util_logger_.writeargs.md).[optionalParams](_util_logger_.writeargs.md#optionalparams)*
 
-*Defined in [src/util/logger.ts:49](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L49)*
+*Defined in [src/util/logger.ts:49](https://github.com/claukers/miqro-core/blob/64522a7/src/util/logger.ts#L49)*
 
 ___
 
@@ -53,4 +53,4 @@ ___
 
 • **out**: *string*
 
-*Defined in [src/util/logger.ts:53](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L53)*
+*Defined in [src/util/logger.ts:53](https://github.com/claukers/miqro-core/blob/64522a7/src/util/logger.ts#L53)*

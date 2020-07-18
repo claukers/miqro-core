@@ -6,6 +6,7 @@
 
 ### References
 
+* [AbstractModelService](_index_.md#abstractmodelservice)
 * [CLIUtil](_index_.md#cliutil)
 * [CMDMapType](_index_.md#cmdmaptype)
 * [ConfigFileNotFoundError](_index_.md#configfilenotfounderror)
@@ -15,6 +16,7 @@
 * [DataBaseState](_index_.md#databasestate)
 * [Database](_index_.md#database)
 * [DefaultLogger](_index_.md#defaultlogger)
+* [FakeDeleteModelService](_index_.md#fakedeletemodelservice)
 * [FeatureToggle](_index_.md#featuretoggle)
 * [ForbiddenError](_index_.md#forbiddenerror)
 * [Formatter](_index_.md#formatter)
@@ -27,8 +29,12 @@
 * [Logger](_index_.md#logger)
 * [LoggerFactory](_index_.md#loggerfactory)
 * [MethodNotImplementedError](_index_.md#methodnotimplementederror)
+* [ModelService](_index_.md#modelservice)
+* [ModelServiceArgsInterface](_index_.md#modelserviceargsinterface)
+* [ModelServiceInterface](_index_.md#modelserviceinterface)
 * [NoTokenSessionInterface](_index_.md#notokensessioninterface)
 * [ParseOptionsError](_index_.md#parseoptionserror)
+* [PostListModelService](_index_.md#postlistmodelservice)
 * [SessionInterface](_index_.md#sessioninterface)
 * [SimpleMapInterface](_index_.md#simplemapinterface)
 * [StopWatch](_index_.md#stopwatch)
@@ -42,8 +48,15 @@
 * [defaultLoggerFormat](_index_.md#defaultloggerformat)
 * [getLoggerFactory](_index_.md#getloggerfactory)
 * [loadSequelizeRC](_index_.md#loadsequelizerc)
+* [parseIncludeQuery](_index_.md#parseincludequery)
 
 ## References
+
+###  AbstractModelService
+
+• **AbstractModelService**:
+
+___
 
 ###  CLIUtil
 
@@ -96,6 +109,12 @@ ___
 ###  DefaultLogger
 
 • **DefaultLogger**:
+
+___
+
+###  FakeDeleteModelService
+
+• **FakeDeleteModelService**:
 
 ___
 
@@ -171,6 +190,24 @@ ___
 
 ___
 
+###  ModelService
+
+• **ModelService**:
+
+___
+
+###  ModelServiceArgsInterface
+
+• **ModelServiceArgsInterface**:
+
+___
+
+###  ModelServiceInterface
+
+• **ModelServiceInterface**:
+
+___
+
 ###  NoTokenSessionInterface
 
 • **NoTokenSessionInterface**:
@@ -180,6 +217,12 @@ ___
 ###  ParseOptionsError
 
 • **ParseOptionsError**:
+
+___
+
+###  PostListModelService
+
+• **PostListModelService**:
 
 ___
 
@@ -258,3 +301,9 @@ ___
 ###  loadSequelizeRC
 
 • **loadSequelizeRC**:
+
+___
+
+###  parseIncludeQuery
+
+• **parseIncludeQuery**:
