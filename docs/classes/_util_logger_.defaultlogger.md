@@ -1,14 +1,12 @@
-[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/logger"](../modules/_util_logger_.md) › [ConsoleLogger](_util_logger_.consolelogger.md)
+[@miqro/core](../README.md) › [Globals](../globals.md) › ["util/logger"](../modules/_util_logger_.md) › [DefaultLogger](_util_logger_.defaultlogger.md)
 
-# Class: ConsoleLogger
+# Class: DefaultLogger
 
 ## Hierarchy
 
-* EventEmitter
+  ↳ [ConsoleLogger](_util_logger_.consolelogger.md)
 
-  ↳ **ConsoleLogger**
-
-  ↳ [DefaultLogger](_util_logger_.defaultlogger.md)
+  ↳ **DefaultLogger**
 
 ## Implements
 
@@ -18,50 +16,46 @@
 
 ### Constructors
 
-* [constructor](_util_logger_.consolelogger.md#constructor)
+* [constructor](_util_logger_.defaultlogger.md#constructor)
 
 ### Properties
 
-* [_formatter](_util_logger_.consolelogger.md#protected-_formatter)
-* [level](_util_logger_.consolelogger.md#private-level)
-* [defaultMaxListeners](_util_logger_.consolelogger.md#static-defaultmaxlisteners)
-* [errorMonitor](_util_logger_.consolelogger.md#static-errormonitor)
+* [_formatter](_util_logger_.defaultlogger.md#protected-_formatter)
 
 ### Methods
 
-* [addListener](_util_logger_.consolelogger.md#addlistener)
-* [debug](_util_logger_.consolelogger.md#debug)
-* [emit](_util_logger_.consolelogger.md#emit)
-* [error](_util_logger_.consolelogger.md#error)
-* [eventNames](_util_logger_.consolelogger.md#eventnames)
-* [getMaxListeners](_util_logger_.consolelogger.md#getmaxlisteners)
-* [info](_util_logger_.consolelogger.md#info)
-* [listenerCount](_util_logger_.consolelogger.md#listenercount)
-* [listeners](_util_logger_.consolelogger.md#listeners)
-* [log](_util_logger_.consolelogger.md#log)
-* [off](_util_logger_.consolelogger.md#off)
-* [on](_util_logger_.consolelogger.md#on)
-* [once](_util_logger_.consolelogger.md#once)
-* [prependListener](_util_logger_.consolelogger.md#prependlistener)
-* [prependOnceListener](_util_logger_.consolelogger.md#prependoncelistener)
-* [rawListeners](_util_logger_.consolelogger.md#rawlisteners)
-* [removeAllListeners](_util_logger_.consolelogger.md#removealllisteners)
-* [removeListener](_util_logger_.consolelogger.md#removelistener)
-* [setMaxListeners](_util_logger_.consolelogger.md#setmaxlisteners)
-* [trace](_util_logger_.consolelogger.md#trace)
-* [warn](_util_logger_.consolelogger.md#warn)
-* [write](_util_logger_.consolelogger.md#protected-write)
-* [listenerCount](_util_logger_.consolelogger.md#static-listenercount)
+* [addListener](_util_logger_.defaultlogger.md#addlistener)
+* [debug](_util_logger_.defaultlogger.md#debug)
+* [emit](_util_logger_.defaultlogger.md#emit)
+* [error](_util_logger_.defaultlogger.md#error)
+* [eventNames](_util_logger_.defaultlogger.md#eventnames)
+* [getMaxListeners](_util_logger_.defaultlogger.md#getmaxlisteners)
+* [info](_util_logger_.defaultlogger.md#info)
+* [listenerCount](_util_logger_.defaultlogger.md#listenercount)
+* [listeners](_util_logger_.defaultlogger.md#listeners)
+* [log](_util_logger_.defaultlogger.md#log)
+* [off](_util_logger_.defaultlogger.md#off)
+* [on](_util_logger_.defaultlogger.md#on)
+* [once](_util_logger_.defaultlogger.md#once)
+* [prependListener](_util_logger_.defaultlogger.md#prependlistener)
+* [prependOnceListener](_util_logger_.defaultlogger.md#prependoncelistener)
+* [rawListeners](_util_logger_.defaultlogger.md#rawlisteners)
+* [removeAllListeners](_util_logger_.defaultlogger.md#removealllisteners)
+* [removeListener](_util_logger_.defaultlogger.md#removelistener)
+* [setMaxListeners](_util_logger_.defaultlogger.md#setmaxlisteners)
+* [trace](_util_logger_.defaultlogger.md#trace)
+* [warn](_util_logger_.defaultlogger.md#warn)
+* [write](_util_logger_.defaultlogger.md#protected-write)
 
 ## Constructors
 
 ###  constructor
 
-\+ **new ConsoleLogger**(`identifier`: string, `level`: [LogLevel](../modules/_util_logger_.md#loglevel), `formatter?`: [Formatter](../modules/_util_logger_.md#formatter)): *[ConsoleLogger](_util_logger_.consolelogger.md)*
+\+ **new DefaultLogger**(`identifier`: string, `level`: [LogLevel](../modules/_util_logger_.md#loglevel), `formatter?`: [Formatter](../modules/_util_logger_.md#formatter)): *[DefaultLogger](_util_logger_.defaultlogger.md)*
 
-*Overrides void*
+*Overrides [ConsoleLogger](_util_logger_.consolelogger.md).[constructor](_util_logger_.consolelogger.md#constructor)*
 
-*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L57)*
+*Defined in [src/util/logger.ts:117](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L117)*
 
 **Parameters:**
 
@@ -71,7 +65,7 @@ Name | Type |
 `level` | [LogLevel](../modules/_util_logger_.md#loglevel) |
 `formatter?` | [Formatter](../modules/_util_logger_.md#formatter) |
 
-**Returns:** *[ConsoleLogger](_util_logger_.consolelogger.md)*
+**Returns:** *[DefaultLogger](_util_logger_.defaultlogger.md)*
 
 ## Properties
 
@@ -79,43 +73,9 @@ Name | Type |
 
 • **_formatter**: *[Formatter](../modules/_util_logger_.md#formatter)* = null
 
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[_formatter](_util_logger_.consolelogger.md#protected-_formatter)*
+
 *Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L57)*
-
-___
-
-### `Private` level
-
-• **level**: *[LogLevel](../modules/_util_logger_.md#loglevel)*
-
-*Defined in [src/util/logger.ts:59](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L59)*
-
-___
-
-### `Static` defaultMaxListeners
-
-▪ **defaultMaxListeners**: *number*
-
-*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[defaultMaxListeners](_util_logger_.consolelogger.md#static-defaultmaxlisteners)*
-
-Defined in node_modules/@types/node/events.d.ts:45
-
-___
-
-### `Static` errorMonitor
-
-▪ **errorMonitor**: *keyof symbol*
-
-*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[errorMonitor](_util_logger_.consolelogger.md#static-errormonitor)*
-
-Defined in node_modules/@types/node/events.d.ts:55
-
-This symbol shall be used to install a listener for only monitoring `'error'`
-events. Listeners installed using this symbol are called before the regular
-`'error'` listeners are called.
-
-Installing a listener using this symbol does not change the behavior once an
-`'error'` event is emitted, therefore the process will still crash if no
-regular `'error'` listener is installed.
 
 ## Methods
 
@@ -150,6 +110,8 @@ ___
 ▸ **debug**(`message?`: any, ...`optionalParams`: any[]): *void*
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
+
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[debug](_util_logger_.consolelogger.md#debug)*
 
 *Defined in [src/util/logger.ts:81](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L81)*
 
@@ -188,6 +150,8 @@ ___
 ▸ **error**(`message?`: any, ...`optionalParams`: any[]): *void*
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
+
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[error](_util_logger_.consolelogger.md#error)*
 
 *Defined in [src/util/logger.ts:87](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L87)*
 
@@ -231,6 +195,8 @@ ___
 ▸ **info**(`message?`: any, ...`optionalParams`: any[]): *void*
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
+
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[info](_util_logger_.consolelogger.md#info)*
 
 *Defined in [src/util/logger.ts:93](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L93)*
 
@@ -286,6 +252,8 @@ ___
 ▸ **log**(`message?`: any, ...`optionalParams`: any[]): *void*
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
+
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[log](_util_logger_.consolelogger.md#log)*
 
 *Defined in [src/util/logger.ts:99](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L99)*
 
@@ -516,6 +484,8 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[trace](_util_logger_.consolelogger.md#trace)*
+
 *Defined in [src/util/logger.ts:105](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L105)*
 
 **Parameters:**
@@ -535,6 +505,8 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[warn](_util_logger_.consolelogger.md#warn)*
+
 *Defined in [src/util/logger.ts:111](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L111)*
 
 **Parameters:**
@@ -552,6 +524,8 @@ ___
 
 ▸ **write**(`args`: [WriteArgs](../interfaces/_util_logger_.writeargs.md)): *void*
 
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[write](_util_logger_.consolelogger.md#protected-write)*
+
 *Defined in [src/util/logger.ts:72](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L72)*
 
 **Parameters:**
@@ -561,24 +535,3 @@ Name | Type |
 `args` | [WriteArgs](../interfaces/_util_logger_.writeargs.md) |
 
 **Returns:** *void*
-
-___
-
-### `Static` listenerCount
-
-▸ **listenerCount**(`emitter`: EventEmitter, `event`: string | symbol): *number*
-
-*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[listenerCount](_util_logger_.consolelogger.md#static-listenercount)*
-
-Defined in node_modules/@types/node/events.d.ts:44
-
-**`deprecated`** since v4.0.0
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`emitter` | EventEmitter |
-`event` | string &#124; symbol |
-
-**Returns:** *number*

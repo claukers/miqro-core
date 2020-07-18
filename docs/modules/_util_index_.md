@@ -11,6 +11,8 @@
 * [ConfigFileNotFoundError](_util_index_.md#configfilenotfounderror)
 * [ConfigPathResolver](_util_index_.md#configpathresolver)
 * [ConsoleLogger](_util_index_.md#consolelogger)
+* [ConsoleLoggerEvents](_util_index_.md#consoleloggerevents)
+* [DefaultLogger](_util_index_.md#defaultlogger)
 * [FeatureToggle](_util_index_.md#featuretoggle)
 * [ForbiddenError](_util_index_.md#forbiddenerror)
 * [Formatter](_util_index_.md#formatter)
@@ -23,6 +25,8 @@
 * [StopWatch](_util_index_.md#stopwatch)
 * [UnAuthorizedError](_util_index_.md#unauthorizederror)
 * [Util](_util_index_.md#util)
+* [WriteArgs](_util_index_.md#writeargs)
+* [WriteEventArgs](_util_index_.md#writeeventargs)
 * [defaultLoggerFactory](_util_index_.md#defaultloggerfactory)
 * [defaultLoggerFormat](_util_index_.md#defaultloggerformat)
 * [getLoggerFactory](_util_index_.md#getloggerfactory)
@@ -74,6 +78,18 @@ ___
 ###  ConsoleLogger
 
 • **ConsoleLogger**:
+
+___
+
+###  ConsoleLoggerEvents
+
+• **ConsoleLoggerEvents**:
+
+___
+
+###  DefaultLogger
+
+• **DefaultLogger**:
 
 ___
 
@@ -149,6 +165,18 @@ ___
 
 ___
 
+###  WriteArgs
+
+• **WriteArgs**:
+
+___
+
+###  WriteEventArgs
+
+• **WriteEventArgs**:
+
+___
+
 ###  defaultLoggerFactory
 
 • **defaultLoggerFactory**:
@@ -177,7 +205,7 @@ ___
 
 Ƭ **GroupPolicyInterface**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/65c3631/src/util/index.ts#L16)*
+*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/543c996/src/util/index.ts#L16)*
 
 ___
 
@@ -185,21 +213,21 @@ ___
 
 Ƭ **GroupPolicyItemInterface**: *string | string[]*
 
-*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/65c3631/src/util/index.ts#L18)*
+*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/543c996/src/util/index.ts#L18)*
 
 ## Functions
 
 ### `Const` policyCheck
 
-▸ **policyCheck**(`session`: [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)): *boolean*
+▸ **policyCheck**(`session`: [SessionInterface](../interfaces/_service_common_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)): *boolean*
 
-*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/65c3631/src/util/index.ts#L25)*
+*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/543c996/src/util/index.ts#L25)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`session` | [SessionInterface](../interfaces/_service_common_index_.sessioninterface.md) |
+`session` | [SessionInterface](../interfaces/_service_common_.sessioninterface.md) |
 `options` | [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md) |
 
 **Returns:** *boolean*

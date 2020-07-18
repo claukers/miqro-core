@@ -20,7 +20,6 @@
 
 ### Variables
 
-* [configModule](_util_util_.md#const-configmodule)
 * [logContainer](_util_util_.md#const-logcontainer)
 * [logger](_util_util_.md#let-logger)
 
@@ -35,7 +34,7 @@
 
 Ƭ **ConfigOutput**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string›*
 
-*Defined in [src/util/util.ts:40](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L40)*
+*Defined in [src/util/util.ts:38](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L38)*
 
 ___
 
@@ -43,7 +42,7 @@ ___
 
 Ƭ **OPTIONPARSERType**: *"remove_extra" | "add_extra" | "no_extra"*
 
-*Defined in [src/util/util.ts:11](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L11)*
+*Defined in [src/util/util.ts:9](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L9)*
 
 ___
 
@@ -51,23 +50,15 @@ ___
 
 Ƭ **ParseSimpleType**: *"string" | "boolean" | "number" | "object" | "any"*
 
-*Defined in [src/util/util.ts:12](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L12)*
+*Defined in [src/util/util.ts:10](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L10)*
 
 ## Variables
-
-### `Const` configModule
-
-• **configModule**: *"dotenv"* = "dotenv"
-
-*Defined in [src/util/util.ts:8](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L8)*
-
-___
 
 ### `Const` logContainer
 
 • **logContainer**: *Map‹string, [Logger](../interfaces/_util_logger_.logger.md)›* = new Map<string, Logger>()
 
-*Defined in [src/util/util.ts:18](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L18)*
+*Defined in [src/util/util.ts:16](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L16)*
 
 ___
 
@@ -75,7 +66,7 @@ ___
 
 • **logger**: *any* = null
 
-*Defined in [src/util/util.ts:42](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L42)*
+*Defined in [src/util/util.ts:40](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L40)*
 
 ## Functions
 
@@ -83,7 +74,7 @@ ___
 
 ▸ **isParseSimpleOption**(`type`: string): *boolean*
 
-*Defined in [src/util/util.ts:14](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L14)*
+*Defined in [src/util/util.ts:12](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L12)*
 
 **Parameters:**
 
@@ -99,7 +90,7 @@ ___
 
 ▸ **parseSimpleOption**(`type`: [ParseSimpleType](_util_util_.md#parsesimpletype), `value`: any): *boolean*
 
-*Defined in [src/util/util.ts:20](https://github.com/claukers/miqro-core/blob/65c3631/src/util/util.ts#L20)*
+*Defined in [src/util/util.ts:18](https://github.com/claukers/miqro-core/blob/543c996/src/util/util.ts#L18)*
 
 **Parameters:**
 

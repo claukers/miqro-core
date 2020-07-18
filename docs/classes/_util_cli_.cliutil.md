@@ -19,7 +19,7 @@
 
 ▸ **cliFlow**(`cmds`: [CMDMapType](../modules/_util_cli_.md#cmdmaptype), `identifier`: string, `logger`: [Logger](../interfaces/_util_logger_.logger.md) | Console): *void*
 
-*Defined in [src/util/cli.ts:9](https://github.com/claukers/miqro-core/blob/65c3631/src/util/cli.ts#L9)*
+*Defined in [src/util/cli.ts:9](https://github.com/claukers/miqro-core/blob/543c996/src/util/cli.ts#L9)*
 
 **Parameters:**
 
@@ -37,7 +37,7 @@ ___
 
 ▸ **routeCMDModule**(`cmds`: [CMDMapType](../modules/_util_cli_.md#cmdmaptype), `identifier`: string, `logger`: [Logger](../interfaces/_util_logger_.logger.md) | Console): *void*
 
-*Defined in [src/util/cli.ts:24](https://github.com/claukers/miqro-core/blob/65c3631/src/util/cli.ts#L24)*
+*Defined in [src/util/cli.ts:24](https://github.com/claukers/miqro-core/blob/543c996/src/util/cli.ts#L24)*
 
 **Parameters:**
 

@@ -17,7 +17,7 @@
 
 • **configPath**: *string* = ConfigPathResolver.getConfigDirname()
 
-*Defined in [src/cli/init.ts:21](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/init.ts#L21)*
+*Defined in [src/cli/init.ts:21](https://github.com/claukers/miqro-core/blob/543c996/src/cli/init.ts#L21)*
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **gitIgnorePath**: *string* = resolve(ConfigPathResolver.getBaseDirname(), ".gitignore")
 
-*Defined in [src/cli/init.ts:44](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/init.ts#L44)*
+*Defined in [src/cli/init.ts:44](https://github.com/claukers/miqro-core/blob/543c996/src/cli/init.ts#L44)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **logger**: *Console* = console
 
-*Defined in [src/cli/init.ts:6](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/init.ts#L6)*
+*Defined in [src/cli/init.ts:6](https://github.com/claukers/miqro-core/blob/543c996/src/cli/init.ts#L6)*
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 • **service**: *string* = resolve(ConfigPathResolver.getBaseDirname(), `index.js`)
 
-*Defined in [src/cli/init.ts:13](https://github.com/claukers/miqro-core/blob/65c3631/src/cli/init.ts#L13)*
+*Defined in [src/cli/init.ts:13](https://github.com/claukers/miqro-core/blob/543c996/src/cli/init.ts#L13)*

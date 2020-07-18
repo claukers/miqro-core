@@ -32,7 +32,7 @@
 
 \+ **new VerifyJWTEndpointService**(): *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*
 
-*Defined in [src/service/index.ts:31](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L31)*
+*Defined in [src/service/index.ts:27](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L27)*
 
 **Returns:** *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*
 
@@ -42,7 +42,7 @@
 
 • **logger**: *[Logger](../interfaces/_util_logger_.logger.md)* = null
 
-*Defined in [src/service/index.ts:31](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L31)*
+*Defined in [src/service/index.ts:27](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L27)*
 
 ___
 
@@ -50,15 +50,15 @@ ___
 
 ▪ **instance**: *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)* = null
 
-*Defined in [src/service/index.ts:23](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L23)*
+*Defined in [src/service/index.ts:19](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L19)*
 
 ## Methods
 
 ###  verify
 
-▸ **verify**(`__namedParameters`: object): *Promise‹[SessionInterface](../interfaces/_service_common_index_.sessioninterface.md)›*
+▸ **verify**(`__namedParameters`: object): *Promise‹[SessionInterface](../interfaces/_service_common_.sessioninterface.md)›*
 
-*Defined in [src/service/index.ts:50](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L50)*
+*Defined in [src/service/index.ts:45](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L45)*
 
 **Parameters:**
 
@@ -68,7 +68,7 @@ Name | Type |
 ------ | ------ |
 `token` | string |
 
-**Returns:** *Promise‹[SessionInterface](../interfaces/_service_common_index_.sessioninterface.md)›*
+**Returns:** *Promise‹[SessionInterface](../interfaces/_service_common_.sessioninterface.md)›*
 
 ___
 
@@ -76,6 +76,6 @@ ___
 
 ▸ **getInstance**(): *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*
 
-*Defined in [src/service/index.ts:25](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L25)*
+*Defined in [src/service/index.ts:21](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L21)*
 
 **Returns:** *[VerifyJWTEndpointService](_service_index_.verifyjwtendpointservice.md)*

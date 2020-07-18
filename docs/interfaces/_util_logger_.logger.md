@@ -9,6 +9,7 @@
 ## Implemented by
 
 * [ConsoleLogger](../classes/_util_logger_.consolelogger.md)
+* [DefaultLogger](../classes/_util_logger_.defaultlogger.md)
 
 ## Index
 
@@ -27,7 +28,7 @@
 
 ▸ **debug**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:21](https://github.com/claukers/miqro-core/blob/65c3631/src/util/logger.ts#L21)*
+*Defined in [src/util/logger.ts:24](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L24)*
 
 **Parameters:**
 
@@ -44,7 +45,7 @@ ___
 
 ▸ **error**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:25](https://github.com/claukers/miqro-core/blob/65c3631/src/util/logger.ts#L25)*
+*Defined in [src/util/logger.ts:28](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L28)*
 
 **Parameters:**
 
@@ -61,7 +62,7 @@ ___
 
 ▸ **info**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:17](https://github.com/claukers/miqro-core/blob/65c3631/src/util/logger.ts#L17)*
+*Defined in [src/util/logger.ts:20](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L20)*
 
 **Parameters:**
 
@@ -78,7 +79,7 @@ ___
 
 ▸ **log**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:15](https://github.com/claukers/miqro-core/blob/65c3631/src/util/logger.ts#L15)*
+*Defined in [src/util/logger.ts:18](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L18)*
 
 **Parameters:**
 
@@ -95,7 +96,7 @@ ___
 
 ▸ **trace**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:19](https://github.com/claukers/miqro-core/blob/65c3631/src/util/logger.ts#L19)*
+*Defined in [src/util/logger.ts:22](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L22)*
 
 **Parameters:**
 
@@ -112,7 +113,7 @@ ___
 
 ▸ **warn**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:23](https://github.com/claukers/miqro-core/blob/65c3631/src/util/logger.ts#L23)*
+*Defined in [src/util/logger.ts:26](https://github.com/claukers/miqro-core/blob/543c996/src/util/logger.ts#L26)*
 
 **Parameters:**
 

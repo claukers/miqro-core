@@ -58,7 +58,7 @@
 
 *Overrides void*
 
-*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L28)*
+*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L28)*
 
 **Returns:** *[Database](_service_db_.database.md)*
 
@@ -68,7 +68,7 @@
 
 • **Op**: *any*
 
-*Defined in [src/service/db.ts:27](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L27)*
+*Defined in [src/service/db.ts:27](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L27)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **models**: *[IModelMap](../modules/_service_db_.md#imodelmap)*
 
-*Defined in [src/service/db.ts:25](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L25)*
+*Defined in [src/service/db.ts:25](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L25)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • **sequelize**: *any*
 
-*Defined in [src/service/db.ts:26](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L26)*
+*Defined in [src/service/db.ts:26](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L26)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 • **state**: *[DataBaseState](../modules/_service_db_.md#databasestate)* = "stopped"
 
-*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L28)*
+*Defined in [src/service/db.ts:28](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L28)*
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 ▪ **defaultMaxListeners**: *number*
 
-*Inherited from [Database](_service_db_.database.md).[defaultMaxListeners](_service_db_.database.md#static-defaultmaxlisteners)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[defaultMaxListeners](_util_logger_.consolelogger.md#static-defaultmaxlisteners)*
 
 Defined in node_modules/@types/node/events.d.ts:45
 
@@ -110,7 +110,7 @@ ___
 
 ▪ **errorMonitor**: *keyof symbol*
 
-*Inherited from [Database](_service_db_.database.md).[errorMonitor](_service_db_.database.md#static-errormonitor)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[errorMonitor](_util_logger_.consolelogger.md#static-errormonitor)*
 
 Defined in node_modules/@types/node/events.d.ts:55
 
@@ -128,7 +128,7 @@ ___
 
 ▪ **events**: *[DataBaseState](../modules/_service_db_.md#databasestate)[]* = ["stopped", "starting", "started", "startstop", "error"]
 
-*Defined in [src/service/db.ts:15](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L15)*
+*Defined in [src/service/db.ts:15](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L15)*
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 ▪ **instance**: *[Database](_service_db_.database.md)* = null
 
-*Defined in [src/service/db.ts:24](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L24)*
+*Defined in [src/service/db.ts:24](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L24)*
 
 ## Methods
 
@@ -144,9 +144,9 @@ ___
 
 ▸ **addListener**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[addListener](_service_db_.database.md#addlistener)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[addListener](_util_logger_.consolelogger.md#addlistener)*
 
-Defined in node_modules/@types/node/globals.d.ts:553
+Defined in node_modules/@types/node/events.d.ts:62
 
 **Parameters:**
 
@@ -170,9 +170,9 @@ ___
 
 ▸ **emit**(`event`: string | symbol, ...`args`: any[]): *boolean*
 
-*Inherited from [Database](_service_db_.database.md).[emit](_service_db_.database.md#emit)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[emit](_util_logger_.consolelogger.md#emit)*
 
-Defined in node_modules/@types/node/globals.d.ts:563
+Defined in node_modules/@types/node/events.d.ts:72
 
 **Parameters:**
 
@@ -189,9 +189,9 @@ ___
 
 ▸ **eventNames**(): *Array‹string | symbol›*
 
-*Inherited from [Database](_service_db_.database.md).[eventNames](_service_db_.database.md#eventnames)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[eventNames](_util_logger_.consolelogger.md#eventnames)*
 
-Defined in node_modules/@types/node/globals.d.ts:568
+Defined in node_modules/@types/node/events.d.ts:77
 
 **Returns:** *Array‹string | symbol›*
 
@@ -201,9 +201,9 @@ ___
 
 ▸ **getMaxListeners**(): *number*
 
-*Inherited from [Database](_service_db_.database.md).[getMaxListeners](_service_db_.database.md#getmaxlisteners)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[getMaxListeners](_util_logger_.consolelogger.md#getmaxlisteners)*
 
-Defined in node_modules/@types/node/globals.d.ts:560
+Defined in node_modules/@types/node/events.d.ts:69
 
 **Returns:** *number*
 
@@ -213,9 +213,9 @@ ___
 
 ▸ **listenerCount**(`type`: string | symbol): *number*
 
-*Inherited from [Database](_service_db_.database.md).[listenerCount](_service_db_.database.md#listenercount)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[listenerCount](_util_logger_.consolelogger.md#listenercount)*
 
-Defined in node_modules/@types/node/globals.d.ts:564
+Defined in node_modules/@types/node/events.d.ts:73
 
 **Parameters:**
 
@@ -231,9 +231,9 @@ ___
 
 ▸ **listeners**(`event`: string | symbol): *Function[]*
 
-*Inherited from [Database](_service_db_.database.md).[listeners](_service_db_.database.md#listeners)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[listeners](_util_logger_.consolelogger.md#listeners)*
 
-Defined in node_modules/@types/node/globals.d.ts:561
+Defined in node_modules/@types/node/events.d.ts:70
 
 **Parameters:**
 
@@ -249,9 +249,9 @@ ___
 
 ▸ **off**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[off](_service_db_.database.md#off)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[off](_util_logger_.consolelogger.md#off)*
 
-Defined in node_modules/@types/node/globals.d.ts:557
+Defined in node_modules/@types/node/events.d.ts:66
 
 **Parameters:**
 
@@ -275,9 +275,9 @@ ___
 
 ▸ **on**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[on](_service_db_.database.md#on)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[on](_util_logger_.consolelogger.md#on)*
 
-Defined in node_modules/@types/node/globals.d.ts:554
+Defined in node_modules/@types/node/events.d.ts:63
 
 **Parameters:**
 
@@ -301,9 +301,9 @@ ___
 
 ▸ **once**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[once](_service_db_.database.md#once)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[once](_util_logger_.consolelogger.md#once)*
 
-Defined in node_modules/@types/node/globals.d.ts:555
+Defined in node_modules/@types/node/events.d.ts:64
 
 **Parameters:**
 
@@ -327,9 +327,9 @@ ___
 
 ▸ **prependListener**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[prependListener](_service_db_.database.md#prependlistener)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[prependListener](_util_logger_.consolelogger.md#prependlistener)*
 
-Defined in node_modules/@types/node/globals.d.ts:566
+Defined in node_modules/@types/node/events.d.ts:75
 
 **Parameters:**
 
@@ -353,9 +353,9 @@ ___
 
 ▸ **prependOnceListener**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[prependOnceListener](_service_db_.database.md#prependoncelistener)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[prependOnceListener](_util_logger_.consolelogger.md#prependoncelistener)*
 
-Defined in node_modules/@types/node/globals.d.ts:567
+Defined in node_modules/@types/node/events.d.ts:76
 
 **Parameters:**
 
@@ -379,7 +379,7 @@ ___
 
 ▸ **query**(`q`: object, `t?`: any): *Promise‹any›*
 
-*Defined in [src/service/db.ts:63](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L63)*
+*Defined in [src/service/db.ts:64](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L64)*
 
 **Parameters:**
 
@@ -400,9 +400,9 @@ ___
 
 ▸ **rawListeners**(`event`: string | symbol): *Function[]*
 
-*Inherited from [Database](_service_db_.database.md).[rawListeners](_service_db_.database.md#rawlisteners)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[rawListeners](_util_logger_.consolelogger.md#rawlisteners)*
 
-Defined in node_modules/@types/node/globals.d.ts:562
+Defined in node_modules/@types/node/events.d.ts:71
 
 **Parameters:**
 
@@ -418,9 +418,9 @@ ___
 
 ▸ **removeAllListeners**(`event?`: string | symbol): *this*
 
-*Inherited from [Database](_service_db_.database.md).[removeAllListeners](_service_db_.database.md#removealllisteners)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[removeAllListeners](_util_logger_.consolelogger.md#removealllisteners)*
 
-Defined in node_modules/@types/node/globals.d.ts:558
+Defined in node_modules/@types/node/events.d.ts:67
 
 **Parameters:**
 
@@ -436,9 +436,9 @@ ___
 
 ▸ **removeListener**(`event`: string | symbol, `listener`: function): *this*
 
-*Inherited from [Database](_service_db_.database.md).[removeListener](_service_db_.database.md#removelistener)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[removeListener](_util_logger_.consolelogger.md#removelistener)*
 
-Defined in node_modules/@types/node/globals.d.ts:556
+Defined in node_modules/@types/node/events.d.ts:65
 
 **Parameters:**
 
@@ -462,9 +462,9 @@ ___
 
 ▸ **setMaxListeners**(`n`: number): *this*
 
-*Inherited from [Database](_service_db_.database.md).[setMaxListeners](_service_db_.database.md#setmaxlisteners)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[setMaxListeners](_util_logger_.consolelogger.md#setmaxlisteners)*
 
-Defined in node_modules/@types/node/globals.d.ts:559
+Defined in node_modules/@types/node/events.d.ts:68
 
 **Parameters:**
 
@@ -480,7 +480,7 @@ ___
 
 ▸ **start**(): *Promise‹void›*
 
-*Defined in [src/service/db.ts:71](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L71)*
+*Defined in [src/service/db.ts:72](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L72)*
 
 **Returns:** *Promise‹void›*
 
@@ -490,7 +490,7 @@ ___
 
 ▸ **stateChange**(`state`: [DataBaseState](../modules/_service_db_.md#databasestate), `args?`: any): *void*
 
-*Defined in [src/service/db.ts:116](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L116)*
+*Defined in [src/service/db.ts:117](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L117)*
 
 **Parameters:**
 
@@ -507,7 +507,7 @@ ___
 
 ▸ **stop**(): *Promise‹void›*
 
-*Defined in [src/service/db.ts:99](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L99)*
+*Defined in [src/service/db.ts:100](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L100)*
 
 **Returns:** *Promise‹void›*
 
@@ -517,7 +517,7 @@ ___
 
 ▸ **transaction**(`transactionCB`: function): *Promise‹any›*
 
-*Defined in [src/service/db.ts:56](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L56)*
+*Defined in [src/service/db.ts:57](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L57)*
 
 **Parameters:**
 
@@ -539,7 +539,7 @@ ___
 
 ▸ **getInstance**(): *[Database](_service_db_.database.md)*
 
-*Defined in [src/service/db.ts:17](https://github.com/claukers/miqro-core/blob/65c3631/src/service/db.ts#L17)*
+*Defined in [src/service/db.ts:17](https://github.com/claukers/miqro-core/blob/543c996/src/service/db.ts#L17)*
 
 **Returns:** *[Database](_service_db_.database.md)*
 
@@ -549,7 +549,7 @@ ___
 
 ▸ **listenerCount**(`emitter`: EventEmitter, `event`: string | symbol): *number*
 
-*Inherited from [Database](_service_db_.database.md).[listenerCount](_service_db_.database.md#static-listenercount)*
+*Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[listenerCount](_util_logger_.consolelogger.md#static-listenercount)*
 
 Defined in node_modules/@types/node/events.d.ts:44
 

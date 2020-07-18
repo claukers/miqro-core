@@ -20,9 +20,9 @@
 
 ###  verify
 
-▸ **verify**(`args`: object): *Promise‹[SessionInterface](_service_common_index_.sessioninterface.md)›*
+▸ **verify**(`args`: object): *Promise‹[SessionInterface](_service_common_.sessioninterface.md)›*
 
-*Defined in [src/service/index.ts:18](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L18)*
+*Defined in [src/service/index.ts:14](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L14)*
 
 **Parameters:**
 
@@ -32,4 +32,4 @@ Name | Type |
 ------ | ------ |
 `token` | string |
 
-**Returns:** *Promise‹[SessionInterface](_service_common_index_.sessioninterface.md)›*
+**Returns:** *Promise‹[SessionInterface](_service_common_.sessioninterface.md)›*

@@ -6,18 +6,11 @@
 
 ### References
 
-* [AbstractModelService](_service_index_.md#abstractmodelservice)
 * [DataBaseState](_service_index_.md#databasestate)
 * [Database](_service_index_.md#database)
-* [FakeDeleteModelService](_service_index_.md#fakedeletemodelservice)
 * [IModelMap](_service_index_.md#imodelmap)
-* [ModelService](_service_index_.md#modelservice)
-* [ModelServiceArgsInterface](_service_index_.md#modelserviceargsinterface)
-* [ModelServiceInterface](_service_index_.md#modelserviceinterface)
 * [NoTokenSessionInterface](_service_index_.md#notokensessioninterface)
-* [PostListModelService](_service_index_.md#postlistmodelservice)
 * [SessionInterface](_service_index_.md#sessioninterface)
-* [parseIncludeQuery](_service_index_.md#parseincludequery)
 
 ### Classes
 
@@ -34,12 +27,6 @@
 
 ## References
 
-###  AbstractModelService
-
-• **AbstractModelService**:
-
-___
-
 ###  DataBaseState
 
 • **DataBaseState**:
@@ -52,33 +39,9 @@ ___
 
 ___
 
-###  FakeDeleteModelService
-
-• **FakeDeleteModelService**:
-
-___
-
 ###  IModelMap
 
 • **IModelMap**:
-
-___
-
-###  ModelService
-
-• **ModelService**:
-
-___
-
-###  ModelServiceArgsInterface
-
-• **ModelServiceArgsInterface**:
-
-___
-
-###  ModelServiceInterface
-
-• **ModelServiceInterface**:
 
 ___
 
@@ -88,21 +51,9 @@ ___
 
 ___
 
-###  PostListModelService
-
-• **PostListModelService**:
-
-___
-
 ###  SessionInterface
 
 • **SessionInterface**:
-
-___
-
-###  parseIncludeQuery
-
-• **parseIncludeQuery**:
 
 ## Variables
 
@@ -110,7 +61,7 @@ ___
 
 • **jwtModule**: *"jsonwebtoken"* = "jsonwebtoken"
 
-*Defined in [src/service/index.ts:13](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L13)*
+*Defined in [src/service/index.ts:9](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L9)*
 
 ___
 
@@ -118,4 +69,4 @@ ___
 
 • **requestModule**: *"axios"* = "axios"
 
-*Defined in [src/service/index.ts:14](https://github.com/claukers/miqro-core/blob/65c3631/src/service/index.ts#L14)*
+*Defined in [src/service/index.ts:10](https://github.com/claukers/miqro-core/blob/543c996/src/service/index.ts#L10)*
