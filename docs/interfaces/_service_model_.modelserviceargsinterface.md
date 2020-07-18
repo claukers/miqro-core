@@ -20,7 +20,7 @@
 
 • **body**: *[SimpleMapInterface](_util_util_.simplemapinterface.md)‹any›*
 
-*Defined in [src/service/model.ts:5](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L5)*
+*Defined in [src/service/model.ts:5](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L5)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **params**: *[SimpleMapInterface](_util_util_.simplemapinterface.md)‹string›*
 
-*Defined in [src/service/model.ts:7](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L7)*
+*Defined in [src/service/model.ts:7](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L7)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • **query**: *[SimpleMapInterface](_util_util_.simplemapinterface.md)‹string›*
 
-*Defined in [src/service/model.ts:6](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L6)*
+*Defined in [src/service/model.ts:6](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L6)*

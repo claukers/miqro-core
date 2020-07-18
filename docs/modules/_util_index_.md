@@ -205,7 +205,7 @@ ___
 
 Ƭ **GroupPolicyInterface**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/64522a7/src/util/index.ts#L16)*
+*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/index.ts#L16)*
 
 ___
 
@@ -213,7 +213,7 @@ ___
 
 Ƭ **GroupPolicyItemInterface**: *string | string[]*
 
-*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/64522a7/src/util/index.ts#L18)*
+*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/index.ts#L18)*
 
 ## Functions
 
@@ -221,7 +221,7 @@ ___
 
 ▸ **policyCheck**(`session`: [SessionInterface](../interfaces/_service_common_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)): *boolean*
 
-*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/64522a7/src/util/index.ts#L25)*
+*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/index.ts#L25)*
 
 **Parameters:**
 

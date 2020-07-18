@@ -22,7 +22,7 @@
 
 ▸ **verify**(`args`: object): *Promise‹[SessionInterface](_service_common_.sessioninterface.md)›*
 
-*Defined in [src/service/index.ts:19](https://github.com/claukers/miqro-core/blob/64522a7/src/service/index.ts#L19)*
+*Defined in [src/service/index.ts:19](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/index.ts#L19)*
 
 **Parameters:**
 

@@ -24,7 +24,7 @@
 
 Ƭ **DataBaseState**: *"stopped" | "starting" | "started" | "startstop" | "error"*
 
-*Defined in [src/service/db.ts:5](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L5)*
+*Defined in [src/service/db.ts:5](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/db.ts#L5)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 Ƭ **IModelMap**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹any›*
 
-*Defined in [src/service/db.ts:7](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L7)*
+*Defined in [src/service/db.ts:7](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/db.ts#L7)*
 
 ## Variables
 
@@ -40,7 +40,7 @@ ___
 
 • **logger**: *any* = null
 
-*Defined in [src/service/db.ts:9](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L9)*
+*Defined in [src/service/db.ts:9](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/db.ts#L9)*
 
 ___
 
@@ -48,4 +48,4 @@ ___
 
 • **sequelizeModule**: *"sequelize"* = "sequelize"
 
-*Defined in [src/service/db.ts:11](https://github.com/claukers/miqro-core/blob/64522a7/src/service/db.ts#L11)*
+*Defined in [src/service/db.ts:11](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/db.ts#L11)*

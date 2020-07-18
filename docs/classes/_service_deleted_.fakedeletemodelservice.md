@@ -39,7 +39,7 @@
 
 *Inherited from [ModelService](_service_smodel_.modelservice.md).[constructor](_service_smodel_.modelservice.md#constructor)*
 
-*Defined in [src/service/smodel.ts:6](https://github.com/claukers/miqro-core/blob/64522a7/src/service/smodel.ts#L6)*
+*Defined in [src/service/smodel.ts:6](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L6)*
 
 **Parameters:**
 
@@ -57,7 +57,7 @@ Name | Type |
 
 *Inherited from [ModelService](_service_smodel_.modelservice.md).[model](_service_smodel_.modelservice.md#protected-model)*
 
-*Defined in [src/service/smodel.ts:8](https://github.com/claukers/miqro-core/blob/64522a7/src/service/smodel.ts#L8)*
+*Defined in [src/service/smodel.ts:8](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L8)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 • **modelIsDeletedAttribute**: *string* = "deleted"
 
-*Defined in [src/service/deleted.ts:5](https://github.com/claukers/miqro-core/blob/64522a7/src/service/deleted.ts#L5)*
+*Defined in [src/service/deleted.ts:5](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/deleted.ts#L5)*
 
 ## Methods
 
@@ -75,7 +75,7 @@ ___
 
 *Overrides [ModelService](_service_smodel_.modelservice.md).[delete](_service_smodel_.modelservice.md#delete)*
 
-*Defined in [src/service/deleted.ts:12](https://github.com/claukers/miqro-core/blob/64522a7/src/service/deleted.ts#L12)*
+*Defined in [src/service/deleted.ts:12](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/deleted.ts#L12)*
 
 **Parameters:**
 
@@ -93,7 +93,7 @@ ___
 
 *Overrides [ModelService](_service_smodel_.modelservice.md).[get](_service_smodel_.modelservice.md#get)*
 
-*Defined in [src/service/deleted.ts:7](https://github.com/claukers/miqro-core/blob/64522a7/src/service/deleted.ts#L7)*
+*Defined in [src/service/deleted.ts:7](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/deleted.ts#L7)*
 
 **Parameters:**
 
@@ -111,7 +111,7 @@ ___
 
 *Overrides [ModelService](_service_smodel_.modelservice.md).[patch](_service_smodel_.modelservice.md#patch)*
 
-*Defined in [src/service/deleted.ts:17](https://github.com/claukers/miqro-core/blob/64522a7/src/service/deleted.ts#L17)*
+*Defined in [src/service/deleted.ts:17](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/deleted.ts#L17)*
 
 **Parameters:**
 
@@ -129,7 +129,7 @@ ___
 
 *Overrides [PostListModelService](_service_postlist_.postlistmodelservice.md).[post](_service_postlist_.postlistmodelservice.md#post)*
 
-*Defined in [src/service/deleted.ts:24](https://github.com/claukers/miqro-core/blob/64522a7/src/service/deleted.ts#L24)*
+*Defined in [src/service/deleted.ts:24](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/deleted.ts#L24)*
 
 **Parameters:**
 
@@ -147,7 +147,7 @@ ___
 
 *Inherited from [AbstractModelService](_service_amodel_.abstractmodelservice.md).[put](_service_amodel_.abstractmodelservice.md#put)*
 
-*Defined in [src/service/amodel.ts:17](https://github.com/claukers/miqro-core/blob/64522a7/src/service/amodel.ts#L17)*
+*Defined in [src/service/amodel.ts:17](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L17)*
 
 **Parameters:**
 

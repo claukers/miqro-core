@@ -29,7 +29,7 @@
 
 ▸ **delete**(`options`: [ModelServiceArgsInterface](_service_model_.modelserviceargsinterface.md), `transaction?`: any): *Promise‹any›*
 
-*Defined in [src/service/model.ts:19](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L19)*
+*Defined in [src/service/model.ts:19](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L19)*
 
 **Parameters:**
 
@@ -46,7 +46,7 @@ ___
 
 ▸ **get**(`options`: [ModelServiceArgsInterface](_service_model_.modelserviceargsinterface.md), `transaction?`: any, `skipLocked?`: boolean): *Promise‹any›*
 
-*Defined in [src/service/model.ts:11](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L11)*
+*Defined in [src/service/model.ts:11](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L11)*
 
 **Parameters:**
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **patch**(`options`: [ModelServiceArgsInterface](_service_model_.modelserviceargsinterface.md), `transaction?`: any): *Promise‹any›*
 
-*Defined in [src/service/model.ts:17](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L17)*
+*Defined in [src/service/model.ts:17](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L17)*
 
 **Parameters:**
 
@@ -81,7 +81,7 @@ ___
 
 ▸ **post**(`options`: [ModelServiceArgsInterface](_service_model_.modelserviceargsinterface.md), `transaction?`: any): *Promise‹any›*
 
-*Defined in [src/service/model.ts:13](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L13)*
+*Defined in [src/service/model.ts:13](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L13)*
 
 **Parameters:**
 
@@ -98,7 +98,7 @@ ___
 
 ▸ **put**(`options`: [ModelServiceArgsInterface](_service_model_.modelserviceargsinterface.md), `transaction?`: any): *Promise‹any›*
 
-*Defined in [src/service/model.ts:15](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L15)*
+*Defined in [src/service/model.ts:15](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L15)*
 
 **Parameters:**
 

@@ -19,7 +19,7 @@
 
 ▸ **parseIncludeQuery**(`includeQuery`: any[]): *any[]*
 
-*Defined in [src/service/model.ts:22](https://github.com/claukers/miqro-core/blob/64522a7/src/service/model.ts#L22)*
+*Defined in [src/service/model.ts:22](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/model.ts#L22)*
 
 **Parameters:**
 
