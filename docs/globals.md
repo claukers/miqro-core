@@ -8,7 +8,8 @@
 
 * ["cli/cli"](modules/_cli_cli_.md)
 * ["cli/config"](modules/_cli_config_.md)
-* ["cli/configBash"](modules/_cli_configbash_.md)
+* ["cli/config-bash"](modules/_cli_config_bash_.md)
+* ["cli/config-env"](modules/_cli_config_env_.md)
 * ["cli/create"](modules/_cli_create_.md)
 * ["cli/init"](modules/_cli_init_.md)
 * ["index"](modules/_index_.md)

@@ -38,7 +38,7 @@
 
 \+ **new ModelService**(`model`: any): *[ModelService](_service_smodel_.modelservice.md)*
 
-*Defined in [src/service/smodel.ts:6](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L6)*
+*Defined in [src/service/smodel.ts:6](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/smodel.ts#L6)*
 
 **Parameters:**
 
@@ -54,7 +54,7 @@ Name | Type |
 
 • **model**: *any*
 
-*Defined in [src/service/smodel.ts:8](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L8)*
+*Defined in [src/service/smodel.ts:8](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/smodel.ts#L8)*
 
 ## Methods
 
@@ -64,7 +64,7 @@ Name | Type |
 
 *Overrides [AbstractModelService](_service_amodel_.abstractmodelservice.md).[delete](_service_amodel_.abstractmodelservice.md#delete)*
 
-*Defined in [src/service/smodel.ts:146](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L146)*
+*Defined in [src/service/smodel.ts:146](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/smodel.ts#L146)*
 
 **Parameters:**
 
@@ -88,7 +88,7 @@ ___
 
 *Overrides [AbstractModelService](_service_amodel_.abstractmodelservice.md).[get](_service_amodel_.abstractmodelservice.md#get)*
 
-*Defined in [src/service/smodel.ts:13](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L13)*
+*Defined in [src/service/smodel.ts:13](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/smodel.ts#L13)*
 
 **Parameters:**
 
@@ -114,7 +114,7 @@ ___
 
 *Overrides [AbstractModelService](_service_amodel_.abstractmodelservice.md).[patch](_service_amodel_.abstractmodelservice.md#patch)*
 
-*Defined in [src/service/smodel.ts:128](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L128)*
+*Defined in [src/service/smodel.ts:128](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/smodel.ts#L128)*
 
 **Parameters:**
 
@@ -138,7 +138,7 @@ ___
 
 *Overrides [AbstractModelService](_service_amodel_.abstractmodelservice.md).[post](_service_amodel_.abstractmodelservice.md#post)*
 
-*Defined in [src/service/smodel.ts:115](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/smodel.ts#L115)*
+*Defined in [src/service/smodel.ts:115](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/smodel.ts#L115)*
 
 **Parameters:**
 
@@ -162,7 +162,7 @@ ___
 
 *Inherited from [AbstractModelService](_service_amodel_.abstractmodelservice.md).[put](_service_amodel_.abstractmodelservice.md#put)*
 
-*Defined in [src/service/amodel.ts:17](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L17)*
+*Defined in [src/service/amodel.ts:17](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/amodel.ts#L17)*
 
 **Parameters:**
 

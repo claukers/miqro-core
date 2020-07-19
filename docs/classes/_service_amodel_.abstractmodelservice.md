@@ -28,7 +28,7 @@
 
 ▸ **delete**(`options`: [ModelServiceArgsInterface](../interfaces/_service_model_.modelserviceargsinterface.md)): *Promise‹any›*
 
-*Defined in [src/service/amodel.ts:27](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L27)*
+*Defined in [src/service/amodel.ts:27](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/amodel.ts#L27)*
 
 **Parameters:**
 
@@ -44,7 +44,7 @@ ___
 
 ▸ **get**(`options`: [ModelServiceArgsInterface](../interfaces/_service_model_.modelserviceargsinterface.md)): *Promise‹any›*
 
-*Defined in [src/service/amodel.ts:7](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L7)*
+*Defined in [src/service/amodel.ts:7](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/amodel.ts#L7)*
 
 **Parameters:**
 
@@ -60,7 +60,7 @@ ___
 
 ▸ **patch**(`options`: [ModelServiceArgsInterface](../interfaces/_service_model_.modelserviceargsinterface.md)): *Promise‹any›*
 
-*Defined in [src/service/amodel.ts:22](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L22)*
+*Defined in [src/service/amodel.ts:22](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/amodel.ts#L22)*
 
 **Parameters:**
 
@@ -76,7 +76,7 @@ ___
 
 ▸ **post**(`options`: [ModelServiceArgsInterface](../interfaces/_service_model_.modelserviceargsinterface.md)): *Promise‹any›*
 
-*Defined in [src/service/amodel.ts:12](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L12)*
+*Defined in [src/service/amodel.ts:12](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/amodel.ts#L12)*
 
 **Parameters:**
 
@@ -92,7 +92,7 @@ ___
 
 ▸ **put**(`options`: [ModelServiceArgsInterface](../interfaces/_service_model_.modelserviceargsinterface.md)): *Promise‹any›*
 
-*Defined in [src/service/amodel.ts:17](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/amodel.ts#L17)*
+*Defined in [src/service/amodel.ts:17](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/amodel.ts#L17)*
 
 **Parameters:**
 

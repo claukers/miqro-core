@@ -26,7 +26,7 @@
 
 \+ **new ConfigFileNotFoundError**(`message`: string): *[ConfigFileNotFoundError](_util_error_configfilenotfound_.configfilenotfounderror.md)*
 
-*Defined in [src/util/error/configfilenotfound.ts:3](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/error/configfilenotfound.ts#L3)*
+*Defined in [src/util/error/configfilenotfound.ts:3](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/error/configfilenotfound.ts#L3)*
 
 **Parameters:**
 
@@ -56,7 +56,7 @@ ___
 
 *Overrides void*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/error/named.ts#L2)*
 
 ___
 

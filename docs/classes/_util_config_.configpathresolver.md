@@ -31,7 +31,7 @@
 
 ▪ **rcLoaded**: *boolean* = false
 
-*Defined in [src/util/config.ts:64](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L64)*
+*Defined in [src/util/config.ts:64](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L64)*
 
 ## Methods
 
@@ -39,7 +39,7 @@
 
 ▸ **getBaseDirname**(): *string*
 
-*Defined in [src/util/config.ts:47](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L47)*
+*Defined in [src/util/config.ts:47](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L47)*
 
 **Returns:** *string*
 
@@ -49,7 +49,7 @@ ___
 
 ▸ **getConfigDirname**(): *string*
 
-*Defined in [src/util/config.ts:38](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L38)*
+*Defined in [src/util/config.ts:38](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L38)*
 
 **Returns:** *string*
 
@@ -59,7 +59,7 @@ ___
 
 ▸ **getMiqroRCFilePath**(): *string*
 
-*Defined in [src/util/config.ts:20](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L20)*
+*Defined in [src/util/config.ts:20](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L20)*
 
 **Returns:** *string*
 
@@ -69,7 +69,7 @@ ___
 
 ▸ **getOverrideConfigFilePath**(): *string*
 
-*Defined in [src/util/config.ts:12](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L12)*
+*Defined in [src/util/config.ts:12](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L12)*
 
 **Returns:** *string*
 
@@ -79,7 +79,7 @@ ___
 
 ▸ **getSequelizeRCFilePath**(): *string*
 
-*Defined in [src/util/config.ts:24](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L24)*
+*Defined in [src/util/config.ts:24](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L24)*
 
 **Returns:** *string*
 
@@ -89,7 +89,7 @@ ___
 
 ▸ **getServiceDirname**(): *string*
 
-*Defined in [src/util/config.ts:28](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L28)*
+*Defined in [src/util/config.ts:28](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L28)*
 
 **Returns:** *string*
 
@@ -99,7 +99,7 @@ ___
 
 ▸ **getServiceName**(): *string*
 
-*Defined in [src/util/config.ts:60](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L60)*
+*Defined in [src/util/config.ts:60](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L60)*
 
 **Returns:** *string*
 
@@ -109,7 +109,7 @@ ___
 
 ▸ **getSrcDirname**(): *string*
 
-*Defined in [src/util/config.ts:66](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L66)*
+*Defined in [src/util/config.ts:66](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L66)*
 
 **Returns:** *string*
 
@@ -119,7 +119,7 @@ ___
 
 ▸ **loadMiqroRC**(): *void*
 
-*Defined in [src/util/config.ts:70](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L70)*
+*Defined in [src/util/config.ts:70](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L70)*
 
 **Returns:** *void*
 
@@ -129,7 +129,7 @@ ___
 
 ▸ **setServiceName**(`name`: string): *string*
 
-*Defined in [src/util/config.ts:55](https://github.com/claukers/miqro-core/blob/cc47cc5/src/util/config.ts#L55)*
+*Defined in [src/util/config.ts:55](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/config.ts#L55)*
 
 **Parameters:**
 

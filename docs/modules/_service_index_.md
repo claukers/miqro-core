@@ -110,7 +110,7 @@ ___
 
 • **jwtModule**: *"jsonwebtoken"* = "jsonwebtoken"
 
-*Defined in [src/service/index.ts:14](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/index.ts#L14)*
+*Defined in [src/service/index.ts:14](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/index.ts#L14)*
 
 ___
 
@@ -118,4 +118,4 @@ ___
 
 • **requestModule**: *"axios"* = "axios"
 
-*Defined in [src/service/index.ts:15](https://github.com/claukers/miqro-core/blob/cc47cc5/src/service/index.ts#L15)*
+*Defined in [src/service/index.ts:15](https://github.com/claukers/miqro-core/blob/5cb140c/src/service/index.ts#L15)*
