@@ -16,40 +16,34 @@ export interface Session extends NoTokenSession {
   token: string;
 }
 
-/* eslint-disable  @typescript-eslint/no-namespace */
-declare global {
-  namespace Express {
-    // tslint:disable-next-line:interface-name
-    interface Request extends IncomingMessage {
-      results: any[];
-      session?: Session;
-      uuid?: string;
-      query: SimpleMap<string>;
-      params: SimpleMap<string>;
-      body: any;
-    }
-  }
+export interface Request extends IncomingMessage {
+  results: any[];
+  session?: Session;
+  uuid?: string;
+  query?: SimpleMap<string>;
+  params?: SimpleMap<string>;
+  body?: any;
 }
 
 export type NextFunction = (e?: any) => void;
 
-export type ErrorCallback = (err: Error, req: Express.Request, res: ServerResponse, next: NextFunction) => any;
-export type Callback = (req: Express.Request, res: ServerResponse) => any;
-export type AsyncCallback = (req: Express.Request, res: ServerResponse) => Promise<any>;
-export type NextCallback = (req: Express.Request, res: ServerResponse, next: NextFunction) => void;
-export type AsyncNextCallback = (req: Express.Request, res: ServerResponse, next: NextFunction) => Promise<void>;
+export type ErrorCallback<T = IncomingMessage> = (err: Error, req: T, res: ServerResponse, next: NextFunction) => any;
+export type Callback<T = IncomingMessage> = (req: T, res: ServerResponse) => any | void;
+export type AsyncCallback<T = IncomingMessage> = (req: T, res: ServerResponse) => Promise<any | void>;
+export type NextCallback<T = IncomingMessage> = (req: T, res: ServerResponse, next: NextFunction) => void;
+export type AsyncNextCallback<T = IncomingMessage> = (req: T, res: ServerResponse, next: NextFunction) => Promise<void>;
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const setResults = (req: Express.Request, results: any[]): void => {
-  req.results = results;
+export const setResults = (req: IncomingMessage, results: any[]): void => {
+  (req as Request).results = results;
 };
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const getResults = (req: Express.Request): any[] => {
-  if (!(req.results)) {
+export const getResults = (req: IncomingMessage): any[] => {
+  if (!((req as Request).results)) {
     setResults(req, []);
   }
-  return req.results;
+  return (req as Request).results;
 };
 
 /**
@@ -58,47 +52,52 @@ export const getResults = (req: Express.Request): any[] => {
  * @param fn  express request handler ´async function´.
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const Handler = (fn: AsyncCallback | Callback, logger?: Logger): NextCallback => {
+export const Handler = (fn: AsyncCallback<Request> | Callback<Request>, logger?: Logger): NextCallback => {
   if (!logger) {
     logger = Util.getLogger("Handler");
   }
   return (req, res, next) => {
+    let handleError = (err: Error) => {
+      logger.error(err);
+      handleError = null;
+      next(err);
+    }
     try {
-      const p = fn(req, res);
-      if (p instanceof Promise) {
-        p.then((result) => {
-          logger.debug(`request[${req.uuid}] push to results[${inspect(result)}]`);
+      let handleResult = (result) => {
+        if (typeof result !== "undefined") {
+          logger.debug(`request[${(req as Request).uuid}] push to results[${inspect(result)}]`);
           getResults(req).push(result);
-          next();
-        }).catch((e) => {
-          logger.error(e);
-          next(e);
-        });
-      } else {
-        logger.debug(`request[${req.uuid}] push to results[${inspect(p)}]`);
-        getResults(req).push(p);
+        } else {
+          logger.debug(`request[${(req as Request).uuid}] ignoring undefined result`);
+        }
         next();
+        handleResult = null;
+      }
+      const p = fn(req as Request, res);
+      if (p instanceof Promise) {
+        p.then(handleResult).catch(handleError);
+      } else {
+        handleResult(p);
       }
     } catch (e) {
-      logger.error(e);
-      next(e);
+      handleError(e);
     }
   };
 };
 
 
 export interface HandleAllOptionsOutput {
-  req: any,
+  req: Request,
   handlers: AsyncNextCallback[]
 }
 
-export type HandleAllOptions = (req: any) => Promise<HandleAllOptionsOutput[]>;
+export type HandleAllOptions = (req: Request) => Promise<HandleAllOptionsOutput[]>;
 
 export const HandleAll = (generator: HandleAllOptions, logger?: Logger): NextCallback => {
   if (!logger) {
     logger = Util.getLogger("HandleAll");
   }
-  return Handler(async (req: any) => {
+  return Handler(async (req) => {
     return Promise.all((await generator(req)).map((call) => {
       return new Promise((resolve, reject) => {
         const toCall = call.handlers.reverse();

@@ -9,7 +9,8 @@ import {
 } from "./responses";
 import {inspect} from "util";
 import {Logger, Util} from "../util";
-import {ErrorCallback, NextCallback} from "./common";
+import {ErrorCallback, NextCallback, Request} from "./common";
+import {IncomingMessage} from "http";
 
 export const createErrorResponse = (e: Error): APIResponse => {
   if (!e.name || e.name === "Error") {
@@ -35,8 +36,8 @@ export const createErrorResponse = (e: Error): APIResponse => {
 };
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const createServiceResponse = (req: any): ServiceResponse => {
-  const {results} = req;
+export const createServiceResponse = (req: IncomingMessage): ServiceResponse => {
+  const {results} = (req as Request);
   if (!results || results.length === 0) {
     return null;
   }
@@ -58,7 +59,7 @@ export const ResponseHandler = (logger?: Logger): NextCallback => {
   return (req, res, next) => {
     try {
       const response = createServiceResponse(req);
-      logger.debug(`request[${req.uuid}] response[${inspect(response)}]`);
+      logger.debug(`request[${(req as Request).uuid}] response[${inspect(response)}]`);
       if (!response) {
         next();
       } else {
@@ -83,7 +84,7 @@ export const ErrorHandler = (logger?: Logger): ErrorCallback => {
   }
   return (err: Error, req, res, next): void => {
     try {
-      logger.error(`request[${req.uuid}] ${inspect(err)}`);
+      logger.error(`request[${(req as Request).uuid}] ${inspect(err)}`);
       const response = createErrorResponse(err);
       if (response) {
         response.send(res);
