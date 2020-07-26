@@ -1,6 +1,10 @@
 import {inspect} from "util";
 import {Logger, SimpleMap, Util} from "../util";
 
+export interface VerifyTokenService {
+  verify(args: { token: string }): Promise<Session>;
+}
+
 export interface NoTokenSession {
   account: string;
   username: string;
