@@ -31,11 +31,11 @@ const parseSimpleOption = (type: ParseSimpleType, value): boolean => {
   return isType;
 };
 
-export interface SimpleMapInterface<T2> {
-  [word: string]: T2;
+export interface SimpleMap<T2> {
+  [key: string]: T2;
 }
 
-export type ConfigOutput = SimpleMapInterface<string>;
+export type ConfigOutput = SimpleMap<string>;
 
 let logger = null;
 
@@ -57,7 +57,7 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrideConfig(path: string, combined?: SimpleMapInterface<string>): ConfigOutput[] {
+  public static overrideConfig(path: string, combined?: SimpleMap<string>): ConfigOutput[] {
     const outputs: ConfigOutput[] = [];
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
@@ -82,7 +82,7 @@ export abstract class Util {
     return outputs;
   }
 
-  public static getConfig(): { combined: SimpleMapInterface<string>; outputs: ConfigOutput[] } {
+  public static getConfig(): { combined: SimpleMap<string>; outputs: ConfigOutput[] } {
     const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
 
     let outputs: ConfigOutput[] = [];
@@ -145,7 +145,7 @@ export abstract class Util {
                              optionsArray: {
                                name: string; type: string; arrayType?: string; required: boolean;
                              }[],
-                             parserOption: OPTIONPARSERType = "no_extra"): SimpleMapInterface<any> {
+                             parserOption: OPTIONPARSERType = "no_extra"): SimpleMap<any> {
     const ret = {};
     if (typeof arg !== "object" || !arg) {
       throw new ParseOptionsError(`${argName} not valid`);

@@ -1,7 +1,7 @@
 import {AbstractModelService} from "./amodel";
 import {ParseOptionsError, Util} from "../util";
 import {Database} from "./db";
-import {ModelServiceArgsInterface, parseIncludeQuery} from "./model";
+import {ModelServiceArgs, parseIncludeQuery} from "./model";
 
 export class ModelService extends AbstractModelService {
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
@@ -10,7 +10,7 @@ export class ModelService extends AbstractModelService {
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-  public async get({body, query, params}: ModelServiceArgsInterface, transaction?: any, skipLocked?: boolean): Promise<any> {
+  public async get({body, query, params}: ModelServiceArgs, transaction?: any, skipLocked?: boolean): Promise<any> {
     const {pagination, include, order} = Util.parseOptions("query", query, [
       {name: "include", type: "string", required: false},
       {name: "pagination", type: "string", required: false},
@@ -112,7 +112,7 @@ export class ModelService extends AbstractModelService {
     return ret;
   }
 
-  public async post({body, query, params}: ModelServiceArgsInterface, transaction?: any): Promise<any> {
+  public async post({body, query, params}: ModelServiceArgs, transaction?: any): Promise<any> {
     Util.parseOptions("params", params, [], "no_extra");
     Util.parseOptions("query", query, [], "no_extra");
     // noinspection JSDeprecatedSymbols
@@ -125,7 +125,7 @@ export class ModelService extends AbstractModelService {
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-  public async patch({body, query, params}: ModelServiceArgsInterface, transaction?: any): Promise<any> {
+  public async patch({body, query, params}: ModelServiceArgs, transaction?: any): Promise<any> {
     Util.parseOptions("query", query, [], "no_extra");
     const instances = await this.get({
       body: {},
@@ -143,7 +143,7 @@ export class ModelService extends AbstractModelService {
     }
   }
 
-  public async delete({body, query, params}: ModelServiceArgsInterface, transaction?: any): Promise<any> {
+  public async delete({body, query, params}: ModelServiceArgs, transaction?: any): Promise<any> {
     Util.parseOptions("query", query, [], "no_extra");
     Util.parseOptions("body", body, [], "no_extra");
     const instances = await this.get({

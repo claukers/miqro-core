@@ -1,9 +1,9 @@
-export interface NoTokenSessionInterface {
+export interface NoTokenSession {
   account: string;
   username: string;
   groups: string[];
 }
 
-export interface SessionInterface extends NoTokenSessionInterface {
+export interface Session extends NoTokenSession {
   token: string;
 }

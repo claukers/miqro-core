@@ -1,22 +1,22 @@
-import {ParseOptionsError, SimpleMapInterface, Util} from "../util";
+import {ParseOptionsError, SimpleMap, Util} from "../util";
 import {Database} from "./db";
 
-export interface ModelServiceArgsInterface {
-  body: SimpleMapInterface<any>;
-  query: SimpleMapInterface<string>;
-  params: SimpleMapInterface<string>;
+export interface ModelServiceArgs {
+  body: SimpleMap<any>;
+  query: SimpleMap<string>;
+  params: SimpleMap<string>;
 }
 
 export interface ModelServiceInterface {
-  get(options: ModelServiceArgsInterface, transaction?: any, skipLocked?: boolean): Promise<any>;
+  get(options: ModelServiceArgs, transaction?: any, skipLocked?: boolean): Promise<any>;
 
-  post(options: ModelServiceArgsInterface, transaction?: any): Promise<any>;
+  post(options: ModelServiceArgs, transaction?: any): Promise<any>;
 
-  put(options: ModelServiceArgsInterface, transaction?: any): Promise<any>;
+  put(options: ModelServiceArgs, transaction?: any): Promise<any>;
 
-  patch(options: ModelServiceArgsInterface, transaction?: any): Promise<any>;
+  patch(options: ModelServiceArgs, transaction?: any): Promise<any>;
 
-  delete(options: ModelServiceArgsInterface, transaction?: any): Promise<any>;
+  delete(options: ModelServiceArgs, transaction?: any): Promise<any>;
 }
 
 export const parseIncludeQuery = (includeQuery: any[]): any[] => {

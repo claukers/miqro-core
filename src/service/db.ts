@@ -1,10 +1,8 @@
 import {EventEmitter} from "events";
-import {loadSequelizeRC, SimpleMapInterface, Util} from "../util";
+import {loadSequelizeRC, SimpleMap, Util} from "../util";
 
 // noinspection SpellCheckingInspection
 export type DataBaseState = "stopped" | "starting" | "started" | "startstop" | "error";
-
-export type IModelMap = SimpleMapInterface<any>
 
 let logger = null;
 
@@ -22,7 +20,7 @@ export class Database extends EventEmitter {
   }
 
   private static instance: Database = null;
-  public readonly models: IModelMap = {};
+  public readonly models: SimpleMap<any> = {};
   public readonly sequelize: any;
   public readonly Op: any;
   private state: DataBaseState = "stopped";

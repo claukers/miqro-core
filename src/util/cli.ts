@@ -1,8 +1,8 @@
-import {SimpleMapInterface} from "./util";
+import {SimpleMap} from "./util";
 import {Logger} from "./logger";
 
 // noinspection SpellCheckingInspection
-export type CMDMapType = SimpleMapInterface<{ module: string; description: string }>
+export type CMDMapType = SimpleMap<{ module: string; description: string }>
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
