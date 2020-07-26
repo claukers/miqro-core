@@ -9,8 +9,8 @@ import {
 } from "./responses";
 import {inspect} from "util";
 import {Logger, Util} from "../util";
-import {ErrorCallback, initRequest, NextCallback} from "./common";
-import {IncomingMessage} from "http";
+import {ErrorCallback, NextCallback} from "./common";
+import {Request} from "express";
 
 export const createErrorResponse = (e: Error): APIResponse => {
   if (!e.name || e.name === "Error") {
@@ -36,8 +36,8 @@ export const createErrorResponse = (e: Error): APIResponse => {
 };
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const createServiceResponse = (req: IncomingMessage): ServiceResponse => {
-  const {results} = initRequest(req);
+export const createServiceResponse = (req: Request): ServiceResponse => {
+  const {results} = req;
   if (!results || results.length === 0) {
     return null;
   }
@@ -52,13 +52,12 @@ export const createServiceResponse = (req: IncomingMessage): ServiceResponse => 
  *
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const ResponseHandler = (logger?: Logger): NextCallback => {
+export const ResponseHandler = (logger?: Logger): NextCallback<void> => {
   if (!logger) {
     logger = Util.getLogger("ResponseHandler");
   }
-  return (reqArgs, res, next) => {
+  return (req, res, next) => {
     try {
-      const req = initRequest(reqArgs)
       const response = createServiceResponse(req);
       logger.debug(`request[${req.uuid}] response[${inspect(response)}]`);
       if (!response) {
@@ -79,13 +78,12 @@ export const ResponseHandler = (logger?: Logger): NextCallback => {
  *
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const ErrorHandler = (logger?: Logger): ErrorCallback => {
+export const ErrorHandler = (logger?: Logger): ErrorCallback<void> => {
   if (!logger) {
     logger = Util.getLogger("ErrorHandler");
   }
-  return (err: Error, reqArgs, res, next): void => {
+  return (err: Error, req, res, next): void => {
     try {
-      const req = initRequest(reqArgs);
       logger.error(`request[${req.uuid}] ${inspect(err)}`);
       const response = createErrorResponse(err);
       if (response) {

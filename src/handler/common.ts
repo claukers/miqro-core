@@ -1,6 +1,6 @@
 import {inspect} from "util";
-import {Logger, SimpleMap, Util} from "../util";
-import {IncomingMessage, ServerResponse} from "http";
+import {Logger, Util} from "../util";
+import {NextFunction, Request, Response} from "express";
 
 export interface VerifyTokenService {
   verify(args: { token: string }): Promise<Session>;
@@ -16,40 +16,33 @@ export interface Session extends NoTokenSession {
   token: string;
 }
 
-export interface Request extends IncomingMessage {
-  results: any[];
-  session?: Session;
-  uuid?: string;
-  query?: SimpleMap<string>;
-  params?: SimpleMap<string>;
-  body?: any;
+/* eslint-disable  @typescript-eslint/no-namespace */
+declare global {
+  namespace Express {
+    // tslint:disable-next-line:interface-name
+    interface Request {
+      results: any[];
+      session?: Session;
+      uuid: string;
+    }
+  }
 }
 
-export const initRequest = (req: IncomingMessage): Request => {
-  (req as any).results = (req as any).results ? (req as any).results : [];
-  (req as any).session = (req as any).session ? (req as any).session : null;
-  (req as any).uuid = (req as any).uuid ? (req as any).uuid : null;
-  (req as any).query = (req as any).query ? (req as any).query : {};
-  (req as any).params = (req as any).params ? (req as any).params : {};
-  (req as any).body = (req as any).body ? (req as any).body : null;
-  return req as Request;
-}
+export type ErrorCallback<T = void> = (err: Error, req: Request, res: Response, next: NextFunction) => T;
 
-export type NextFunction = (e?: any) => void;
+export type Callback<T = any> = (req: Request, res: Response) => T;
+export type AsyncCallback<T = any> = (req: Request, res: Response) => Promise<T>;
 
-export type ErrorCallback<T = IncomingMessage> = (err: Error, req: T, res: ServerResponse, next: NextFunction) => any;
-export type Callback<T = IncomingMessage> = (req: T, res: ServerResponse) => any | void;
-export type AsyncCallback<T = IncomingMessage> = (req: T, res: ServerResponse) => Promise<any | void>;
-export type NextCallback<T = IncomingMessage> = (req: T, res: ServerResponse, next: NextFunction) => void;
-export type AsyncNextCallback<T = IncomingMessage> = (req: T, res: ServerResponse, next: NextFunction) => Promise<void>;
+export type NextCallback<T = void> = (req: Request, res: Response, next: NextFunction) => T;
+export type AsyncNextCallback<T = void> = (req: Request, res: Response, next: NextFunction) => Promise<T>;
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const setResults = (req: IncomingMessage, results: any[]): void => {
+export const setResults = (req: Request, results: any[]): void => {
   (req as Request).results = results;
 };
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const getResults = (req: IncomingMessage): any[] => {
+export const getResults = (req: Request): any[] => {
   if (!((req as Request).results)) {
     setResults(req, []);
   }
@@ -62,29 +55,24 @@ export const getResults = (req: IncomingMessage): any[] => {
  * @param fn  express request handler ´async function´.
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const Handler = (fn: AsyncCallback<Request> | Callback<Request>, logger?: Logger): NextCallback => {
+export const Handler = (fn: AsyncCallback | Callback, logger?: Logger): NextCallback => {
   if (!logger) {
     logger = Util.getLogger("Handler");
   }
-  return (reqArgs, res, next) => {
+  return (req, res, next) => {
     let handleError = (err: Error) => {
       logger.error(err);
       handleError = null;
       next(err);
     }
     try {
-      const req = initRequest(reqArgs);
+      const p = fn(req, res);
       let handleResult = (result) => {
-        if (typeof result !== "undefined") {
-          logger.debug(`request[${req.uuid}] push to results[${inspect(result)}]`);
-          getResults(req).push(result);
-        } else {
-          logger.debug(`request[${req.uuid}] ignoring undefined result`);
-        }
+        logger.debug(`request[${req.uuid}] push to results[${inspect(result)}]`);
+        getResults(req).push(result);
         next();
         handleResult = null;
       }
-      const p = fn(req, res);
       if (p instanceof Promise) {
         p.then(handleResult).catch(handleError);
       } else {
@@ -98,8 +86,8 @@ export const Handler = (fn: AsyncCallback<Request> | Callback<Request>, logger?:
 
 
 export interface HandleAllOptionsOutput {
-  req: Request,
-  handlers: AsyncNextCallback[]
+  req: Request;
+  handlers: NextCallback[] | AsyncNextCallback[];
 }
 
 export type HandleAllOptions = (req: Request) => Promise<HandleAllOptionsOutput[]>;
@@ -117,7 +105,7 @@ export const HandleAll = (generator: HandleAllOptions, logger?: Logger): NextCal
           if (!handler) {
             resolve(getResults(call.req))
           } else {
-            handler(call.req, null, (e?: Error) => {
+            handler(call.req, null, (e?: any) => {
               if (e) {
                 reject(e);
               } else {

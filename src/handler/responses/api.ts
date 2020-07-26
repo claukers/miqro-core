@@ -1,3 +1,5 @@
+import {Response} from "express";
+
 export class APIResponse {
   public status = 200;
 
@@ -5,7 +7,7 @@ export class APIResponse {
   constructor(public body?: any) {
   }
 
-  public send(res: any) {
+  public send(res: Response) {
     res.status(this.status);
     res.json(this.body);
   }
