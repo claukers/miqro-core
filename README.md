@@ -1,6 +1,6 @@
 # @miqro/core
 
-this module provides functions to develop and integrate with microservices like **logging**, **config**, **request parsing**, and some middleware helpers for express.
+this module provides helpers functions to develop **express** nodejs applications like **logging**, **config** and **request parsing**
 
 ```javascript
 const {
@@ -64,116 +64,7 @@ const resultWithoutExtra = Util.parseOptions("person", data, [
 ], "ignore_extra");
 ```
 
-## handlers
 
-##### basic result passing
-
-```javascript
-...
-
-const getSomething = (param)=> {
-    return async ({params}) => {
-        const value = parseInt(params[param]);
-        return value;
-    }
-}
-
-app.get("/add/:a/:b/:c", [
-    Handler(getSomething("a")),
-    Handler(getSomething("b")),
-    Handler(getSomething("c")),
-    (req, res, next) => {
-        const results = getResults(req);
-        // do something with results
-        const ret = results.reduce((ag, value) => {
-            ag += value;
-        }, 0);
-        // clear prev results so ResponseHandler sends only the value stored in "ret" 
-        setResults(req, [ret]);
-        next();
-    }, 
-    ResponseHandler()
-]);
-....
-```
-
-##### parallel result passing
-
-TODO
-
-```javascript
-...
-const a = Handler(....);
-const b = Handler(....);
-const c = Handler(....);
-const d = Handler(....);
-
-app.use([
-    HandleAll((req)=>{
-        .....
-        const reqAB = ....
-        const reqCD = ....
-        .....
-        return [{
-            reqAB,
-            handlers: [a, b,....]
-         }, {
-            reqCD,
-            handlers: [c, d,....]
-         }, ...];  
-    }),
-    ResponseHandler() // results will be passed the same way as Promise.all(...)
-]);
-....
-```
-
-##### req.session
-
-TODO
-
-```javascript
-...
-app.post(..., [SessionHandler(...), protectedHandler, ResponseHandler(...)])
-...
-app.use(ErrorHandler(...)) // this is needed for resolving a failed session validation as a 401 or 403
-...
-```
-
-##### res.session.groups validation
-
-TODO
-
-```javascript
-...
-app.post(..., [SessionHandler(...), GroupPolicyHandler(...), protectedHandler, ResponseHandler(...)])
-...
-app.use(ErrorHandler(...)) // this is needed for resolving a failed session validation as a 401 or 403
-...
-```
-
-##### error handling
-
-TODO
-
-```javascript
-...
-app.use(..., [
-    ...
-    ({body}) => {
-        // for example this is interpreted in ErrorHandler as a 400 if req.body doesnt match
-        Util.parseOptions("body", body, [
-          { name: "name", type: "string", required: true },
-          { name: "age", type: "number", required: true },
-          { name: "likes", type: "array", required: true, arrayType: "string" }
-        ], "no_extra");
-    },
-    ...
-]);
-...
-app.use(ErrorHandler(...))
-...
-app.use(myFallBackerrorHandler) // this will catch all throws that are not reconized by ErrorHandler()
-```
 
 ### config
 
