@@ -1,5 +1,5 @@
 import {inspect} from "util";
-import {Logger, Util} from "../util";
+import {Logger, SimpleMap, Util} from "../util";
 
 export interface NoTokenSession {
   account: string;
@@ -19,6 +19,10 @@ declare global {
       results: any[];
       session?: Session;
       uuid: string;
+      query: SimpleMap<string>;
+      params: SimpleMap<string>;
+      headers: SimpleMap<string>;
+      body: any;
     }
   }
 }
