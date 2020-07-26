@@ -2,7 +2,7 @@
 
 **in early development not to use in production**
 
-this module provides the features like **logging**, **config**, **option parsing**.
+this module provides the features like **logging**, **config** and **option parsing**.
 
 ```javascript
 const {
@@ -10,10 +10,10 @@ const {
   FeatureToggle
 } = require("@miqro/core");
 
-// this should load the correct env variables in process.env
+// this should load env files in config/$NODE_ENV/*.env into process.env
 Util.loadConfig();
 
-// force the load of an .env file into process.env 
+// force the load of an env file into process.env 
 Util.overrideConfig("other.env");
 
 // this will throw if ENV_VAR_A doesnt exists  
@@ -98,7 +98,7 @@ TODO
 
 TODO
 
-###### custom factory example
+###### custom logger factory example
 
 ```config/log.js```
 
@@ -144,27 +144,6 @@ module.exports = (identifier) => {
   return logger;
 };
 ```
-
-
-### sequelize
-
-TODO
-
-##### auto migrations 
-
-see ```@miqro/database```
-
-### jsonwebtoken
-
-TODO
-
-##### token validation and req.session
-
-TODO
-
-##### req.session group validation
-
-TODO
 
 ### documentation
 
