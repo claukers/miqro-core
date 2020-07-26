@@ -1,7 +1,20 @@
 import {ParseOptionsError} from "./";
 import {ForbiddenError} from "./error";
 import {Logger} from "./logger";
-import {Session} from "../handler";
+
+export interface VerifyTokenService {
+  verify(args: { token: string }): Promise<Session>;
+}
+
+export interface NoTokenSession {
+  account: string;
+  username: string;
+  groups: string[];
+}
+
+export interface Session extends NoTokenSession {
+  token: string;
+}
 
 export * from "./util";
 
