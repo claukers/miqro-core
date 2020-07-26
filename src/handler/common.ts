@@ -1,5 +1,6 @@
 import {inspect} from "util";
 import {Logger, SimpleMap, Util} from "../util";
+import {IncomingMessage, ServerResponse} from "http";
 
 export interface VerifyTokenService {
   verify(args: { token: string }): Promise<Session>;
@@ -19,25 +20,24 @@ export interface Session extends NoTokenSession {
 declare global {
   namespace Express {
     // tslint:disable-next-line:interface-name
-    interface Request {
+    interface Request extends IncomingMessage {
       results: any[];
       session?: Session;
-      uuid: string;
+      uuid?: string;
       query: SimpleMap<string>;
       params: SimpleMap<string>;
-      headers: SimpleMap<string>;
       body: any;
     }
   }
 }
 
-export type NextFunction = (e?: Error) => void;
+export type NextFunction = (e?: any) => void;
 
-export type ErrorCallback = (err: Error, req: Express.Request, res: any, next: NextFunction) => any;
-export type Callback = (req: Express.Request, res: any) => any;
-export type AsyncCallback = (req: Express.Request, res: any) => Promise<any>;
-export type NextCallback = (req: Express.Request, res: any, next: NextFunction) => void;
-export type AsyncNextCallback = (req: Express.Request, res: any, next: NextFunction) => Promise<void>;
+export type ErrorCallback = (err: Error, req: Express.Request, res: ServerResponse, next: NextFunction) => any;
+export type Callback = (req: Express.Request, res: ServerResponse) => any;
+export type AsyncCallback = (req: Express.Request, res: ServerResponse) => Promise<any>;
+export type NextCallback = (req: Express.Request, res: ServerResponse, next: NextFunction) => void;
+export type AsyncNextCallback = (req: Express.Request, res: ServerResponse, next: NextFunction) => Promise<void>;
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
 export const setResults = (req: Express.Request, results: any[]): void => {
