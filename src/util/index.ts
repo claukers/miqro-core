@@ -1,7 +1,7 @@
 import {ParseOptionsError} from "./";
 import {ForbiddenError} from "./error";
 import {Logger} from "./logger";
-import {Session} from "../common";
+import {Session} from "../handler";
 
 export * from "./util";
 
