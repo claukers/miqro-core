@@ -25,6 +25,16 @@ export interface Request extends IncomingMessage {
   body?: any;
 }
 
+export const initRequest = (req: IncomingMessage): Request => {
+  (req as any).results = (req as any).results ? (req as any).results : [];
+  (req as any).session = (req as any).session ? (req as any).session : null;
+  (req as any).uuid = (req as any).uuid ? (req as any).uuid : null;
+  (req as any).query = (req as any).query ? (req as any).query : {};
+  (req as any).params = (req as any).params ? (req as any).params : {};
+  (req as any).body = (req as any).body ? (req as any).body : null;
+  return req as Request;
+}
+
 export type NextFunction = (e?: any) => void;
 
 export type ErrorCallback<T = IncomingMessage> = (err: Error, req: T, res: ServerResponse, next: NextFunction) => any;
@@ -56,24 +66,25 @@ export const Handler = (fn: AsyncCallback<Request> | Callback<Request>, logger?:
   if (!logger) {
     logger = Util.getLogger("Handler");
   }
-  return (req, res, next) => {
+  return (reqArgs, res, next) => {
     let handleError = (err: Error) => {
       logger.error(err);
       handleError = null;
       next(err);
     }
     try {
+      const req = initRequest(reqArgs);
       let handleResult = (result) => {
         if (typeof result !== "undefined") {
-          logger.debug(`request[${(req as Request).uuid}] push to results[${inspect(result)}]`);
+          logger.debug(`request[${req.uuid}] push to results[${inspect(result)}]`);
           getResults(req).push(result);
         } else {
-          logger.debug(`request[${(req as Request).uuid}] ignoring undefined result`);
+          logger.debug(`request[${req.uuid}] ignoring undefined result`);
         }
         next();
         handleResult = null;
       }
-      const p = fn(req as Request, res);
+      const p = fn(req, res);
       if (p instanceof Promise) {
         p.then(handleResult).catch(handleError);
       } else {
