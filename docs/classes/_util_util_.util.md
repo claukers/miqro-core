@@ -31,7 +31,7 @@
 
 ▪ **configLoaded**: *boolean* = false
 
-*Defined in [src/util/util.ts:221](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L221)*
+*Defined in [src/util/util.ts:221](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L221)*
 
 ## Methods
 
@@ -39,7 +39,7 @@
 
 ▸ **checkEnvVariables**(`requiredEnvVariables`: string[]): *void*
 
-*Defined in [src/util/util.ts:135](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L135)*
+*Defined in [src/util/util.ts:135](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L135)*
 
 **Parameters:**
 
@@ -55,7 +55,7 @@ ___
 
 ▸ **checkModules**(`requiredModules`: string[]): *void*
 
-*Defined in [src/util/util.ts:125](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L125)*
+*Defined in [src/util/util.ts:125](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L125)*
 
 **Parameters:**
 
@@ -71,7 +71,7 @@ ___
 
 ▸ **getComponentLogger**(`component?`: string): *[Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/util.ts:216](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L216)*
+*Defined in [src/util/util.ts:216](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L216)*
 
 **Parameters:**
 
@@ -87,11 +87,11 @@ ___
 
 ▸ **getConfig**(): *object*
 
-*Defined in [src/util/util.ts:85](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L85)*
+*Defined in [src/util/util.ts:85](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L85)*
 
 **Returns:** *object*
 
-* **combined**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string›*
+* **combined**: *[SimpleMap](../interfaces/_util_util_.simplemap.md)‹string›*
 
 * **outputs**: *[ConfigOutput](../modules/_util_util_.md#configoutput)[]*
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **getLogger**(`identifier`: string): *[Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/util.ts:205](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L205)*
+*Defined in [src/util/util.ts:205](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L205)*
 
 **Parameters:**
 
@@ -117,7 +117,7 @@ ___
 
 ▸ **loadConfig**(): *void*
 
-*Defined in [src/util/util.ts:118](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L118)*
+*Defined in [src/util/util.ts:118](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L118)*
 
 **Returns:** *void*
 
@@ -125,16 +125,16 @@ ___
 
 ### `Static` overrideConfig
 
-▸ **overrideConfig**(`path`: string, `combined?`: [SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string›): *[ConfigOutput](../modules/_util_util_.md#configoutput)[]*
+▸ **overrideConfig**(`path`: string, `combined?`: [SimpleMap](../interfaces/_util_util_.simplemap.md)‹string›): *[ConfigOutput](../modules/_util_util_.md#configoutput)[]*
 
-*Defined in [src/util/util.ts:60](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L60)*
+*Defined in [src/util/util.ts:60](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L60)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
 `path` | string |
-`combined?` | [SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹string› |
+`combined?` | [SimpleMap](../interfaces/_util_util_.simplemap.md)‹string› |
 
 **Returns:** *[ConfigOutput](../modules/_util_util_.md#configoutput)[]*
 
@@ -142,9 +142,9 @@ ___
 
 ### `Static` parseOptions
 
-▸ **parseOptions**(`argName`: string, `arg`: object, `optionsArray`: object[], `parserOption`: [OPTIONPARSERType](../modules/_util_util_.md#optionparsertype)): *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹any›*
+▸ **parseOptions**(`argName`: string, `arg`: object, `optionsArray`: object[], `parserOption`: [OPTIONPARSERType](../modules/_util_util_.md#optionparsertype)): *[SimpleMap](../interfaces/_util_util_.simplemap.md)‹any›*
 
-*Defined in [src/util/util.ts:143](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L143)*
+*Defined in [src/util/util.ts:143](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L143)*
 
 **Parameters:**
 
@@ -155,7 +155,7 @@ Name | Type | Default |
 `optionsArray` | object[] | - |
 `parserOption` | [OPTIONPARSERType](../modules/_util_util_.md#optionparsertype) | "no_extra" |
 
-**Returns:** *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹any›*
+**Returns:** *[SimpleMap](../interfaces/_util_util_.simplemap.md)‹any›*
 
 ___
 
@@ -163,7 +163,7 @@ ___
 
 ▸ **setupInstanceEnv**(`serviceName`: string, `scriptPath`: string): *void*
 
-*Defined in [src/util/util.ts:47](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L47)*
+*Defined in [src/util/util.ts:47](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L47)*
 
 **Parameters:**
 
@@ -180,6 +180,6 @@ ___
 
 ▸ **setupSimpleEnv**(): *void*
 
-*Defined in [src/util/util.ts:43](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/util.ts#L43)*
+*Defined in [src/util/util.ts:43](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/util.ts#L43)*
 
 **Returns:** *void*

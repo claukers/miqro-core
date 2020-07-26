@@ -61,7 +61,7 @@
 
 *Overrides void*
 
-*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L57)*
+*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L57)*
 
 **Parameters:**
 
@@ -79,7 +79,7 @@ Name | Type |
 
 • **_formatter**: *[Formatter](../modules/_util_logger_.md#formatter)* = null
 
-*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L57)*
+*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L57)*
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 • **level**: *[LogLevel](../modules/_util_logger_.md#loglevel)*
 
-*Defined in [src/util/logger.ts:59](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L59)*
+*Defined in [src/util/logger.ts:59](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L59)*
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/logger.ts:81](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L81)*
+*Defined in [src/util/logger.ts:81](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L81)*
 
 **Parameters:**
 
@@ -189,7 +189,7 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/logger.ts:87](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L87)*
+*Defined in [src/util/logger.ts:87](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L87)*
 
 **Parameters:**
 
@@ -232,7 +232,7 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/logger.ts:93](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L93)*
+*Defined in [src/util/logger.ts:93](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L93)*
 
 **Parameters:**
 
@@ -287,7 +287,7 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/logger.ts:99](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L99)*
+*Defined in [src/util/logger.ts:99](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L99)*
 
 **Parameters:**
 
@@ -516,7 +516,7 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/logger.ts:105](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L105)*
+*Defined in [src/util/logger.ts:105](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L105)*
 
 **Parameters:**
 
@@ -535,7 +535,7 @@ ___
 
 *Implementation of [Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/logger.ts:111](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L111)*
+*Defined in [src/util/logger.ts:111](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L111)*
 
 **Parameters:**
 
@@ -552,7 +552,7 @@ ___
 
 ▸ **write**(`args`: [WriteArgs](../interfaces/_util_logger_.writeargs.md)): *void*
 
-*Defined in [src/util/logger.ts:72](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L72)*
+*Defined in [src/util/logger.ts:72](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L72)*
 
 **Parameters:**
 

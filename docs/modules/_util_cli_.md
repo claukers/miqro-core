@@ -16,6 +16,6 @@
 
 ###  CMDMapType
 
-Ƭ **CMDMapType**: *[SimpleMapInterface](../interfaces/_util_util_.simplemapinterface.md)‹object›*
+Ƭ **CMDMapType**: *[SimpleMap](../interfaces/_util_util_.simplemap.md)‹object›*
 
-*Defined in [src/util/cli.ts:5](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/cli.ts#L5)*
+*Defined in [src/util/cli.ts:5](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/cli.ts#L5)*

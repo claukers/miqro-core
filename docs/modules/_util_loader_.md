@@ -20,7 +20,7 @@
 
 Ƭ **LoggerFactory**: *function*
 
-*Defined in [src/util/loader.ts:11](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/loader.ts#L11)*
+*Defined in [src/util/loader.ts:11](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/loader.ts#L11)*
 
 #### Type declaration:
 
@@ -38,7 +38,7 @@ Name | Type |
 
 ▸ **defaultLoggerFactory**(`identifier`: string): *[Logger](../interfaces/_util_logger_.logger.md)*
 
-*Defined in [src/util/loader.ts:13](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/loader.ts#L13)*
+*Defined in [src/util/loader.ts:13](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/loader.ts#L13)*
 
 **Parameters:**
 
@@ -54,7 +54,7 @@ ___
 
 ▸ **getLoggerFactory**(): *[LoggerFactory](_util_loader_.md#loggerfactory)*
 
-*Defined in [src/util/loader.ts:52](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/loader.ts#L52)*
+*Defined in [src/util/loader.ts:52](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/loader.ts#L52)*
 
 **Returns:** *[LoggerFactory](_util_loader_.md#loggerfactory)*
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **loadSequelizeRC**(): *object*
 
-*Defined in [src/util/loader.ts:19](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/loader.ts#L19)*
+*Defined in [src/util/loader.ts:19](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/loader.ts#L19)*
 
 **Returns:** *object*
 

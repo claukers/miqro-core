@@ -5,7 +5,7 @@ export class APIResponse {
   constructor(public body?: any) {
   }
 
-  public async send(res: any): Promise<void> {
+  public send(res: any) {
     res.status(this.status);
     res.json(this.body);
   }

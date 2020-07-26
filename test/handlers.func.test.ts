@@ -3,12 +3,12 @@ import {expect} from "chai";
 import * as express from "express";
 import * as path from "path";
 import * as request from "supertest";
-import {Util, ParseOptionsError} from "../src";
+import {ParseOptionsError, Util} from "../src";
 
 process.env.MIQRO_DIRNAME = path.resolve(__dirname, "sample");
 Util.loadConfig();
 
-describe("handlers functional tests", function() {
+describe("handlers functional tests", function () {
   this.timeout(10000);
   it("ErrorHandler catches ParseOptionsError as 400", (done) => {
     const {ErrorHandler} = require("../src/");
@@ -110,10 +110,130 @@ describe("handlers functional tests", function() {
         }
       });
   });
-  it("Handler happy path agregates results", (done) => {
+  it("Handler happy path aggregates results", (done) => {
     const {Handler, ResponseHandler} = require("../src/");
     let bla = 0;
     const myFunc = () => {
+      return ++bla;
+    };
+    const app = express();
+    app.get("/myFunc", [
+      Handler(myFunc),
+      Handler(myFunc),
+      ResponseHandler()
+    ]);
+
+    request(app)
+      .get('/myFunc')
+      .expect('Content-Type', /json/)
+      .expect('Content-Length', '31')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          expect(res.body.success).to.be.equals(true);
+          expect(res.body.result[0]).to.be.equals(1);
+          expect(res.body.result[1]).to.be.equals(2);
+          done();
+        }
+      });
+  });
+  it("Handler happy path aggregates results async", (done) => {
+    const {Handler, ResponseHandler} = require("../src/");
+    let bla = 0;
+    const myFunc = async () => {
+      return ++bla;
+    };
+    const app = express();
+    app.get("/myFunc", [
+      Handler(myFunc),
+      Handler(myFunc),
+      ResponseHandler()
+    ]);
+
+    request(app)
+      .get('/myFunc')
+      .expect('Content-Type', /json/)
+      .expect('Content-Length', '31')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          expect(res.body.success).to.be.equals(true);
+          expect(res.body.result[0]).to.be.equals(1);
+          expect(res.body.result[1]).to.be.equals(2);
+          done();
+        }
+      });
+  });
+  it("Handler happy path aggregates results Promise", (done) => {
+    const {Handler, ResponseHandler} = require("../src/");
+    let bla = 0;
+    const myFunc = () => {
+      return new Promise((resolve) => {
+        resolve(++bla);
+      });
+    };
+    const app = express();
+    app.get("/myFunc", [
+      Handler(myFunc),
+      Handler(myFunc),
+      ResponseHandler()
+    ]);
+
+    request(app)
+      .get('/myFunc')
+      .expect('Content-Type', /json/)
+      .expect('Content-Length', '31')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          expect(res.body.success).to.be.equals(true);
+          expect(res.body.result[0]).to.be.equals(1);
+          expect(res.body.result[1]).to.be.equals(2);
+          done();
+        }
+      });
+  });
+  it("Handler happy path aggregates results function Promise", (done) => {
+    const {Handler, ResponseHandler} = require("../src/");
+    let bla = 0;
+    function myFunc() {
+      return new Promise((resolve) => {
+        resolve(++bla);
+      });
+    };
+    const app = express();
+    app.get("/myFunc", [
+      Handler(myFunc),
+      Handler(myFunc),
+      ResponseHandler()
+    ]);
+
+    request(app)
+      .get('/myFunc')
+      .expect('Content-Type', /json/)
+      .expect('Content-Length', '31')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          expect(res.body.success).to.be.equals(true);
+          expect(res.body.result[0]).to.be.equals(1);
+          expect(res.body.result[1]).to.be.equals(2);
+          done();
+        }
+      });
+  });
+  it("Handler happy path aggregates results function value", (done) => {
+    const {Handler, ResponseHandler} = require("../src/");
+    let bla = 0;
+    function myFunc() {
       return ++bla;
     };
     const app = express();

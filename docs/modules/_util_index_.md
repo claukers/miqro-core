@@ -9,6 +9,7 @@
 * [CLIUtil](_util_index_.md#cliutil)
 * [CMDMapType](_util_index_.md#cmdmaptype)
 * [ConfigFileNotFoundError](_util_index_.md#configfilenotfounderror)
+* [ConfigOutput](_util_index_.md#configoutput)
 * [ConfigPathResolver](_util_index_.md#configpathresolver)
 * [ConsoleLogger](_util_index_.md#consolelogger)
 * [ConsoleLoggerEvents](_util_index_.md#consoleloggerevents)
@@ -20,8 +21,10 @@
 * [Logger](_util_index_.md#logger)
 * [LoggerFactory](_util_index_.md#loggerfactory)
 * [MethodNotImplementedError](_util_index_.md#methodnotimplementederror)
+* [OPTIONPARSERType](_util_index_.md#optionparsertype)
 * [ParseOptionsError](_util_index_.md#parseoptionserror)
-* [SimpleMapInterface](_util_index_.md#simplemapinterface)
+* [ParseSimpleType](_util_index_.md#parsesimpletype)
+* [SimpleMap](_util_index_.md#simplemap)
 * [StopWatch](_util_index_.md#stopwatch)
 * [UnAuthorizedError](_util_index_.md#unauthorizederror)
 * [Util](_util_index_.md#util)
@@ -38,12 +41,12 @@
 
 ### Interfaces
 
-* [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)
+* [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md)
 
 ### Type aliases
 
-* [GroupPolicyInterface](_util_index_.md#grouppolicyinterface)
-* [GroupPolicyItemInterface](_util_index_.md#grouppolicyiteminterface)
+* [GroupPolicyGroups](_util_index_.md#grouppolicygroups)
+* [GroupPolicyType](_util_index_.md#grouppolicytype)
 
 ### Functions
 
@@ -66,6 +69,12 @@ ___
 ###  ConfigFileNotFoundError
 
 • **ConfigFileNotFoundError**:
+
+___
+
+###  ConfigOutput
+
+• **ConfigOutput**:
 
 ___
 
@@ -135,15 +144,27 @@ ___
 
 ___
 
+###  OPTIONPARSERType
+
+• **OPTIONPARSERType**:
+
+___
+
 ###  ParseOptionsError
 
 • **ParseOptionsError**:
 
 ___
 
-###  SimpleMapInterface
+###  ParseSimpleType
 
-• **SimpleMapInterface**:
+• **ParseSimpleType**:
+
+___
+
+###  SimpleMap
+
+• **SimpleMap**:
 
 ___
 
@@ -201,33 +222,33 @@ ___
 
 ## Type aliases
 
-###  GroupPolicyInterface
+###  GroupPolicyGroups
 
-Ƭ **GroupPolicyInterface**: *"at_least_one" | "all"*
+Ƭ **GroupPolicyGroups**: *string | string[]*
 
-*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/index.ts#L16)*
+*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L18)*
 
 ___
 
-###  GroupPolicyItemInterface
+###  GroupPolicyType
 
-Ƭ **GroupPolicyItemInterface**: *string | string[]*
+Ƭ **GroupPolicyType**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/index.ts#L18)*
+*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L16)*
 
 ## Functions
 
 ### `Const` policyCheck
 
-▸ **policyCheck**(`session`: [SessionInterface](../interfaces/_service_common_.sessioninterface.md), `options`: [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md)): *boolean*
+▸ **policyCheck**(`session`: [Session](../interfaces/_handler_common_.session.md), `options`: [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md)): *boolean*
 
-*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/index.ts#L25)*
+*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L25)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`session` | [SessionInterface](../interfaces/_service_common_.sessioninterface.md) |
-`options` | [GroupPolicyOptionsInterface](../interfaces/_util_index_.grouppolicyoptionsinterface.md) |
+`session` | [Session](../interfaces/_handler_common_.session.md) |
+`options` | [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md) |
 
 **Returns:** *boolean*

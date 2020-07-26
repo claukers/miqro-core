@@ -33,11 +33,11 @@ declare global {
 
 export type NextFunction = (e?: Error) => void;
 
-export type IErrorHandlerCallback = (err: Error, req: Express.Request, res: any, next: NextFunction) => Promise<any>;
-export type IHandlerCallback = (req: Express.Request, res: any) => Promise<any>;
-export type ICallback = (req: Express.Request, res: any) => any;
-export type INextCallback = (req: Express.Request, res: any, next: NextFunction) => any;
-export type INextHandlerCallback = (req: Express.Request, res: any, next: NextFunction) => Promise<any>;
+export type ErrorCallback = (err: Error, req: Express.Request, res: any, next: NextFunction) => any;
+export type Callback = (req: Express.Request, res: any) => any;
+export type AsyncCallback = (req: Express.Request, res: any) => Promise<any>;
+export type NextCallback = (req: Express.Request, res: any, next: NextFunction) => void;
+export type AsyncNextCallback = (req: Express.Request, res: any, next: NextFunction) => Promise<void>;
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
 export const setResults = (req: Express.Request, results: any[]): void => {
@@ -53,52 +53,48 @@ export const getResults = (req: Express.Request): any[] => {
 };
 
 /**
- * Wraps an async express request handler that when the function throws it is correctly handled by calling the next function
- *
- * @param fn  express request handler ´async function´.
- * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
- */
-export const NextErrorHandler = (fn: INextHandlerCallback, logger?: Logger): INextHandlerCallback => {
-  if (!logger) {
-    logger = Util.getLogger("NextErrorHandler");
-  }
-  return async (req, res, next): Promise<void> => {
-    try {
-      await fn(req, res, next);
-    } catch (e) {
-      logger.error(`request[${req.uuid}] ${inspect(e)}`);
-      next(e);
-    }
-  };
-};
-
-/**
  * Wraps an async express request handler but catches the return value and appends it to req.results
  *
  * @param fn  express request handler ´async function´.
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const Handler = (fn: IHandlerCallback, logger?: Logger): INextHandlerCallback => {
+export const Handler = (fn: AsyncCallback | Callback, logger?: Logger): NextCallback => {
   if (!logger) {
     logger = Util.getLogger("Handler");
   }
-  return NextErrorHandler(async (req, res, next) => {
-    const result = await fn(req, res);
-    logger.debug(`request[${req.uuid}] push to results[${inspect(result)}]`);
-    getResults(req).push(result);
-    next();
-  }, logger);
+  return (req, res, next) => {
+    try {
+      const p = fn(req, res);
+      if (p instanceof Promise) {
+        p.then((result) => {
+          logger.debug(`request[${req.uuid}] push to results[${inspect(result)}]`);
+          getResults(req).push(result);
+          next();
+        }).catch((e) => {
+          logger.error(e);
+          next(e);
+        });
+      } else {
+        logger.debug(`request[${req.uuid}] push to results[${inspect(p)}]`);
+        getResults(req).push(p);
+        next();
+      }
+    } catch (e) {
+      logger.error(e);
+      next(e);
+    }
+  };
 };
 
 
 export interface HandleAllOptionsOutput {
   req: any,
-  handlers: INextHandlerCallback[]
+  handlers: AsyncNextCallback[]
 }
 
 export type HandleAllOptions = (req: any) => Promise<HandleAllOptionsOutput[]>;
 
-export const HandleAll = (generator: HandleAllOptions, logger?: Logger): INextHandlerCallback => {
+export const HandleAll = (generator: HandleAllOptions, logger?: Logger): NextCallback => {
   if (!logger) {
     logger = Util.getLogger("HandleAll");
   }

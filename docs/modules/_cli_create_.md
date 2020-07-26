@@ -17,7 +17,7 @@
 
 • **logger**: *Console* = console
 
-*Defined in [src/cli/create.ts:6](https://github.com/claukers/miqro-core/blob/5cb140c/src/cli/create.ts#L6)*
+*Defined in [src/cli/create.ts:6](https://github.com/claukers/miqro-core/blob/f2fd61b/src/cli/create.ts#L6)*
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **serviceName**: *string* = process.argv[3]
 
-*Defined in [src/cli/create.ts:7](https://github.com/claukers/miqro-core/blob/5cb140c/src/cli/create.ts#L7)*
+*Defined in [src/cli/create.ts:7](https://github.com/claukers/miqro-core/blob/f2fd61b/src/cli/create.ts#L7)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **servicePath**: *string* = resolve(servicesFolderPath, `${serviceName.toLowerCase()}.js`)
 
-*Defined in [src/cli/create.ts:26](https://github.com/claukers/miqro-core/blob/5cb140c/src/cli/create.ts#L26)*
+*Defined in [src/cli/create.ts:26](https://github.com/claukers/miqro-core/blob/f2fd61b/src/cli/create.ts#L26)*
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 • **servicesFolderPath**: *string* = ConfigPathResolver.getServiceDirname()
 
-*Defined in [src/cli/create.ts:18](https://github.com/claukers/miqro-core/blob/5cb140c/src/cli/create.ts#L18)*
+*Defined in [src/cli/create.ts:18](https://github.com/claukers/miqro-core/blob/f2fd61b/src/cli/create.ts#L18)*

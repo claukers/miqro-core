@@ -1,4 +1,4 @@
-import {INextHandlerCallback, Session, VerifyTokenService} from "./common";
+import {AsyncNextCallback, Session, VerifyTokenService} from "./common";
 import {
   ForbiddenError,
   GroupPolicy,
@@ -9,7 +9,7 @@ import {
   Util
 } from "../util";
 
-export const SessionHandler = (authService: VerifyTokenService, logger?: Logger): INextHandlerCallback => {
+export const SessionHandler = (authService: VerifyTokenService, logger?: Logger): AsyncNextCallback => {
   Util.checkEnvVariables(["TOKEN_LOCATION"]);
   switch (process.env.TOKEN_LOCATION) {
     case "header":
@@ -66,7 +66,7 @@ export const SessionHandler = (authService: VerifyTokenService, logger?: Logger)
   };
 };
 
-export const GroupPolicyHandler = (options: GroupPolicyOptions, logger?: Logger): INextHandlerCallback => {
+export const GroupPolicyHandler = (options: GroupPolicyOptions, logger?: Logger): AsyncNextCallback => {
   if (!logger) {
     logger = Util.getLogger("GroupPolicyHandler");
   }

@@ -28,7 +28,7 @@
 
 ▸ **debug**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:24](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L24)*
+*Defined in [src/util/logger.ts:24](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L24)*
 
 **Parameters:**
 
@@ -45,7 +45,7 @@ ___
 
 ▸ **error**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:28](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L28)*
+*Defined in [src/util/logger.ts:28](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L28)*
 
 **Parameters:**
 
@@ -62,7 +62,7 @@ ___
 
 ▸ **info**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:20](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L20)*
+*Defined in [src/util/logger.ts:20](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L20)*
 
 **Parameters:**
 
@@ -79,7 +79,7 @@ ___
 
 ▸ **log**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:18](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L18)*
+*Defined in [src/util/logger.ts:18](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L18)*
 
 **Parameters:**
 
@@ -96,7 +96,7 @@ ___
 
 ▸ **trace**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:22](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L22)*
+*Defined in [src/util/logger.ts:22](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L22)*
 
 **Parameters:**
 
@@ -113,7 +113,7 @@ ___
 
 ▸ **warn**(`message?`: any, ...`optionalParams`: any[]): *void*
 
-*Defined in [src/util/logger.ts:26](https://github.com/claukers/miqro-core/blob/5cb140c/src/util/logger.ts#L26)*
+*Defined in [src/util/logger.ts:26](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/logger.ts#L26)*
 
 **Parameters:**
 

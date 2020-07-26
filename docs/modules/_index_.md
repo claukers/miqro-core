@@ -6,55 +6,90 @@
 
 ### References
 
-* [AbstractModelService](_index_.md#abstractmodelservice)
+* [APIResponse](_index_.md#apiresponse)
+* [AsyncCallback](_index_.md#asynccallback)
+* [AsyncNextCallback](_index_.md#asyncnextcallback)
+* [BadRequestResponse](_index_.md#badrequestresponse)
 * [CLIUtil](_index_.md#cliutil)
 * [CMDMapType](_index_.md#cmdmaptype)
+* [Callback](_index_.md#callback)
 * [ConfigFileNotFoundError](_index_.md#configfilenotfounderror)
+* [ConfigOutput](_index_.md#configoutput)
 * [ConfigPathResolver](_index_.md#configpathresolver)
 * [ConsoleLogger](_index_.md#consolelogger)
 * [ConsoleLoggerEvents](_index_.md#consoleloggerevents)
-* [DataBaseState](_index_.md#databasestate)
-* [Database](_index_.md#database)
 * [DefaultLogger](_index_.md#defaultlogger)
-* [FakeDeleteModelService](_index_.md#fakedeletemodelservice)
+* [ErrorCallback](_index_.md#errorcallback)
+* [ErrorHandler](_index_.md#errorhandler)
+* [ErrorResponse](_index_.md#errorresponse)
 * [FeatureToggle](_index_.md#featuretoggle)
 * [ForbiddenError](_index_.md#forbiddenerror)
+* [ForbiddenResponse](_index_.md#forbiddenresponse)
 * [Formatter](_index_.md#formatter)
 * [GroupPolicy](_index_.md#grouppolicy)
-* [GroupPolicyInterface](_index_.md#grouppolicyinterface)
-* [GroupPolicyItemInterface](_index_.md#grouppolicyiteminterface)
-* [GroupPolicyOptionsInterface](_index_.md#grouppolicyoptionsinterface)
-* [IModelMap](_index_.md#imodelmap)
+* [GroupPolicyGroups](_index_.md#grouppolicygroups)
+* [GroupPolicyHandler](_index_.md#grouppolicyhandler)
+* [GroupPolicyOptions](_index_.md#grouppolicyoptions)
+* [GroupPolicyType](_index_.md#grouppolicytype)
+* [HandleAll](_index_.md#handleall)
+* [HandleAllOptions](_index_.md#handlealloptions)
+* [HandleAllOptionsOutput](_index_.md#handlealloptionsoutput)
+* [Handler](_index_.md#handler)
 * [LogLevel](_index_.md#loglevel)
 * [Logger](_index_.md#logger)
 * [LoggerFactory](_index_.md#loggerfactory)
 * [MethodNotImplementedError](_index_.md#methodnotimplementederror)
-* [ModelService](_index_.md#modelservice)
-* [ModelServiceArgsInterface](_index_.md#modelserviceargsinterface)
-* [ModelServiceInterface](_index_.md#modelserviceinterface)
-* [NoTokenSessionInterface](_index_.md#notokensessioninterface)
+* [NextCallback](_index_.md#nextcallback)
+* [NextFunction](_index_.md#nextfunction)
+* [NoTokenSession](_index_.md#notokensession)
+* [NotFoundResponse](_index_.md#notfoundresponse)
+* [OPTIONPARSERType](_index_.md#optionparsertype)
 * [ParseOptionsError](_index_.md#parseoptionserror)
-* [PostListModelService](_index_.md#postlistmodelservice)
-* [SessionInterface](_index_.md#sessioninterface)
-* [SimpleMapInterface](_index_.md#simplemapinterface)
+* [ParseSimpleType](_index_.md#parsesimpletype)
+* [ResponseHandler](_index_.md#responsehandler)
+* [ServiceResponse](_index_.md#serviceresponse)
+* [Session](_index_.md#session)
+* [SessionHandler](_index_.md#sessionhandler)
+* [SimpleMap](_index_.md#simplemap)
 * [StopWatch](_index_.md#stopwatch)
 * [UnAuthorizedError](_index_.md#unauthorizederror)
+* [UnAuthorizedResponse](_index_.md#unauthorizedresponse)
 * [Util](_index_.md#util)
-* [VerifyJWTEndpointService](_index_.md#verifyjwtendpointservice)
-* [VerifyTokenServiceInterface](_index_.md#verifytokenserviceinterface)
+* [VerifyTokenService](_index_.md#verifytokenservice)
 * [WriteArgs](_index_.md#writeargs)
 * [WriteEventArgs](_index_.md#writeeventargs)
+* [createErrorResponse](_index_.md#createerrorresponse)
+* [createServiceResponse](_index_.md#createserviceresponse)
 * [defaultLoggerFactory](_index_.md#defaultloggerfactory)
 * [defaultLoggerFormat](_index_.md#defaultloggerformat)
 * [getLoggerFactory](_index_.md#getloggerfactory)
+* [getResults](_index_.md#getresults)
 * [loadSequelizeRC](_index_.md#loadsequelizerc)
-* [parseIncludeQuery](_index_.md#parseincludequery)
+* [setResults](_index_.md#setresults)
 
 ## References
 
-###  AbstractModelService
+###  APIResponse
 
-• **AbstractModelService**:
+• **APIResponse**:
+
+___
+
+###  AsyncCallback
+
+• **AsyncCallback**:
+
+___
+
+###  AsyncNextCallback
+
+• **AsyncNextCallback**:
+
+___
+
+###  BadRequestResponse
+
+• **BadRequestResponse**:
 
 ___
 
@@ -70,9 +105,21 @@ ___
 
 ___
 
+###  Callback
+
+• **Callback**:
+
+___
+
 ###  ConfigFileNotFoundError
 
 • **ConfigFileNotFoundError**:
+
+___
+
+###  ConfigOutput
+
+• **ConfigOutput**:
 
 ___
 
@@ -94,27 +141,27 @@ ___
 
 ___
 
-###  DataBaseState
-
-• **DataBaseState**:
-
-___
-
-###  Database
-
-• **Database**:
-
-___
-
 ###  DefaultLogger
 
 • **DefaultLogger**:
 
 ___
 
-###  FakeDeleteModelService
+###  ErrorCallback
 
-• **FakeDeleteModelService**:
+• **ErrorCallback**:
+
+___
+
+###  ErrorHandler
+
+• **ErrorHandler**:
+
+___
+
+###  ErrorResponse
+
+• **ErrorResponse**:
 
 ___
 
@@ -130,6 +177,12 @@ ___
 
 ___
 
+###  ForbiddenResponse
+
+• **ForbiddenResponse**:
+
+___
+
 ###  Formatter
 
 • **Formatter**:
@@ -142,27 +195,51 @@ ___
 
 ___
 
-###  GroupPolicyInterface
+###  GroupPolicyGroups
 
-• **GroupPolicyInterface**:
-
-___
-
-###  GroupPolicyItemInterface
-
-• **GroupPolicyItemInterface**:
+• **GroupPolicyGroups**:
 
 ___
 
-###  GroupPolicyOptionsInterface
+###  GroupPolicyHandler
 
-• **GroupPolicyOptionsInterface**:
+• **GroupPolicyHandler**:
 
 ___
 
-###  IModelMap
+###  GroupPolicyOptions
 
-• **IModelMap**:
+• **GroupPolicyOptions**:
+
+___
+
+###  GroupPolicyType
+
+• **GroupPolicyType**:
+
+___
+
+###  HandleAll
+
+• **HandleAll**:
+
+___
+
+###  HandleAllOptions
+
+• **HandleAllOptions**:
+
+___
+
+###  HandleAllOptionsOutput
+
+• **HandleAllOptionsOutput**:
+
+___
+
+###  Handler
+
+• **Handler**:
 
 ___
 
@@ -190,27 +267,33 @@ ___
 
 ___
 
-###  ModelService
+###  NextCallback
 
-• **ModelService**:
-
-___
-
-###  ModelServiceArgsInterface
-
-• **ModelServiceArgsInterface**:
+• **NextCallback**:
 
 ___
 
-###  ModelServiceInterface
+###  NextFunction
 
-• **ModelServiceInterface**:
+• **NextFunction**:
 
 ___
 
-###  NoTokenSessionInterface
+###  NoTokenSession
 
-• **NoTokenSessionInterface**:
+• **NoTokenSession**:
+
+___
+
+###  NotFoundResponse
+
+• **NotFoundResponse**:
+
+___
+
+###  OPTIONPARSERType
+
+• **OPTIONPARSERType**:
 
 ___
 
@@ -220,21 +303,39 @@ ___
 
 ___
 
-###  PostListModelService
+###  ParseSimpleType
 
-• **PostListModelService**:
-
-___
-
-###  SessionInterface
-
-• **SessionInterface**:
+• **ParseSimpleType**:
 
 ___
 
-###  SimpleMapInterface
+###  ResponseHandler
 
-• **SimpleMapInterface**:
+• **ResponseHandler**:
+
+___
+
+###  ServiceResponse
+
+• **ServiceResponse**:
+
+___
+
+###  Session
+
+• **Session**:
+
+___
+
+###  SessionHandler
+
+• **SessionHandler**:
+
+___
+
+###  SimpleMap
+
+• **SimpleMap**:
 
 ___
 
@@ -250,21 +351,21 @@ ___
 
 ___
 
+###  UnAuthorizedResponse
+
+• **UnAuthorizedResponse**:
+
+___
+
 ###  Util
 
 • **Util**:
 
 ___
 
-###  VerifyJWTEndpointService
+###  VerifyTokenService
 
-• **VerifyJWTEndpointService**:
-
-___
-
-###  VerifyTokenServiceInterface
-
-• **VerifyTokenServiceInterface**:
+• **VerifyTokenService**:
 
 ___
 
@@ -277,6 +378,18 @@ ___
 ###  WriteEventArgs
 
 • **WriteEventArgs**:
+
+___
+
+###  createErrorResponse
+
+• **createErrorResponse**:
+
+___
+
+###  createServiceResponse
+
+• **createServiceResponse**:
 
 ___
 
@@ -298,12 +411,18 @@ ___
 
 ___
 
+###  getResults
+
+• **getResults**:
+
+___
+
 ###  loadSequelizeRC
 
 • **loadSequelizeRC**:
 
 ___
 
-###  parseIncludeQuery
+###  setResults
 
-• **parseIncludeQuery**:
+• **setResults**:

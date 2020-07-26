@@ -9,9 +9,9 @@ import {
 } from "./responses";
 import {inspect} from "util";
 import {Logger, Util} from "../util";
-import {IErrorHandlerCallback, INextHandlerCallback, NextErrorHandler} from "./common";
+import {ErrorCallback, NextCallback} from "./common";
 
-export const createErrorResponse = async (e: Error): Promise<APIResponse> => {
+export const createErrorResponse = (e: Error): APIResponse => {
   if (!e.name || e.name === "Error") {
     return null;
   } else {
@@ -35,7 +35,7 @@ export const createErrorResponse = async (e: Error): Promise<APIResponse> => {
 };
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
-export const createServiceResponse = async (req: any): Promise<ServiceResponse> => {
+export const createServiceResponse = (req: any): ServiceResponse => {
   const {results} = req;
   if (!results || results.length === 0) {
     return null;
@@ -51,19 +51,24 @@ export const createServiceResponse = async (req: any): Promise<ServiceResponse> 
  *
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const ResponseHandler = (logger?: Logger): INextHandlerCallback => {
+export const ResponseHandler = (logger?: Logger): NextCallback => {
   if (!logger) {
     logger = Util.getLogger("ResponseHandler");
   }
-  return NextErrorHandler(async (req, res, next) => {
-    const response = await createServiceResponse(req);
-    logger.debug(`request[${req.uuid}] response[${inspect(response)}]`);
-    if (!response) {
-      next();
-    } else {
-      await response.send(res);
+  return (req, res, next) => {
+    try {
+      const response = createServiceResponse(req);
+      logger.debug(`request[${req.uuid}] response[${inspect(response)}]`);
+      if (!response) {
+        next();
+      } else {
+        response.send(res);
+      }
+    } catch (e) {
+      logger.error(e);
+      next(e);
     }
-  }, logger);
+  };
 };
 
 // noinspection SpellCheckingInspection
@@ -72,20 +77,21 @@ export const ResponseHandler = (logger?: Logger): INextHandlerCallback => {
  *
  * @param logger  [OPTIONAL] logger for logging errors ´ILogger´.
  */
-export const ErrorHandler = (logger?: Logger): IErrorHandlerCallback => {
+export const ErrorHandler = (logger?: Logger): ErrorCallback => {
   if (!logger) {
     logger = Util.getLogger("ErrorHandler");
   }
-  return async (err: Error, req, res, next): Promise<void> => {
+  return (err: Error, req, res, next): void => {
     try {
       logger.error(`request[${req.uuid}] ${inspect(err)}`);
-      const response = await createErrorResponse(err);
+      const response = createErrorResponse(err);
       if (response) {
-        await response.send(res);
+        response.send(res);
       } else {
         next(err);
       }
     } catch (e) {
+      logger.error(e);
       next(e);
     }
   };
