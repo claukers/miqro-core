@@ -4,7 +4,7 @@ import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {getLoggerFactory} from "./loader";
 import {Logger} from "./logger";
-import {ClientRequest, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
+import {ClientRequest, IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
 import {request as httpsRequest} from "https";
 import {parse as urlParse} from "url";
 
@@ -56,7 +56,7 @@ export abstract class Util {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
-  public static async request(options: RequestOptions): Promise<{ status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
+  public static async request(options: RequestOptions): Promise<{ headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
     return new Promise((resolve, reject) => {
       try {
         const url = urlParse(options.url);
@@ -97,6 +97,7 @@ export abstract class Util {
                   resolve({
                     response: res,
                     status,
+                    headers: res.headers,
                     request: req,
                     data
                   });
@@ -104,6 +105,7 @@ export abstract class Util {
                   const err = new Error(`request ended with status [${status}]`);
                   (err as any).response = res;
                   (err as any).status = status;
+                  (err as any).headers = res.headers;
                   (err as any).request = req;
                   (err as any).data = data;
                   reject(err);
