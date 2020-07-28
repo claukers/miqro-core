@@ -4,6 +4,9 @@ import {ConfigPathResolver} from "./config";
 import {ConfigFileNotFoundError, ParseOptionsError} from "./error/";
 import {getLoggerFactory} from "./loader";
 import {Logger} from "./logger";
+import {ClientRequest, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
+import {request as httpsRequest} from "https";
+import {parse as urlParse} from "url";
 
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
@@ -39,14 +42,103 @@ export type ConfigOutput = SimpleMap<string>;
 
 let logger = null;
 
+export interface RequestOptions {
+  url: string;
+  method?: string;
+  socketPath?: string;
+  timeout?: number;
+  headers?: OutgoingHttpHeaders;
+  data?: SimpleMap<string | number | boolean> | string;
+}
+
 export abstract class Util {
   public static setupSimpleEnv(): void {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
+  public static async request(options: RequestOptions): Promise<{ status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
+    return new Promise((resolve, reject) => {
+      try {
+        const url = urlParse(options.url);
+        if (url.protocol === null) {
+          url.protocol = "http:";
+        }
+        switch (url.protocol) {
+          case "https:":
+          case "http:":
+            const requestModule = (url.protocol === "https:" ? httpsRequest : httpRequest);
+            const req: ClientRequest = requestModule({
+              agent: false,
+              path: url.path,
+              socketPath: options.socketPath,
+              headers: options.headers,
+              timeout: options.timeout,
+              hostname: url.hostname,
+              port: url.port
+            }, (res) => {
+              let data = "";
+              const chunkListener = (chunk) => {
+                data += chunk;
+              };
+              const errorListener = (e2) => {
+                res.removeListener("data", chunkListener);
+                res.removeListener("end", endListener);
+                reject(e2);
+              };
+              const endListener = () => {
+                res.removeListener("data", chunkListener);
+                res.removeListener("error", errorListener);
+                const contentType = res.headers["content-type"];
+                if (contentType.indexOf("application/json") === 0 || contentType.indexOf("json") === 0) {
+                  data = JSON.parse(data);
+                }
+                const status = res.statusCode;
+                if (status >= 200 && status < 300) {
+                  resolve({
+                    response: res,
+                    status,
+                    request: req,
+                    data
+                  });
+                } else {
+                  const err = new Error(`request ended with status [${status}]`);
+                  (err as any).response = res;
+                  (err as any).status = status;
+                  (err as any).request = req;
+                  (err as any).data = data;
+                  reject(err);
+                }
+              }
+              try {
+                res.on("data", chunkListener);
+                res.once("error", errorListener)
+                res.once("end", endListener);
+              } catch (e3) {
+                res.removeListener("data", chunkListener);
+                res.removeListener("end", endListener);
+                res.removeListener("error", errorListener);
+                reject(e3);
+              }
+            });
+            if (options.data) {
+              req.write(typeof options.data === "string" ? options.data : JSON.stringify(options.data));
+            }
+            req.end();
+            break;
+          default:
+            reject(new Error(`unknown protocol [${url.protocol}]`))
+        }
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
   public static setupInstanceEnv(serviceName: string, scriptPath: string): void {
     const microDirname = resolve(dirname(scriptPath));
-    if (!process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined") {
+    if (!
+      process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined"
+    ) {
       process.env.MIQRO_DIRNAME = microDirname;
     } else {
       // noinspection SpellCheckingInspection
@@ -57,7 +149,7 @@ export abstract class Util {
     Util.setupSimpleEnv();
   }
 
-  public static overrideConfig(path: string, combined?: SimpleMap<string>): ConfigOutput[] {
+  public static overrideConfig(path: string, combined ?: SimpleMap<string>): ConfigOutput[] {
     const outputs: ConfigOutput[] = [];
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
@@ -116,7 +208,9 @@ export abstract class Util {
   }
 
   public static loadConfig(): void {
-    if (!Util.configLoaded) {
+    if (!
+      Util.configLoaded
+    ) {
       Util.getConfig();
       Util.configLoaded = true;
     }
@@ -140,14 +234,22 @@ export abstract class Util {
     });
   }
 
-  public static parseOptions(argName: string,
-                             arg: { [name: string]: any },
-                             optionsArray: {
-                               name: string; type: string; arrayType?: string; required: boolean;
-                             }[],
-                             parserOption: OPTIONPARSERType = "no_extra"): SimpleMap<any> {
+  public static parseOptions(
+    argName: string, arg:
+      {
+        [name: string]: any
+      },
+    optionsArray: {
+      name: string;
+      type: string;
+      arrayType?: string;
+      required: boolean;
+    }[],
+    parserOption: OPTIONPARSERType = "no_extra"
+  ): SimpleMap<any> {
     const ret = {};
-    if (typeof arg !== "object" || !arg) {
+    if (typeof arg !== "object" || !arg
+    ) {
       throw new ParseOptionsError(`${argName} not valid`);
     }
     const undefinedCount = 0;
@@ -213,7 +315,7 @@ export abstract class Util {
     return logContainer.get(identifier);
   }
 
-  public static getComponentLogger(component?: string): Logger {
+  public static getComponentLogger(component ?: string): Logger {
     const serviceName = ConfigPathResolver.getServiceName();
     return Util.getLogger(`${serviceName ? `${serviceName}${component ? "." : ""}` : ""}${component ? component : ""}`);
   }
