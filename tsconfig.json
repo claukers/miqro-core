@@ -2,8 +2,9 @@
   "compileOnSave": true,
   "compilerOptions": {
     "outDir": "./dist/",
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": false,
+    "esModuleInterop": true,
     "declaration": true,
     "moduleResolution": "node",
     "module": "commonjs",

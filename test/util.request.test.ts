@@ -1,7 +1,7 @@
 import {after, before, describe, it} from 'mocha';
 import {expect} from 'chai';
 import {Util} from "../src/";
-import * as express from "express";
+import express from "express";
 import {existsSync, unlinkSync} from "fs";
 
 describe('lib.Util.request func tests', function () {
@@ -186,5 +186,31 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
-
+  /*it('test list', (done) => {
+    (async () => {
+      const testURLS = [
+        "http://planet.gnome.org/atom.xml",
+        "https://www.schneier.com/blog/atom.xml",
+        "http://rss.slashdot.org/Slashdot/slashdot",
+        "https://cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+        "https://cooperativa.cl/noticias/site/tax/port/all/rss_6___1.xml",
+        "https://www.elmostrador.cl/destacado/feed/",
+        "http://feeds.feedburner.com/soychilecl-todas",
+        "https://www.elmostrador.cl/noticias/pais/feed/",
+        "https://www.elmostrador.cl/opinion/feed/",
+        "https://cooperativa.cl/noticias/site/tax/port/all/rss_2___1.xml",
+        "https://arstechnica.com/"
+      ];
+      const responses = await Promise.all(testURLS.map(url => {
+        return Util.request({
+          url,
+          method: "get"
+        });
+      }));
+      for (const {status} of responses) {
+        expect(status).to.be.equals(200);
+      }
+      expect(responses.length).to.be.equals(testURLS.length);
+    })().then(done).catch(done);
+  });*/
 });
