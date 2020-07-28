@@ -16,24 +16,31 @@ describe('lib.Util.request func tests', function () {
         unlinkSync(SOCKET_PATH);
       const app = express();
       const appPort = express();
+      const redirectHandler = (req, res) => {
+        res.redirect(302, `http://localhost:${PORT}/hello?format=txt&otherQ=2`);
+      }
       const helloHandler = (req, res) => {
         const format = req.query.format;
         const otherQ = req.query.otherQ;
 
         if (req.method === "POST" && format === "json") {
           expect(req.body.bla).to.be.equals(1);
-        } else if (req.method === "POST" && format === "json") {
+        } else if (req.method === "POST" && format === "txt") {
           expect(req.body).to.be.equals("blo");
         }
 
-        if (otherQ !== "1") {
+        if (otherQ !== "1" && otherQ !== "2") {
           res.status(503);
           res.send("not valid otherQ [" + req.query.otherQ + "]");
         } else {
           switch (format) {
             case "txt":
               res.status(200);
-              res.send("hello");
+              if (otherQ !== "1") {
+                res.send("hello2");
+              } else {
+                res.send("hello");
+              }
               break;
             case "json":
               res.status(200);
@@ -48,6 +55,7 @@ describe('lib.Util.request func tests', function () {
         }
       };
       app.get("/hello", helloHandler);
+      app.get("/redirect", redirectHandler);
       appPort.get("/hello", helloHandler);
       server = app.listen(SOCKET_PATH);
       serverPort = appPort.listen(PORT);
@@ -137,10 +145,46 @@ describe('lib.Util.request func tests', function () {
         });
         expect(true).to.be.equals(false);
       } catch (e) {
-        const {data, status} = e;
+        const {redirectedUrl, data, status} = e;
         expect(data).to.be.equals("not valid format [notvalid]");
         expect(status).to.be.equals(400);
+        expect(redirectedUrl).to.be.equals(undefined);
       }
     })().then(done).catch(done);
   });
+
+  it('simple get follow redirect', (done) => {
+    (async () => {
+      const {url, redirectedUrl, status, data} = await Util.request({
+        url: "/redirect",
+        method: "get",
+        socketPath: SOCKET_PATH
+      });
+      expect(status).to.be.equals(200);
+      expect(redirectedUrl).to.be.equals("http://localhost:8080/hello?format=txt&otherQ=2");
+      expect(url).to.be.equals("/redirect");
+      expect(data).to.be.equals("hello2");
+    })().then(done).catch(done);
+  });
+
+  it('simple get ignoreRedirect:true throws', (done) => {
+    (async () => {
+      try {
+        await Util.request({
+          url: "/redirect",
+          method: "get",
+          socketPath: SOCKET_PATH,
+          ignoreRedirect: true
+        });
+        expect(true).to.be.equals(false);
+      } catch ({url, redirectedUrl, status}) {
+        expect(status).to.be.equals(302);
+        expect(redirectedUrl).to.be.equals(undefined);
+        expect(url).to.be.equals("/redirect");
+      }
+
+    })().then(done).catch(done);
+  });
+
+
 });

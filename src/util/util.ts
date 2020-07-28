@@ -46,6 +46,7 @@ export interface RequestOptions {
   url: string;
   method?: string;
   socketPath?: string;
+  ignoreRedirect?: boolean;
   timeout?: number;
   headers?: OutgoingHttpHeaders;
   data?: SimpleMap<string | number | boolean> | string;
@@ -56,7 +57,7 @@ export abstract class Util {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
-  public static async request(options: RequestOptions): Promise<{ headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
+  public static async request(options: RequestOptions): Promise<{ url: string; redirectedUrl?: string; headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
     return new Promise((resolve, reject) => {
       try {
         const url = urlParse(options.url);
@@ -89,26 +90,50 @@ export abstract class Util {
                 res.removeListener("data", chunkListener);
                 res.removeListener("error", errorListener);
                 const contentType = res.headers["content-type"];
-                if (contentType.indexOf("application/json") === 0 || contentType.indexOf("json") === 0) {
+                const location = res.headers["location"];
+                if (contentType && (contentType.indexOf("application/json") === 0 || contentType.indexOf("json") === 0)) {
                   data = JSON.parse(data);
                 }
                 const status = res.statusCode;
-                if (status >= 200 && status < 300) {
-                  resolve({
-                    response: res,
-                    status,
-                    headers: res.headers,
-                    request: req,
-                    data
+                if (status >= 300 && status <= 400 && !options.ignoreRedirect && location) {
+                  Util.request({
+                    ...options,
+                    url: location
+                  }).then((ret) => {
+                    const redirectedUrl = ret.url;
+                    resolve({
+                      ...ret,
+                      url: options.url,
+                      redirectedUrl
+                    });
+                  }).catch((e4) => {
+                    const redirectedUrl = e4.url;
+                    if (redirectedUrl) {
+                      e4.redirectedUrl = redirectedUrl;
+                      e4.url = options.url;
+                    }
+                    reject(e4);
                   });
                 } else {
-                  const err = new Error(`request ended with status [${status}]`);
-                  (err as any).response = res;
-                  (err as any).status = status;
-                  (err as any).headers = res.headers;
-                  (err as any).request = req;
-                  (err as any).data = data;
-                  reject(err);
+                  if (status >= 200 && status < 300) {
+                    resolve({
+                      url: options.url,
+                      response: res,
+                      status,
+                      headers: res.headers,
+                      request: req,
+                      data
+                    });
+                  } else {
+                    const err = new Error(`request ended with status [${status}]`);
+                    (err as any).response = res;
+                    (err as any).status = status;
+                    (err as any).headers = res.headers;
+                    (err as any).request = req;
+                    (err as any).url = options.url;
+                    (err as any).data = data;
+                    reject(err);
+                  }
                 }
               }
               try {
