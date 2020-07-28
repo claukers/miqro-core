@@ -42,6 +42,9 @@
 ### Interfaces
 
 * [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md)
+* [NoTokenSession](../interfaces/_util_index_.notokensession.md)
+* [Session](../interfaces/_util_index_.session.md)
+* [VerifyTokenService](../interfaces/_util_index_.verifytokenservice.md)
 
 ### Type aliases
 
@@ -226,7 +229,7 @@ ___
 
 Ƭ **GroupPolicyGroups**: *string | string[]*
 
-*Defined in [src/util/index.ts:18](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L18)*
+*Defined in [src/util/index.ts:31](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L31)*
 
 ___
 
@@ -234,21 +237,21 @@ ___
 
 Ƭ **GroupPolicyType**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L16)*
+*Defined in [src/util/index.ts:29](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L29)*
 
 ## Functions
 
 ### `Const` policyCheck
 
-▸ **policyCheck**(`session`: [Session](../interfaces/_handler_common_.session.md), `options`: [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md)): *boolean*
+▸ **policyCheck**(`session`: [Session](../interfaces/_util_index_.session.md), `options`: [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md)): *boolean*
 
-*Defined in [src/util/index.ts:25](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L25)*
+*Defined in [src/util/index.ts:38](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L38)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`session` | [Session](../interfaces/_handler_common_.session.md) |
+`session` | [Session](../interfaces/_util_index_.session.md) |
 `options` | [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md) |
 
 **Returns:** *boolean*

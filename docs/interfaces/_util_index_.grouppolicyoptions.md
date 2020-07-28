@@ -19,7 +19,7 @@
 
 • **groupPolicy**: *[GroupPolicyType](../modules/_util_index_.md#grouppolicytype)*
 
-*Defined in [src/util/index.ts:22](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L22)*
+*Defined in [src/util/index.ts:35](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L35)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **groups**: *[GroupPolicyGroups](../modules/_util_index_.md#grouppolicygroups)[]*
 
-*Defined in [src/util/index.ts:21](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L21)*
+*Defined in [src/util/index.ts:34](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L34)*

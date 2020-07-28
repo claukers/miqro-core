@@ -16,15 +16,15 @@
 
 ### `Static` validateSession
 
-▸ **validateSession**(`session`: [Session](../interfaces/_handler_common_.session.md), `options`: [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md), `logger`: [Logger](../interfaces/_util_logger_.logger.md)): *Promise‹boolean›*
+▸ **validateSession**(`session`: [Session](../interfaces/_util_index_.session.md), `options`: [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md), `logger`: [Logger](../interfaces/_util_logger_.logger.md)): *Promise‹boolean›*
 
-*Defined in [src/util/index.ts:68](https://github.com/claukers/miqro-core/blob/f2fd61b/src/util/index.ts#L68)*
+*Defined in [src/util/index.ts:81](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L81)*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`session` | [Session](../interfaces/_handler_common_.session.md) |
+`session` | [Session](../interfaces/_util_index_.session.md) |
 `options` | [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md) |
 `logger` | [Logger](../interfaces/_util_logger_.logger.md) |
 
