@@ -64,43 +64,7 @@ const resultWithoutExtra = Util.parseOptions("person", data, [
 ], "ignore_extra");
 ```
 
-
-
-### config
-
-TODO
-
-##### env files
-
-TODO
-
-##### override env files
-
-TODO
-
-##### .miqrorc
-
-TODO
-
-### logging
-
-TODO
-
-##### setup log level per identifier
-
-TODO
-
-##### default logger transports
-
-TODO
-
-##### override the default logger factory
-
-TODO
-
 ###### custom logger factory example
-
-TODO
 
 ```config/log.js```
 
@@ -111,8 +75,6 @@ module.exports = (identifier) => {
 ```
 
 ###### custom transport
-
-TODO
 
 ```config/log.js```
 
@@ -130,8 +92,6 @@ module.exports = (identifier) => {
 ```
 
 ###### change format
-
-TODO
 
 ```config/log.js```
 
@@ -152,7 +112,5 @@ module.exports = (identifier) => {
 ```
 
 ### documentation
-
-TODO
 
 [globals](docs/globals.md)
