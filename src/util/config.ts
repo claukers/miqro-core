@@ -52,11 +52,6 @@ export abstract class ConfigPathResolver {
     }
   }
 
-  public static setServiceName(name: string): string {
-    process.env.MIQRO_SERVICE_NAME = name;
-    return process.env.MIQRO_SERVICE_NAME;
-  }
-
   public static getServiceName(): string | undefined {
     return process.env.MIQRO_SERVICE_NAME;
   }

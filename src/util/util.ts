@@ -80,7 +80,7 @@ export abstract class Util {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
-  public static async request(options: RequestOptions): Promise<{ url: string; redirectedUrl?: string; headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
+  public static async request(options: RequestOptions): Promise<{ url: string; redirectedUrl: string | null; headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
     return new Promise((resolve, reject) => {
       try {
         const url = urlParse(options.url);
@@ -144,6 +144,7 @@ export abstract class Util {
                         url: options.url,
                         response: res,
                         status,
+                        redirectedUrl: null,
                         headers: res.headers,
                         request: req,
                         data
@@ -179,6 +180,11 @@ export abstract class Util {
         reject(e);
       }
     });
+  }
+
+  public static setServiceName(name: string): string {
+    process.env.MIQRO_SERVICE_NAME = name;
+    return process.env.MIQRO_SERVICE_NAME;
   }
 
   public static setupInstanceEnv(serviceName: string, scriptPath: string): void {
@@ -326,7 +332,7 @@ export abstract class Util {
       if (value === undefined && required) {
         throw new ParseOptionsError(`${argName}.${name} not defined`);
       } else if (value !== undefined && !isType) {
-        throw new ParseOptionsError(`${argName}.${name}not ${type}`);
+        throw new ParseOptionsError(`${argName}.${name} not ${type}`);
       } else if (value !== undefined) {
         ret[name] = arg[name];
       }
