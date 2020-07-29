@@ -9,6 +9,7 @@ import {request as httpsRequest} from "https";
 import {parse as urlParse} from "url";
 
 export class ResponseError extends Error {
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   constructor(
     public readonly status: number | undefined,
     public readonly response: IncomingMessage | undefined,
@@ -26,7 +27,7 @@ const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `Util.loadCon
 
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
-export type SimpleTypes = string | boolean | number | object | Array<any>;
+export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
 export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
 
 const isOPTIONPARSERType = (type: string | any): boolean => {
