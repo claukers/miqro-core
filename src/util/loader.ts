@@ -1,4 +1,3 @@
-"use strict";
 import {existsSync} from "fs";
 import {resolve} from "path";
 import {Util} from "./util";
