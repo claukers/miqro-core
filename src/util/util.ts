@@ -80,7 +80,10 @@ export abstract class Util {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
 
-  public static async request(options: RequestOptions): Promise<{ url: string; redirectedUrl: string | null; headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
+  public static async request(options: RequestOptions, logger?: Logger): Promise<{ url: string; redirectedUrl: string | null; headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> {
+    if (!logger) {
+      logger = Util.logger;
+    }
     return new Promise((resolve, reject) => {
       try {
         const url = urlParse(options.url);
@@ -123,6 +126,7 @@ export abstract class Util {
                   reject(err);
                 } else {
                   if (status >= 300 && status <= 400 && !options.ignoreRedirect && location) {
+                    (logger as Logger).info(`redirecting to [${location}] from [${options.url}]`);
                     Util.request({
                       ...options,
                       url: location
