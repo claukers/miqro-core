@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "outDir": "./dist/",
-    "removeComments": false,
+    "removeComments": true,
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "sourceMap": false,
