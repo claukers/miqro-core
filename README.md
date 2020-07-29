@@ -110,7 +110,3 @@ module.exports = (identifier) => {
   return logger;
 };
 ```
-
-### documentation
-
-[globals](docs/globals.md)

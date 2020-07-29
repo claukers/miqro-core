@@ -12,8 +12,6 @@
     "miqro-core": "dist/cli/cli.js"
   },
   "scripts": {
-    "predoc": "rm -Rf docs;",
-    "doc": "typedoc --mode library --plugin typedoc-plugin-markdown --out docs src",
     "prepare": "npm run build",
     "prebuild": "rm -Rf dist;",
     "build": "tsc",
@@ -37,11 +35,7 @@
     "express": "^4.17.1",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0",
-    "sinon": "^9.0.2",
-    "supertest": "^4.0.2",
     "ts-node": "^8.10.2",
-    "typedoc": "0.17.0",
-    "typedoc-plugin-markdown": "^2.2.17",
     "typescript": "^3.9.7"
   },
   "engines": {
