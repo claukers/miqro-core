@@ -8,17 +8,38 @@ import {ClientRequest, IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders
 import {request as httpsRequest} from "https";
 import {parse as urlParse} from "url";
 
+export class ResponseError extends Error {
+  constructor(
+    public readonly status: number | undefined,
+    public readonly response: IncomingMessage | undefined,
+    public readonly headers: IncomingHttpHeaders | undefined,
+    public readonly url: string,
+    public readonly redirectedUrl: string | null,
+    public readonly data: any,
+  ) {
+    super(`request ended with ${status ? `status [${status}]` : "no status"}`);
+  }
+}
+
+const MISSED_CONFIG = (path: string): string => `nothing loaded from [${path}] env file doesnt exists!`;
+const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`;
+
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
+export type SimpleTypes = string | boolean | number | object | Array<any>;
 export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
 
-const isParseSimpleOption = (type: string): boolean => {
+const isOPTIONPARSERType = (type: string | any): boolean => {
+  return ["remove_extra", "add_extra", "no_extra"].indexOf(type) !== -1;
+}
+
+const isParseSimpleOption = (type: string | any): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
 };
 
 const logContainer = new Map<string, Logger>();
 
-const parseSimpleOption = (type: ParseSimpleType, value): boolean => {
+const parseSimpleOption = (type: ParseSimpleType, value: any): boolean => {
   let isType;
   if (type === "any") {
     isType = true;
@@ -40,8 +61,6 @@ export interface SimpleMap<T2> {
 
 export type ConfigOutput = SimpleMap<string>;
 
-let logger = null;
-
 export interface RequestOptions {
   url: string;
   method?: string;
@@ -53,6 +72,9 @@ export interface RequestOptions {
 }
 
 export abstract class Util {
+
+  public static logger: Logger;
+
   public static setupSimpleEnv(): void {
     process.env.NODE_ENV = process.env.NODE_ENV || "development";
   }
@@ -77,11 +99,11 @@ export abstract class Util {
               hostname: url.hostname,
               port: url.port
             }, (res) => {
-              let data = "";
-              const chunkListener = (chunk) => {
+              let data: any = "";
+              const chunkListener = (chunk: any) => {
                 data += chunk;
               };
-              const errorListener = (e2) => {
+              const errorListener = (e2: Error) => {
                 res.removeListener("data", chunkListener);
                 res.removeListener("end", endListener);
                 reject(e2);
@@ -95,46 +117,43 @@ export abstract class Util {
                   data = JSON.parse(data);
                 }
                 const status = res.statusCode;
-                if (status >= 300 && status <= 400 && !options.ignoreRedirect && location) {
-                  Util.request({
-                    ...options,
-                    url: location
-                  }).then((ret) => {
-                    const redirectedUrl = ret.url;
-                    resolve({
-                      ...ret,
-                      url: options.url,
-                      redirectedUrl
-                    });
-                  }).catch((e4) => {
-                    const redirectedUrl = e4.url;
-                    if (redirectedUrl) {
-                      e4.redirectedUrl = redirectedUrl;
-                      e4.url = options.url;
-                    }
-                    reject(e4);
-                  });
+                if (!status) {
+                  const err = new ResponseError(status, res, res.headers, options.url, null, data);
+                  reject(err);
                 } else {
-                  if (status >= 200 && status < 300) {
-                    resolve({
-                      url: options.url,
-                      response: res,
-                      status,
-                      headers: res.headers,
-                      request: req,
-                      data
+                  if (status >= 300 && status <= 400 && !options.ignoreRedirect && location) {
+                    Util.request({
+                      ...options,
+                      url: location
+                    }).then((ret) => {
+                      const redirectedUrl = ret.url;
+                      resolve({
+                        ...ret,
+                        url: options.url,
+                        redirectedUrl
+                      });
+                    }).catch((e4: ResponseError) => {
+                      const err = new ResponseError(status, res, res.headers, options.url, e4.url, data);
+                      err.stack = e4.stack;
+                      reject(err);
                     });
                   } else {
-                    const err = new Error(`request ended with status [${status}]`);
-                    (err as any).response = res;
-                    (err as any).status = status;
-                    (err as any).headers = res.headers;
-                    (err as any).request = req;
-                    (err as any).url = options.url;
-                    (err as any).data = data;
-                    reject(err);
+                    if (status >= 200 && status < 300) {
+                      resolve({
+                        url: options.url,
+                        response: res,
+                        status,
+                        headers: res.headers,
+                        request: req,
+                        data
+                      });
+                    } else {
+                      const err = new ResponseError(status, res, res.headers, options.url, null, data);
+                      reject(err);
+                    }
                   }
                 }
+
               }
               try {
                 res.on("data", chunkListener);
@@ -169,7 +188,7 @@ export abstract class Util {
       process.env.MIQRO_DIRNAME = microDirname;
     } else {
       // noinspection SpellCheckingInspection
-      logger.warn(`NOT changing to MIQRO_DIRNAME[${microDirname}] because already defined as ${process.env.MIQRO_DIRNAME}!`);
+      Util.logger.warn(`NOT changing to MIQRO_DIRNAME [${microDirname}] because already defined as ${process.env.MIQRO_DIRNAME}!`);
     }
     process.chdir(microDirname);
     process.env.MICRO_NAME = serviceName;
@@ -181,7 +200,7 @@ export abstract class Util {
     if (!existsSync(path)) {
       throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
     } else {
-      logger.debug(`overriding config with [${path}].`);
+      Util.logger.debug(`overriding config with [${path}].`);
       const overrideConfig: ConfigOutput = {};
       readFileSync(path).toString().split("\n")
         .filter(value => value && value.length > 0 && value.substr(0, 1) !== "#")
@@ -214,22 +233,22 @@ export abstract class Util {
         const configFilePath = resolve(configDirname, configFile);
         const ext = extname(configFilePath);
         if (ext === ".env") {
-          logger.debug(`loading ${configFilePath}`);
+          Util.logger.debug(`loading ${configFilePath}`);
           outputs = outputs.concat(Util.overrideConfig(configFilePath, combined));
         }
       }
 
       if (configFiles.length === 0) {
-        logger.debug(`Util.loadConfig nothing loaded [${configDirname}] env files dont exist! Maybe you miss to run miqro-core init.`);
+        Util.logger.debug(MISSED_TO_RUNMIQRO_INIT(configDirname));
       }
     } else {
-      logger.debug(`Util.loadConfig nothing loaded [${configDirname}] dirname dont exist! Maybe you miss to run miqro-core init.`);
+      Util.logger.debug(MISSED_TO_RUNMIQRO_INIT(configDirname));
     }
 
     if (overridePath && existsSync(overridePath)) {
       outputs = outputs.concat(Util.overrideConfig(overridePath, combined));
     } else if (overridePath) {
-      logger.warn(`nothing loaded from [${process.env.MIQRO_OVERRIDE_CONFIG_PATH}] env file doesnt exists!`);
+      Util.logger.warn(MISSED_CONFIG(overridePath));
     }
     return {combined, outputs};
   }
@@ -248,7 +267,7 @@ export abstract class Util {
       try {
         require(module);
       } catch (e) {
-        throw new ConfigFileNotFoundError(`module [${module}] not installed!. [${e.message}].`);
+        throw new ConfigFileNotFoundError(`module [${module}] not found!. [${e.message}].`);
       }
     });
   }
@@ -262,10 +281,7 @@ export abstract class Util {
   }
 
   public static parseOptions(
-    argName: string, arg:
-      {
-        [name: string]: any
-      },
+    argName: string, arg: SimpleMap<SimpleTypes>,
     optionsArray: {
       name: string;
       type: string;
@@ -273,30 +289,35 @@ export abstract class Util {
       required: boolean;
     }[],
     parserOption: OPTIONPARSERType = "no_extra"
-  ): SimpleMap<any> {
-    const ret = {};
-    if (typeof arg !== "object" || !arg
-    ) {
+  ): SimpleMap<SimpleTypes> {
+    const ret: SimpleMap<SimpleTypes> = {};
+    if (typeof arg !== "object" || !arg) {
       throw new ParseOptionsError(`${argName} not valid`);
     }
+    if (!isOPTIONPARSERType(parserOption)) {
+      throw new ParseOptionsError(`parserOption [${parserOption}] not valid!`);
+    }
     const undefinedCount = 0;
-    optionsArray.forEach((patchAttr) => {
+    for (const patchAttr of optionsArray) {
       const name = patchAttr.name;
       const type = patchAttr.type;
       const arrayType = patchAttr.arrayType;
       const required = patchAttr.required;
       const value = arg[name];
-      let isType;
+      let isType: boolean;
       if (isParseSimpleOption(type)) {
         const sType = type as ParseSimpleType;
         isType = parseSimpleOption(sType, value);
       } else if (type === "array") {
         isType = value instanceof Array && isParseSimpleOption(arrayType);
         if (isType) {
-          value.forEach((valueItem) => {
+          for (const valueItem of (value as Array<any>)) {
             const sType = arrayType as ParseSimpleType;
             isType = isType && parseSimpleOption(sType, valueItem);
-          });
+            if (!isType) {
+              break;
+            }
+          }
         }
       } else {
         isType = false;
@@ -304,11 +325,11 @@ export abstract class Util {
       if (value === undefined && required) {
         throw new ParseOptionsError(`${argName}.${name} not defined`);
       } else if (value !== undefined && !isType) {
-        throw new ParseOptionsError(`${argName}.${name} not ${type}`);
+        throw new ParseOptionsError(`${argName}.${name}not ${type}`);
       } else if (value !== undefined) {
         ret[name] = arg[name];
       }
-    });
+    }
     const argKeys = Object.keys(arg);
     const retKeys = Object.keys(ret);
     if (retKeys.length === argKeys.length - undefinedCount) {
@@ -318,28 +339,32 @@ export abstract class Util {
         return ret;
       } else if (parserOption === "add_extra") {
         return arg;
-      } else if (parserOption === "no_extra") {
-        retKeys.forEach((key) => {
+      } else {
+        // no extra
+        for (const key of retKeys) {
           const index = argKeys.indexOf(key);
           if (index !== -1) {
             argKeys.splice(index, 1);
           }
-        });
+        }
         const extraKey = argKeys[0];
-        throw new ParseOptionsError(`${argName} options not valid [${extraKey}]`);
+        throw new ParseOptionsError(`${argName} option not valid [${extraKey}]`)
       }
     }
   }
 
-  public static getLogger(identifier: string): Logger {
+  public static getLogger(identifier: string | any): Logger {
     if (typeof identifier !== "string") {
       throw new Error("Bad log identifier");
     }
-    if (!logContainer.has(identifier)) {
+    if (logContainer.has(identifier)) {
+      return logContainer.get(identifier) as Logger;
+    } else {
       const factory = getLoggerFactory();
-      logContainer.set(identifier, factory(identifier));
+      const logger = factory(identifier);
+      logContainer.set(identifier, logger);
+      return logger;
     }
-    return logContainer.get(identifier);
   }
 
   public static getComponentLogger(component ?: string): Logger {
@@ -350,4 +375,4 @@ export abstract class Util {
   private static configLoaded = false;
 }
 
-logger = Util.getLogger("Util");
+Util.logger = Util.getLogger("Util");

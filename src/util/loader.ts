@@ -18,7 +18,7 @@ export const defaultLoggerFactory: LoggerFactory = (identifier: string): Logger 
 // noinspection SpellCheckingInspection
 export const loadSequelizeRC = (): {
   // noinspection SpellCheckingInspection
-  sequelizercPath;
+  sequelizercPath: string;
   dbConfigFilePath: string;
   migrationsFolder: string;
   seedersFolder: string;

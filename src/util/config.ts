@@ -5,11 +5,11 @@ import {Util} from "./util";
 let miqroRCConfig: {
   serviceDirname: string;
   configDirname: string;
-} = null;
+} | null = null;
 
 export abstract class ConfigPathResolver {
 
-  public static getOverrideConfigFilePath(): string {
+  public static getOverrideConfigFilePath(): string | null {
     if (!process.env.MIQRO_OVERRIDE_CONFIG_PATH) {
       return null;
     } else {
@@ -57,7 +57,7 @@ export abstract class ConfigPathResolver {
     return process.env.MIQRO_SERVICE_NAME;
   }
 
-  public static getServiceName(): string {
+  public static getServiceName(): string | undefined {
     return process.env.MIQRO_SERVICE_NAME;
   }
 

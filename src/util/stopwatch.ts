@@ -1,6 +1,6 @@
 export class StopWatch {
-  private lastMS: number = null;
-  private startMS: number = null;
+  private lastMS: number;
+  private startMS: number;
   constructor() {
     this.lastMS = new Date().getTime();
     this.startMS = this.lastMS;

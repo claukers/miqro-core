@@ -25,7 +25,7 @@ if (!existsSync(configPath)) {
     recursive: true
   });
 
-  const initEnvFile = (path, template): void => {
+  const initEnvFile = (path: string, template: string): void => {
     if (!existsSync(path)) {
       logger.warn(`creating ${path} env file`);
       writeFileSync(path, template);

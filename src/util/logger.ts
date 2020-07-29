@@ -1,6 +1,6 @@
 import {format} from "util";
 import {EventEmitter} from "events";
-import {createWriteStream} from "fs";
+import {createWriteStream, WriteStream} from "fs";
 import {resolve} from "path";
 
 export type LogLevel = "error" | "warn" | "info" | "debug" | "trace";
@@ -54,7 +54,7 @@ export interface WriteEventArgs extends WriteArgs {
 }
 
 export class ConsoleLogger extends EventEmitter implements Logger {
-  protected readonly _formatter: Formatter = null;
+  protected readonly _formatter: Formatter;
 
   constructor(identifier: string, private readonly level: LogLevel, formatter?: Formatter) {
     super();
@@ -115,18 +115,19 @@ export class ConsoleLogger extends EventEmitter implements Logger {
 }
 
 export class DefaultLogger extends ConsoleLogger {
+  private fileHandler: WriteStream | undefined;
+
   constructor(identifier: string, level: LogLevel, formatter?: Formatter) {
     super(identifier, level, formatter);
-    let fileHandler = null;
     this.on(ConsoleLoggerEvents.write, ({out}: WriteEventArgs) => {
       try {
-        if (process.env.LOG_FILE && !fileHandler) {
+        if (process.env.LOG_FILE && !this.fileHandler) {
           const path = resolve(process.env.LOG_FILE);
-          fileHandler = createWriteStream(path, {flags: "a"})
+          this.fileHandler = createWriteStream(path, {flags: "a"})
         }
-        if (fileHandler) {
-          fileHandler.write(`${out}\n`, (err) => {
-            if(err) {
+        if (this.fileHandler) {
+          this.fileHandler.write(`${out}\n`, (err) => {
+            if (err) {
               this.emit(ConsoleLoggerEvents.error, err);
             }
           });
