@@ -1,5 +1,5 @@
-import { describe, it } from 'mocha';
-import { expect } from 'chai';
+import {describe, it} from 'mocha';
+import {expect} from 'chai';
 
 describe('grouppolicy func tests', function () {
   it("happy path mix tape 1 invalid auth", (done) => {
@@ -12,7 +12,7 @@ describe('grouppolicy func tests', function () {
       debug: console.log,
       warn: console.warn,
       error: console.error
-    }).catch((e) => {
+    }).catch((e: Error) => {
       expect(e.message).to.be.equals("Invalid session. You are not permitted to do this!");
       done();
     });
@@ -27,7 +27,7 @@ describe('grouppolicy func tests', function () {
       debug: console.log,
       warn: console.warn,
       error: console.error
-    }).then((ret) => {
+    }).then((ret: boolean) => {
       expect(ret).to.be.equals(true);
       done();
     });
@@ -42,7 +42,7 @@ describe('grouppolicy func tests', function () {
       debug: console.log,
       warn: console.warn,
       error: console.error
-    }).then((ret) => {
+    }).then((ret: boolean) => {
       expect(ret).to.be.equals(true);
       done();
     });
@@ -57,7 +57,7 @@ describe('grouppolicy func tests', function () {
       debug: console.log,
       warn: console.warn,
       error: console.error
-    }).catch((e) => {
+    }).catch((e: Error) => {
       expect(e.message).to.be.equals("Invalid session. You are not permitted to do this!");
       done();
     });

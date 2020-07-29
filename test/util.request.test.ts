@@ -1,12 +1,13 @@
 import {after, before, describe, it} from 'mocha';
 import {expect} from 'chai';
 import {Util} from "../src/";
-import express from "express";
+import Express, {Request, Response} from "express";
 import {existsSync, unlinkSync} from "fs";
+import {Server} from "http";
 
 describe('lib.Util.request func tests', function () {
-  let server = null;
-  let serverPort = null;
+  let server: Server;
+  let serverPort: Server;
   const SOCKET_PATH = "/tmp/socket.1111";
   const PORT = 8080;
 
@@ -14,12 +15,12 @@ describe('lib.Util.request func tests', function () {
     (async () => {
       if (existsSync(SOCKET_PATH))
         unlinkSync(SOCKET_PATH);
-      const app = express();
-      const appPort = express();
-      const redirectHandler = (req, res) => {
+      const app = Express();
+      const appPort = Express();
+      const redirectHandler = (req: Request, res: Response) => {
         res.redirect(302, `http://localhost:${PORT}/hello?format=txt&otherQ=2`);
       }
-      const helloHandler = (req, res) => {
+      const helloHandler = (req: Request, res: Response) => {
         const format = req.query.format;
         const otherQ = req.query.otherQ;
 
@@ -123,7 +124,7 @@ describe('lib.Util.request func tests', function () {
 
   it('simple post /hello?format=txt happy path over unixsocket', (done) => {
     (async () => {
-      const {data, status} = await Util.request({
+      const {data, status, redirectedUrl} = await Util.request({
         url: "/hello?format=txt&otherQ=1",
         socketPath: SOCKET_PATH,
         method: "post",
@@ -131,6 +132,7 @@ describe('lib.Util.request func tests', function () {
       });
       expect(data).to.be.equals("hello");
       expect(status).to.be.equals(200);
+      expect(redirectedUrl).to.be.equals(null);
     })().then(done).catch(done);
   });
 
@@ -148,7 +150,7 @@ describe('lib.Util.request func tests', function () {
         const {redirectedUrl, data, status} = e;
         expect(data).to.be.equals("not valid format [notvalid]");
         expect(status).to.be.equals(400);
-        expect(redirectedUrl).to.be.equals(undefined);
+        expect(redirectedUrl).to.be.equals(null);
       }
     })().then(done).catch(done);
   });
@@ -179,7 +181,7 @@ describe('lib.Util.request func tests', function () {
         expect(true).to.be.equals(false);
       } catch ({url, redirectedUrl, status}) {
         expect(status).to.be.equals(302);
-        expect(redirectedUrl).to.be.equals(undefined);
+        expect(redirectedUrl).to.be.equals(null);
         expect(url).to.be.equals("/redirect");
       }
 
