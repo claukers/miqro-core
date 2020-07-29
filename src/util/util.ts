@@ -171,6 +171,9 @@ export abstract class Util {
             if (options.data) {
               req.write(typeof options.data === "string" ? options.data : JSON.stringify(options.data));
             }
+            req.once("error", (e: Error) => {
+              reject(e);
+            });
             req.end();
             break;
           default:
