@@ -25,7 +25,7 @@
 
 *Inherited from [NoTokenSession](_util_index_.notokensession.md).[account](_util_index_.notokensession.md#account)*
 
-*Defined in [src/util/index.ts:10](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L10)*
+*Defined in [src/util/index.ts:10](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L10)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 *Inherited from [NoTokenSession](_util_index_.notokensession.md).[groups](_util_index_.notokensession.md#groups)*
 
-*Defined in [src/util/index.ts:12](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L12)*
+*Defined in [src/util/index.ts:12](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L12)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 • **token**: *string*
 
-*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L16)*
+*Defined in [src/util/index.ts:16](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L16)*
 
 ___
 
@@ -53,4 +53,4 @@ ___
 
 *Inherited from [NoTokenSession](_util_index_.notokensession.md).[username](_util_index_.notokensession.md#username)*
 
-*Defined in [src/util/index.ts:11](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L11)*
+*Defined in [src/util/index.ts:11](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L11)*

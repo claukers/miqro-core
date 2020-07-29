@@ -16,7 +16,7 @@
 
 • **config**: *[SimpleMap](../interfaces/_util_util_.simplemap.md)‹string›* = configOut.combined
 
-*Defined in [src/cli/config.ts:12](https://github.com/claukers/miqro-core/blob/c210610/src/cli/config.ts#L12)*
+*Defined in [src/cli/config.ts:12](https://github.com/claukers/miqro-core/blob/4c91395/src/cli/config.ts#L12)*
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **configOut**: *object* = Util.getConfig()
 
-*Defined in [src/cli/config.ts:10](https://github.com/claukers/miqro-core/blob/c210610/src/cli/config.ts#L10)*
+*Defined in [src/cli/config.ts:10](https://github.com/claukers/miqro-core/blob/4c91395/src/cli/config.ts#L10)*
 
 #### Type declaration:
 
@@ -38,4 +38,4 @@ ___
 
 • **logger**: *Console* = console
 
-*Defined in [src/cli/config.ts:3](https://github.com/claukers/miqro-core/blob/c210610/src/cli/config.ts#L3)*
+*Defined in [src/cli/config.ts:3](https://github.com/claukers/miqro-core/blob/4c91395/src/cli/config.ts#L3)*

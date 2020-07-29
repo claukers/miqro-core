@@ -35,7 +35,7 @@
 
 Ƭ **Formatter**: *function*
 
-*Defined in [src/util/logger.ts:31](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L31)*
+*Defined in [src/util/logger.ts:31](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L31)*
 
 #### Type declaration:
 
@@ -54,7 +54,7 @@ ___
 
 Ƭ **LogLevel**: *"error" | "warn" | "info" | "debug" | "trace"*
 
-*Defined in [src/util/logger.ts:6](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L6)*
+*Defined in [src/util/logger.ts:6](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L6)*
 
 ## Functions
 
@@ -62,7 +62,7 @@ ___
 
 ▸ **defaultLoggerFormat**(`__namedParameters`: object): *[Formatter](_util_logger_.md#formatter)*
 
-*Defined in [src/util/logger.ts:33](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L33)*
+*Defined in [src/util/logger.ts:33](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L33)*
 
 **Parameters:**
 
@@ -80,19 +80,19 @@ Name | Type |
 
 ### ▪ **ConsoleLoggerEvents**: *object*
 
-*Defined in [src/util/logger.ts:41](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L41)*
+*Defined in [src/util/logger.ts:41](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L41)*
 
 ###  error
 
 • **error**: *string* = "error"
 
-*Defined in [src/util/logger.ts:43](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L43)*
+*Defined in [src/util/logger.ts:43](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L43)*
 
 ###  write
 
 • **write**: *string* = "write"
 
-*Defined in [src/util/logger.ts:42](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L42)*
+*Defined in [src/util/logger.ts:42](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L42)*
 
 ___
 
@@ -100,34 +100,34 @@ ___
 
 ### ▪ **LOG_LEVEL_MAP**: *object*
 
-*Defined in [src/util/logger.ts:8](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L8)*
+*Defined in [src/util/logger.ts:8](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L8)*
 
 ###  debug
 
 • **debug**: *number* = 4
 
-*Defined in [src/util/logger.ts:13](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L13)*
+*Defined in [src/util/logger.ts:13](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L13)*
 
 ###  error
 
 • **error**: *number* = 1
 
-*Defined in [src/util/logger.ts:10](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L10)*
+*Defined in [src/util/logger.ts:10](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L10)*
 
 ###  info
 
 • **info**: *number* = 3
 
-*Defined in [src/util/logger.ts:12](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L12)*
+*Defined in [src/util/logger.ts:12](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L12)*
 
 ###  trace
 
 • **trace**: *number* = 5
 
-*Defined in [src/util/logger.ts:14](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L14)*
+*Defined in [src/util/logger.ts:14](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L14)*
 
 ###  warn
 
 • **warn**: *number* = 2
 
-*Defined in [src/util/logger.ts:11](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L11)*
+*Defined in [src/util/logger.ts:11](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L11)*

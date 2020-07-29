@@ -29,8 +29,11 @@
 * [OPTIONPARSERType](_index_.md#optionparsertype)
 * [ParseOptionsError](_index_.md#parseoptionserror)
 * [ParseSimpleType](_index_.md#parsesimpletype)
+* [RequestOptions](_index_.md#requestoptions)
+* [ResponseError](_index_.md#responseerror)
 * [Session](_index_.md#session)
 * [SimpleMap](_index_.md#simplemap)
+* [SimpleTypes](_index_.md#simpletypes)
 * [StopWatch](_index_.md#stopwatch)
 * [UnAuthorizedError](_index_.md#unauthorizederror)
 * [Util](_index_.md#util)
@@ -182,6 +185,18 @@ ___
 
 ___
 
+###  RequestOptions
+
+• **RequestOptions**:
+
+___
+
+###  ResponseError
+
+• **ResponseError**:
+
+___
+
 ###  Session
 
 • **Session**:
@@ -191,6 +206,12 @@ ___
 ###  SimpleMap
 
 • **SimpleMap**:
+
+___
+
+###  SimpleTypes
+
+• **SimpleTypes**:
 
 ___
 

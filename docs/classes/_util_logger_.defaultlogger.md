@@ -21,6 +21,7 @@
 ### Properties
 
 * [_formatter](_util_logger_.defaultlogger.md#protected-_formatter)
+* [fileHandler](_util_logger_.defaultlogger.md#private-filehandler)
 
 ### Methods
 
@@ -55,7 +56,7 @@
 
 *Overrides [ConsoleLogger](_util_logger_.consolelogger.md).[constructor](_util_logger_.consolelogger.md#constructor)*
 
-*Defined in [src/util/logger.ts:117](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L117)*
+*Defined in [src/util/logger.ts:118](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L118)*
 
 **Parameters:**
 
@@ -71,11 +72,19 @@ Name | Type |
 
 ### `Protected` _formatter
 
-• **_formatter**: *[Formatter](../modules/_util_logger_.md#formatter)* = null
+• **_formatter**: *[Formatter](../modules/_util_logger_.md#formatter)*
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[_formatter](_util_logger_.consolelogger.md#protected-_formatter)*
 
-*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L57)*
+*Defined in [src/util/logger.ts:57](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L57)*
+
+___
+
+### `Private` fileHandler
+
+• **fileHandler**: *WriteStream | undefined*
+
+*Defined in [src/util/logger.ts:118](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L118)*
 
 ## Methods
 
@@ -113,7 +122,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[debug](_util_logger_.consolelogger.md#debug)*
 
-*Defined in [src/util/logger.ts:81](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L81)*
+*Defined in [src/util/logger.ts:81](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L81)*
 
 **Parameters:**
 
@@ -153,7 +162,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[error](_util_logger_.consolelogger.md#error)*
 
-*Defined in [src/util/logger.ts:87](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L87)*
+*Defined in [src/util/logger.ts:87](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L87)*
 
 **Parameters:**
 
@@ -198,7 +207,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[info](_util_logger_.consolelogger.md#info)*
 
-*Defined in [src/util/logger.ts:93](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L93)*
+*Defined in [src/util/logger.ts:93](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L93)*
 
 **Parameters:**
 
@@ -255,7 +264,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[log](_util_logger_.consolelogger.md#log)*
 
-*Defined in [src/util/logger.ts:99](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L99)*
+*Defined in [src/util/logger.ts:99](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L99)*
 
 **Parameters:**
 
@@ -486,7 +495,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[trace](_util_logger_.consolelogger.md#trace)*
 
-*Defined in [src/util/logger.ts:105](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L105)*
+*Defined in [src/util/logger.ts:105](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L105)*
 
 **Parameters:**
 
@@ -507,7 +516,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[warn](_util_logger_.consolelogger.md#warn)*
 
-*Defined in [src/util/logger.ts:111](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L111)*
+*Defined in [src/util/logger.ts:111](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L111)*
 
 **Parameters:**
 
@@ -526,7 +535,7 @@ ___
 
 *Inherited from [ConsoleLogger](_util_logger_.consolelogger.md).[write](_util_logger_.consolelogger.md#protected-write)*
 
-*Defined in [src/util/logger.ts:72](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L72)*
+*Defined in [src/util/logger.ts:72](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L72)*
 
 **Parameters:**
 

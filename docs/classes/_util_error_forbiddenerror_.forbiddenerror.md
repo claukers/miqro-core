@@ -26,7 +26,7 @@
 
 \+ **new ForbiddenError**(`message`: string): *[ForbiddenError](_util_error_forbiddenerror_.forbiddenerror.md)*
 
-*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/c210610/src/util/error/forbiddenerror.ts#L3)*
+*Defined in [src/util/error/forbiddenerror.ts:3](https://github.com/claukers/miqro-core/blob/4c91395/src/util/error/forbiddenerror.ts#L3)*
 
 **Parameters:**
 
@@ -54,15 +54,15 @@ ___
 
 *Inherited from [NamedError](_util_error_named_.namederror.md).[name](_util_error_named_.namederror.md#name)*
 
-*Overrides void*
+*Overrides [ResponseError](_util_util_.responseerror.md).[name](_util_util_.responseerror.md#name)*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/c210610/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/4c91395/src/util/error/named.ts#L2)*
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamedError](_util_error_named_.namederror.md).[stack](_util_error_named_.namederror.md#optional-stack)*
 

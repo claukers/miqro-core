@@ -22,7 +22,7 @@
 
 • **level**: *[LogLevel](../modules/_util_logger_.md#loglevel)*
 
-*Defined in [src/util/logger.ts:47](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L47)*
+*Defined in [src/util/logger.ts:47](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L47)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **message**? : *any*
 
-*Defined in [src/util/logger.ts:48](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L48)*
+*Defined in [src/util/logger.ts:48](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L48)*
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **optionalParams**: *any[]*
 
-*Defined in [src/util/logger.ts:49](https://github.com/claukers/miqro-core/blob/c210610/src/util/logger.ts#L49)*
+*Defined in [src/util/logger.ts:49](https://github.com/claukers/miqro-core/blob/4c91395/src/util/logger.ts#L49)*

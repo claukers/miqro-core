@@ -16,12 +16,6 @@
 
 ### `Let` miqroRCConfig
 
-• **miqroRCConfig**: *object* = null
+• **miqroRCConfig**: *object | null* = null
 
-*Defined in [src/util/config.ts:5](https://github.com/claukers/miqro-core/blob/c210610/src/util/config.ts#L5)*
-
-#### Type declaration:
-
-* **configDirname**: *string*
-
-* **serviceDirname**: *string*
+*Defined in [src/util/config.ts:5](https://github.com/claukers/miqro-core/blob/4c91395/src/util/config.ts#L5)*

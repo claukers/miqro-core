@@ -24,7 +24,10 @@
 * [OPTIONPARSERType](_util_index_.md#optionparsertype)
 * [ParseOptionsError](_util_index_.md#parseoptionserror)
 * [ParseSimpleType](_util_index_.md#parsesimpletype)
+* [RequestOptions](_util_index_.md#requestoptions)
+* [ResponseError](_util_index_.md#responseerror)
 * [SimpleMap](_util_index_.md#simplemap)
+* [SimpleTypes](_util_index_.md#simpletypes)
 * [StopWatch](_util_index_.md#stopwatch)
 * [UnAuthorizedError](_util_index_.md#unauthorizederror)
 * [Util](_util_index_.md#util)
@@ -165,9 +168,27 @@ ___
 
 ___
 
+###  RequestOptions
+
+• **RequestOptions**:
+
+___
+
+###  ResponseError
+
+• **ResponseError**:
+
+___
+
 ###  SimpleMap
 
 • **SimpleMap**:
+
+___
+
+###  SimpleTypes
+
+• **SimpleTypes**:
 
 ___
 
@@ -229,7 +250,7 @@ ___
 
 Ƭ **GroupPolicyGroups**: *string | string[]*
 
-*Defined in [src/util/index.ts:31](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L31)*
+*Defined in [src/util/index.ts:31](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L31)*
 
 ___
 
@@ -237,7 +258,7 @@ ___
 
 Ƭ **GroupPolicyType**: *"at_least_one" | "all"*
 
-*Defined in [src/util/index.ts:29](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L29)*
+*Defined in [src/util/index.ts:29](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L29)*
 
 ## Functions
 
@@ -245,7 +266,7 @@ ___
 
 ▸ **policyCheck**(`session`: [Session](../interfaces/_util_index_.session.md), `options`: [GroupPolicyOptions](../interfaces/_util_index_.grouppolicyoptions.md)): *boolean*
 
-*Defined in [src/util/index.ts:38](https://github.com/claukers/miqro-core/blob/c210610/src/util/index.ts#L38)*
+*Defined in [src/util/index.ts:38](https://github.com/claukers/miqro-core/blob/4c91395/src/util/index.ts#L38)*
 
 **Parameters:**
 

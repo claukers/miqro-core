@@ -43,15 +43,15 @@ ___
 
 • **name**: *string* = "NamedError"
 
-*Overrides void*
+*Overrides [ResponseError](_util_util_.responseerror.md).[name](_util_util_.responseerror.md#name)*
 
-*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/c210610/src/util/error/named.ts#L2)*
+*Defined in [src/util/error/named.ts:2](https://github.com/claukers/miqro-core/blob/4c91395/src/util/error/named.ts#L2)*
 
 ___
 
 ### `Optional` stack
 
-• **stack**? : *string*
+• **stack**? : *undefined | string*
 
 *Inherited from [NamedError](_util_error_named_.namederror.md).[stack](_util_error_named_.namederror.md#optional-stack)*
 
