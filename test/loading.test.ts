@@ -1,5 +1,5 @@
 import {describe, it} from "mocha";
-import {expect} from "chai";
+import {strictEqual} from "assert";
 import {resolve} from "path";
 
 process.env.NODE_ENV = "test";
@@ -11,8 +11,8 @@ describe("Util loader tests", () => {
       const lib = require("../src");
       lib.Util.configLoaded = false;
       const logger = lib.Util.getLogger("bla");
-      expect(logger).to.not.be.equals(undefined);
-      expect(logger).to.not.be.equals(null);
+      strictEqual(logger !== undefined, true);
+      strictEqual(logger !== null, true);
     })().then(done).catch(done);
   });
 
@@ -31,8 +31,8 @@ describe("Util loader tests", () => {
       const old = process.env.MIQRO_DIRNAME;
       process.env.MIQRO_DIRNAME = resolve(__dirname, "data2");
       lib.Util.loadConfig();
-      expect(process.env.one).to.be.equals("1");
-      expect(process.env.two).to.be.equals("2");
+      strictEqual(process.env.one, "1");
+      strictEqual(process.env.two, "2");
       delete process.env.MIQRO_DIRNAME;
     })().then(done).catch(done);
   });
@@ -44,8 +44,8 @@ describe("Util loader tests", () => {
       const old = process.env.MIQRO_DIRNAME;
       process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
       lib.Util.loadConfig();
-      expect(process.env.one).to.be.equals("0");
-      expect(process.env.two).to.be.equals("2");
+      strictEqual(process.env.one, "0");
+      strictEqual(process.env.two, "2");
       delete process.env.MIQRO_DIRNAME;
     })().then(done).catch(done);
   });
@@ -57,13 +57,13 @@ describe("Util loader tests", () => {
       const old = process.env.MIQRO_DIRNAME;
       process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
       const list = lib.Util.getConfig();
-      expect(process.env.one).to.be.equals("0");
-      expect(process.env.two).to.be.equals("2");
-      expect(list.outputs.length).to.be.equals(2);
-      expect(list.combined.one).to.be.equals("0");
-      expect(list.combined.two).to.be.equals("2");
-      expect(list.outputs[0].one).to.be.equals("1");
-      expect(list.outputs[1].one).to.be.equals("0");
+      strictEqual(process.env.one, "0");
+      strictEqual(process.env.two, "2");
+      strictEqual(list.outputs.length, 2);
+      strictEqual(list.combined.one, "0");
+      strictEqual(list.combined.two, "2");
+      strictEqual(list.outputs[0].one, "1");
+      strictEqual(list.outputs[1].one, "0");
       delete process.env.MIQRO_DIRNAME;
     })().then(done).catch(done);
   });
@@ -75,8 +75,8 @@ describe("Util loader tests", () => {
       const cwd = process.cwd();
       process.chdir(resolve(__dirname, "data"));
       lib.Util.loadConfig();
-      expect(lib.ConfigPathResolver.getConfigDirname()).to.be.equals(resolve(__dirname, "data", "blo", "test"));
-      expect(lib.ConfigPathResolver.getServiceDirname()).to.be.equals(resolve(__dirname, "data", "bla"));
+      strictEqual(lib.ConfigPathResolver.getConfigDirname(), resolve(__dirname, "data", "blo", "test"));
+      strictEqual(lib.ConfigPathResolver.getServiceDirname(), resolve(__dirname, "data", "bla"));
       process.chdir(cwd);
     })().then(done).catch(done);
   });

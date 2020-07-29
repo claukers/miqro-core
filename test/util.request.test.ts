@@ -1,9 +1,9 @@
 import {after, before, describe, it} from 'mocha';
-import {expect} from 'chai';
 import {Util} from "../src/";
-import Express, {Request, Response} from "express";
+import express, {Request, Response} from "express";
 import {existsSync, unlinkSync} from "fs";
 import {Server} from "http";
+import {strictEqual} from "assert";
 
 describe('lib.Util.request func tests', function () {
   let server: Server;
@@ -15,8 +15,8 @@ describe('lib.Util.request func tests', function () {
     (async () => {
       if (existsSync(SOCKET_PATH))
         unlinkSync(SOCKET_PATH);
-      const app = Express();
-      const appPort = Express();
+      const app = express();
+      const appPort = express();
       const redirectHandler = (req: Request, res: Response) => {
         res.redirect(302, `http://localhost:${PORT}/hello?format=txt&otherQ=2`);
       }
@@ -25,9 +25,9 @@ describe('lib.Util.request func tests', function () {
         const otherQ = req.query.otherQ;
 
         if (req.method === "POST" && format === "json") {
-          expect(req.body.bla).to.be.equals(1);
+          strictEqual(req.body.bla, 1);
         } else if (req.method === "POST" && format === "txt") {
-          expect(req.body).to.be.equals("blo");
+          strictEqual(req.body, "blo");
         }
 
         if (otherQ !== "1" && otherQ !== "2") {
@@ -76,8 +76,8 @@ describe('lib.Util.request func tests', function () {
         url: "http://localhost:8080/hello?format=txt&otherQ=1",
         method: "get"
       });
-      expect(data).to.be.equals("hello");
-      expect(status).to.be.equals(200);
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
     })().then(done).catch(done);
   });
 
@@ -88,8 +88,8 @@ describe('lib.Util.request func tests', function () {
         socketPath: SOCKET_PATH,
         method: "get"
       });
-      expect(data).to.be.equals("hello");
-      expect(status).to.be.equals(200);
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
     })().then(done).catch(done);
   });
 
@@ -102,8 +102,8 @@ describe('lib.Util.request func tests', function () {
           bla: 1
         }
       });
-      expect(data.ble).to.be.equals(2);
-      expect(status).to.be.equals(200);
+      strictEqual(data.ble, 2);
+      strictEqual(status, 200);
     })().then(done).catch(done);
   });
 
@@ -117,8 +117,8 @@ describe('lib.Util.request func tests', function () {
           bla: 1
         }
       });
-      expect(data.ble).to.be.equals(2);
-      expect(status).to.be.equals(200);
+      strictEqual(data.ble, 2);
+      strictEqual(status, 200);
     })().then(done).catch(done);
   });
 
@@ -130,9 +130,9 @@ describe('lib.Util.request func tests', function () {
         method: "post",
         data: "blo"
       });
-      expect(data).to.be.equals("hello");
-      expect(status).to.be.equals(200);
-      expect(redirectedUrl).to.be.equals(null);
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+      strictEqual(redirectedUrl, null);
     })().then(done).catch(done);
   });
 
@@ -145,12 +145,12 @@ describe('lib.Util.request func tests', function () {
           method: "post",
           data: "blo"
         });
-        expect(true).to.be.equals(false);
+        strictEqual(true, false);
       } catch (e) {
         const {redirectedUrl, data, status} = e;
-        expect(data).to.be.equals("not valid format [notvalid]");
-        expect(status).to.be.equals(400);
-        expect(redirectedUrl).to.be.equals(null);
+        strictEqual(data, "not valid format [notvalid]");
+        strictEqual(status, 400);
+        strictEqual(redirectedUrl, null);
       }
     })().then(done).catch(done);
   });
@@ -162,10 +162,10 @@ describe('lib.Util.request func tests', function () {
         method: "get",
         socketPath: SOCKET_PATH
       });
-      expect(status).to.be.equals(200);
-      expect(redirectedUrl).to.be.equals("http://localhost:8080/hello?format=txt&otherQ=2");
-      expect(url).to.be.equals("/redirect");
-      expect(data).to.be.equals("hello2");
+      strictEqual(status, 200);
+      strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=2");
+      strictEqual(url, "/redirect");
+      strictEqual(data, "hello2");
     })().then(done).catch(done);
   });
 
@@ -178,11 +178,11 @@ describe('lib.Util.request func tests', function () {
           socketPath: SOCKET_PATH,
           ignoreRedirect: true
         });
-        expect(true).to.be.equals(false);
+        strictEqual(true, false);
       } catch ({url, redirectedUrl, status}) {
-        expect(status).to.be.equals(302);
-        expect(redirectedUrl).to.be.equals(null);
-        expect(url).to.be.equals("/redirect");
+        strictEqual(status, 302);
+        strictEqual(redirectedUrl, null);
+        strictEqual(url, "/redirect");
       }
 
     })().then(done).catch(done);
@@ -210,9 +210,9 @@ describe('lib.Util.request func tests', function () {
         });
       }));
       for (const {status} of responses) {
-        expect(status).to.be.equals(200);
+        strictEqual(status, 200);
       }
-      expect(responses.length).to.be.equals(testURLS.length);
+      strictEqual(responses.length, testURLS.length);
     })().then(done).catch(done);
   });*/
 });
