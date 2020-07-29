@@ -1,9 +1,9 @@
-import {ParseOptionsError} from "./";
+import {ParseOptionsError, Util} from "./";
 import {ForbiddenError} from "./error";
 import {Logger} from "./logger";
 
 export interface VerifyTokenService {
-  verify(args: { token: string }): Promise<Session>;
+  verify(args: { token: string }): Promise<Session | null>;
 }
 
 export interface NoTokenSession {
@@ -78,17 +78,20 @@ const policyCheck = (session: Session, options: GroupPolicyOptions): boolean => 
 };
 
 export abstract class GroupPolicy {
-  public static async validateSession(session: Session, options: GroupPolicyOptions, logger: Logger): Promise<boolean> {
+  public static async validateSession(session: Session, options: GroupPolicyOptions, logger?: Logger): Promise<boolean> {
+    if (!logger) {
+      logger = Util.getLogger("GroupPolicy");
+    }
     if (session === undefined || session.account === undefined || session.username === undefined) {
       throw new ParseOptionsError(`Invalid authentication!`);
     }
     const ret = policyCheck(session, options);
     if (!ret) {
-      logger.warn(`unauthorized token[${session.token}] with groups[${session.groups.toString()}]` +
+      (logger as Logger).warn(`unauthorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` not on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
       throw new ForbiddenError(`Invalid session. You are not permitted to do this!`);
     } else {
-      logger.debug(`authorized token[${session.token}] with groups[${session.groups.toString()}]` +
+      (logger as Logger).debug(`authorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
       return true;
     }
