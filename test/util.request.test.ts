@@ -6,6 +6,7 @@ import {Server} from "http";
 import {strictEqual} from "assert";
 
 describe('lib.Util.request func tests', function () {
+  this.timeout(100000);
   let server: Server;
   let serverPort: Server;
   const SOCKET_PATH = "/tmp/socket.1111";
@@ -17,6 +18,12 @@ describe('lib.Util.request func tests', function () {
         unlinkSync(SOCKET_PATH);
       const app = express();
       const appPort = express();
+      const redirectNoHostHandler = (req: Request, res: Response) => {
+        res.redirect(302, `/hello?format=txt&otherQ=3`);
+      };
+      const redirectWithDifferentHostHandler = (req: Request, res: Response) => {
+        res.redirect(302, `http://localhost:${PORT + 1}/hello?format=txt&otherQ=4`);
+      };
       const redirectHandler = (req: Request, res: Response) => {
         res.redirect(302, `http://localhost:${PORT}/hello?format=txt&otherQ=2`);
       }
@@ -30,7 +37,7 @@ describe('lib.Util.request func tests', function () {
           strictEqual(req.body, "blo");
         }
 
-        if (otherQ !== "1" && otherQ !== "2") {
+        if (otherQ !== "1" && otherQ !== "2" && otherQ !== "3" && otherQ !== "4") {
           res.status(503);
           res.send("not valid otherQ [" + req.query.otherQ + "]");
         } else {
@@ -58,6 +65,8 @@ describe('lib.Util.request func tests', function () {
       app.get("/hello", helloHandler);
       app.get("/redirect", redirectHandler);
       appPort.get("/hello", helloHandler);
+      appPort.get("/redirectNoHostHandler", redirectNoHostHandler);
+      appPort.get("/redirectWithDifferentHostHandler", redirectWithDifferentHostHandler);
       server = app.listen(SOCKET_PATH);
       serverPort = appPort.listen(PORT);
     })().then(done).catch(done);
@@ -147,7 +156,8 @@ describe('lib.Util.request func tests', function () {
         });
         strictEqual(true, false);
       } catch (e) {
-        const {redirectedUrl, data, status} = e;
+        const {redirectedUrl, data, status, name} = e;
+        strictEqual(name, "ResponseError");
         strictEqual(data, "not valid format [notvalid]");
         strictEqual(status, 400);
         strictEqual(redirectedUrl, null);
@@ -169,6 +179,39 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
+  it('simple get follow redirect with no host', (done) => {
+    (async () => {
+      const {url, redirectedUrl, status, data} = await Util.request({
+        url: "http://localhost:8080/redirectNoHostHandler",
+        method: "get"
+      });
+      strictEqual(status, 200);
+      strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=3");
+      strictEqual(url, "http://localhost:8080/redirectNoHostHandler");
+      strictEqual(data, "hello2");
+    })().then(done).catch(done);
+  });
+
+  it('simple get follow redirect with different host and ECONNREFUSED', (done) => {
+    (async () => {
+      try {
+        await Util.request({
+          url: "http://localhost:8080/redirectWithDifferentHostHandler",
+          method: "get"
+        });
+        strictEqual(true, false);
+      } catch (e) {
+        const {name, code, url, redirectedUrl, status, data} = e as any;
+        strictEqual(status, undefined);
+        strictEqual(code, "ECONNREFUSED");
+        strictEqual(name, "ResponseConnectionRefusedError");
+        strictEqual(redirectedUrl, "http://localhost:8081/hello?format=txt&otherQ=4");
+        strictEqual(url, "http://localhost:8080/redirectWithDifferentHostHandler");
+        strictEqual(data, undefined);
+      }
+    })().then(done).catch(done);
+  });
+
   it('simple get ignoreRedirect:true throws', (done) => {
     (async () => {
       try {
@@ -179,8 +222,9 @@ describe('lib.Util.request func tests', function () {
           ignoreRedirect: true
         });
         strictEqual(true, false);
-      } catch ({url, redirectedUrl, status}) {
+      } catch ({url, redirectedUrl, status, name}) {
         strictEqual(status, 302);
+        strictEqual(name, "ResponseError");
         strictEqual(redirectedUrl, null);
         strictEqual(url, "/redirect");
       }
@@ -191,6 +235,7 @@ describe('lib.Util.request func tests', function () {
   /*it('test list', (done) => {
     (async () => {
       const testURLS = [
+        "https://www.publimetro.cl/cl/entretenimiento/2020/07/29/chef-yann-yvin-se-aburrio-se-fue-francia-tras-sufrir-violenta-encerrona.html",
         "http://planet.gnome.org/atom.xml",
         "https://www.schneier.com/blog/atom.xml",
         "http://rss.slashdot.org/Slashdot/slashdot",
@@ -201,7 +246,7 @@ describe('lib.Util.request func tests', function () {
         "https://www.elmostrador.cl/noticias/pais/feed/",
         "https://www.elmostrador.cl/opinion/feed/",
         "https://cooperativa.cl/noticias/site/tax/port/all/rss_2___1.xml",
-        "https://arstechnica.com/"
+        //"https://arstechnica.com/"
       ];
       const responses = await Promise.all(testURLS.map(url => {
         return Util.request({
@@ -214,5 +259,5 @@ describe('lib.Util.request func tests', function () {
       }
       strictEqual(responses.length, testURLS.length);
     })().then(done).catch(done);
-  });*/
+});*/
 });

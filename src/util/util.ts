@@ -7,8 +7,9 @@ import {Logger} from "./logger";
 import {ClientRequest, IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
 import {request as httpsRequest} from "https";
 import {parse as urlParse} from "url";
+import {NamedError} from "./error/named";
 
-export class ResponseError extends Error {
+export class ResponseError extends NamedError {
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   constructor(
     public readonly status: number | undefined,
@@ -19,6 +20,7 @@ export class ResponseError extends Error {
     public readonly data: any,
   ) {
     super(`request ended with ${status ? `status [${status}]` : "no status"}`);
+    this.name = "ResponseError";
   }
 }
 
@@ -116,7 +118,7 @@ export abstract class Util {
                 res.removeListener("data", chunkListener);
                 res.removeListener("error", errorListener);
                 const contentType = res.headers["content-type"];
-                const location = res.headers["location"];
+
                 if (contentType && (contentType.indexOf("application/json") === 0 || contentType.indexOf("json") === 0)) {
                   data = JSON.parse(data);
                 }
@@ -125,23 +127,40 @@ export abstract class Util {
                   const err = new ResponseError(status, res, res.headers, options.url, null, data);
                   reject(err);
                 } else {
-                  if (status >= 300 && status <= 400 && !options.ignoreRedirect && location) {
-                    (logger as Logger).info(`redirecting to [${location}] from [${options.url}]`);
-                    Util.request({
-                      ...options,
-                      url: location
-                    }).then((ret) => {
-                      const redirectedUrl = ret.url;
-                      resolve({
-                        ...ret,
-                        url: options.url,
-                        redirectedUrl
+
+                  if (status >= 300 && status <= 400 && !options.ignoreRedirect && res.headers["location"]) {
+                    let location = res.headers["location"];
+                    try {
+                      const loURL = urlParse(location);
+                      if (!loURL.hostname && url.hostname) {
+                        // missing hostname on redirect so same hostname protocol and port?
+                        location = `${url.protocol}//${url.hostname}${url.port ? `:${url.port}` : ""}${loURL.path}`;
+                      }
+                      (logger as Logger).debug(`redirecting to [${location}] from [${options.url}]`);
+                      Util.request({
+                        ...options,
+                        url: location
+                      }).then((ret) => {
+                        const redirectedUrl = ret.url;
+                        resolve({
+                          ...ret,
+                          url: options.url,
+                          redirectedUrl
+                        });
+                      }).catch((e4: any) => {
+                        if (e4.response && e4.status && e4.headers && e4.data) {
+                          const err = new ResponseError(e4.status, e4.response, e4.headers, options.url, location, e4.data);
+                          err.stack = e4.stack;
+                          reject(err);
+                        } else {
+                          (e4 as any).redirectedUrl = location;
+                          (e4 as any).url = options.url;
+                          reject(e4);
+                        }
                       });
-                    }).catch((e4: ResponseError) => {
-                      const err = new ResponseError(status, res, res.headers, options.url, e4.url, data);
-                      err.stack = e4.stack;
-                      reject(err);
-                    });
+                    } catch (e5) {
+                      reject(new ResponseError(status, res, res.headers, options.url, location, data));
+                    }
                   } else {
                     if (status >= 200 && status < 300) {
                       resolve({
@@ -176,6 +195,9 @@ export abstract class Util {
               req.write(typeof options.data === "string" ? options.data : JSON.stringify(options.data));
             }
             req.once("error", (e: Error) => {
+              if ((e as any).code === "ECONNREFUSED") {
+                e.name = "ResponseConnectionRefusedError";
+              }
               reject(e);
             });
             req.end();
