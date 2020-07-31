@@ -6,7 +6,7 @@ import {getLoggerFactory} from "./loader";
 import {Logger} from "./logger";
 import {ClientRequest, IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
 import {request as httpsRequest} from "https";
-import {parse as urlParse} from "url";
+import {format as formatUrl, parse as parseUrl, parse as urlParse} from "url";
 import {NamedError} from "./error/named";
 
 export class ResponseError extends NamedError {
@@ -134,8 +134,14 @@ export abstract class Util {
                       const loURL = urlParse(location);
                       if (!loURL.hostname && url.hostname) {
                         // missing hostname on redirect so same hostname protocol and port?
-                        location = `${url.protocol}//${url.hostname}${url.port ? `:${url.port}` : ""}${loURL.path}`;
+                        loURL.hostname = url.hostname;
+                        loURL.port = url.port;
+                        loURL.path = url.path;
+                        loURL.protocol = url.protocol;
+                        // location = `${url.protocol}//${url.hostname}${url.port ? `:${url.port}` : ""}${loURL.path}`;
+                        location = formatUrl(loURL);
                       }
+
                       (logger as Logger).debug(`redirecting to [${location}] from [${options.url}]`);
                       Util.request({
                         ...options,
