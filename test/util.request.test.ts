@@ -231,33 +231,4 @@ describe('lib.Util.request func tests', function () {
 
     })().then(done).catch(done);
   });
-
-  /*it('test list', (done) => {
-    (async () => {
-      const testURLS = [
-        "https://www.publimetro.cl/cl/entretenimiento/2020/07/29/chef-yann-yvin-se-aburrio-se-fue-francia-tras-sufrir-violenta-encerrona.html",
-        "http://planet.gnome.org/atom.xml",
-        "https://www.schneier.com/blog/atom.xml",
-        "http://rss.slashdot.org/Slashdot/slashdot",
-        "https://cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
-        "https://cooperativa.cl/noticias/site/tax/port/all/rss_6___1.xml",
-        "https://www.elmostrador.cl/destacado/feed/",
-        "http://feeds.feedburner.com/soychilecl-todas",
-        "https://www.elmostrador.cl/noticias/pais/feed/",
-        "https://www.elmostrador.cl/opinion/feed/",
-        "https://cooperativa.cl/noticias/site/tax/port/all/rss_2___1.xml",
-        //"https://arstechnica.com/"
-      ];
-      const responses = await Promise.all(testURLS.map(url => {
-        return Util.request({
-          url,
-          method: "get"
-        });
-      }));
-      for (const {status} of responses) {
-        strictEqual(status, 200);
-      }
-      strictEqual(responses.length, testURLS.length);
-    })().then(done).catch(done);
-});*/
 });
