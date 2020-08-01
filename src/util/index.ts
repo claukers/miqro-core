@@ -30,12 +30,12 @@ export type GroupPolicyType = "at_least_one" | "all";
 
 export type GroupPolicyGroups = string | string[];
 
-export interface GroupPolicyOptions {
+export interface GroupPolicy {
   groups: GroupPolicyGroups[];
   groupPolicy: GroupPolicyType;
 }
 
-const policyCheck = (session: Session, options: GroupPolicyOptions): boolean => {
+export const groupPolicyCheck = (session: Session, options: GroupPolicy): boolean => {
   switch (options.groupPolicy) {
     case "at_least_one":
       for (const group of options.groups) {
@@ -77,15 +77,15 @@ const policyCheck = (session: Session, options: GroupPolicyOptions): boolean => 
   }
 };
 
-export abstract class GroupPolicy {
-  public static async validateSession(session: Session, options: GroupPolicyOptions, logger?: Logger): Promise<boolean> {
+export abstract class GroupPolicyValidator {
+  public static async validate(session: Session, options: GroupPolicy, logger?: Logger): Promise<boolean> {
     if (!logger) {
       logger = Util.getLogger("GroupPolicy");
     }
     if (session === undefined || session.account === undefined || session.username === undefined) {
       throw new ParseOptionsError(`Invalid authentication!`);
     }
-    const ret = policyCheck(session, options);
+    const ret = groupPolicyCheck(session, options);
     if (!ret) {
       (logger as Logger).warn(`unauthorized token[${session.token}] with groups[${session.groups.toString()}]` +
         ` not on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);

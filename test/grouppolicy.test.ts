@@ -1,10 +1,10 @@
 import {describe, it} from 'mocha';
 import {strictEqual} from "assert";
 
-describe('grouppolicy func tests', function () {
+describe('GroupPolicyValidator func tests', function () {
   it("happy path mix tape 1 invalid auth", (done) => {
-    const {GroupPolicy} = require("../src");
-    GroupPolicy.validateSession({account: "a", username: "u", groups: ["1", "2", "3"]}, {
+    const {GroupPolicyValidator} = require("../src");
+    GroupPolicyValidator.validate({account: "a", username: "u", groups: ["1", "2", "3"]}, {
       groups: [["5", "1"], ["3", "4"], "5"],
       groupPolicy: "at_least_one"
     }, {
@@ -18,8 +18,8 @@ describe('grouppolicy func tests', function () {
     });
   });
   it("happy path mix tape 1 valid auth", (done) => {
-    const {GroupPolicy} = require("../src");
-    GroupPolicy.validateSession({account: "a", username: "u", groups: ["1", "4", "3"]}, {
+    const {GroupPolicyValidator} = require("../src");
+    GroupPolicyValidator.validate({account: "a", username: "u", groups: ["1", "4", "3"]}, {
       groups: [["5", "1"], ["3", "4"], "5"],
       groupPolicy: "at_least_one"
     }, {
@@ -33,8 +33,8 @@ describe('grouppolicy func tests', function () {
     });
   });
   it("happy path mix tape 2 valid auth", (done) => {
-    const {GroupPolicy} = require("../src");
-    GroupPolicy.validateSession({account: "a", username: "u", groups: ["6", "4", "3"]}, {
+    const {GroupPolicyValidator} = require("../src");
+    GroupPolicyValidator.validate({account: "a", username: "u", groups: ["6", "4", "3"]}, {
       groups: [["5", "1"], ["3", "4", "6"], "5"],
       groupPolicy: "at_least_one"
     }, {
@@ -48,8 +48,8 @@ describe('grouppolicy func tests', function () {
     });
   });
   it("happy path mix tape 2 invalid auth", (done) => {
-    const {GroupPolicy} = require("../src");
-    GroupPolicy.validateSession({account: "a", username: "u", groups: ["6", "0", "3"]}, {
+    const {GroupPolicyValidator} = require("../src");
+    GroupPolicyValidator.validate({account: "a", username: "u", groups: ["6", "0", "3"]}, {
       groups: [["5", "1"], ["3", "4", "6"], "5"],
       groupPolicy: "at_least_one"
     }, {
@@ -59,6 +59,22 @@ describe('grouppolicy func tests', function () {
       error: console.error
     }).catch((e: Error) => {
       strictEqual(e.message, "Invalid session. You are not permitted to do this!");
+      done();
+    });
+  });
+
+  it("happy path mix tape 2 invalid policu", (done) => {
+    const {GroupPolicyValidator} = require("../src");
+    GroupPolicyValidator.validate({account: "a", username: "u", groups: ["6", "0", "3"]}, {
+      groups: [["5", "1"], ["3", "4", "6"], "5"],
+      groupPolicy: "invalid_policy"
+    }, {
+      info: console.log,
+      debug: console.log,
+      warn: console.warn,
+      error: console.error
+    }).catch((e: Error) => {
+      strictEqual(e.message, "policy [invalid_policy] not implemented!!");
       done();
     });
   });
