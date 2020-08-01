@@ -6,7 +6,7 @@ import {getLoggerFactory} from "./loader";
 import {Logger} from "./logger";
 import {ClientRequest, IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
 import {request as httpsRequest} from "https";
-import {format as formatUrl, parse as parseUrl, parse as urlParse} from "url";
+import {format as formatUrl, parse as urlParse} from "url";
 import {NamedError} from "./error/named";
 
 export class ResponseError extends NamedError {
@@ -71,7 +71,7 @@ export interface RequestOptions {
   ignoreRedirect?: boolean;
   timeout?: number;
   headers?: OutgoingHttpHeaders;
-  data?: SimpleMap<string | number | boolean> | string;
+  data?: any;
 }
 
 export abstract class Util {
