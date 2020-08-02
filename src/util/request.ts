@@ -57,10 +57,8 @@ const requestCallback = (url: UrlWithStringQuery, options: RequestOptions, reque
         res.removeListener("error", errorListener);
         const contentType = res.headers["content-type"];
 
-        if (contentType && (contentType.indexOf("application/json") === 0 || contentType.indexOf("json") === 0)) {
-
+        if (contentType && data && (contentType.indexOf("application/json") === 0 || contentType.indexOf("json") === 0)) {
           data = JSON.parse(data);
-
         }
         const status = res.statusCode;
         if (!status) {
