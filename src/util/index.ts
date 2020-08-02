@@ -13,6 +13,7 @@ export interface Session extends NoTokenSession {
 }
 
 export * from "./util";
+export * from "./test_helper";
 export * from "./group";
 export * from "./option-parser";
 export * from "./request";
