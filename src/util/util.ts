@@ -1,6 +1,6 @@
 import {loadConfig, overrideConfig} from "./config";
 import {getComponentLogger, getLogger, Logger} from "./logger";
-import {request, RequestOptions} from "./request";
+import {request, RequestOptions, RequestResponse} from "./request";
 import {checkEnvVariables, checkModules, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
 import {setServiceName, setupInstanceEnv, setupSimpleEnv} from "./loader";
 
@@ -15,7 +15,7 @@ export abstract class Util {
     return setupSimpleEnv();
   }
 
-  public static async request(options: RequestOptions, logger?: Logger) {
+  public static async request(options: RequestOptions, logger?: Logger): Promise<RequestResponse> {
     if (!logger) {
       logger = Util.logger;
     }

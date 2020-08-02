@@ -30,7 +30,17 @@ export interface RequestOptions {
   data?: any;
 }
 
-export const request = (options: RequestOptions, logger?: Logger): Promise<{ url: string; redirectedUrl: string | null; headers: IncomingHttpHeaders, status: number; response: IncomingMessage; data: any; request: ClientRequest; }> => {
+export interface RequestResponse {
+  url: string;
+  redirectedUrl: string | null;
+  headers: IncomingHttpHeaders,
+  status: number;
+  response: IncomingMessage;
+  data: any;
+  request: ClientRequest;
+}
+
+export const request = (options: RequestOptions, logger?: Logger): Promise<RequestResponse> => {
   if (!logger) {
     logger = Util.getLogger("request");
   }
