@@ -92,6 +92,24 @@ export abstract class Util {
       return new Promise((resolve, reject) => {
         try {
           const isJSON: boolean = typeof options.data !== "string";
+          if (isJSON &&
+            ((options.headers && (options.headers["Content-Type"] === undefined) && options.headers["content-type"] === undefined) ||
+              !options.headers)
+          ) {
+            if (!options.headers) {
+              options.headers = {};
+            }
+            options.headers["Content-Type"] = "application/json;charset=utf-8";
+          } else if (
+            !isJSON &&
+            ((options.headers && (options.headers["Content-Type"] === undefined) && options.headers["content-type"] === undefined) ||
+              !options.headers)
+          ) {
+            if (!options.headers) {
+              options.headers = {};
+            }
+            options.headers["Content-Type"] = "plain/text;charset=utf-8";
+          }
           const data = options.data ? !isJSON ? options.data : JSON.stringify(options.data) : undefined;
           const contentLength = data ? data.length : 0;
           const url = urlParse(options.url);

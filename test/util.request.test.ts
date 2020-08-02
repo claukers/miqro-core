@@ -4,6 +4,7 @@ import express, {NextFunction, Request, Response} from "express";
 import {existsSync, unlinkSync} from "fs";
 import {Server} from "http";
 import {strictEqual} from "assert";
+import bodyParser = require("body-parser");
 
 describe('lib.Util.request func tests', function () {
   this.timeout(100000);
@@ -27,19 +28,29 @@ describe('lib.Util.request func tests', function () {
       const redirectHandler = (req: Request, res: Response) => {
         res.redirect(302, `http://localhost:${PORT}/hello?format=txt&otherQ=2`);
       }
-      const simpleParser = () => (req: Request, res: Response, next: NextFunction) => {
-        let body = "";
-        req.on('data', (data) => {
-          body += data;
-        });
-
-        req.on('end', () => {
-          req.body = body;
-          next();
-        });
+      const parserOptions = {
+        strict: true,
+        inflate: true,
+        type: "application/json"
       };
-      app.use(simpleParser());
-      appPort.use(simpleParser());
+      const textParserOptions = {
+        strict: true,
+        inflate: true,
+        type: "plain/text"
+      };
+      app.use(bodyParser.json(parserOptions));
+      app.use(bodyParser.text(textParserOptions));
+      appPort.use(bodyParser.json(parserOptions));
+      appPort.use(bodyParser.text(textParserOptions));
+      const sumhandler = (req: Request, response: Response) => {
+        response.status(200);
+        strictEqual(req.body instanceof Array, true);
+        let ret = 0;
+        for (const r of req.body) {
+          ret += r.val;
+        }
+        response.send(`${ret}`);
+      };
       const helloHandler = (req: Request, res: Response, next: NextFunction) => {
         const format = req.query.format;
         const otherQ = req.query.otherQ;
@@ -77,6 +88,7 @@ describe('lib.Util.request func tests', function () {
       };
       app.get("/hello", helloHandler);
       appPort.post("/post/hello", helloHandler);
+      appPort.post("/post/sum", sumhandler);
       app.post("/post/hello", helloHandler);
       app.post("/put/hello", helloHandler);
       app.get("/redirect", redirectHandler);
@@ -130,6 +142,18 @@ describe('lib.Util.request func tests', function () {
       });
       strictEqual(data, "hello");
       strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple post /post/sum happy path', (done) => {
+    (async () => {
+      const resp = await Util.request({
+        url: "http://localhost:8080/post/sum",
+        method: "POST",
+        data: [{val: 1}, {val: 2}]
+      });
+      strictEqual(resp.data, "3");
+      strictEqual(resp.status, 200);
     })().then(done).catch(done);
   });
 
