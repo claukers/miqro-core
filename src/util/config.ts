@@ -1,6 +1,9 @@
-import {existsSync, readFileSync} from "fs";
-import {resolve} from "path";
-import {Util} from "./util";
+import {existsSync, readdirSync, readFileSync} from "fs";
+import {extname, resolve} from "path";
+import {ConfigOutput, Util} from "./util";
+import {SimpleMap} from "./option-parser";
+import {ConfigFileNotFoundError} from "./error";
+import {Logger} from "./logger";
 
 let miqroRCConfig: {
   serviceDirname: string;
@@ -80,4 +83,65 @@ export abstract class ConfigPathResolver {
       }
     }
   }
+}
+
+export const overrideConfig = (path: string, combined ?: SimpleMap<string>, logger = Util.logger): ConfigOutput[] => {
+  const outputs: ConfigOutput[] = [];
+  if (!existsSync(path)) {
+    throw new ConfigFileNotFoundError(`config file [${path}] doesnt exists!`);
+  } else {
+    logger.debug(`overriding config with [${path}].`);
+    const overrideConfig: ConfigOutput = {};
+    readFileSync(path).toString().split("\n")
+      .filter(value => value && value.length > 0 && value.substr(0, 1) !== "#")
+      .forEach((line) => {
+        const [key, val] = line.split("=");
+        overrideConfig[key] = val;
+      });
+    outputs.push(overrideConfig);
+    const keys = Object.keys(overrideConfig);
+    for (const key of keys) {
+      if (combined) {
+        combined[key] = overrideConfig[key];
+      }
+      process.env[key] = overrideConfig[key];
+    }
+  }
+  return outputs;
+};
+
+
+const MISSED_CONFIG = (path: string): string => `nothing loaded from [${path}] env file doesnt exists!`;
+const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `loadConfig nothing loaded [${configDirname}] env files dont exist!.`;
+
+export const loadConfig = (configDirname: string = ConfigPathResolver.getConfigDirname(), logger: Logger = Util.logger): { combined: SimpleMap<string>; outputs: ConfigOutput[] } => {
+  const overridePath = ConfigPathResolver.getOverrideConfigFilePath();
+
+  let outputs: ConfigOutput[] = [];
+  const combined = {};
+
+  if (existsSync(configDirname)) {
+    const configFiles = readdirSync(configDirname);
+    for (const configFile of configFiles) {
+      const configFilePath = resolve(configDirname, configFile);
+      const ext = extname(configFilePath);
+      if (ext === ".env") {
+        logger.debug(`loading ${configFilePath}`);
+        outputs = outputs.concat(overrideConfig(configFilePath, combined));
+      }
+    }
+
+    if (configFiles.length === 0) {
+      logger.debug(MISSED_TO_RUNMIQRO_INIT(configDirname));
+    }
+  } else {
+    logger.debug(MISSED_TO_RUNMIQRO_INIT(configDirname));
+  }
+
+  if (overridePath && existsSync(overridePath)) {
+    outputs = outputs.concat(overrideConfig(overridePath, combined));
+  } else if (overridePath) {
+    logger.warn(MISSED_CONFIG(overridePath));
+  }
+  return {combined, outputs};
 }

@@ -2,6 +2,10 @@ import {format} from "util";
 import {EventEmitter} from "events";
 import {createWriteStream, WriteStream} from "fs";
 import {resolve} from "path";
+import {getLoggerFactory} from "./loader";
+import {ConfigPathResolver} from "./config";
+
+const logContainer = new Map<string, Logger>();
 
 export type LogLevel = "error" | "warn" | "info" | "debug" | "trace";
 
@@ -137,4 +141,23 @@ export class DefaultLogger extends ConsoleLogger {
       }
     });
   }
+}
+
+export const getLogger = (identifier: string | any): Logger => {
+  if (typeof identifier !== "string") {
+    throw new Error("Bad log identifier");
+  }
+  if (logContainer.has(identifier)) {
+    return logContainer.get(identifier) as Logger;
+  } else {
+    const factory = getLoggerFactory();
+    const logger = factory(identifier);
+    logContainer.set(identifier, logger);
+    return logger;
+  }
+};
+
+export const getComponentLogger = (component ?: string): Logger => {
+  const serviceName = ConfigPathResolver.getServiceName();
+  return getLogger(`${serviceName ? `${serviceName}${component ? "." : ""}` : ""}${component ? component : ""}`);
 }

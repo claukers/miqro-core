@@ -1,4 +1,4 @@
-import {SimpleMap} from "./util";
+import {SimpleMap} from "./option-parser";
 import {Logger} from "./logger";
 
 // noinspection SpellCheckingInspection
