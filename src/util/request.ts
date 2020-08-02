@@ -40,10 +40,7 @@ export interface RequestResponse {
   request: ClientRequest;
 }
 
-export const request = (options: RequestOptions, logger?: Logger): Promise<RequestResponse> => {
-  if (!logger) {
-    logger = Util.getLogger("request");
-  }
+export const request = (options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> => {
   if (options.method?.toLowerCase() === "get" && options.data !== undefined) {
     return Promise.reject(new Error("cannot send data on method get"));
   } else {
@@ -128,7 +125,7 @@ export const request = (options: RequestOptions, logger?: Logger): Promise<Reque
                         location = formatUrl(loURL);
                       }
 
-                      (logger as Logger).debug(`redirecting to [${location}] from [${options.url}]`);
+                      logger.debug(`redirecting to [${location}] from [${options.url}]`);
                       Util.request({
                         ...options,
                         url: location

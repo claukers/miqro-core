@@ -1,4 +1,4 @@
-import {loadConfig, overrideConfig} from "./config";
+import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
 import {getComponentLogger, getLogger, Logger} from "./logger";
 import {request, RequestOptions, RequestResponse} from "./request";
 import {checkEnvVariables, checkModules, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
@@ -15,10 +15,7 @@ export abstract class Util {
     return setupSimpleEnv();
   }
 
-  public static async request(options: RequestOptions, logger?: Logger): Promise<RequestResponse> {
-    if (!logger) {
-      logger = Util.logger;
-    }
+  public static async request(options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> {
     return request(options, logger);
   }
 
@@ -26,22 +23,22 @@ export abstract class Util {
     return setServiceName(name);
   }
 
-  public static setupInstanceEnv(serviceName: string, scriptPath: string): void {
-    return setupInstanceEnv(serviceName, scriptPath);
+  public static setupInstanceEnv(serviceName: string, scriptPath: string, logger = Util.logger): void {
+    return setupInstanceEnv(serviceName, scriptPath, logger);
   }
 
-  public static overrideConfig(path: string, combined ?: SimpleMap<string>): ConfigOutput[] {
-    return overrideConfig(path, combined);
+  public static overrideConfig(path: string, combined ?: SimpleMap<string>, logger = Util.logger): ConfigOutput[] {
+    return overrideConfig(path, combined, logger);
   }
 
-  public static getConfig(): { combined: SimpleMap<string>; outputs: ConfigOutput[] } {
-    return loadConfig();
+  public static getConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger: Logger = Util.logger): { combined: SimpleMap<string>; outputs: ConfigOutput[] } {
+    return loadConfig(configDirname, logger);
   }
 
-  public static loadConfig(): { combined: SimpleMap<string>; outputs: ConfigOutput[] } | null {
+  public static loadConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger = Util.logger): { combined: SimpleMap<string>; outputs: ConfigOutput[] } | null {
     if (!Util.configLoaded) {
       Util.configLoaded = true;
-      return loadConfig();
+      return loadConfig(configDirname, logger);
     } else {
       return null;
     }
