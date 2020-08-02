@@ -32,7 +32,6 @@ DB_POOL_MIN=0
 DB_POOL_ACQUIRE=30000
 DB_POOL_IDDLE=10000
 DB_STORAGE=./dev.sqlite3
-DB_DROPTABLES=false
 `;
 
 export const expressEnvFile = `####################
@@ -74,11 +73,11 @@ node_modules/
 export const mainjs = (servicePath: string): string => {
   // noinspection SpellCheckingInspection
   return `const express = require("express");
-const { Util } = require("@miqro/core");
+const { loadConfig, getLogger } = require("@miqro/core");
 const { setupMiddleware } = require("@miqro/handlers");
-Util.loadConfig();
+loadConfig();
 
-const logger = Util.getLogger("main.js");
+const logger = getLogger("main.js");
 const service = require("./${servicePath}");
 
 const app = express();
@@ -95,25 +94,21 @@ service(app).then((server) => {
 export const indexjs = (): string => {
   // noinspection SpellCheckingInspection
   return `const {
-  APIResponse
-} = require("@miqro/handlers");
-const {
   Database
 } = require("@miqro/database");
 const {
-  Util
+  getComponentLogger
 } = require("@miqro/core");
+const express = require("express");
 const path = require("path");
 
-module.exports = async (app) => {
-  const logger = Util.getLogger(path.basename(__filename));
-  const db = await Database.getInstance();
+module.exports = async (app = express()) => {
+  const logger = getComponentLogger();
+  const db = new Database();
 
   app.get("/hello", async (req, res) => {
     logger.info("GET /hello called!");
-    await new APIResponse({
-      result: "world"
-    }).send(res);
+    res.json({ world: true });
   });
   logger.info("started");
   return app;
@@ -124,15 +119,11 @@ module.exports = async (app) => {
 // noinspection SpellCheckingInspection
 const servicejs = (serviceName: string): string => {
   // noinspection SpellCheckingInspection
-  return `const { Util } = require("@miqro/core");
+  return `const { getComponentLogger } = require("@miqro/core");
 
 class ${serviceName}Service {
-  static getInstance() {
-    ${serviceName}Service.instance = ${serviceName}Service.instance ? ${serviceName}Service.instance : new ${serviceName}Service();
-    return ${serviceName}Service.instance;
-  }
-  constructor() {
-    this.logger = Util.getLogger("${serviceName}Service");
+  constructor(logger = getComponentLogger("${serviceName}Service")) {
+    this.logger = logger;
   }
   async myFunction({ body, params, query, session, headers }) {
     this.logger.info("myFunction has been called!");
