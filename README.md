@@ -1,38 +1,45 @@
 # @miqro/core
 
-this module provides helpers functions to develop **express** nodejs applications like **logging**, **config** and **request parsing**
+this module provides helpers functions to develop nodejs applications like **logging**, **config** and **request parsing**
 
 ```javascript
 const {
-  Util,
-  FeatureToggle
-} = require("@miqro/core");
+  loadConfig,
+  overrideConfig,
+  getLogger,
+  getComponentLogger,
+  isFeatureEnabled,
+  parseOptions,
+} = require("./dist");
 
 // this should load env files in config/$NODE_ENV/*.env into process.env
-Util.loadConfig();
+const output = loadConfig();
 
-// force the load of an env file into process.env 
-Util.overrideConfig("other.env");
+// this should load env files in directoryPath into process.env
+loadConfig(directoryPath);
 
-// this will throw if ENV_VAR_A doesnt exists  
-Util.checkEnvVariables(["ENV_VAR_A"]);
+// force the load of an env file into process.env
+overrideConfig("other.env");
+
+// this will throw if ENV_VAR_A doesnt exists
+checkEnvVariables(["ENV_VAR_A"]);
 
 // this logger will be created using the factory in config/log.js if the file exists.
 // also this logger will respect LOG_LEVEL_MyIdentifier=debug|warn|info|error Env var as its log level
-const logger = Util.getLogger("MyIdentifier");
+const logger = getLogger("MyIdentifier");
 logger.info("infolog");
 logger.warn("warnlog");
 logger.error("errorlog");
 logger.debug("debuglog");
 
-const mainLogger = Util.getComponentLogger(); // this will produce a logger named myscript where myscript is the service name
-const moduleALogger = Util.getComponentLogger("moduleA"); // this will produce a logger named myscript.moduleA where myscript is the service name
+const mainLogger = getComponentLogger(); // this will produce a logger named myscript where myscript is the service name
+const moduleALogger = getComponentLogger("moduleA"); // this will produce a logger named myscript.moduleA where myscript is the service name
 
 
 // this will check if FEATURE_TOGGLE_BODY_PARSER env var is set to true.
 // this will crash your app if FEATURE_TOGGLE_BODY_PARSER is not set.
 // consider adding FEATURE_TOGGLE_<yourfeature>=true|false in your config/<NODE_ENV>.env file
-if(FeatureToggle.isFeatureEnabled("body_parser")) {
+if(isFeatureEnabled("body_parser")) {
   logger.info("body_parser feature enabled");
 }
 
@@ -50,18 +57,18 @@ const data = {
 ], "no_extra");*/
 
 // this will not and "resultWithExtra" will have any extra attrs data may have
-const resultWithExtra = Util.parseOptions("person", data, [
+const resultWithExtra = parseOptions("person", data, [
   { name: "name", type: "string", required: true },
   { name: "age", type: "number", required: true },
   { name: "likes", type: "array", required: true, arrayType: "string" }
 ], "add_extra");
 
 // neither will this, but this will discard the extra attrs in data in "resultWithoutExtra"
-const resultWithoutExtra = Util.parseOptions("person", data, [
+const resultWithoutExtra = parseOptions("person", data, [
   { name: "name", type: "string", required: true },
   { name: "age", type: "number", required: true },
   { name: "likes", type: "array", required: true, arrayType: "string" }
-], "ignore_extra");
+], "remove_extra");
 ```
 
 ###### custom logger factory example
