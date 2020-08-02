@@ -1,5 +1,5 @@
 import {after, before, describe, it} from 'mocha';
-import {Util} from "../src/";
+import {request, Util} from "../src/";
 import express, {NextFunction, Request, Response} from "express";
 import {existsSync, unlinkSync} from "fs";
 import {Server} from "http";
@@ -110,6 +110,17 @@ describe('lib.Util.request func tests', function () {
   it('simple get /hello?format=txt happy path', (done) => {
     (async () => {
       const {data, status} = await Util.request({
+        url: "http://localhost:8080/hello?format=txt&otherQ=1",
+        method: "get"
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple get /hello?format=txt happy path not using util', (done) => {
+    (async () => {
+      const {data, status} = await request({
         url: "http://localhost:8080/hello?format=txt&otherQ=1",
         method: "get"
       });

@@ -4,13 +4,14 @@ this module provides helpers functions to develop nodejs applications like **log
 
 ```javascript
 const {
+  request,
   loadConfig,
   overrideConfig,
   getLogger,
   getComponentLogger,
   isFeatureEnabled,
   parseOptions,
-} = require("./dist");
+} = require("@miqro/core");
 
 // this should load env files in config/$NODE_ENV/*.env into process.env
 const output = loadConfig();
@@ -35,6 +36,12 @@ logger.debug("debuglog");
 const mainLogger = getComponentLogger(); // this will produce a logger named myscript where myscript is the service name
 const moduleALogger = getComponentLogger("moduleA"); // this will produce a logger named myscript.moduleA where myscript is the service name
 
+// this is a wrapper for https|http request method using a Promise that follows redirects
+const response = await request({
+    url:...,
+    ignoreRedirect: false,
+    ....
+});
 
 // this will check if FEATURE_TOGGLE_BODY_PARSER env var is set to true.
 // this will crash your app if FEATURE_TOGGLE_BODY_PARSER is not set.
