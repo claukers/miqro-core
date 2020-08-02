@@ -1,6 +1,6 @@
 import {after, before, describe, it} from 'mocha';
 import {Util} from "../src/";
-import express, {Request, Response} from "express";
+import express, {NextFunction, Request, Response} from "express";
 import {existsSync, unlinkSync} from "fs";
 import {Server} from "http";
 import {strictEqual} from "assert";
@@ -27,7 +27,20 @@ describe('lib.Util.request func tests', function () {
       const redirectHandler = (req: Request, res: Response) => {
         res.redirect(302, `http://localhost:${PORT}/hello?format=txt&otherQ=2`);
       }
-      const helloHandler = (req: Request, res: Response) => {
+      const simpleParser = () => (req: Request, res: Response, next: NextFunction) => {
+        let body = "";
+        req.on('data', (data) => {
+          body += data;
+        });
+
+        req.on('end', () => {
+          req.body = body;
+          next();
+        });
+      };
+      app.use(simpleParser());
+      appPort.use(simpleParser());
+      const helloHandler = (req: Request, res: Response, next: NextFunction) => {
         const format = req.query.format;
         const otherQ = req.query.otherQ;
 
@@ -63,6 +76,9 @@ describe('lib.Util.request func tests', function () {
         }
       };
       app.get("/hello", helloHandler);
+      appPort.post("/post/hello", helloHandler);
+      app.post("/post/hello", helloHandler);
+      app.post("/put/hello", helloHandler);
       app.get("/redirect", redirectHandler);
       appPort.get("/hello", helloHandler);
       appPort.get("/redirectNoHostHandler", redirectNoHostHandler);
@@ -90,6 +106,46 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
+  it('cannot get with data', (done) => {
+    (async () => {
+      try {
+        await Util.request({
+          url: "anyurl",
+          method: "get",
+          data: 1
+        });
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "cannot send data on method get");
+      }
+    })().then(done).catch(done);
+  });
+
+  it('simple post /hello happy path', (done) => {
+    (async () => {
+      const {data, status} = await Util.request({
+        url: "http://localhost:8080/post/hello?format=txt&otherQ=1",
+        method: "POST",
+        data: "blo"
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple post /hello happy path over unix socket', (done) => {
+    (async () => {
+      const {data, status} = await Util.request({
+        url: "/post/hello?format=txt&otherQ=1",
+        method: "POST",
+        data: "blo",
+        socketPath: SOCKET_PATH
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
   it('simple get /hello?format=txt happy path over unixsocket url act as path', (done) => {
     (async () => {
       const {data, status} = await Util.request({
@@ -102,57 +158,53 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
-  it('simple post /hello?format=json happy path', (done) => {
+  it('simple get /hello?format=json happy path', (done) => {
     (async () => {
       const {data, status} = await Util.request({
         url: "http://localhost:8080/hello?format=json&otherQ=1",
-        method: "post",
-        data: {
-          bla: 1
-        }
+        method: "get"
       });
       strictEqual(data.ble, 2);
       strictEqual(status, 200);
     })().then(done).catch(done);
   });
 
-  it('simple post /hello?format=json happy path over unixsocket', (done) => {
+  it('simple get /hello?format=json happy path over unixsocket', (done) => {
     (async () => {
       const {data, status} = await Util.request({
         url: "/hello?format=json&otherQ=1",
         socketPath: SOCKET_PATH,
-        method: "post",
-        data: {
-          bla: 1
-        }
+        method: "get"
       });
       strictEqual(data.ble, 2);
       strictEqual(status, 200);
     })().then(done).catch(done);
   });
 
-  it('simple post /hello?format=txt happy path over unixsocket', (done) => {
+  it('simple get /hello?format=txt happy path over unixsocket', (done) => {
     (async () => {
-      const {data, status, redirectedUrl} = await Util.request({
-        url: "/hello?format=txt&otherQ=1",
-        socketPath: SOCKET_PATH,
-        method: "post",
-        data: "blo"
-      });
-      strictEqual(data, "hello");
-      strictEqual(status, 200);
-      strictEqual(redirectedUrl, null);
+      try {
+        const {data, status, redirectedUrl} = await Util.request({
+          url: "/hello?format=txt&otherQ=1",
+          socketPath: SOCKET_PATH,
+          method: "get"
+        });
+        strictEqual(data, "hello");
+        strictEqual(status, 200);
+        strictEqual(redirectedUrl, null);
+      } catch (e) {
+        throw e;
+      }
     })().then(done).catch(done);
   });
 
-  it('simple post /hello?format=notvalid happy path 400 throws', (done) => {
+  it('simple get /hello?format=notvalid happy path 400 throws over unixsocket', (done) => {
     (async () => {
       try {
         await Util.request({
           url: "/hello?format=notvalid&otherQ=1",
           socketPath: SOCKET_PATH,
-          method: "post",
-          data: "blo"
+          method: "get"
         });
         strictEqual(true, false);
       } catch (e) {
