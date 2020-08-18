@@ -44,8 +44,6 @@ const response = await request({
 });
 
 // this will check if FEATURE_TOGGLE_BODY_PARSER env var is set to true.
-// this will crash your app if FEATURE_TOGGLE_BODY_PARSER is not set.
-// consider adding FEATURE_TOGGLE_<yourfeature>=true|false in your config/<NODE_ENV>.env file
 if(isFeatureEnabled("body_parser")) {
   logger.info("body_parser feature enabled");
 }
