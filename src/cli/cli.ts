@@ -5,9 +5,11 @@ import {CLIUtil} from "../util";
 
 // noinspection SpellCheckingInspection
 CLIUtil.cliFlow({
-  init: {module: resolve(__dirname, "init"), description: "\tinits your config folder (MIQRO_DIRNAME)"},
+  init: {module: resolve(__dirname, "init"), description: "\tinits your config folder"},
   config: {module: resolve(__dirname, "config"), description: "\toutputs to stdout the config as a json"},
-  ["config-bash"]: {module: resolve(__dirname, "config-bash"), description: "outputs to stdout the config as a bash script"},
-  ["config-env"]: {module: resolve(__dirname, "config-env"), description: "outputs to stdout the config as a env file"},
-  createservice: {module: resolve(__dirname, "create"), description: "create a service."}
+  ["config-bash"]: {
+    module: resolve(__dirname, "config-bash"),
+    description: "outputs to stdout the config as a bash script"
+  },
+  ["config-env"]: {module: resolve(__dirname, "config-env"), description: "outputs to stdout the config as a env file"}
 }, "miqro-core", console);

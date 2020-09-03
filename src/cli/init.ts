@@ -1,6 +1,6 @@
 import {existsSync, mkdirSync, writeFileSync} from "fs";
 import {resolve} from "path";
-import {ConfigPathResolver, Util} from "../util";
+import {ConfigPathResolver} from "../util";
 import {templates} from "../util/templates";
 
 const logger = console;
@@ -8,14 +8,6 @@ const logger = console;
 if (process.argv.length !== 3) {
   // noinspection SpellCheckingInspection
   throw new Error(`usage: miqro-core init`);
-}
-
-const service = resolve(ConfigPathResolver.getBaseDirname(), `index.js`);
-
-if (!existsSync(service)) {
-  logger.warn(`microservice [${service}] doesnt exists!`);
-  logger.warn(`creating [${service}]!`);
-  writeFileSync(service, templates.indexjs());
 }
 
 const configPath = ConfigPathResolver.getConfigDirname();
@@ -39,13 +31,3 @@ if (!existsSync(configPath)) {
   initEnvFile(resolve(configPath, `express.env`), templates.expressEnvFile);
   initEnvFile(resolve(configPath, `features.env`), templates.featuresEnvFile);
 }
-
-// noinspection SpellCheckingInspection
-const gitIgnorePath = resolve(ConfigPathResolver.getBaseDirname(), ".gitignore");
-if (!existsSync(gitIgnorePath)) {
-  logger.warn(`creating ${gitIgnorePath} file`);
-  writeFileSync(gitIgnorePath, templates.gitignore);
-}
-
-Util.setupScriptEnv("init", service);
-Util.loadConfig();

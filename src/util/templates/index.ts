@@ -3,7 +3,7 @@
 export const logEnvFile = `####################
 ## logging
 LOG_LEVEL=info
-LOG_LEVEL_Sequelize=error
+LOG_LEVEL_Database=error
 #LOG_FILE=./logs/dev.log
 `;
 
@@ -67,86 +67,8 @@ TOKEN_HEADER=Authorization
 TOKEN_VERIFY_ENDPOINT_METHOD=GET
 `;
 
-
-// noinspection SpellCheckingInspection,SpellCheckingInspection
-export const gitignore = `logs/
-node_modules/
-*.sqlite3
-`;
-
-// noinspection SpellCheckingInspection
-export const mainjs = (servicePath: string): string => {
-  // noinspection SpellCheckingInspection
-  return `const express = require("express");
-const { loadConfig, getLogger } = require("@miqro/core");
-const { setupMiddleware } = require("@miqro/handlers");
-loadConfig();
-
-const logger = getLogger("main.js");
-const service = require("./${servicePath}");
-
-const app = express();
-setupMiddleware(app, logger);
-service(app).then((server) => {
-  server.listen(process.env.PORT);
-}).catch((e) => {
-  logger.error(e);
-});
-`;
-};
-
-// noinspection SpellCheckingInspection
-export const indexjs = (): string => {
-  // noinspection SpellCheckingInspection
-  return `const {
-  Database
-} = require("@miqro/database");
-const {
-  getComponentLogger
-} = require("@miqro/core");
-const express = require("express");
-const path = require("path");
-
-module.exports = async (app = express()) => {
-  const logger = getComponentLogger();
-  const db = new Database();
-
-  app.get("/hello", async (req, res) => {
-    logger.info("GET /hello called!");
-    res.json({ world: true });
-  });
-  logger.info("started");
-  return app;
-};
-`;
-};
-
-// noinspection SpellCheckingInspection
-const servicejs = (serviceName: string): string => {
-  // noinspection SpellCheckingInspection
-  return `const { getComponentLogger } = require("@miqro/core");
-
-class ${serviceName}Service {
-  constructor(logger = getComponentLogger("${serviceName}Service")) {
-    this.logger = logger;
-  }
-  async myFunction({ body, params, query, session, headers }) {
-    this.logger.info("myFunction has been called!");
-    return null;
-  }
-}
-
-module.exports.${serviceName}Service = ${serviceName}Service;
-
-`;
-};
-
 // noinspection SpellCheckingInspection
 export const templates = {
-  gitignore,
-  servicejs,
-  indexjs,
-  mainjs,
   logEnvFile,
   authEnvFile,
   dbEnvFile,
