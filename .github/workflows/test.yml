@@ -26,7 +26,8 @@ jobs:
         # Set always-auth in npmrc
         # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0
         node-version: 10.x # optional, default is 10.x
-        run: |
+    - name: NPM Tests
+      run: |
           npm install
           npm audit
           npm run lint
