@@ -57,10 +57,10 @@ export interface WriteEventArgs extends WriteArgs {
   out: string;
 }
 
-export class ConsoleLogger extends EventEmitter implements Logger {
+export abstract class Logger extends EventEmitter implements Logger {
   protected readonly _formatter: Formatter;
 
-  constructor(identifier: string, private readonly level: LogLevel, formatter?: Formatter) {
+  protected constructor(identifier: string, private readonly level: LogLevel, formatter?: Formatter) {
     super();
     if (!LOG_LEVEL_MAP[level]) {
       throw new Error(`Unknown level [${level}]`);
@@ -68,9 +68,6 @@ export class ConsoleLogger extends EventEmitter implements Logger {
     this._formatter = formatter ? formatter : defaultLoggerFormat({
       identifier
     });
-    this.on(ConsoleLoggerEvents.write, ({out, level}: WriteEventArgs) => {
-      console[level](out);
-    })
   }
 
   protected write(args: WriteArgs): void {
@@ -115,6 +112,15 @@ export class ConsoleLogger extends EventEmitter implements Logger {
   public warn(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "warn";
     return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+  }
+}
+
+export class ConsoleLogger extends Logger {
+  constructor(identifier: string, level: LogLevel, formatter?: Formatter) {
+    super(identifier, level, formatter);
+    this.on(ConsoleLoggerEvents.write, ({out, level}: WriteEventArgs) => {
+      console[level](out);
+    });
   }
 }
 
