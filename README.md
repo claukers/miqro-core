@@ -25,16 +25,14 @@ overrideConfig("other.env");
 // this will throw if ENV_VAR_A doesnt exists
 checkEnvVariables(["ENV_VAR_A"]);
 
-// this logger will be created using the factory in config/log.js if the file exists.
-// also this logger will respect LOG_LEVEL_MyIdentifier=debug|warn|info|error Env var as its log level
+// creating a logger with getLogger(...) will set the level of the logger to LOG_LEVEL_MyIdentifier=debug|warn|info|error Env var as its a valid log level
 const logger = getLogger("MyIdentifier");
 logger.info("infolog");
 logger.warn("warnlog");
 logger.error("errorlog");
 logger.debug("debuglog");
-
-const mainLogger = getComponentLogger(); // this will produce a logger named myscript where myscript is the service name
-const moduleALogger = getComponentLogger("moduleA"); // this will produce a logger named myscript.moduleA where myscript is the service name
+// this logger will NOT respect env var LOG_LEVEL_MyIdentifier and will be force to use debug
+// const logger = new DefaultLogger("MyIdentifier", "debug");
 
 // this is a wrapper for https|http request method using a Promise that follows redirects
 const response = await request({
@@ -76,50 +74,25 @@ const resultWithoutExtra = parseOptions("person", data, [
 ], "remove_extra");
 ```
 
-###### custom logger factory example
-
-```config/log.js```
+###### custom transport and format
 
 ```javascript
-module.exports = (identifier) => {
-  return console;
-};
-```
-
-###### custom transport
-
-```config/log.js```
-
-```javascript
-const {DefaultLogger} = require("@miqro/core");
-
-module.exports = (identifier) => {
-  const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info");
-  const logger = new DefaultLogger(identifier, level);
-  logger.on("write", ({level, out}) => {
-    ....
-  });
-  return logger;
-};
-```
-
-###### change format
-
-```config/log.js```
-
-```javascript
-const {DefaultLogger} = require("@miqro/core");
-
-module.exports = (identifier) => {
-  const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info");
-  const myFormatter = (level, message) => {
+...
+const myFormatter = (level, message) => {
     return `${new Date().toISOString()} ${pid} ` +
       `[${identifier}] ` +
       `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
       `${message}`;
   };
-  const logger = new DefaultLogger(identifier, level, myFormatter);
-  return logger;
-};
+const logger = new Logger(identifier, level, myFormatter);
+logger.on(LoggerEvents.write, ({level, out}) => {
+    ...
+    console.log(out);
+    ...
+});
+logger.on(LoggerEvents.write, ({level, out}) => {
+    ...
+});
+...
 ```
 
