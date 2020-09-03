@@ -78,12 +78,11 @@ const resultWithoutExtra = parseOptions("person", data, [
 
 ```javascript
 ...
-const myFormatter = (level, message) => {
-    return `${new Date().toISOString()} ${pid} ` +
+const myFormatter = (level, message) => 
+    `${new Date().toISOString()} ${pid} ` +
       `[${identifier}] ` +
       `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
       `${message}`;
-  };
 const logger = new Logger(identifier, level, myFormatter);
 logger.on(LoggerEvents.write, ({level, out}) => {
     ...
