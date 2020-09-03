@@ -6,6 +6,7 @@ this module provides helpers functions to develop nodejs applications like **log
 const {
   request,
   loadConfig,
+  DefaultLogger,
   overrideConfig,
   getLogger,
   getComponentLogger,
