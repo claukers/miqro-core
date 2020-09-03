@@ -47,5 +47,5 @@ if (!existsSync(gitIgnorePath)) {
   writeFileSync(gitIgnorePath, templates.gitignore);
 }
 
-Util.setupInstanceEnv("init", service);
+Util.setupScriptEnv("init", service);
 Util.loadConfig();

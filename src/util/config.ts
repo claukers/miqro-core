@@ -67,7 +67,7 @@ export abstract class ConfigPathResolver {
 
   private static loadMiqroRC(): void {
     if (!ConfigPathResolver.rcLoaded) {
-      Util.setupSimpleEnv();
+      Util.setupNodeEnv();
       const path = ConfigPathResolver.getMiqroRCFilePath();
       if (existsSync(path)) {
         const o = JSON.parse(readFileSync(path).toString());

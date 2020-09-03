@@ -2,7 +2,7 @@ import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
 import {getLogger, Logger, LoggerFormatter} from "./logger";
 import {request, RequestOptions, RequestResponse} from "./request";
 import {checkEnvVariables, checkModules, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
-import {setServiceName, setupInstanceEnv, setupSimpleEnv} from "./loader";
+import {setServiceName, setupScriptEnv, setupNodeEnv} from "./loader";
 
 
 export type ConfigOutput = SimpleMap<string>;
@@ -11,8 +11,8 @@ export abstract class Util {
 
   public static logger: Logger;
 
-  public static setupSimpleEnv(): void {
-    return setupSimpleEnv();
+  public static setupNodeEnv(): void {
+    return setupNodeEnv();
   }
 
   public static async request(options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> {
@@ -23,8 +23,8 @@ export abstract class Util {
     return setServiceName(name);
   }
 
-  public static setupInstanceEnv(serviceName: string, scriptPath: string, logger = Util.logger): void {
-    return setupInstanceEnv(serviceName, scriptPath, logger);
+  public static setupScriptEnv(serviceName: string, scriptPath: string, logger = Util.logger): void {
+    return setupScriptEnv(serviceName, scriptPath, logger);
   }
 
   public static overrideConfig(path: string, combined ?: SimpleMap<string>, logger = Util.logger): ConfigOutput[] {

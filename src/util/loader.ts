@@ -25,11 +25,11 @@ export const getLoggerFactory = (): LoggerFactory => {
   }
 };
 
-export const setupSimpleEnv = (): void => {
+export const setupNodeEnv = (): void => {
   process.env.NODE_ENV = process.env.NODE_ENV || "development";
 };
 
-export const setupInstanceEnv = (serviceName: string, scriptPath: string, logger = Util.logger): void => {
+export const setupScriptEnv = (serviceName: string, scriptPath: string, logger = Util.logger): void => {
   const microDirname = resolve(dirname(scriptPath));
   if (!
     process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined"
@@ -41,7 +41,7 @@ export const setupInstanceEnv = (serviceName: string, scriptPath: string, logger
   }
   process.chdir(microDirname);
   process.env.MICRO_NAME = serviceName;
-  setupSimpleEnv();
+  setupNodeEnv();
 }
 
 export const setServiceName = (name: string): string => {
