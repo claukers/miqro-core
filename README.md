@@ -79,8 +79,8 @@ const resultWithoutExtra = parseOptions("person", data, [
 
 ```javascript
 ...
-const myFormatter = (level, message) => 
-    `${new Date().toISOString()} ${pid} ` +
+const myFormatter = ({identifier, level, message}) => 
+    `${new Date().toISOString()} ${process.pid} ` +
       `[${identifier}] ` +
       `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
       `${message}`;

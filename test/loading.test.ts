@@ -1,7 +1,17 @@
 import {describe, it} from "mocha";
 import {strictEqual} from "assert";
 import {resolve} from "path";
-import {ConfigPathResolver, LogContainer, LoggerEvents, LoggerWriteEventArgs, LogLevel, Util} from "../src/util";
+import {
+  ConfigPathResolver,
+  fake,
+  getLoggerFactory,
+  LogContainer,
+  Logger,
+  LoggerEvents,
+  LoggerWriteEventArgs,
+  setLoggerFactory,
+  Util
+} from "../src/util";
 
 process.env.NODE_ENV = "test";
 
@@ -18,14 +28,36 @@ describe("Util loader tests", () => {
   it("getLogger with custom formatting", (done) => {
     LogContainer.clear();
     (Util as any).configLoaded = false;
-    const logger = Util.getLogger("bla", (level: LogLevel, message: string): string => `bla ${level} ${message}`);
+    const logger = Util.getLogger("bla", ({level, message}): string => `bla ${level} ${message}`);
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
     logger.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
       strictEqual(out, "bla info blo");
       done();
     });
+    logger.debug("ignore this");
     logger.info("blo");
+
+  });
+
+  it("getLogger with custom factory and formatting", (done) => {
+    LogContainer.clear();
+    (Util as any).configLoaded = false;
+    const old = getLoggerFactory();
+    const fakeFactory = fake(({identifier, level, formatter}) => {
+      return new Logger("ble", "debug", formatter);
+    })
+    setLoggerFactory(fakeFactory);
+    const logger = Util.getLogger("bla", ({level, message}): string => `bla ${level} ${message}`);
+    strictEqual(logger !== undefined, true);
+    strictEqual(logger !== null, true);
+    logger.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
+      strictEqual(fakeFactory.callCount, 1);
+      strictEqual(out, "bla debug blo");
+      setLoggerFactory(old);
+      done();
+    });
+    logger.debug("blo");
   });
 
   it("loadConfig without .env file should work", () => {

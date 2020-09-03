@@ -1,22 +1,25 @@
-import {existsSync} from "fs";
 import {dirname, resolve} from "path";
 import {Util} from "./util";
-import {ConfigPathResolver} from "./config";
 import {DefaultLogger, Logger, LoggerFormatter, LogLevel} from "./logger";
 
 // noinspection SpellCheckingInspection
 
-export type LoggerFactory = (identifier: string, formatter?: LoggerFormatter) => Logger;
+export type LoggerFactory = (args: { identifier: string, formatter?: LoggerFormatter, level: LogLevel; }) => Logger;
 
-export const defaultLoggerFactory: LoggerFactory = (identifier: string, formatter?: LoggerFormatter): Logger => {
-  const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info") as LogLevel;
+export const defaultLoggerFactory: LoggerFactory = ({identifier, formatter, level}): Logger => {
   return new DefaultLogger(identifier, level, formatter);
 };
 
+let customLoggerFactory: LoggerFactory;
+
+export const setLoggerFactory = (factory: LoggerFactory): LoggerFactory => {
+  customLoggerFactory = factory;
+  return customLoggerFactory;
+}
+
 export const getLoggerFactory = (): LoggerFactory => {
-  const logPath = resolve(ConfigPathResolver.getConfigDirname(), `log.js`);
-  if (existsSync(logPath)) {
-    return require(logPath);
+  if (customLoggerFactory) {
+    return customLoggerFactory;
   } else {
     return defaultLoggerFactory;
   }

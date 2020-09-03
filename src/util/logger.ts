@@ -34,15 +34,13 @@ export interface Logger {
   error(message?: any, ...optionalParams: any[]): void;
 }
 
-export type LoggerFormatter = (level: LogLevel, message: string) => string;
+export type LoggerFormatter = (args: { identifier: string, level: LogLevel, message: string }) => string;
 
-export const defaultLoggerFormat = ({identifier}: { identifier: string; }): LoggerFormatter => {
-  const pid = process.pid;
-  return (level: string, message: string) => `${new Date().toISOString()} ${pid} ` +
+export const defaultLoggerFormatter: LoggerFormatter =
+  ({identifier, level, message}) => `${new Date().toISOString()} ${process.pid} ` +
     `[${identifier}] ` +
     `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
     `${message}`;
-};
 
 export const LoggerEvents = {
   write: "write",
@@ -62,20 +60,22 @@ export interface LoggerWriteEventArgs extends WriteArgs {
 export class Logger extends EventEmitter implements Logger {
   protected readonly _formatter: LoggerFormatter;
 
-  constructor(identifier: string, private readonly level: LogLevel, formatter?: LoggerFormatter) {
+  constructor(protected readonly identifier: string, protected readonly level: LogLevel, formatter?: LoggerFormatter) {
     super();
     if (!LOG_LEVEL_MAP[level]) {
       throw new Error(`Unknown level [${level}]`);
     }
-    this._formatter = formatter ? formatter : defaultLoggerFormat({
-      identifier
-    });
+    this._formatter = formatter ? formatter : defaultLoggerFormatter;
   }
 
   protected write(args: WriteArgs): void {
     try {
       const eventArgs: LoggerWriteEventArgs = {
-        out: this._formatter(args.level, format(args.message, ...args.optionalParams)),
+        out: this._formatter({
+          identifier: this.identifier,
+          level: args.level,
+          message: format(args.message, ...args.optionalParams)
+        }),
         ...args
       };
       this.emit(LoggerEvents.write, eventArgs);
@@ -159,21 +159,19 @@ export class DefaultLogger extends ConsoleLogger {
   }
 }
 
-export const getLogger = (identifier: string, formatter?: LoggerFormatter): Logger => {
-  if (typeof identifier !== "string") {
+export const getLogger = (identifier?: string, formatter?: LoggerFormatter): Logger => {
+  if (typeof identifier !== "string" && typeof identifier !== undefined) {
     throw new Error("Bad log identifier");
+  } else {
+    identifier = ConfigPathResolver.getServiceName();
   }
   if (LogContainer.has(identifier)) {
     return LogContainer.get(identifier) as Logger;
   } else {
     const factory = getLoggerFactory();
-    const logger = factory(identifier, formatter);
+    const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info") as LogLevel;
+    const logger = factory({identifier, level, formatter});
     LogContainer.set(identifier, logger);
     return logger;
   }
 };
-
-export const getComponentLogger = (component ?: string, formatter?: LoggerFormatter): Logger => {
-  const serviceName = ConfigPathResolver.getServiceName();
-  return getLogger(`${serviceName ? `${serviceName}${component ? "." : ""}` : ""}${component ? component : ""}`, formatter);
-}
