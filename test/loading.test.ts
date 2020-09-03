@@ -107,7 +107,6 @@ describe("Util loader tests", () => {
     process.chdir(resolve(__dirname, "data"));
     Util.loadConfig();
     strictEqual(ConfigPathResolver.getConfigDirname(), resolve(__dirname, "data", "blo", "test"));
-    strictEqual(ConfigPathResolver.getServiceDirname(), resolve(__dirname, "data", "bla"));
     process.chdir(cwd);
   });
 });

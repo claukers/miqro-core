@@ -6,7 +6,6 @@ import {ConfigFileNotFoundError} from "./error";
 import {Logger} from "./logger";
 
 let miqroRCConfig: {
-  serviceDirname: string;
   configDirname: string;
 } | null = null;
 
@@ -27,16 +26,6 @@ export abstract class ConfigPathResolver {
   public static getSequelizeRCFilePath(): string {
     return resolve(ConfigPathResolver.getBaseDirname(), `.sequelizerc`);
   }
-
-  public static getServiceDirname(): string {
-    ConfigPathResolver.loadMiqroRC();
-    if (miqroRCConfig) {
-      return miqroRCConfig.serviceDirname;
-    } else {
-      return resolve(ConfigPathResolver.getSrcDirname(), `services`);
-    }
-  }
-
 
   public static getConfigDirname(): string {
     ConfigPathResolver.loadMiqroRC();
@@ -73,10 +62,8 @@ export abstract class ConfigPathResolver {
         const o = JSON.parse(readFileSync(path).toString());
         if (o && typeof o === "object") {
           Util.parseOptions(path, o, [
-            {name: "serviceDirname", type: "string", required: true},
             {name: "configDirname", type: "string", required: true}
           ], "no_extra");
-          o.serviceDirname = resolve(ConfigPathResolver.getBaseDirname(), o.serviceDirname);
           o.configDirname = resolve(ConfigPathResolver.getBaseDirname(), o.configDirname);
           miqroRCConfig = o;
         }
