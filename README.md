@@ -54,7 +54,7 @@ const data = {
   extra: "bb"
 };
 // this will throw a ParseOptionError with a message like person.extra is not expected.
-/*const { name, age } = Util.parseOptions("person", data, [
+/*const { name, age } = parseOptions("person", data, [
   { name: "name", type: "string", required: true },
   { name: "age", type: "number", required: true },
   { name: "likes", type: "array", required: true, arrayType: "string" }
