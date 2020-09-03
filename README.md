@@ -75,7 +75,7 @@ const resultWithoutExtra = parseOptions("person", data, [
 ], "remove_extra");
 ```
 
-###### custom transport and format
+###### custom logger
 
 ```javascript
 ...
@@ -92,6 +92,15 @@ logger.on(LoggerEvents.write, ({level, out}) => {
 });
 logger.on(LoggerEvents.write, ({level, out}) => {
     ...
+});
+...
+```
+
+###### custom factory for getLogger(...)
+```javascript
+...
+setLoggerFactory(({identifier, level, formatter})=>{
+  ...
 });
 ...
 ```
