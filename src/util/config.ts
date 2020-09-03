@@ -50,10 +50,6 @@ export abstract class ConfigPathResolver {
 
   private static rcLoaded = false;
 
-  private static getSrcDirname(): string {
-    return resolve(ConfigPathResolver.getBaseDirname(), `src`);
-  }
-
   private static loadMiqroRC(): void {
     if (!ConfigPathResolver.rcLoaded) {
       Util.setupNodeEnv();
