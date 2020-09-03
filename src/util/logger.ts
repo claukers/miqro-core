@@ -5,7 +5,9 @@ import {resolve} from "path";
 import {getLoggerFactory} from "./loader";
 import {ConfigPathResolver} from "./config";
 
-const logContainer = new Map<string, Logger>();
+export type LogContainer = Map<string, Logger>;
+
+export const LogContainer: LogContainer = new Map<string, Logger>();
 
 export type LogLevel = "error" | "warn" | "info" | "debug" | "trace";
 
@@ -32,9 +34,9 @@ export interface Logger {
   error(message?: any, ...optionalParams: any[]): void;
 }
 
-export type Formatter = (level: LogLevel, message: string) => string;
+export type LoggerFormatter = (level: LogLevel, message: string) => string;
 
-export const defaultLoggerFormat = ({identifier}: { identifier: string; }): Formatter => {
+export const defaultLoggerFormat = ({identifier}: { identifier: string; }): LoggerFormatter => {
   const pid = process.pid;
   return (level: string, message: string) => `${new Date().toISOString()} ${pid} ` +
     `[${identifier}] ` +
@@ -42,7 +44,7 @@ export const defaultLoggerFormat = ({identifier}: { identifier: string; }): Form
     `${message}`;
 };
 
-export const ConsoleLoggerEvents = {
+export const LoggerEvents = {
   write: "write",
   error: "error"
 };
@@ -53,14 +55,14 @@ export interface WriteArgs {
   optionalParams: any[]
 }
 
-export interface WriteEventArgs extends WriteArgs {
+export interface LoggerWriteEventArgs extends WriteArgs {
   out: string;
 }
 
-export abstract class Logger extends EventEmitter implements Logger {
-  protected readonly _formatter: Formatter;
+export class Logger extends EventEmitter implements Logger {
+  protected readonly _formatter: LoggerFormatter;
 
-  protected constructor(identifier: string, private readonly level: LogLevel, formatter?: Formatter) {
+  constructor(identifier: string, private readonly level: LogLevel, formatter?: LoggerFormatter) {
     super();
     if (!LOG_LEVEL_MAP[level]) {
       throw new Error(`Unknown level [${level}]`);
@@ -71,11 +73,15 @@ export abstract class Logger extends EventEmitter implements Logger {
   }
 
   protected write(args: WriteArgs): void {
-    const eventArgs: WriteEventArgs = {
-      out: this._formatter(args.level, format(args.message, ...args.optionalParams)),
-      ...args
-    };
-    this.emit(ConsoleLoggerEvents.write, eventArgs);
+    try {
+      const eventArgs: LoggerWriteEventArgs = {
+        out: this._formatter(args.level, format(args.message, ...args.optionalParams)),
+        ...args
+      };
+      this.emit(LoggerEvents.write, eventArgs);
+    } catch (e) {
+      this.emit(LoggerEvents.error, e);
+    }
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
@@ -116,10 +122,14 @@ export abstract class Logger extends EventEmitter implements Logger {
 }
 
 export class ConsoleLogger extends Logger {
-  constructor(identifier: string, level: LogLevel, formatter?: Formatter) {
+  constructor(identifier: string, level: LogLevel, formatter?: LoggerFormatter) {
     super(identifier, level, formatter);
-    this.on(ConsoleLoggerEvents.write, ({out, level}: WriteEventArgs) => {
-      console[level](out);
+    this.on(LoggerEvents.write, ({out, level}: LoggerWriteEventArgs) => {
+      try {
+        console[level](out);
+      } catch (e) {
+        this.emit(LoggerEvents.error, e);
+      }
     });
   }
 }
@@ -127,9 +137,9 @@ export class ConsoleLogger extends Logger {
 export class DefaultLogger extends ConsoleLogger {
   private fileHandler: WriteStream | undefined;
 
-  constructor(identifier: string, level: LogLevel, formatter?: Formatter) {
+  constructor(identifier: string, level: LogLevel, formatter?: LoggerFormatter) {
     super(identifier, level, formatter);
-    this.on(ConsoleLoggerEvents.write, ({out}: WriteEventArgs) => {
+    this.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
       try {
         if (process.env.LOG_FILE && !this.fileHandler) {
           const path = resolve(process.env.LOG_FILE);
@@ -138,32 +148,32 @@ export class DefaultLogger extends ConsoleLogger {
         if (this.fileHandler) {
           this.fileHandler.write(`${out}\n`, (err) => {
             if (err) {
-              this.emit(ConsoleLoggerEvents.error, err);
+              this.emit(LoggerEvents.error, err);
             }
           });
         }
       } catch (e) {
-        this.emit(ConsoleLoggerEvents.error, e);
+        this.emit(LoggerEvents.error, e);
       }
     });
   }
 }
 
-export const getLogger = (identifier: string | any): Logger => {
+export const getLogger = (identifier: string, formatter?: LoggerFormatter): Logger => {
   if (typeof identifier !== "string") {
     throw new Error("Bad log identifier");
   }
-  if (logContainer.has(identifier)) {
-    return logContainer.get(identifier) as Logger;
+  if (LogContainer.has(identifier)) {
+    return LogContainer.get(identifier) as Logger;
   } else {
     const factory = getLoggerFactory();
-    const logger = factory(identifier);
-    logContainer.set(identifier, logger);
+    const logger = factory(identifier, formatter);
+    LogContainer.set(identifier, logger);
     return logger;
   }
 };
 
-export const getComponentLogger = (component ?: string): Logger => {
+export const getComponentLogger = (component ?: string, formatter?: LoggerFormatter): Logger => {
   const serviceName = ConfigPathResolver.getServiceName();
-  return getLogger(`${serviceName ? `${serviceName}${component ? "." : ""}` : ""}${component ? component : ""}`);
+  return getLogger(`${serviceName ? `${serviceName}${component ? "." : ""}` : ""}${component ? component : ""}`, formatter);
 }

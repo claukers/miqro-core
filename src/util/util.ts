@@ -1,5 +1,5 @@
 import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
-import {getComponentLogger, getLogger, Logger} from "./logger";
+import {getComponentLogger, getLogger, Logger, LoggerFormatter} from "./logger";
 import {request, RequestOptions, RequestResponse} from "./request";
 import {checkEnvVariables, checkModules, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
 import {setServiceName, setupInstanceEnv, setupSimpleEnv} from "./loader";
@@ -65,12 +65,12 @@ export abstract class Util {
     return parseOptions(argName, arg, optionsArray, options);
   }
 
-  public static getLogger(identifier: string | any): Logger {
-    return getLogger(identifier);
+  public static getLogger(identifier: string, formatter?: LoggerFormatter): Logger {
+    return getLogger(identifier, formatter);
   }
 
-  public static getComponentLogger(component ?: string): Logger {
-    return getComponentLogger(component);
+  public static getComponentLogger(component ?: string, formatter?: LoggerFormatter): Logger {
+    return getComponentLogger(component, formatter);
   }
 
   private static configLoaded = false;

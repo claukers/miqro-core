@@ -2,15 +2,15 @@ import {existsSync} from "fs";
 import {dirname, resolve} from "path";
 import {Util} from "./util";
 import {ConfigPathResolver} from "./config";
-import {DefaultLogger, Logger, LogLevel} from "./logger";
+import {DefaultLogger, Logger, LoggerFormatter, LogLevel} from "./logger";
 
 // noinspection SpellCheckingInspection
 
-export type LoggerFactory = (identifier: string) => Logger;
+export type LoggerFactory = (identifier: string, formatter?: LoggerFormatter) => Logger;
 
-export const defaultLoggerFactory: LoggerFactory = (identifier: string): Logger => {
+export const defaultLoggerFactory: LoggerFactory = (identifier: string, formatter?: LoggerFormatter): Logger => {
   const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info") as LogLevel;
-  return new DefaultLogger(identifier, level);
+  return new DefaultLogger(identifier, level, formatter);
 };
 
 export const getLoggerFactory = (): LoggerFactory => {
