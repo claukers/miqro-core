@@ -26,7 +26,9 @@ export const getLoggerFactory = (): LoggerFactory => {
 };
 
 export const setupNodeEnv = (): void => {
-  process.env.NODE_ENV = process.env.NODE_ENV || "development";
+  if(process) {
+    process["env"]["NODE_ENV"] = process["env"]["NODE_ENV"] || "development"; // this is for webpack
+  }
 };
 
 export const setupScriptEnv = (serviceName: string, scriptPath: string, logger = Util.logger): void => {
