@@ -1,7 +1,7 @@
 import {Logger} from "./logger";
-import {ClientRequest, IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, request as httpRequest} from "http";
-import {format as formatUrl, parse as urlParse, UrlWithStringQuery} from "url";
-import {request as httpsRequest} from "https";
+import http from "http";
+import url from "url";
+import https from "https";
 import {NamedError} from "./error/named";
 import {Util} from "./util";
 
@@ -9,8 +9,8 @@ export class ResponseError extends NamedError {
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   constructor(
     public readonly status: number | undefined,
-    public readonly response: IncomingMessage | undefined,
-    public readonly headers: IncomingHttpHeaders | undefined,
+    public readonly response: http.IncomingMessage | undefined,
+    public readonly headers: http.IncomingHttpHeaders | undefined,
     public readonly url: string,
     public readonly redirectedUrl: string | null,
     public readonly data: any,
@@ -26,21 +26,21 @@ export interface RequestOptions {
   socketPath?: string;
   ignoreRedirect?: boolean;
   timeout?: number;
-  headers?: OutgoingHttpHeaders;
+  headers?: http.OutgoingHttpHeaders;
   data?: any;
 }
 
 export interface RequestResponse {
   url: string;
   redirectedUrl: string | null;
-  headers: IncomingHttpHeaders,
+  headers: http.IncomingHttpHeaders,
   status: number;
-  response: IncomingMessage;
+  response: http.IncomingMessage;
   data: any;
-  request: ClientRequest;
+  request: http.ClientRequest;
 }
 
-const requestCallback = (url: UrlWithStringQuery, options: RequestOptions, request: ClientRequest, logger: Logger) => (res: IncomingMessage): Promise<RequestResponse> => {
+const requestCallback = (urlO: url.UrlWithStringQuery, options: RequestOptions, req: http.ClientRequest, logger: Logger) => (res: http.IncomingMessage): Promise<RequestResponse> => {
   return new Promise<RequestResponse>((resolve, reject) => {
     let data: any = "";
     const chunkListener = (chunk: any) => {
@@ -69,18 +69,18 @@ const requestCallback = (url: UrlWithStringQuery, options: RequestOptions, reque
           if (status >= 300 && status <= 400 && !options.ignoreRedirect && res.headers["location"]) {
             let location = res.headers["location"];
             try {
-              const loURL = urlParse(location);
-              if (!loURL.hostname && url.hostname) {
+              const loURL = url.parse(location);
+              if (!loURL.hostname && urlO.hostname) {
                 // missing hostname on redirect so same hostname protocol and port?
-                loURL.hostname = url.hostname;
-                loURL.port = url.port;
-                loURL.path = url.path;
-                loURL.protocol = url.protocol;
-                location = formatUrl(loURL);
+                loURL.hostname = urlO.hostname;
+                loURL.port = urlO.port;
+                loURL.path = urlO.path;
+                loURL.protocol = urlO.protocol;
+                location = url.format(loURL);
               }
 
               logger.debug(`redirecting to [${location}] from [${options.url}]`);
-              Util.request({
+              request({
                 ...options,
                 url: location
               }).then((ret) => {
@@ -112,7 +112,7 @@ const requestCallback = (url: UrlWithStringQuery, options: RequestOptions, reque
                 status,
                 redirectedUrl: null,
                 headers: res.headers,
-                request,
+                request: req,
                 data
               });
             } else {
@@ -168,17 +168,17 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
         }
         const data = options.data ? !isJSON ? options.data : JSON.stringify(options.data) : undefined;
         const contentLength = data ? data.length : 0;
-        const url = urlParse(options.url);
-        if (url.protocol === null) {
-          url.protocol = "http:";
+        const urlO = url.parse(options.url);
+        if (urlO.protocol === null) {
+          urlO.protocol = "http:";
         }
-        switch (url.protocol) {
+        switch (urlO.protocol) {
           case "https:":
           case "http:":
-            const requestModule = (url.protocol === "https:" ? httpsRequest : httpRequest);
-            const req: ClientRequest = requestModule({
+            const requestModule = (urlO.protocol === "https:" ? https.request : http.request);
+            const req: http.ClientRequest = requestModule({
               agent: false,
-              path: url.path,
+              path: urlO.path,
               method: options.method,
               socketPath: options.socketPath,
               headers: {
@@ -187,11 +187,11 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
                 ["Content-Length"]: contentLength
               },
               timeout: options.timeout,
-              hostname: url.hostname,
-              port: url.port
-            }, (res: IncomingMessage) => {
+              hostname: urlO.hostname,
+              port: urlO.port
+            }, (res: http.IncomingMessage) => {
               try {
-                requestCallback(url, options, req, logger)(res).then((response) => {
+                requestCallback(urlO, options, req, logger)(res).then((response) => {
                   resolve(response);
                 }).catch((e) => {
                   reject(e);
@@ -209,7 +209,7 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
             req.end(data);
             break;
           default:
-            reject(new Error(`unknown protocol [${url.protocol}]`))
+            reject(new Error(`unknown protocol [${urlO.protocol}]`))
         }
       } catch (e) {
         reject(e);
