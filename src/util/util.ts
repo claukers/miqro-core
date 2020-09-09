@@ -1,7 +1,7 @@
 import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
 import {getLogger, Logger, LoggerFormatter} from "./logger";
 import {request, RequestOptions, RequestResponse} from "./request";
-import {checkEnvVariables, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
+import {checkEnvVariables, checkModules, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
 import {setServiceName, setupNodeEnv, setupScriptEnv} from "./loader";
 
 
@@ -13,6 +13,10 @@ export abstract class Util {
 
   public static setupNodeEnv(): void {
     return setupNodeEnv();
+  }
+
+  public static checkModules(requiredModules: string[]): void {
+    return checkModules(requiredModules);
   }
 
   public static async request(options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> {
