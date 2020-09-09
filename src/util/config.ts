@@ -87,7 +87,9 @@ export const overrideConfig = (path: string, combined ?: SimpleMap<string>, logg
       if (combined) {
         combined[key] = overrideConfig[key];
       }
-      process.env[key] = overrideConfig[key];
+      Object.defineProperty(process.env, key, {
+        value: overrideConfig[key]
+      }); // this is for webpack
     }
   }
   return outputs;
