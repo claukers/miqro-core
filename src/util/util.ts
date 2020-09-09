@@ -1,8 +1,8 @@
 import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
 import {getLogger, Logger, LoggerFormatter} from "./logger";
 import {request, RequestOptions, RequestResponse} from "./request";
-import {checkEnvVariables, checkModules, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
-import {setServiceName, setupScriptEnv, setupNodeEnv} from "./loader";
+import {checkEnvVariables, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
+import {setServiceName, setupNodeEnv, setupScriptEnv} from "./loader";
 
 
 export type ConfigOutput = SimpleMap<string>;
@@ -42,10 +42,6 @@ export abstract class Util {
     } else {
       return null;
     }
-  }
-
-  public static checkModules(requiredModules: string[]): void {
-    return checkModules(requiredModules);
   }
 
   public static checkEnvVariables(requiredEnvVariables: string[]): void {

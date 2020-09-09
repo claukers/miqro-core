@@ -2,7 +2,7 @@ import {SimpleMap} from "./option-parser";
 import {Logger} from "./logger";
 
 // noinspection SpellCheckingInspection
-export type CMDMapType = SimpleMap<{ module: string; description: string }>
+export type CMDMapType = SimpleMap<{ cb: () => void; description: string }>
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
@@ -30,7 +30,7 @@ export abstract class CLIUtil {
         throw new Error("command " + cmdArg + " not found!");
       } else {
         try {
-          require(cmds[cmdArg].module);
+          cmds[cmdArg].cb();
         } catch (e) {
           logger.error(e.message);
           process.exit(1);

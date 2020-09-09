@@ -116,13 +116,3 @@ export const checkEnvVariables = (requiredEnvVariables: string[]): void => {
     }
   });
 };
-
-export const checkModules = (requiredModules: string[]): void => {
-  requiredModules.forEach((module) => {
-    try {
-      require(module);
-    } catch (e) {
-      throw new ConfigFileNotFoundError(`module [${module}] not found!. [${e.message}].`);
-    }
-  });
-};

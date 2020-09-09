@@ -1,15 +1,18 @@
 #!/usr/bin/env node
 
-import {resolve} from "path";
 import {CLIUtil} from "../util";
+import {main as init} from "./init";
+import {main as config} from "./config";
+import {main as configBash} from "./config-bash";
+import {main as configEnv} from "./config-env";
 
 // noinspection SpellCheckingInspection
 CLIUtil.cliFlow({
-  init: {module: resolve(__dirname, "init"), description: "\tinits your config folder"},
-  config: {module: resolve(__dirname, "config"), description: "\toutputs to stdout the config as a json"},
+  init: {cb: init, description: "\tinits your config folder"},
+  config: {cb: config, description: "\toutputs to stdout the config as a json"},
   ["config-bash"]: {
-    module: resolve(__dirname, "config-bash"),
+    cb: configBash,
     description: "outputs to stdout the config as a bash script"
   },
-  ["config-env"]: {module: resolve(__dirname, "config-env"), description: "outputs to stdout the config as a env file"}
+  ["config-env"]: {cb: configEnv, description: "outputs to stdout the config as a env file"}
 }, "miqro-core", console);
