@@ -162,7 +162,7 @@ export class DefaultLogger extends ConsoleLogger {
 export const getLogger = (identifier?: string, formatter?: LoggerFormatter): Logger => {
   if (typeof identifier !== "string" && typeof identifier !== undefined) {
     throw new Error("Bad log identifier");
-  } else {
+  } else if (identifier === undefined) {
     identifier = ConfigPathResolver.getServiceName();
   }
   if (LogContainer.has(identifier)) {
