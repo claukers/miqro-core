@@ -3,7 +3,7 @@ import {resolve} from "path";
 import {ConfigPathResolver} from "../util";
 import {templates} from "../util/templates";
 
-export const main = () => {
+export const main = (): void => {
   const logger = console;
 
   if (process.argv.length !== 3) {

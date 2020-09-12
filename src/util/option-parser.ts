@@ -1,4 +1,4 @@
-import {ConfigFileNotFoundError, ParseOptionsError} from "./error";
+import {ParseOptionsError} from "./error";
 import {ConfigPathResolver} from "./config";
 
 // noinspection SpellCheckingInspection

@@ -1,6 +1,6 @@
 import {Util} from "../util";
 
-export const main = () => {
+export const main = (): void => {
   const logger = console;
 
   if (process.argv.length !== 3) {
