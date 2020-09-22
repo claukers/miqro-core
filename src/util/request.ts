@@ -138,7 +138,6 @@ const requestCallback = (urlO: url.UrlWithStringQuery, options: RequestOptions, 
       reject(e3);
     }
   });
-
 }
 
 export const request = (options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> => {
