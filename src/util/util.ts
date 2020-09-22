@@ -44,8 +44,8 @@ export abstract class Util {
     }
   }
 
-  public static checkEnvVariables(requiredEnvVariables: string[]): void {
-    return checkEnvVariables(requiredEnvVariables);
+  public static checkEnvVariables(requiredEnvVariables: string[], defaults?: string[]): string[] {
+    return checkEnvVariables(requiredEnvVariables, defaults);
   }
 
   public static parseOptions(
