@@ -109,10 +109,17 @@ export const parseOptions = (
 };
 
 
-export const checkEnvVariables = (requiredEnvVariables: string[]): void => {
-  requiredEnvVariables.forEach((envName) => {
-    if (process.env[envName] === undefined) {
+export const checkEnvVariables = (requiredEnvVariables: string[], defaults?: string[]): string[] => {
+  if (defaults && defaults.length !== requiredEnvVariables.length) {
+    throw new Error(`defaults cannot be a different length of requiredEnvVariabled`);
+  }
+  return requiredEnvVariables.map((envName, index) => {
+    if (process.env[envName] === undefined && !defaults) {
       throw new Error(`Env variable [${envName}!] not defined. Consider adding it to a env file located in [${ConfigPathResolver.getConfigDirname()}].`);
+    } else if (process.env[envName] === undefined && defaults) {
+      return defaults[index];
+    } else {
+      return process.env[envName] as string;
     }
   });
 };
