@@ -56,4 +56,44 @@ describe('lib.Util.parseOptions unit tests', function () {
     };
     test().then(done).catch(done);
   });
+
+  it('simple {} no_extra', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      Util.parseOptions("argName", {}, [
+        {name: "number", type: "number", required: false},
+        {name: "string", type: "string", required: false},
+        {name: "boolean", type: "boolean", required: false},
+        {name: "object", type: "object", required: false},
+        {name: "stringArray", type: "array", arrayType: "string", required: false},
+        {name: "numberArray", type: "array", arrayType: "number", required: false}
+      ], "no_extra");
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {number: undefined} no_extra', (done) => {
+
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      try {
+        Util.parseOptions("argName", {
+          number: undefined
+        }, [
+          {name: "number", type: "number", required: false},
+          {name: "string", type: "string", required: false},
+          {name: "boolean", type: "boolean", required: false},
+          {name: "object", type: "object", required: false},
+          {name: "stringArray", type: "array", arrayType: "string", required: false},
+          {name: "numberArray", type: "array", arrayType: "number", required: false}
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.number not number");
+
+      }
+
+    };
+    test().then(done).catch(done);
+  });
 });

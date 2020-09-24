@@ -79,7 +79,7 @@ export const parseOptions = (
     }
     if (value === undefined && required) {
       throw new ParseOptionsError(`${argName}.${name} not defined`);
-    } else if (value !== undefined && !isType) {
+    } else if (!isType && arg.hasOwnProperty(name)) {
       throw new ParseOptionsError(`${argName}.${name} not ${type}`);
     } else if (value !== undefined) {
       ret[name] = arg[name];
