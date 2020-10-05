@@ -1,27 +1,34 @@
 import {SimpleMap} from "./option-parser";
 import {Logger} from "./logger";
 
+export type CB<T> = () => T;
+
 // noinspection SpellCheckingInspection
-export type CMDMapType = SimpleMap<{ cb: () => void; description: string }>
+export type CMDMapType = SimpleMap<{ cb: CB<void> | CB<Promise<void>>; description: string }>
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
   public static cliFlow(cmds: CMDMapType, identifier: string, logger: Logger | Console): void {
-    try {
-      CLIUtil.routeCMDModule(cmds, identifier, logger);
-    } catch (e) {
-      logger.error(e.message);
-      logger.info(`usage: ${identifier} <command> [args]`);
-      logger.info(`Available commands:`);
-      for (const cmd of Object.keys(cmds)) {
-        logger.info(`\t${cmd}\t${cmds[cmd].description}`);
+    const flow = async () => {
+      try {
+        await CLIUtil.routeCMDModule(cmds, identifier, logger);
+      } catch (e) {
+        logger.error(e.message);
+        logger.info(`usage: ${identifier} <command> [args]`);
+        logger.info(`Available commands:`);
+        for (const cmd of Object.keys(cmds)) {
+          logger.info(`\t${cmd}\t${cmds[cmd].description}`);
+        }
+        process.exit(1);
       }
-      process.exit(1);
     }
+    flow().catch((e) => {
+      logger.error(e);
+    });
   }
 
   // noinspection SpellCheckingInspection
-  public static routeCMDModule(cmds: CMDMapType, identifier: string, logger: Logger | Console): void {
+  public static async routeCMDModule(cmds: CMDMapType, identifier: string, logger: Logger | Console): Promise<void> {
     const cmdArg = process.argv[2];
     if (!cmdArg) {
       throw new Error("no command");
@@ -30,7 +37,7 @@ export abstract class CLIUtil {
         throw new Error("command " + cmdArg + " not found!");
       } else {
         try {
-          cmds[cmdArg].cb();
+          await cmds[cmdArg].cb();
         } catch (e) {
           logger.error(e.message);
           process.exit(1);
