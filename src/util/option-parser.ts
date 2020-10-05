@@ -24,8 +24,10 @@ const parseSimpleOption = (type: ParseSimpleType, value: any): boolean => {
   if (type === "any") {
     isType = true;
   } else if (type === "number") {
-    value = parseInt(value, 10);
     isType = !isNaN(value);
+    if(isType) {
+      value = parseInt(value, 10);
+    }
   } else if (type === "boolean") {
     value = value === "true" || value === true ? true : value === "false" || value === false ? false : null;
     isType = value !== null;
