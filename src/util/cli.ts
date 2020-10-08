@@ -8,13 +8,13 @@ export type CMDMapType = SimpleMap<{ cb: CB<void> | CB<Promise<void>>; descripti
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection
-  public static cliFlow(cmds: CMDMapType, identifier: string, logger: Logger | Console): void {
+  public static cliFlow(cmds: CMDMapType, usage: string, logger: Logger | Console): void {
     const flow = async () => {
       try {
-        await CLIUtil.routeCMDModule(cmds, identifier, logger);
+        await CLIUtil.routeCMDModule(cmds, logger);
       } catch (e) {
         logger.error(e.message);
-        logger.info(`usage: ${identifier} <command> [args]`);
+        logger.info(`${usage}`);
         logger.info(`Available commands:`);
         for (const cmd of Object.keys(cmds)) {
           logger.info(`\t${cmd}\t${cmds[cmd].description}`);
@@ -28,7 +28,7 @@ export abstract class CLIUtil {
   }
 
   // noinspection SpellCheckingInspection
-  public static async routeCMDModule(cmds: CMDMapType, identifier: string, logger: Logger | Console): Promise<void> {
+  public static async routeCMDModule(cmds: CMDMapType, logger: Logger | Console): Promise<void> {
     const cmdArg = process.argv[2];
     if (!cmdArg) {
       throw new Error("no command");
