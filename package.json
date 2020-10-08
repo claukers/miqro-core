@@ -9,6 +9,7 @@
     "url": "https://github.com/claukers/miqro-core.git"
   },
   "bin": {
+    "@miqro/core": "dist/cli/cli.js",
     "miqro-core": "dist/cli/cli.js"
   },
   "scripts": {

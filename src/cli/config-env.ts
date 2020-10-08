@@ -5,7 +5,7 @@ export const main = (): void => {
 
   if (process.argv.length !== 3) {
     // noinspection SpellCheckingInspection
-    throw new Error(`usage: miqro-core config-env`);
+    throw new Error(`usage: miqro config-env`);
   }
 
   const configOut = Util.getConfig();
