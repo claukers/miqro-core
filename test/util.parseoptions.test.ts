@@ -2,6 +2,25 @@ import {describe, it} from 'mocha';
 import {strictEqual} from "assert";
 
 describe('lib.Util.parseOptions unit tests', function () {
+  it('simple invalid valid null  check no_extra', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      try {
+        Util.parseOptions("argName", null, [
+          {name: "number", type: "number", required: true},
+          {name: "string", type: "string", required: true},
+          {name: "boolean", type: "boolean", required: true},
+          {name: "object", type: "object", required: true},
+          {name: "stringArray", type: "array", arrayType: "string", required: true},
+          {name: "numberArray", type: "array", arrayType: "number", required: true}
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "invalid argName");
+      }
+    };
+    test().then(done).catch(done);
+  });
   it('simple valid check no_extra', (done) => {
     const test = async () => {
       const {Util} = require("../src/util/util");
