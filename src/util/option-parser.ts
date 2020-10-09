@@ -1,8 +1,7 @@
 import {ConfigPathResolver} from "./config";
 import {ParseOptionsError} from "./error";
 
-// noinspection SpellCheckingInspection
-export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
+export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
 export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array";
 
@@ -11,8 +10,8 @@ export interface SimpleMap<T2> {
 }
 
 export interface NestedParseOption {
-  optionsArray: ParseOption[];
-  parserOption: OPTIONPARSERType;
+  options: ParseOption[];
+  mode: ParseOptionsMode;
 }
 
 export interface ParseOption {
@@ -23,14 +22,13 @@ export interface ParseOption {
   required: boolean;
 }
 
-
 const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption): { isType: boolean; parsedValue: any; } => {
   switch (type) {
     case "nested":
       if (!nestedOptions) {
         throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
       }
-      const pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.optionsArray, nestedOptions.parserOption);
+      const pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode);
       return {
         isType: pValue !== null,
         parsedValue: pValue === null ? value : pValue
@@ -91,35 +89,36 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
 };
 
 export const parseOptions = (
-  argName: string, arg: SimpleMap<SimpleTypes>,
-  optionsArray: ParseOption[],
-  parserOption: OPTIONPARSERType = "no_extra"
+  name: string,
+  arg: SimpleMap<SimpleTypes>,
+  options: ParseOption[],
+  mode: ParseOptionsMode = "no_extra"
 ): SimpleMap<SimpleTypes> => {
   const ret: SimpleMap<SimpleTypes> = {};
   // throw new ParseOptionsError(`${argName}.${name} not ${type}`);
   // throw new ParseOptionsError(`${argName}.${name} not defined`);
-  for (const option of optionsArray) {
+  for (const option of options) {
     const value = arg[option.name];
     const exists = arg.hasOwnProperty(option.name);
     if (!exists && !option.required) {
       continue;
-    } else if (value === undefined && option.required) {
-      throw new ParseOptionsError(`${argName}.${option.name} not defined`);
+    } else if (!exists && option.required) {
+      throw new ParseOptionsError(`${name}.${option.name} not defined`);
     }
-    const {isType, parsedValue} = isValueType(argName, option.name, option.type, value, option.arrayType, option.nestedOptions);
+    const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions);
     if (!isType) {
-      throw new ParseOptionsError(`${argName}.${option.name} not ${option.type}${option.type === "array" && option.arrayType ? ` of ${option.arrayType}` : (option.type === "nested" ? " as defined!" : "")}`);
+      throw new ParseOptionsError(`${name}.${option.name} not ${option.type}${option.type === "array" && option.arrayType ? ` of ${option.arrayType}` : (option.type === "nested" ? " as defined!" : "")}`);
     }
     ret[option.name] = parsedValue;
   }
-  switch (parserOption) {
+  switch (mode) {
     case "no_extra":
       const argKeys = Object.keys(arg);
       const hasExtra = Object.keys(ret).length !== argKeys.length;
       if (hasExtra) {
         for (const argKey of argKeys) {
           if (!ret.hasOwnProperty(argKey)) {
-            throw new ParseOptionsError(`${argName} option not valid [${argKey}]`);
+            throw new ParseOptionsError(`${name} option not valid [${argKey}]`);
           }
         }
       }
@@ -132,7 +131,7 @@ export const parseOptions = (
     case "remove_extra":
       return ret;
     default:
-      throw new ParseOptionsError(`unsupported parserOption ${parserOption}`);
+      throw new ParseOptionsError(`unsupported mode ${mode}`);
   }
 };
 

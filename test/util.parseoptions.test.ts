@@ -51,8 +51,8 @@ describe('lib.Util.parseOptions unit tests', function () {
         {name: "stringArray", type: "array", arrayType: "string", required: true},
         {
           name: "nestedArray", type: "array", arrayType: "nested", required: true, nestedOptions: {
-            parserOption: "no_extra",
-            optionsArray: [
+            mode: "no_extra",
+            options: [
               {name: "bla", type: "string", required: true}
             ]
           }
@@ -89,7 +89,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         {name: "boolean", type: "boolean", required: true},
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
-            optionsArray: [
+            options: [
               {name: "string", type: "string", required: true},
               {name: "boolean", type: "boolean", required: false}
             ]
@@ -128,11 +128,11 @@ describe('lib.Util.parseOptions unit tests', function () {
         {name: "boolean", type: "boolean", required: true},
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
-            optionsArray: [
+            options: [
               {name: "string", type: "string", required: true},
               {name: "boolean", type: "boolean", required: false}
             ],
-            parserOption: "add_extra"
+            mode: "add_extra"
           }
         },
         {name: "stringArray", type: "array", arrayType: "string", required: true},
@@ -169,7 +169,7 @@ describe('lib.Util.parseOptions unit tests', function () {
           {name: "boolean", type: "boolean", required: true},
           {
             name: "nested", type: "nested", required: true, nestedOptions: {
-              optionsArray: [
+              options: [
                 {name: "string", type: "string", required: true},
                 {name: "boolean", type: "boolean", required: true}
               ]
