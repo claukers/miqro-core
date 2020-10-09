@@ -1,10 +1,10 @@
-import {ParseOptionsError} from "./error";
 import {ConfigPathResolver} from "./config";
+import {ParseOptionsError} from "./error";
 
 // noinspection SpellCheckingInspection
 export type OPTIONPARSERType = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
-export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any";
+export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array";
 
 export interface SimpleMap<T2> {
   [key: string]: T2;
@@ -18,95 +18,129 @@ const isParseSimpleOption = (type: string | any): boolean => {
   return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
 };
 
+export interface NestedParseOption {
+  optionsArray: ParseOption[];
+  parserOption: OPTIONPARSERType;
+}
 
-const parseSimpleOption = (type: ParseSimpleType, value: any): boolean => {
-  let isType;
-  if (type === "any") {
-    isType = true;
-  } else if (type === "number") {
-    isType = !isNaN(value);
-    if(isType) {
-      value = parseInt(value, 10);
-    }
-  } else if (type === "boolean") {
-    value = value === "true" || value === true ? true : value === "false" || value === false ? false : null;
-    isType = value !== null;
-  } else {
-    isType = typeof value === type;
+export interface ParseOption {
+  name: string;
+  type: ParseSimpleType;
+  arrayType?: ParseSimpleType;
+  nestedOptions?: NestedParseOption;
+  required: boolean;
+}
+
+
+const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption): { isType: boolean; parsedValue: any; } => {
+  switch (type) {
+    case "nested":
+      if (!nestedOptions) {
+        throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
+      }
+      let pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.optionsArray, nestedOptions.parserOption);
+      return {
+        isType: pValue !== null,
+        parsedValue: pValue === null ? value : pValue
+      }
+    case "array":
+      const parsedList: SimpleTypes[] = [];
+      let isType = value instanceof Array;
+      if (isType) {
+        switch (arrayType) {
+          case undefined:
+            for (const v of value) {
+              parsedList.push(v);
+            }
+            break;
+          default:
+            for (let i = 0; i < value.length; i++) {
+              const v = value[i];
+              const aiType = isValueType(`${name}.${attrName}`, `[${i}]`, arrayType, v, undefined, nestedOptions)
+              if (!aiType.isType) {
+                isType = false;
+                break;
+              } else {
+                parsedList.push(aiType.parsedValue);
+              }
+            }
+            break;
+        }
+      }
+      return {
+        isType,
+        parsedValue: isType ? parsedList : value
+      };
+    case "any":
+      return {
+        isType: true,
+        parsedValue: value
+      };
+    case "number":
+      return {
+        isType: !isNaN(value),
+        parsedValue: !isNaN(value) ? parseInt(value, 10) : value
+      };
+    case "boolean":
+      const parsedValue = value === "true" || value === true ? true : value === "false" || value === false ? true : null;
+      return {
+        isType: parsedValue !== null,
+        parsedValue: parsedValue !== null ? parsedValue : value
+      };
+    case "string":
+    case "object":
+      return {
+        isType: typeof value === type,
+        parsedValue: value
+      };
+    default:
+      throw new ParseOptionsError(`unsupported type ${type}`);
   }
-  return isType;
 };
 
 export const parseOptions = (
   argName: string, arg: SimpleMap<SimpleTypes>,
-  optionsArray: {
-    name: string;
-    type: string;
-    arrayType?: string;
-    required: boolean;
-  }[],
+  optionsArray: ParseOption[],
   parserOption: OPTIONPARSERType = "no_extra"
 ): SimpleMap<SimpleTypes> => {
   const ret: SimpleMap<SimpleTypes> = {};
-  if (typeof arg !== "object" || !arg) {
-    throw new ParseOptionsError(`${argName} not valid`);
+  // throw new ParseOptionsError(`${argName}.${name} not ${type}`);
+  // throw new ParseOptionsError(`${argName}.${name} not defined`);
+  for (const option of optionsArray) {
+    const value = arg[option.name];
+    const exists = arg.hasOwnProperty(option.name);
+    if (!exists && !option.required) {
+      continue;
+    } else if (value === undefined && option.required) {
+      throw new ParseOptionsError(`${argName}.${option.name} not defined`);
+    }
+    const {isType, parsedValue} = isValueType(argName, option.name, option.type, value, option.arrayType, option.nestedOptions);
+    if (!isType) {
+      throw new ParseOptionsError(`${argName}.${option.name} not ${option.type}${option.type === "array" && option.arrayType ? ` of ${option.arrayType}` : (option.type === "nested" ? " as defined!" : "")}`);
+    }
+    ret[option.name] = parsedValue;
   }
-  if (!isOPTIONPARSERType(parserOption)) {
-    throw new ParseOptionsError(`parserOption [${parserOption}] not valid!`);
-  }
-  const undefinedCount = 0;
-  for (const patchAttr of optionsArray) {
-    const name = patchAttr.name;
-    const type = patchAttr.type;
-    const arrayType = patchAttr.arrayType;
-    const required = patchAttr.required;
-    const value = arg[name];
-    let isType: boolean;
-    if (isParseSimpleOption(type)) {
-      const sType = type as ParseSimpleType;
-      isType = parseSimpleOption(sType, value);
-    } else if (type === "array") {
-      isType = value instanceof Array && isParseSimpleOption(arrayType);
-      if (isType) {
-        for (const valueItem of (value as Array<any>)) {
-          const sType = arrayType as ParseSimpleType;
-          isType = isType && parseSimpleOption(sType, valueItem);
-          if (!isType) {
-            break;
+  switch (parserOption) {
+    case "no_extra":
+      const argKeys = Object.keys(arg);
+      const hasExtra = Object.keys(ret).length !== argKeys.length;
+      if (hasExtra) {
+        for (const argKey of argKeys) {
+          if (!ret.hasOwnProperty(argKey)) {
+            throw new ParseOptionsError(`${argName} option not valid [${argKey}]`);
           }
         }
       }
-    } else {
-      isType = false;
-    }
-    if (value === undefined && required) {
-      throw new ParseOptionsError(`${argName}.${name} not defined`);
-    } else if (!isType && arg.hasOwnProperty(name)) {
-      throw new ParseOptionsError(`${argName}.${name} not ${type}`);
-    } else if (value !== undefined) {
-      ret[name] = arg[name];
-    }
-  }
-  const argKeys = Object.keys(arg);
-  const retKeys = Object.keys(ret);
-  if (retKeys.length === argKeys.length - undefinedCount) {
-    return ret;
-  } else {
-    if (parserOption === "remove_extra") {
       return ret;
-    } else if (parserOption === "add_extra") {
-      return arg;
-    } else {
-      // no extra
-      for (const key of retKeys) {
-        const index = argKeys.indexOf(key);
-        if (index !== -1) {
-          argKeys.splice(index, 1);
-        }
-      }
-      const extraKey = argKeys[0];
-      throw new ParseOptionsError(`${argName} option not valid [${extraKey}]`)
-    }
+    case "add_extra":
+      return {
+        ...arg,
+        ...ret
+      };
+    case "remove_extra":
+      return ret;
+    default:
+      throw new ParseOptionsError(`unsupported parserOption ${parserOption}`);
   }
 };
 

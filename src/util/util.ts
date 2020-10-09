@@ -1,7 +1,7 @@
 import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
 import {getLogger, Logger, LoggerFormatter} from "./logger";
 import {request, RequestOptions, RequestResponse} from "./request";
-import {checkEnvVariables, OPTIONPARSERType, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
+import {checkEnvVariables, OPTIONPARSERType, ParseOption, parseOptions, SimpleMap, SimpleTypes} from "./option-parser";
 import {setServiceName, setupNodeEnv, setupScriptEnv} from "./loader";
 
 
@@ -50,15 +50,10 @@ export abstract class Util {
 
   public static parseOptions(
     argName: string, arg: SimpleMap<SimpleTypes>,
-    optionsArray: {
-      name: string;
-      type: string;
-      arrayType?: string;
-      required: boolean;
-    }[],
-    options: OPTIONPARSERType = "no_extra"
+    optionsArray: ParseOption[],
+    parserOption: OPTIONPARSERType = "no_extra"
   ): SimpleMap<SimpleTypes> {
-    return parseOptions(argName, arg, optionsArray, options);
+    return parseOptions(argName, arg, optionsArray, parserOption);
   }
 
   public static getLogger(identifier: string, formatter?: LoggerFormatter): Logger {
