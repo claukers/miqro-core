@@ -15,4 +15,4 @@ CLIUtil.cliFlow({
     description: "outputs to stdout the config as a bash script"
   },
   ["config-env"]: {cb: configEnv, description: "outputs to stdout the config as a env file"}
-}, "usage: npx miqro core:<command> [args]", console);
+}, "usage: npx @miqro/core <command> [args]", console);

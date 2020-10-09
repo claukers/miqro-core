@@ -7,8 +7,7 @@ export const main = (): void => {
   const logger = console;
 
   if (process.argv.length !== 3) {
-    // noinspection SpellCheckingInspection
-    throw new Error(`usage: npx miqro core:init`);
+    throw new Error(`invalid number of args`);
   }
 
   const configPath = ConfigPathResolver.getConfigDirname();

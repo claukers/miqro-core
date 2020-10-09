@@ -4,8 +4,7 @@ export const main = (): void => {
   const logger = console;
 
   if (process.argv.length !== 3) {
-    // noinspection SpellCheckingInspection
-    throw new Error(`usage: npx miqro core:config-env`);
+    throw new Error(`invalid number of args`);
   }
 
   const configOut = Util.getConfig();
