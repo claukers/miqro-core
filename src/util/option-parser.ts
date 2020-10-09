@@ -10,14 +10,6 @@ export interface SimpleMap<T2> {
   [key: string]: T2;
 }
 
-const isOPTIONPARSERType = (type: string | any): boolean => {
-  return ["remove_extra", "add_extra", "no_extra"].indexOf(type) !== -1;
-}
-
-const isParseSimpleOption = (type: string | any): boolean => {
-  return ["string", "boolean", "number", "object", "any"].indexOf(type) !== -1;
-};
-
 export interface NestedParseOption {
   optionsArray: ParseOption[];
   parserOption: OPTIONPARSERType;
@@ -38,7 +30,7 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
       if (!nestedOptions) {
         throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
       }
-      let pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.optionsArray, nestedOptions.parserOption);
+      const pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.optionsArray, nestedOptions.parserOption);
       return {
         isType: pValue !== null,
         parsedValue: pValue === null ? value : pValue
