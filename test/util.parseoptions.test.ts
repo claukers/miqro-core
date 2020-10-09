@@ -339,9 +339,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         strictEqual(false, true);
       } catch (e) {
         strictEqual(e.message, "argName.number not number");
-
       }
-
     };
     test().then(done).catch(done);
   });
