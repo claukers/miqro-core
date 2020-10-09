@@ -30,6 +30,47 @@ describe('lib.Util.parseOptions unit tests', function () {
     };
     test().then(done).catch(done);
   });
+  it('simple valid check with nested array and no_extra', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      const ret = Util.parseOptions("argName", {
+        number: 1,
+        string: "string",
+        boolean: true,
+        object: {},
+        stringArray: ["", ""],
+        numberArray: [1, 2, 3],
+        nestedArray: [
+          {bla: "blo"}
+        ]
+      }, [
+        {name: "number", type: "number", required: true},
+        {name: "string", type: "string", required: true},
+        {name: "boolean", type: "boolean", required: true},
+        {name: "object", type: "object", required: true},
+        {name: "stringArray", type: "array", arrayType: "string", required: true},
+        {
+          name: "nestedArray", type: "array", arrayType: "nested", required: true, nestedOptions: {
+            parserOption: "no_extra",
+            optionsArray: [
+              {name: "bla", type: "string", required: true}
+            ]
+          }
+        },
+        {name: "numberArray", type: "array", arrayType: "number", required: true}
+      ], "no_extra");
+      strictEqual(Object.keys(ret).length, 7);
+      strictEqual(ret.number, 1);
+      strictEqual(ret.string, "string");
+      strictEqual(ret.boolean, true);
+      strictEqual(typeof ret.object, "object");
+      strictEqual(ret.stringArray.length, 2);
+      strictEqual(ret.numberArray.length, 3);
+      strictEqual(ret.nestedArray.length, 1);
+      strictEqual(ret.nestedArray[0].bla, "blo");
+    };
+    test().then(done).catch(done);
+  });
   it('simple valid check nested no_extra', (done) => {
     const test = async () => {
       const {Util} = require("../src/util/util");
