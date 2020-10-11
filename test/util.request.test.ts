@@ -95,6 +95,8 @@ describe('lib.Util.request func tests', function () {
       appPort.get("/hello", helloHandler);
       appPort.get("/redirectNoHostHandler", redirectNoHostHandler);
       appPort.get("/redirectWithDifferentHostHandler", redirectWithDifferentHostHandler);
+      appPort.use(require("compression")({threshold: 0}));
+      appPort.get("/compressHello", helloHandler);
       server = app.listen(SOCKET_PATH);
       serverPort = appPort.listen(PORT);
     })().then(done).catch(done);
@@ -109,7 +111,7 @@ describe('lib.Util.request func tests', function () {
 
   it('simple get /hello?format=txt happy path', (done) => {
     (async () => {
-      const {data, status} = await Util.request({
+      const {data, status, buffer, headers} = await Util.request({
         url: "http://localhost:8080/hello?format=txt&otherQ=1",
         method: "get"
       });
@@ -177,6 +179,22 @@ describe('lib.Util.request func tests', function () {
         socketPath: SOCKET_PATH
       });
       strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+
+  it('simple get /compressHello?format=txt with gzip encoding happy path over unixsocket url act as path', (done) => {
+    (async () => {
+      const {data, status, headers, buffer} = await Util.request({
+        url: "http://localhost:8080/compressHello?format=txt&otherQ=1",
+        method: "get",
+        headers: {
+          ["Accept-Encoding"]: "gzip"
+        }
+      });
+      strictEqual(data, "hello");
+      strictEqual(headers["content-encoding"], "gzip");
       strictEqual(status, 200);
     })().then(done).catch(done);
   });

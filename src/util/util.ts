@@ -1,6 +1,7 @@
 import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
 import {getLogger, Logger, LoggerFormatter} from "./logger";
-import {request, RequestOptions, RequestResponse} from "./request";
+import {request} from "./request";
+import {RequestOptions, RequestResponse} from "./request_common";
 import {checkEnvVariables, ParseOption, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes} from "./option-parser";
 import {setServiceName, setupNodeEnv, setupScriptEnv} from "./loader";
 

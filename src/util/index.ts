@@ -17,6 +17,7 @@ export * from "./test_helper";
 export * from "./group";
 export * from "./option-parser";
 export * from "./request";
+export * from "./request_common";
 
 export * from "./stopwatch";
 export * from "./logger";
