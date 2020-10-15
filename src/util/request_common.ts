@@ -1,6 +1,4 @@
-import url from "url";
 import http from "http";
-import {Logger} from "./logger";
 import {NamedError} from "./error/named";
 
 export class ResponseError extends NamedError {
