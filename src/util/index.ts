@@ -1,8 +1,10 @@
+import {SimpleMap, SimpleTypes} from "./option-parser";
+
 export interface VerifyTokenService {
   verify(args: { token: string }): Promise<Session | null>;
 }
 
-export interface NoTokenSession {
+export interface NoTokenSession extends SimpleMap<SimpleTypes> {
   account: string;
   username: string;
   groups: string[];
