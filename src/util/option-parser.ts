@@ -3,7 +3,7 @@ import {ParseOptionsError} from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
-export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array";
+export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array" | "enum";
 
 export interface SimpleMap<T2> {
   [key: string]: T2;
@@ -19,10 +19,11 @@ export interface ParseOption {
   type: ParseSimpleType;
   arrayType?: ParseSimpleType;
   nestedOptions?: NestedParseOption;
+  enumList?: string[];
   required: boolean;
 }
 
-const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption): { isType: boolean; parsedValue: any; } => {
+const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption, enumList?: string[]): { isType: boolean; parsedValue: any; } => {
   switch (type) {
     case "nested":
       if (!nestedOptions) {
@@ -37,24 +38,21 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
       const parsedList: SimpleTypes[] = [];
       let isType = value instanceof Array;
       if (isType) {
-        switch (arrayType) {
-          case undefined:
-            for (const v of value) {
-              parsedList.push(v);
+        if (arrayType === undefined) {
+          for (const v of value) {
+            parsedList.push(v);
+          }
+        } else {
+          for (let i = 0; i < value.length; i++) {
+            const v = value[i];
+            const aiType = isValueType(`${name}.${attrName}`, `[${i}]`, arrayType, v, undefined, nestedOptions, enumList)
+            if (!aiType.isType) {
+              isType = false;
+              break;
+            } else {
+              parsedList.push(aiType.parsedValue);
             }
-            break;
-          default:
-            for (let i = 0; i < value.length; i++) {
-              const v = value[i];
-              const aiType = isValueType(`${name}.${attrName}`, `[${i}]`, arrayType, v, undefined, nestedOptions)
-              if (!aiType.isType) {
-                isType = false;
-                break;
-              } else {
-                parsedList.push(aiType.parsedValue);
-              }
-            }
-            break;
+          }
         }
       }
       return {
@@ -76,6 +74,17 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
       return {
         isType: parsedValue !== null,
         parsedValue: parsedValue !== null ? parsedValue : value
+      };
+    case "enum":
+      const enumCheck = isValueType(`${name}.${attrName}`, `enumList`, "array", enumList, "string");
+      if (enumCheck.isType && enumList) {
+        enumCheck.isType = enumList.indexOf(value) !== -1;
+      } else {
+        throw new ParseOptionsError(`options.enumList not a string array`);
+      }
+      return {
+        isType: enumCheck.isType,
+        parsedValue: value
       };
     case "string":
     case "object":
@@ -108,7 +117,7 @@ export const parseOptions = (
     } else if (!exists && option.required) {
       throw new ParseOptionsError(`${name}.${option.name} not defined`);
     }
-    const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions);
+    const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions, option.enumList);
     if (!isType) {
       throw new ParseOptionsError(`${name}.${option.name} not ${option.type}${option.type === "array" && option.arrayType ? ` of ${option.arrayType}` : (option.type === "nested" ? " as defined!" : "")}`);
     }
