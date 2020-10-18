@@ -17,6 +17,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         strictEqual(false, true);
       } catch (e) {
         strictEqual(e.message, "invalid argName");
+        strictEqual(e.argAttr, "argName");
       }
     };
     test().then(done).catch(done);
@@ -77,6 +78,140 @@ describe('lib.Util.parseOptions unit tests', function () {
     };
     test().then(done).catch(done);
   });
+  it('simple invalid check no_extra with enum in array', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      try {
+        const ret = Util.parseOptions("argName", {
+          number: 1,
+          string: "string",
+          boolean: true,
+          object: {},
+          stringArray: ["object", "not valid"],
+          numberArray: [1, 2, 3]
+        }, [
+          {name: "number", type: "number", required: true},
+          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
+          {name: "boolean", type: "boolean", required: true},
+          {name: "object", type: "object", required: true},
+          {name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
+          {name: "numberArray", type: "array", arrayType: "number", required: true}
+        ], "no_extra");
+        strictEqual(true, false);
+      } catch (e) {
+        strictEqual(e.message, "argName.stringArray not array of enum as defined. valid values [object,function]");
+        strictEqual(e.argAttr, "argName.stringArray");
+      }
+    };
+    test().then(done).catch(done);
+  });
+  it('simple invalid check no_extra with enum in nested', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      try {
+        const ret = Util.parseOptions("argName", {
+          number: 1,
+          string: "string",
+          boolean: true,
+          object: {},
+          nested: {
+            stringArray: ["object", "not valid"]
+          },
+          numberArray: [1, 2, 3]
+        }, [
+          {name: "number", type: "number", required: true},
+          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
+          {name: "boolean", type: "boolean", required: true},
+          {name: "object", type: "object", required: true},
+          {
+            name: "nested", type: "nested", required: true, nestedOptions: {
+              options: [
+                {
+                  name: "stringArray",
+                  type: "array",
+                  arrayType: "enum",
+                  required: true,
+                  enumValues: ["object", "function"]
+                }
+              ],
+              mode: "no_extra"
+            }
+          },
+          {name: "numberArray", type: "array", arrayType: "number", required: true}
+        ], "no_extra");
+        strictEqual(true, false);
+      } catch (e) {
+        strictEqual(e.message, "argName.nested.stringArray not array of enum as defined. valid values [object,function]");
+        strictEqual(e.argAttr, "argName.nested.stringArray");
+      }
+    };
+    test().then(done).catch(done);
+  });
+  it('simple invalid check no_extra with enum in nested not array', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      try {
+        const ret = Util.parseOptions("argName", {
+          number: 1,
+          string: "string",
+          boolean: true,
+          object: {},
+          nested: {
+            string: "not valid"
+          },
+          numberArray: [1, 2, 3]
+        }, [
+          {name: "number", type: "number", required: true},
+          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
+          {name: "boolean", type: "boolean", required: true},
+          {name: "object", type: "object", required: true},
+          {
+            name: "nested", type: "nested", required: true, nestedOptions: {
+              options: [
+                {
+                  name: "string",
+                  type: "enum",
+                  required: true,
+                  enumValues: ["object", "function"]
+                }
+              ],
+              mode: "no_extra"
+            }
+          },
+          {name: "numberArray", type: "array", arrayType: "number", required: true}
+        ], "no_extra");
+        strictEqual(true, false);
+      } catch (e) {
+        strictEqual(e.message, "argName.nested.string not enum as defined. valid values [object,function]");
+        strictEqual(e.argAttr, "argName.nested.string");
+      }
+    };
+    test().then(done).catch(done);
+  });
+  it('simple invalid check no_extra with enum', (done) => {
+    const test = async () => {
+      const {Util} = require("../src/util/util");
+      try {
+        const ret = Util.parseOptions("argName", {
+          number: 1,
+          string: "not valid",
+          boolean: true,
+          object: {}
+        }, [
+          {name: "number", type: "number", required: true},
+          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
+          {name: "boolean", type: "boolean", required: true},
+          {name: "object", type: "object", required: true},
+          {name: "string", type: "enum", required: true, enumValues: ["object", "function"]}
+        ], "no_extra");
+        strictEqual(true, false);
+      } catch (e) {
+        strictEqual(e.message, "argName.string not enum as defined. valid values [string,number]");
+        strictEqual(e.argAttr, "argName.string");
+      }
+    };
+    test().then(done).catch(done);
+  });
   it('simple valid check no_extra with enum in nested', (done) => {
     const test = async () => {
       const {Util} = require("../src/util/util");
@@ -100,7 +235,13 @@ describe('lib.Util.parseOptions unit tests', function () {
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
             options: [
-              {name: "stringArray2", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
+              {
+                name: "stringArray2",
+                type: "array",
+                arrayType: "enum",
+                required: true,
+                enumValues: ["object", "function"]
+              },
             ],
             mode: "no_extra"
           }
@@ -295,6 +436,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         strictEqual(false, true);
       } catch (e) {
         strictEqual(e.message, "argName.nested.boolean not defined");
+        strictEqual(e.argAttr, "argName.nested.boolean");
       }
     };
     test().then(done).catch(done);
@@ -321,6 +463,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         strictEqual(false, true);
       } catch (e) {
         strictEqual(e.message, "argName.number not number");
+        strictEqual(e.argAttr, "argName.number");
       }
     };
     test().then(done).catch(done);
@@ -348,7 +491,8 @@ describe('lib.Util.parseOptions unit tests', function () {
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
-        strictEqual(e.message, "argName option not valid [extraKey]");
+        strictEqual(e.message, "argName.extraKey option not valid [extraKey]");
+        strictEqual(e.argAttr, "argName.extraKey");
       }
     };
     test().then(done).catch(done);
@@ -453,6 +597,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         strictEqual(false, true);
       } catch (e) {
         strictEqual(e.message, "argName.number not number");
+        strictEqual(e.argAttr, "argName.number");
       }
     };
     test().then(done).catch(done);

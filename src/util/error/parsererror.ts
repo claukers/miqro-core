@@ -1,7 +1,7 @@
 import {NamedError} from "./named";
 
 export class ParseOptionsError extends NamedError {
-  constructor(message: string) {
+  constructor(message: string, public argAttr?: string) {
     super(message);
     this.name = "ParseOptionsError";
   }

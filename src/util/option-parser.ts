@@ -107,7 +107,7 @@ export const parseOptions = (
   // throw new ParseOptionsError(`${argName}.${name} not ${type}`);
   // throw new ParseOptionsError(`${argName}.${name} not defined`);
   if (!arg || typeof arg !== "object") {
-    throw new ParseOptionsError(`invalid ${name}`);
+    throw new ParseOptionsError(`invalid ${name}`, name);
   }
   for (const option of options) {
     const value = arg[option.name];
@@ -115,11 +115,15 @@ export const parseOptions = (
     if (!exists && !option.required) {
       continue;
     } else if (!exists && option.required) {
-      throw new ParseOptionsError(`${name}.${option.name} not defined`);
+      throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
     }
     const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions, option.enumValues);
     if (!isType) {
-      throw new ParseOptionsError(`${name}.${option.name} not ${option.type}${option.type === "array" && option.arrayType ? ` of ${option.arrayType}` : (option.type === "nested" ? " as defined!" : "")}`);
+      throw new ParseOptionsError(
+        `${name}.${option.name} not ${option.type}` +
+        `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : (option.type === "nested" ? " as defined!" : (option.type === "enum" ? ` as defined. valid values [${option.enumValues}]` : ""))}`,
+        `${name}.${option.name}`
+      );
     }
     ret[option.name] = parsedValue;
   }
@@ -130,7 +134,7 @@ export const parseOptions = (
       if (hasExtra) {
         for (const argKey of argKeys) {
           if (!ret.hasOwnProperty(argKey)) {
-            throw new ParseOptionsError(`${name} option not valid [${argKey}]`);
+            throw new ParseOptionsError(`${name}.${argKey} option not valid [${argKey}]`, `${name}.${argKey}`);
           }
         }
       }
