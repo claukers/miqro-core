@@ -80,7 +80,7 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
       if (enumCheck.isType && enumValues) {
         enumCheck.isType = enumValues.indexOf(value) !== -1;
       } else {
-        throw new ParseOptionsError(`options.enumList not a string array`);
+        throw new ParseOptionsError(`options.enumValues not a string array`);
       }
       return {
         isType: enumCheck.isType,
