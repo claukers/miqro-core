@@ -19,11 +19,11 @@ export interface ParseOption {
   type: ParseSimpleType;
   arrayType?: ParseSimpleType;
   nestedOptions?: NestedParseOption;
-  enumList?: string[];
+  enumValues?: string[];
   required: boolean;
 }
 
-const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption, enumList?: string[]): { isType: boolean; parsedValue: any; } => {
+const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption, enumValues?: string[]): { isType: boolean; parsedValue: any; } => {
   switch (type) {
     case "nested":
       if (!nestedOptions) {
@@ -45,7 +45,7 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
         } else {
           for (let i = 0; i < value.length; i++) {
             const v = value[i];
-            const aiType = isValueType(`${name}.${attrName}`, `[${i}]`, arrayType, v, undefined, nestedOptions, enumList)
+            const aiType = isValueType(`${name}.${attrName}`, `[${i}]`, arrayType, v, undefined, nestedOptions, enumValues)
             if (!aiType.isType) {
               isType = false;
               break;
@@ -76,9 +76,9 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
         parsedValue: parsedValue !== null ? parsedValue : value
       };
     case "enum":
-      const enumCheck = isValueType(`${name}.${attrName}`, `enumList`, "array", enumList, "string");
-      if (enumCheck.isType && enumList) {
-        enumCheck.isType = enumList.indexOf(value) !== -1;
+      const enumCheck = isValueType(`${name}.${attrName}`, `enumList`, "array", enumValues, "string");
+      if (enumCheck.isType && enumValues) {
+        enumCheck.isType = enumValues.indexOf(value) !== -1;
       } else {
         throw new ParseOptionsError(`options.enumList not a string array`);
       }
@@ -117,7 +117,7 @@ export const parseOptions = (
     } else if (!exists && option.required) {
       throw new ParseOptionsError(`${name}.${option.name} not defined`);
     }
-    const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions, option.enumList);
+    const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions, option.enumValues);
     if (!isType) {
       throw new ParseOptionsError(`${name}.${option.name} not ${option.type}${option.type === "array" && option.arrayType ? ` of ${option.arrayType}` : (option.type === "nested" ? " as defined!" : "")}`);
     }

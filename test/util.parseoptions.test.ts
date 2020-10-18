@@ -33,7 +33,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         numberArray: [1, 2, 3]
       }, [
         {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumList: ["string", "number"]},
+        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
         {name: "boolean", type: "boolean", required: true},
         {name: "object", type: "object", required: true},
         {name: "stringArray", type: "array", arrayType: "string", required: true},
@@ -61,10 +61,10 @@ describe('lib.Util.parseOptions unit tests', function () {
         numberArray: [1, 2, 3]
       }, [
         {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumList: ["string", "number"]},
+        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
         {name: "boolean", type: "boolean", required: true},
         {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "enum", required: true, enumList: ["object", "function"]},
+        {name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
         {name: "numberArray", type: "array", arrayType: "number", required: true}
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
@@ -92,15 +92,15 @@ describe('lib.Util.parseOptions unit tests', function () {
         }
       }, [
         {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumList: ["string", "number"]},
+        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
         {name: "boolean", type: "boolean", required: true},
         {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "enum", required: true, enumList: ["object", "function"]},
+        {name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
         {name: "numberArray", type: "array", arrayType: "number", required: true},
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
             options: [
-              {name: "stringArray2", type: "array", arrayType: "enum", required: true, enumList: ["object", "function"]},
+              {name: "stringArray2", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
             ],
             mode: "no_extra"
           }
