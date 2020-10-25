@@ -6,7 +6,10 @@ import {Util} from "./util";
 import {RequestOptions, RequestResponse, ResponseError} from "./request_common";
 import {gunzipSync} from "zlib";
 
-const DEFAULT_USER_AGENT = "curl";
+const DEFAULT_USER_AGENT = "curl/7.69.1";
+const CONTENT_TYPE_HEADER = "Content-Type";
+const JSON_TYPE = "application/json;charset=utf-8";
+const TEXT_TYPE = "plain/text;charset=utf-8";
 
 export const request = (options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> => {
   if (options.method?.toLowerCase() === "get" && options.data !== undefined) {
@@ -14,24 +17,16 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
   } else {
     return new Promise((resolve, reject) => {
       try {
+        if (!options.headers) {
+          options.headers = {};
+        }
         const isJSON: boolean = typeof options.data !== "string";
-        if (isJSON &&
-          ((options.headers && (options.headers["Content-Type"] === undefined) && options.headers["content-type"] === undefined) ||
-            !options.headers)
-        ) {
-          if (!options.headers) {
-            options.headers = {};
-          }
-          options.headers["Content-Type"] = "application/json;charset=utf-8";
-        } else if (
-          !isJSON &&
-          ((options.headers && (options.headers["Content-Type"] === undefined) && options.headers["content-type"] === undefined) ||
-            !options.headers)
-        ) {
-          if (!options.headers) {
-            options.headers = {};
-          }
-          options.headers["Content-Type"] = "plain/text;charset=utf-8";
+
+        const noType = (options.headers[CONTENT_TYPE_HEADER] === undefined || options.headers[CONTENT_TYPE_HEADER.toLowerCase()] === undefined);
+        if (isJSON && options.data && noType) {
+          options.headers["Content-Type"] = JSON_TYPE;
+        } else if (!isJSON && options.data && noType) {
+          options.headers["Content-Type"] = TEXT_TYPE;
         }
         const data = options.data ? !isJSON ? options.data : JSON.stringify(options.data) : undefined;
         const contentLength = data ? data.length : 0;
