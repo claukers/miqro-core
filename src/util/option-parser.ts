@@ -70,7 +70,7 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
         parsedValue: !isNaN(value) ? parseInt(value, 10) : value
       };
     case "boolean":
-      const parsedValue = value === "true" || value === true ? true : value === "false" || value === false ? true : null;
+      const parsedValue = value === "true" || value === true ? true : value === "false" || value === false ? false : null;
       return {
         isType: parsedValue !== null,
         parsedValue: parsedValue !== null ? parsedValue : value

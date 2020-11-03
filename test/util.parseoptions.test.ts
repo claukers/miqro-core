@@ -28,7 +28,7 @@ describe('lib.Util.parseOptions unit tests', function () {
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
-        boolean: true,
+        boolean: false,
         object: {},
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
@@ -43,7 +43,7 @@ describe('lib.Util.parseOptions unit tests', function () {
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
       strictEqual(ret.string, "string");
-      strictEqual(ret.boolean, true);
+      strictEqual(ret.boolean, false);
       strictEqual(typeof ret.object, "object");
       strictEqual(ret.stringArray.length, 2);
       strictEqual(ret.numberArray.length, 3);
