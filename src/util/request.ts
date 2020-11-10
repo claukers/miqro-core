@@ -22,7 +22,7 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
         }
         const isJSON: boolean = typeof options.data !== "string";
 
-        const noType = (options.headers[CONTENT_TYPE_HEADER] === undefined || options.headers[CONTENT_TYPE_HEADER.toLowerCase()] === undefined);
+        const noType = (options.headers[CONTENT_TYPE_HEADER] === undefined && options.headers[CONTENT_TYPE_HEADER.toLowerCase()] === undefined && options.headers[CONTENT_TYPE_HEADER.toUpperCase()] === undefined);
         if (isJSON && options.data && noType) {
           options.headers["Content-Type"] = JSON_TYPE;
         } else if (!isJSON && options.data && noType) {
