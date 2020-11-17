@@ -137,7 +137,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
-        strictEqual(e.message, "parseJSON not available to a not string value");
+        strictEqual(e.message, "parseJSON not available to non string value");
       }
     };
     test().then(done).catch(done);

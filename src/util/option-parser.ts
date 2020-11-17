@@ -47,7 +47,7 @@ const isValueType = (
 
   if (parseJSON) {
     if (typeof value !== "string") {
-      throw new ParseOptionsError(`parseJSON not available to a not string value`);
+      throw new ParseOptionsError(`parseJSON not available to non string value`);
     }
     try {
       value = JSON.parse(value);
