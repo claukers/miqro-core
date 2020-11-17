@@ -1,5 +1,5 @@
-import {ConfigPathResolver} from "./config";
-import {ParseOptionsError} from "./error";
+import { ConfigPathResolver } from "./config";
+import { ParseOptionsError } from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
@@ -21,9 +21,41 @@ export interface ParseOption {
   nestedOptions?: NestedParseOption;
   enumValues?: string[];
   required: boolean;
+  parseJSON?: boolean;
 }
 
-const isValueType = (name: string, attrName: string, type: ParseSimpleType, value: any, arrayType?: ParseSimpleType, nestedOptions?: NestedParseOption, enumValues?: string[]): { isType: boolean; parsedValue: any; } => {
+const isValueType = (
+  {
+    name,
+    attrName,
+    type,
+    value,
+    arrayType,
+    nestedOptions,
+    enumValues,
+    parseJSON
+  }: {
+    name: string,
+    attrName: string,
+    type: ParseSimpleType,
+    value: any,
+    arrayType?: ParseSimpleType,
+    nestedOptions?: NestedParseOption,
+    enumValues?: string[],
+    parseJSON?: boolean
+  }): { isType: boolean; parsedValue: any; } => {
+
+  if (parseJSON) {
+    if (typeof value !== "string") {
+      throw new ParseOptionsError(`parseJSON not available to a not string value`);
+    }
+    try {
+      value = JSON.parse(value);
+    } catch (e) {
+      throw new ParseOptionsError(`value not json!`);
+    }
+  }
+
   switch (type) {
     case "nested":
       if (!nestedOptions) {
@@ -45,7 +77,7 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
         } else {
           for (let i = 0; i < value.length; i++) {
             const v = value[i];
-            const aiType = isValueType(`${name}.${attrName}`, `[${i}]`, arrayType, v, undefined, nestedOptions, enumValues)
+            const aiType = isValueType({ name: `${name}.${attrName}`, attrName: `[${i}]`, type: arrayType, value: v, nestedOptions, enumValues })
             if (!aiType.isType) {
               isType = false;
               break;
@@ -76,8 +108,8 @@ const isValueType = (name: string, attrName: string, type: ParseSimpleType, valu
         parsedValue: parsedValue !== null ? parsedValue : value
       };
     case "enum":
-      const enumCheck = isValueType(`${name}.${attrName}`, `enumList`, "array", enumValues, "string");
-      if (enumCheck.isType && enumValues) {
+      const enumCheck = isValueType({ name: `${name}.${attrName}`, attrName: `enumList`, type: "array", value: enumValues, arrayType: "string" });
+      if (enumCheck.isType && enumValues && enumValues.length > 0) {
         enumCheck.isType = enumValues.indexOf(value) !== -1;
       } else {
         throw new ParseOptionsError(`options.enumValues not a string array`);
@@ -101,7 +133,8 @@ export const parseOptions = (
   name: string,
   arg: SimpleMap<SimpleTypes>,
   options: ParseOption[],
-  mode: ParseOptionsMode = "no_extra"
+  mode: ParseOptionsMode = "no_extra",
+  ignoreUndefined = false
 ): SimpleMap<SimpleTypes> => {
   const ret: SimpleMap<SimpleTypes> = {};
   // throw new ParseOptionsError(`${argName}.${name} not ${type}`);
@@ -111,13 +144,13 @@ export const parseOptions = (
   }
   for (const option of options) {
     const value = arg[option.name];
-    const exists = arg.hasOwnProperty(option.name);
+    const exists = ignoreUndefined ? value !== undefined : arg.hasOwnProperty(option.name);
     if (!exists && !option.required) {
       continue;
     } else if (!exists && option.required) {
       throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
     }
-    const {isType, parsedValue} = isValueType(name, option.name, option.type, value, option.arrayType, option.nestedOptions, option.enumValues);
+    const { isType, parsedValue } = isValueType({ name, attrName: option.name, type: option.type, value: value, arrayType: option.arrayType, nestedOptions: option.nestedOptions, enumValues: option.enumValues, parseJSON: option.parseJSON });
     if (!isType) {
       throw new ParseOptionsError(
         `${name}.${option.name} not ${option.type}` +
@@ -133,7 +166,9 @@ export const parseOptions = (
       const hasExtra = Object.keys(ret).length !== argKeys.length;
       if (hasExtra) {
         for (const argKey of argKeys) {
-          if (!ret.hasOwnProperty(argKey)) {
+          if (ignoreUndefined && arg[argKey] === undefined) {
+            continue;
+          } else if (!ret.hasOwnProperty(argKey)) {
             throw new ParseOptionsError(`${name}.${argKey} option not valid [${argKey}]`, `${name}.${argKey}`);
           }
         }

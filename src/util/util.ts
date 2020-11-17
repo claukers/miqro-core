@@ -53,9 +53,10 @@ export abstract class Util {
     name: string,
     arg: SimpleMap<SimpleTypes>,
     options: ParseOption[],
-    mode: ParseOptionsMode = "no_extra"
+    mode: ParseOptionsMode = "no_extra",
+    ignoreUndefined = false,
   ): SimpleMap<SimpleTypes> {
-    return parseOptions(name, arg, options, mode);
+    return parseOptions(name, arg, options, mode, ignoreUndefined);
   }
 
   public static getLogger(identifier: string, formatter?: LoggerFormatter): Logger {
