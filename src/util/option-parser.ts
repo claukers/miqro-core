@@ -137,8 +137,6 @@ export const parseOptions = (
   ignoreUndefined = false
 ): SimpleMap<SimpleTypes> => {
   const ret: SimpleMap<SimpleTypes> = {};
-  // throw new ParseOptionsError(`${argName}.${name} not ${type}`);
-  // throw new ParseOptionsError(`${argName}.${name} not defined`);
   if (!arg || typeof arg !== "object") {
     throw new ParseOptionsError(`invalid ${name}`, name);
   }
