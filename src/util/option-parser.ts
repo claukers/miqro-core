@@ -18,6 +18,8 @@ export interface ParseOption {
   name: string;
   type: ParseSimpleType;
   arrayType?: ParseSimpleType;
+  arrayMinLength?: number;
+  arrayMaxLength?: number;
   nestedOptions?: NestedParseOption;
   enumValues?: string[];
   required: boolean;
@@ -33,7 +35,9 @@ const isValueType = (
     arrayType,
     nestedOptions,
     enumValues,
-    parseJSON
+    parseJSON,
+    arrayMinLength,
+    arrayMaxLength
   }: {
     name: string,
     attrName: string,
@@ -42,6 +46,8 @@ const isValueType = (
     arrayType?: ParseSimpleType,
     nestedOptions?: NestedParseOption,
     enumValues?: string[],
+    arrayMinLength?: number;
+    arrayMaxLength?: number;
     parseJSON?: boolean
   }): { isType: boolean; parsedValue: any; } => {
 
@@ -77,7 +83,7 @@ const isValueType = (
         } else {
           for (let i = 0; i < value.length; i++) {
             const v = value[i];
-            const aiType = isValueType({ name: `${name}.${attrName}`, attrName: `[${i}]`, type: arrayType, value: v, nestedOptions, enumValues })
+            const aiType = isValueType({ name: `${name}.${attrName}`, attrName: `[${i}]`, type: arrayType, value: v, nestedOptions, enumValues, arrayMaxLength, arrayMinLength })
             if (!aiType.isType) {
               isType = false;
               break;
@@ -86,6 +92,12 @@ const isValueType = (
             }
           }
         }
+      }
+      if (isType && arrayMinLength !== undefined && parsedList.length < arrayMinLength) {
+        isType = false;
+      }
+      if (isType && arrayMaxLength !== undefined && parsedList.length > arrayMaxLength) {
+        isType = false;
       }
       return {
         isType,
@@ -148,10 +160,21 @@ export const parseOptions = (
     } else if (!exists && option.required) {
       throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
     }
-    const { isType, parsedValue } = isValueType({ name, attrName: option.name, type: option.type, value: value, arrayType: option.arrayType, nestedOptions: option.nestedOptions, enumValues: option.enumValues, parseJSON: option.parseJSON });
+    const { isType, parsedValue } = isValueType({
+      name,
+      attrName: option.name,
+      type: option.type,
+      value: value,
+      arrayType: option.arrayType,
+      nestedOptions: option.nestedOptions,
+      enumValues: option.enumValues,
+      parseJSON: option.parseJSON,
+      arrayMaxLength: option.arrayMaxLength,
+      arrayMinLength: option.arrayMinLength
+    });
     if (!isType) {
       throw new ParseOptionsError(
-        `${name}.${option.name} not ${option.type}` +
+        `${name}.${option.name} not ${option.type}${option.type === "array" && option.arrayMinLength !== undefined ? `${option.arrayMinLength}:` : ""}${option.type === "array" && option.arrayMaxLength !== undefined ? `:${option.arrayMaxLength}` : ""}` +
         `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : (option.type === "nested" ? " as defined!" : (option.type === "enum" ? ` as defined. valid values [${option.enumValues}]` : ""))}`,
         `${name}.${option.name}`
       );

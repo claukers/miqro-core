@@ -1,18 +1,82 @@
-import {describe, it} from 'mocha';
-import {strictEqual} from "assert";
+import { strictEqual } from "assert";
+import { describe, it } from 'mocha';
 
 describe('lib.Util.parseOptions unit tests', function () {
+
+  it('simple invalid check minLength no_extra', (done) => {
+    const test = async () => {
+      try {
+        const { Util } = require("../src/util/util");
+        const ret = Util.parseOptions("argName", {
+          stringArray: ["", ""]
+        }, [
+          { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMinLength: 3 },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.stringArray not array3: of string");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple invalid check maxLength no_extra', (done) => {
+    const test = async () => {
+      try {
+        const { Util } = require("../src/util/util");
+        const ret = Util.parseOptions("argName", {
+          stringArray: ["", ""]
+        }, [
+          { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMaxLength: 1 },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.stringArray not array:1 of string");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple invalid check maxLength and minLength', (done) => {
+    const test = async () => {
+      try {
+        const { Util } = require("../src/util/util");
+        const ret = Util.parseOptions("argName", {
+          stringArray: ["", ""]
+        }, [
+          { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMinLength: 0, arrayMaxLength: 1 },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.stringArray not array0::1 of string");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple valid check maxLength and minLength', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const ret = Util.parseOptions("argName", {
+        stringArray: ["", ""]
+      }, [
+        { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMinLength: 0, arrayMaxLength: 2 },
+      ], "no_extra");
+    };
+    test().then(done).catch(done);
+  });
+
   it('simple invalid valid null  check no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         Util.parseOptions("argName", null, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "string", required: true},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
-          {name: "stringArray", type: "array", arrayType: "string", required: true},
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "string", required: true },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
+          { name: "stringArray", type: "array", arrayType: "string", required: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
@@ -24,7 +88,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check no_extra with enum and parseJSON', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -35,12 +99,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "nested", nestedOptions: {mode: "no_extra", options: [{name: "bla", required: true, type: "number"}]}, required: true, parseJSON: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "nested", nestedOptions: { mode: "no_extra", options: [{ name: "bla", required: true, type: "number" }] }, required: true, parseJSON: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -54,7 +118,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check no_extra with array and parseJSON', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -65,12 +129,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: JSON.stringify([1, 2, 3])
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "nested", nestedOptions: {mode: "no_extra", options: [{name: "bla", required: true, type: "number"}]}, required: true, parseJSON: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true, parseJSON: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "nested", nestedOptions: { mode: "no_extra", options: [{ name: "bla", required: true, type: "number" }] }, required: true, parseJSON: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true, parseJSON: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -85,7 +149,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
   it('simple valid check no_extra with array nested and parseJSON', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -94,14 +158,14 @@ describe('lib.Util.parseOptions unit tests', function () {
           bla: 1
         }),
         stringArray: ["", ""],
-        numberArray: JSON.stringify([{bla: 1}, {bla: 2}, {bla: 3}])
+        numberArray: JSON.stringify([{ bla: 1 }, { bla: 2 }, { bla: 3 }])
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "nested", nestedOptions: {mode: "no_extra", options: [{name: "bla", required: true, type: "number"}]}, required: true, parseJSON: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "nested", required: true, parseJSON: true, nestedOptions: {mode: "no_extra", options: [{name: "bla", required: true, type: "number"}]}}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "nested", nestedOptions: { mode: "no_extra", options: [{ name: "bla", required: true, type: "number" }] }, required: true, parseJSON: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "nested", required: true, parseJSON: true, nestedOptions: { mode: "no_extra", options: [{ name: "bla", required: true, type: "number" }] } }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -117,7 +181,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple invalid check no_extra with enum and parseJSON', (done) => {
     const test = async () => {
       try {
-        const {Util} = require("../src/util/util");
+        const { Util } = require("../src/util/util");
         const ret = Util.parseOptions("argName", {
           number: 1,
           string: "string",
@@ -128,12 +192,12 @@ describe('lib.Util.parseOptions unit tests', function () {
           stringArray: ["", ""],
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "nested", nestedOptions: {mode: "no_extra", options: [{name: "bla", required: true, type: "number"}]}, required: true, parseJSON: true},
-          {name: "stringArray", type: "array", arrayType: "string", required: true},
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "nested", nestedOptions: { mode: "no_extra", options: [{ name: "bla", required: true, type: "number" }] }, required: true, parseJSON: true },
+          { name: "stringArray", type: "array", arrayType: "string", required: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
@@ -145,7 +209,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
   it('simple valid check no_extra with enum', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -154,12 +218,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -173,7 +237,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check no_extra with enum in array', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -182,12 +246,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["object", "function"],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"] },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -201,7 +265,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple invalid check no_extra with enum in array', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         const ret = Util.parseOptions("argName", {
           number: 1,
@@ -211,12 +275,12 @@ describe('lib.Util.parseOptions unit tests', function () {
           stringArray: ["object", "not valid"],
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
-          {name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
+          { name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"] },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(true, false);
       } catch (e) {
@@ -228,7 +292,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple invalid check no_extra with enum in nested', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         const ret = Util.parseOptions("argName", {
           number: 1,
@@ -240,10 +304,10 @@ describe('lib.Util.parseOptions unit tests', function () {
           },
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
           {
             name: "nested", type: "nested", required: true, nestedOptions: {
               options: [
@@ -258,7 +322,7 @@ describe('lib.Util.parseOptions unit tests', function () {
               mode: "no_extra"
             }
           },
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(true, false);
       } catch (e) {
@@ -270,7 +334,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple invalid check no_extra with enum in nested not array', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         const ret = Util.parseOptions("argName", {
           number: 1,
@@ -282,10 +346,10 @@ describe('lib.Util.parseOptions unit tests', function () {
           },
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
           {
             name: "nested", type: "nested", required: true, nestedOptions: {
               options: [
@@ -299,7 +363,7 @@ describe('lib.Util.parseOptions unit tests', function () {
               mode: "no_extra"
             }
           },
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(true, false);
       } catch (e) {
@@ -311,7 +375,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple invalid check no_extra with enum', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         const ret = Util.parseOptions("argName", {
           number: 1,
@@ -319,11 +383,11 @@ describe('lib.Util.parseOptions unit tests', function () {
           boolean: true,
           object: {}
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
-          {name: "string", type: "enum", required: true, enumValues: ["object", "function"]}
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["object", "function"] }
         ], "no_extra");
         strictEqual(true, false);
       } catch (e) {
@@ -335,7 +399,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check no_extra with enum in nested', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -347,12 +411,12 @@ describe('lib.Util.parseOptions unit tests', function () {
           stringArray2: ["object", "function"],
         }
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "enum", required: true, enumValues: ["string", "number"]},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"]},
-        {name: "numberArray", type: "array", arrayType: "number", required: true},
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"] },
+        { name: "numberArray", type: "array", arrayType: "number", required: true },
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
             options: [
@@ -380,7 +444,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -389,12 +453,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "string", required: true},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "string", required: true },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -408,7 +472,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check with nested array and no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -417,23 +481,23 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3],
         nestedArray: [
-          {bla: "blo"}
+          { bla: "blo" }
         ]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "string", required: true},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "string", required: true },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
         {
           name: "nestedArray", type: "array", arrayType: "nested", required: true, nestedOptions: {
             mode: "no_extra",
             options: [
-              {name: "bla", type: "string", required: true}
+              { name: "bla", type: "string", required: true }
             ]
           }
         },
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 7);
       strictEqual(ret.number, 1);
@@ -449,7 +513,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check nested no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -460,19 +524,19 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "string", required: true},
-        {name: "boolean", type: "boolean", required: true},
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "string", required: true },
+        { name: "boolean", type: "boolean", required: true },
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
             options: [
-              {name: "string", type: "string", required: true},
-              {name: "boolean", type: "boolean", required: false}
+              { name: "string", type: "string", required: true },
+              { name: "boolean", type: "boolean", required: false }
             ]
           }
         },
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -487,7 +551,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple valid check nested add_extra and no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         string: "string",
@@ -499,20 +563,20 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "string", required: true},
-        {name: "boolean", type: "boolean", required: true},
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "string", required: true },
+        { name: "boolean", type: "boolean", required: true },
         {
           name: "nested", type: "nested", required: true, nestedOptions: {
             options: [
-              {name: "string", type: "string", required: true},
-              {name: "boolean", type: "boolean", required: false}
+              { name: "string", type: "string", required: true },
+              { name: "boolean", type: "boolean", required: false }
             ],
             mode: "add_extra"
           }
         },
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "no_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -528,7 +592,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   });
   it('simple invalid check nested no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         const ret = Util.parseOptions("argName", {
           number: 1,
@@ -540,19 +604,19 @@ describe('lib.Util.parseOptions unit tests', function () {
           stringArray: ["", ""],
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "string", required: true},
-          {name: "boolean", type: "boolean", required: true},
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "string", required: true },
+          { name: "boolean", type: "boolean", required: true },
           {
             name: "nested", type: "nested", required: true, nestedOptions: {
               options: [
-                {name: "string", type: "string", required: true},
-                {name: "boolean", type: "boolean", required: true}
+                { name: "string", type: "string", required: true },
+                { name: "boolean", type: "boolean", required: true }
               ]
             }
           },
-          {name: "stringArray", type: "array", arrayType: "string", required: true},
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "stringArray", type: "array", arrayType: "string", required: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
@@ -565,7 +629,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple invalid number check no_extra', (done) => {
     const test = async () => {
       try {
-        const {Util} = require("../src/util/util");
+        const { Util } = require("../src/util/util");
         Util.parseOptions("argName", {
           number: "number",
           string: "string",
@@ -574,12 +638,12 @@ describe('lib.Util.parseOptions unit tests', function () {
           stringArray: ["", ""],
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "string", required: true},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
-          {name: "stringArray", type: "array", arrayType: "string", required: true},
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "string", required: true },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
+          { name: "stringArray", type: "array", arrayType: "string", required: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
@@ -593,7 +657,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple invalid extra key check no_extra', (done) => {
     const test = async () => {
       try {
-        const {Util} = require("../src/util/util");
+        const { Util } = require("../src/util/util");
         Util.parseOptions("argName", {
           number: 1,
           extraKey: "bla",
@@ -603,12 +667,12 @@ describe('lib.Util.parseOptions unit tests', function () {
           stringArray: ["", ""],
           numberArray: [1, 2, 3]
         }, [
-          {name: "number", type: "number", required: true},
-          {name: "string", type: "string", required: true},
-          {name: "boolean", type: "boolean", required: true},
-          {name: "object", type: "object", required: true},
-          {name: "stringArray", type: "array", arrayType: "string", required: true},
-          {name: "numberArray", type: "array", arrayType: "number", required: true}
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "string", required: true },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
+          { name: "stringArray", type: "array", arrayType: "string", required: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
@@ -622,7 +686,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid extra key check add_extra', (done) => {
     const test = async () => {
 
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         extraKey: "bla",
@@ -632,12 +696,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "string", required: true},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "string", required: true },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "add_extra");
       strictEqual(Object.keys(ret).length, 7);
       strictEqual(ret.number, 1);
@@ -654,7 +718,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid extra key check remove_extra', (done) => {
     const test = async () => {
 
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: 1,
         extraKey: "bla",
@@ -664,12 +728,12 @@ describe('lib.Util.parseOptions unit tests', function () {
         stringArray: ["", ""],
         numberArray: [1, 2, 3]
       }, [
-        {name: "number", type: "number", required: true},
-        {name: "string", type: "string", required: true},
-        {name: "boolean", type: "boolean", required: true},
-        {name: "object", type: "object", required: true},
-        {name: "stringArray", type: "array", arrayType: "string", required: true},
-        {name: "numberArray", type: "array", arrayType: "number", required: true}
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "string", required: true },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
       ], "remove_extra");
       strictEqual(Object.keys(ret).length, 6);
       strictEqual(ret.number, 1);
@@ -687,14 +751,14 @@ describe('lib.Util.parseOptions unit tests', function () {
 
   it('simple {} no_extra', (done) => {
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       Util.parseOptions("argName", {}, [
-        {name: "number", type: "number", required: false},
-        {name: "string", type: "string", required: false},
-        {name: "boolean", type: "boolean", required: false},
-        {name: "object", type: "object", required: false},
-        {name: "stringArray", type: "array", arrayType: "string", required: false},
-        {name: "numberArray", type: "array", arrayType: "number", required: false}
+        { name: "number", type: "number", required: false },
+        { name: "string", type: "string", required: false },
+        { name: "boolean", type: "boolean", required: false },
+        { name: "object", type: "object", required: false },
+        { name: "stringArray", type: "array", arrayType: "string", required: false },
+        { name: "numberArray", type: "array", arrayType: "number", required: false }
       ], "no_extra");
     };
     test().then(done).catch(done);
@@ -703,17 +767,17 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple {number: undefined} no_extra', (done) => {
 
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       try {
         Util.parseOptions("argName", {
           number: undefined
         }, [
-          {name: "number", type: "number", required: false},
-          {name: "string", type: "string", required: false},
-          {name: "boolean", type: "boolean", required: false},
-          {name: "object", type: "object", required: false},
-          {name: "stringArray", type: "array", arrayType: "string", required: false},
-          {name: "numberArray", type: "array", arrayType: "number", required: false}
+          { name: "number", type: "number", required: false },
+          { name: "string", type: "string", required: false },
+          { name: "boolean", type: "boolean", required: false },
+          { name: "object", type: "object", required: false },
+          { name: "stringArray", type: "array", arrayType: "string", required: false },
+          { name: "numberArray", type: "array", arrayType: "number", required: false }
         ], "no_extra");
         strictEqual(false, true);
       } catch (e) {
@@ -727,16 +791,16 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple {number: undefined} no_extra with ignore undefined', (done) => {
 
     const test = async () => {
-      const {Util} = require("../src/util/util");
+      const { Util } = require("../src/util/util");
       const ret = Util.parseOptions("argName", {
         number: undefined
       }, [
-        {name: "number", type: "number", required: false},
-        {name: "string", type: "string", required: false},
-        {name: "boolean", type: "boolean", required: false},
-        {name: "object", type: "object", required: false},
-        {name: "stringArray", type: "array", arrayType: "string", required: false},
-        {name: "numberArray", type: "array", arrayType: "number", required: false}
+        { name: "number", type: "number", required: false },
+        { name: "string", type: "string", required: false },
+        { name: "boolean", type: "boolean", required: false },
+        { name: "object", type: "object", required: false },
+        { name: "stringArray", type: "array", arrayType: "string", required: false },
+        { name: "numberArray", type: "array", arrayType: "number", required: false }
       ], "no_extra", true);
       strictEqual(Object.keys(ret).length, 0);
     };
