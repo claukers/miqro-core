@@ -66,6 +66,17 @@ describe('lib.Util.parseOptions unit tests', function () {
     test().then(done).catch(done);
   });
 
+  it('simple valid check maxLength and minLength required false', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const ret = Util.parseOptions("argName", {
+      }, [
+        { name: "stringArray", type: "array", arrayType: "string", required: false, arrayMinLength: 0, arrayMaxLength: 2 },
+      ], "no_extra");
+    };
+    test().then(done).catch(done);
+  });
+
   it('simple invalid valid null  check no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
