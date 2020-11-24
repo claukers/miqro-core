@@ -2,8 +2,6 @@ import {dirname, resolve} from "path";
 import {Util} from "./util";
 import {DefaultLogger, Logger, LoggerFormatter, LogLevel} from "./logger";
 
-// noinspection SpellCheckingInspection
-
 export type LoggerFactory = (args: { identifier: string, formatter?: LoggerFormatter, level: LogLevel; }) => Logger;
 
 export const defaultLoggerFactory: LoggerFactory = ({identifier, formatter, level}): Logger => {
