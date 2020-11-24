@@ -1,10 +1,11 @@
 import {Logger} from "./logger";
 import http from "http";
-import url from "url";
+import {parse as urlParse, UrlWithStringQuery, format as urlFormat} from "url";
 import https from "https";
 import {Util} from "./util";
 import {RequestOptions, RequestResponse, ResponseError} from "./request_common";
 import {gunzipSync} from "zlib";
+import {parse as parseQuery, stringify as stringifyQuery} from "querystring";
 
 const DEFAULT_USER_AGENT = "curl/7.69.1";
 const CONTENT_TYPE_HEADER = "Content-Type";
@@ -30,7 +31,7 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
         }
         const data = options.data ? !isJSON ? options.data : JSON.stringify(options.data) : undefined;
         const contentLength = data ? data.length : 0;
-        const urlO = url.parse(options.url);
+        const urlO: UrlWithStringQuery = urlParse(options.url);
         if (urlO.protocol === null) {
           urlO.protocol = "http:";
         }
@@ -38,9 +39,15 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
           case "https:":
           case "http:":
             const requestModule = (urlO.protocol === "https:" ? https.request : http.request);
+            const queryStr = stringifyQuery(urlO.query ? {
+              ...options.query,
+              ...parseQuery(urlO.query)
+            } : {
+              ...options.query
+            });
             const req: http.ClientRequest = requestModule({
               agent: false,
-              path: urlO.path,
+              path: `${urlO.pathname}${queryStr ? `?${queryStr}` : ""}${urlO.hash ? urlO.hash : ""}`,
               method: options.method,
               socketPath: options.socketPath,
               headers: {
@@ -80,7 +87,7 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
   }
 }
 
-const requestCallback = (urlO: url.UrlWithStringQuery, options: RequestOptions, req: http.ClientRequest, logger: Logger) => (res: http.IncomingMessage): Promise<RequestResponse> => {
+const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req: http.ClientRequest, logger: Logger) => (res: http.IncomingMessage): Promise<RequestResponse> => {
   return new Promise<RequestResponse>((resolve, reject) => {
     const buffers: Buffer[] = [];
     const chunkListener = (chunk: Buffer) => {
@@ -113,14 +120,14 @@ const requestCallback = (urlO: url.UrlWithStringQuery, options: RequestOptions, 
           if (status >= 300 && status <= 400 && !options.ignoreRedirect && res.headers["location"]) {
             let location = res.headers["location"];
             try {
-              const loURL = url.parse(location);
+              const loURL = urlParse(location);
               if (!loURL.hostname && urlO.hostname) {
                 // missing hostname on redirect so same hostname protocol and port?
                 loURL.hostname = urlO.hostname;
                 loURL.port = urlO.port;
                 loURL.path = urlO.path;
                 loURL.protocol = urlO.protocol;
-                location = url.format(loURL);
+                location = urlFormat(loURL);
               }
 
               logger.debug(`redirecting to [${location}] from [${options.url}]`);

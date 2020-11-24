@@ -131,6 +131,64 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
+  it('simple get /hello?format=txt happy path not using util query from options', (done) => {
+    (async () => {
+      const {data, status} = await request({
+        url: "http://localhost:8080/hello",
+        query: {
+          format: "txt",
+          otherQ: 1
+        },
+        method: "get"
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple get /hello?format=txt happy path not using util query from options with hash', (done) => {
+    (async () => {
+      const {data, status} = await request({
+        url: "http://localhost:8080/hello#hash1",
+        query: {
+          format: "txt",
+          otherQ: 1
+        },
+        method: "get"
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple get /hello?format=txt happy path not using util query from options and url', (done) => {
+    (async () => {
+      const {data, status} = await request({
+        url: "http://localhost:8080/hello?otherQ=1",
+        query: {
+          format: "txt"
+        },
+        method: "get"
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple get /hello?format=txt happy path not using util query from options and url and hash', (done) => {
+    (async () => {
+      const {data, status} = await request({
+        url: "http://localhost:8080/hello?otherQ=1#hashs",
+        query: {
+          format: "txt"
+        },
+        method: "get"
+      });
+      strictEqual(data, "hello");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
   it('cannot get with data', (done) => {
     (async () => {
       try {

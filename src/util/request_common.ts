@@ -1,5 +1,6 @@
 import http from "http";
 import {NamedError} from "./error/named";
+import {ParsedUrlQueryInput} from "querystring";
 
 export class ResponseError extends NamedError {
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
@@ -20,6 +21,7 @@ export class ResponseError extends NamedError {
 export interface RequestOptions {
   url: string;
   method?: string;
+  query?: ParsedUrlQueryInput;
   socketPath?: string;
   ignoreRedirect?: boolean;
   timeout?: number;
