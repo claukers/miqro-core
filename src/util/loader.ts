@@ -16,11 +16,18 @@ export const LoaderCache: {
   rc: MiqroRC | null | false;
   // noinspection SpellCheckingInspection
   sequelizeRC: SequelizeRC | null | false;
+  clear: () => void;
 } = {
   config: false,
   loggerFactory: false,
   rc: false,
-  sequelizeRC: false
+  sequelizeRC: false,
+  clear: () => {
+    LoaderCache.config = false;
+    LoaderCache.loggerFactory = false;
+    LoaderCache.rc = false;
+    LoaderCache.sequelizeRC = false;
+  }
 };
 
 export const initLoggerFactory = (modulePath: string = ConfigPathResolver.getCustomLoggerFactoryPath(), logger?: Logger): void => {
