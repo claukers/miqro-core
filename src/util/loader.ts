@@ -28,7 +28,7 @@ export const initLoggerFactory = (modulePath: string = ConfigPathResolver.getCus
     LoaderCache.loggerFactory = true;
     if (existsSync(modulePath)) {
       logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
-      logger.debug(`loading logger factory  [${modulePath}]`);
+      logger.debug(`loading logger factory from [${modulePath}]`);
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const loggerFactory = require(modulePath) as LoggerFactory;
       setLoggerFactory(loggerFactory);
@@ -94,7 +94,7 @@ export const loadConfigFile = (envFilePath: string, combined?: SimpleMap<string>
   return ret;
 };
 
-const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `loadConfig nothing loaded [${configDirname}] env files dont exist!.`;
+const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `no config loaded. env files in [${configDirname}] dont exist!.`;
 
 export const loadConfig = (configDirname: string = ConfigPathResolver.getConfigDirname(), logger?: Logger): LoadConfigOut => {
   if (LoaderCache.config === false) {
@@ -131,7 +131,7 @@ export const loadMiqroRC = (path = ConfigPathResolver.getMiqroRCFilePath(), logg
     LoaderCache.rc = null;
     Util.setupNodeEnv();
     if (existsSync(path)) {
-      logger.debug(`loading [${path}]`);
+      logger.debug(`loading .miqrorc from [${path}]`);
       const o = JSON.parse(readFileSync(path).toString());
       if (o && typeof o === "object") {
         Util.parseOptions(path, o, [
