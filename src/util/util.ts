@@ -1,22 +1,20 @@
-import {ConfigPathResolver, loadConfig, overrideConfig} from "./config";
+import {ConfigPathResolver, LoadConfigOut, setServiceName, setupNodeEnv} from "./config";
 import {getLogger, Logger, LoggerFormatter} from "./logger";
 import {request} from "./request";
 import {RequestOptions, RequestResponse} from "./request_common";
 import {checkEnvVariables, ParseOption, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes} from "./option-parser";
-import {setServiceName, setupNodeEnv, setupScriptEnv} from "./loader";
+import {loadConfig, initLoggerFactory} from "./loader";
 
 
 export type ConfigOutput = SimpleMap<string>;
 
 export abstract class Util {
 
-  public static logger: Logger;
-
   public static setupNodeEnv(): void {
     return setupNodeEnv();
   }
 
-  public static async request(options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> {
+  public static async request(options: RequestOptions, logger?: Logger): Promise<RequestResponse> {
     return request(options, logger);
   }
 
@@ -24,25 +22,16 @@ export abstract class Util {
     return setServiceName(name);
   }
 
-  public static setupScriptEnv(serviceName: string, scriptPath: string, logger = Util.logger): void {
-    return setupScriptEnv(serviceName, scriptPath, logger);
-  }
-
-  public static overrideConfig(path: string, combined ?: SimpleMap<string>, logger = Util.logger): ConfigOutput[] {
-    return overrideConfig(path, combined, logger);
-  }
-
-  public static getConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger: Logger = Util.logger): { combined: SimpleMap<string>; outputs: ConfigOutput[] } {
+  public static getConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger?: Logger): LoadConfigOut {
     return loadConfig(configDirname, logger);
   }
 
-  public static loadConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger = Util.logger): { combined: SimpleMap<string>; outputs: ConfigOutput[] } | null {
-    if (!Util.configLoaded) {
-      Util.configLoaded = true;
-      return loadConfig(configDirname, logger);
-    } else {
-      return null;
-    }
+  public static loadConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger?: Logger): LoadConfigOut {
+    return loadConfig(configDirname, logger);
+  }
+
+  public static initLoggerFactory(modulePath: string = ConfigPathResolver.getCustomLoggerFactoryPath(), logger?: Logger): void {
+    return initLoggerFactory(modulePath, logger);
   }
 
   public static checkEnvVariables(requiredEnvVariables: string[], defaults?: string[]): string[] {
@@ -62,8 +51,4 @@ export abstract class Util {
   public static getLogger(identifier: string, formatter?: LoggerFormatter): Logger {
     return getLogger(identifier, formatter);
   }
-
-  private static configLoaded = false;
 }
-
-Util.logger = Util.getLogger("Util");

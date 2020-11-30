@@ -10,7 +10,8 @@ import {
   LoggerEvents,
   LoggerWriteEventArgs,
   setLoggerFactory,
-  Util
+  Util,
+  LoaderCache
 } from "../src/util";
 
 process.env.NODE_ENV = "test";
@@ -19,7 +20,7 @@ describe("Util loader tests", () => {
 
   it("getLogger without log.js and without loadConfig should work", () => {
     LogContainer.clear();
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
     const logger = Util.getLogger("bla");
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
@@ -27,7 +28,8 @@ describe("Util loader tests", () => {
 
   it("getLogger with custom formatting", (done) => {
     LogContainer.clear();
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
+    process.env.LOG_LEVEL_bla = "info";
     const logger = Util.getLogger("bla", ({level, message}): string => `bla ${level} ${message}`);
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
@@ -42,7 +44,7 @@ describe("Util loader tests", () => {
 
   it("getLogger with custom factory and formatting", (done) => {
     LogContainer.clear();
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
     const old = getLoggerFactory();
     const fakeFactory = fake(({identifier, level, formatter}) => {
       return new Logger("ble", "debug", formatter);
@@ -62,12 +64,12 @@ describe("Util loader tests", () => {
 
   it("loadConfig without .env file should work", () => {
     LogContainer.clear();
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
     Util.loadConfig();
   })
 
   it("loadConfig with multiple env files should work", () => {
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
     const old = process.env.MIQRO_DIRNAME;
     process.env.MIQRO_DIRNAME = resolve(__dirname, "data2");
     Util.loadConfig();
@@ -77,7 +79,7 @@ describe("Util loader tests", () => {
   });
 
   it("loadConfig with multiple env files should override", () => {
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
     const old = process.env.MIQRO_DIRNAME;
     process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
     Util.loadConfig();
@@ -87,7 +89,7 @@ describe("Util loader tests", () => {
   });
 
   it("getConfig with multiple env files should override", () => {
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
     const old = process.env.MIQRO_DIRNAME;
     process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
     const list = Util.getConfig();
@@ -102,7 +104,8 @@ describe("Util loader tests", () => {
   });
 
   it("loadConfig with .miqrorc file should change defaults con ConfigPathLoader", () => {
-    (Util as any).configLoaded = false;
+    LoaderCache.config = false;
+    LoaderCache.rc = false;
     const cwd = process.cwd();
     process.chdir(resolve(__dirname, "data"));
     Util.loadConfig();

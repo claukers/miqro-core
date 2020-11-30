@@ -2,7 +2,6 @@ import {format} from "util";
 import {EventEmitter} from "events";
 import {createWriteStream, WriteStream} from "fs";
 import {resolve} from "path";
-import {getLoggerFactory} from "./loader";
 import {ConfigPathResolver} from "./config";
 
 export type LogContainer = Map<string, Logger>;
@@ -173,5 +172,26 @@ export const getLogger = (identifier?: string, formatter?: LoggerFormatter): Log
     const logger = factory({identifier, level, formatter});
     LogContainer.set(identifier, logger);
     return logger;
+  }
+};
+
+export type LoggerFactory = (args: { identifier: string, formatter?: LoggerFormatter, level: LogLevel; }) => Logger;
+
+export const defaultLoggerFactory: LoggerFactory = ({identifier, formatter, level}): Logger => {
+  return new DefaultLogger(identifier, level, formatter);
+};
+
+let customLoggerFactory: LoggerFactory;
+
+export const setLoggerFactory = (factory: LoggerFactory): LoggerFactory => {
+  customLoggerFactory = factory;
+  return customLoggerFactory;
+};
+
+export const getLoggerFactory = (): LoggerFactory => {
+  if (customLoggerFactory) {
+    return customLoggerFactory;
+  } else {
+    return defaultLoggerFactory;
   }
 };

@@ -1,8 +1,7 @@
-import {Logger} from "./logger";
+import {getLogger, Logger} from "./logger";
 import http from "http";
-import {parse as urlParse, UrlWithStringQuery, format as urlFormat} from "url";
+import {format as urlFormat, parse as urlParse, UrlWithStringQuery} from "url";
 import https from "https";
-import {Util} from "./util";
 import {RequestOptions, RequestResponse, ResponseError} from "./request_common";
 import {gunzipSync} from "zlib";
 import {parse as parseQuery, stringify as stringifyQuery} from "querystring";
@@ -12,7 +11,7 @@ const CONTENT_TYPE_HEADER = "Content-Type";
 const JSON_TYPE = "application/json;charset=utf-8";
 const TEXT_TYPE = "plain/text;charset=utf-8";
 
-export const request = (options: RequestOptions, logger: Logger = Util.logger): Promise<RequestResponse> => {
+export const request = (options: RequestOptions, logger?: Logger): Promise<RequestResponse> => {
   if (options.method?.toLowerCase() === "get" && options.data !== undefined) {
     return Promise.reject(new Error("cannot send data on method get"));
   } else {
@@ -60,7 +59,7 @@ export const request = (options: RequestOptions, logger: Logger = Util.logger): 
               port: urlO.port
             }, (res: http.IncomingMessage) => {
               try {
-                requestCallback(urlO, options, req, logger)(res).then((response) => {
+                requestCallback(urlO, options, req, logger ? logger : getLogger("request"))(res).then((response) => {
                   resolve(response);
                 }).catch((e) => {
                   reject(e);
@@ -190,4 +189,4 @@ const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req:
       reject(e3);
     }
   });
-}
+};

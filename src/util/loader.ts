@@ -1,52 +1,153 @@
-import {dirname, resolve} from "path";
-import {Util} from "./util";
-import {DefaultLogger, Logger, LoggerFormatter, LogLevel} from "./logger";
+import {extname, resolve} from "path";
+import {ConfigOutput, Util} from "./util";
+import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
+import {existsSync, readdirSync, readFileSync} from "fs";
+import {ConfigPathResolver, LoadConfigOut, MiqroRC, SequelizeRC} from "./config";
+import {ConfigFileNotFoundError} from "./error";
+import {SimpleMap} from "./option-parser";
 
-export type LoggerFactory = (args: { identifier: string, formatter?: LoggerFormatter, level: LogLevel; }) => Logger;
+const LOADER_IDENTIFIER = "loader";
 
-export const defaultLoggerFactory: LoggerFactory = ({identifier, formatter, level}): Logger => {
-  return new DefaultLogger(identifier, level, formatter);
+
+// noinspection SpellCheckingInspection
+export const LoaderCache: {
+  config: LoadConfigOut | false;
+  loggerFactory: boolean;
+  rc: MiqroRC | null | false;
+  // noinspection SpellCheckingInspection
+  sequelizeRC: SequelizeRC | null | false;
+} = {
+  config: false,
+  loggerFactory: false,
+  rc: false,
+  sequelizeRC: false
 };
 
-let customLoggerFactory: LoggerFactory;
-
-export const setLoggerFactory = (factory: LoggerFactory): LoggerFactory => {
-  customLoggerFactory = factory;
-  return customLoggerFactory;
-}
-
-export const getLoggerFactory = (): LoggerFactory => {
-  if (customLoggerFactory) {
-    return customLoggerFactory;
-  } else {
-    return defaultLoggerFactory;
+export const initLoggerFactory = (modulePath: string = ConfigPathResolver.getCustomLoggerFactoryPath(), logger?: Logger): void => {
+  if (!LoaderCache.loggerFactory) {
+    LoaderCache.loggerFactory = true;
+    if (existsSync(modulePath)) {
+      logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
+      logger.debug(`loading logger factory  [${modulePath}]`);
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const loggerFactory = require(modulePath) as LoggerFactory;
+      setLoggerFactory(loggerFactory);
+    }
   }
 };
 
-export const setupNodeEnv = (): void => {
-  if (process.env) {
-    Object.defineProperty(process.env, 'NODE_ENV', {
-      value: process.env.NODE_ENV || "development"
-    }); // this is for webpack
-  }
-};
-
-export const setupScriptEnv = (serviceName: string, scriptPath: string, logger = Util.logger): void => {
-  const microDirname = resolve(dirname(scriptPath));
-  if (!
-    process.env.MIQRO_DIRNAME || process.env.MIQRO_DIRNAME === "undefined"
-  ) {
-    process.env.MIQRO_DIRNAME = microDirname;
-  } else {
+export const loadSequelizeRC = (sequelizercPath: string = ConfigPathResolver.getSequelizeRCFilePath(), logger?: Logger): SequelizeRC => {
+  if (LoaderCache.sequelizeRC === false) {
+    LoaderCache.sequelizeRC = null;
+    logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
     // noinspection SpellCheckingInspection
-    logger.warn(`NOT changing to MIQRO_DIRNAME [${microDirname}] because already defined as ${process.env.MIQRO_DIRNAME}!`);
+    if (!existsSync(sequelizercPath)) {
+      // noinspection SpellCheckingInspection
+      throw new ConfigFileNotFoundError(`missing .sequelizerc file. maybe you didnt init your db config.`);
+    } else {
+      logger.debug(`loading sequelize config from [${sequelizercPath}]`);
+      // noinspection SpellCheckingInspection
+      /* eslint-disable  @typescript-eslint/no-var-requires */
+      const sequelizerc = require(sequelizercPath);
+      const modelsFolder = sequelizerc["models-path"];
+      if (!existsSync(modelsFolder)) {
+        throw new ConfigFileNotFoundError(`missing .sequelizerc["models-path"]=[${modelsFolder}] file. maybe you didnt init your db config.`);
+      }
+      const ret = {
+        sequelizercPath,
+        dbConfigFilePath: sequelizerc.config,
+        migrationsFolder: sequelizerc["migrations-path"],
+        seedersFolder: sequelizerc["seeders-path"],
+        modelsFolder
+      };
+      LoaderCache.sequelizeRC = ret;
+      return ret;
+    }
+  } else {
+    throw new ConfigFileNotFoundError(`missing .sequelizerc file. maybe you didnt init your db config.`);
   }
-  process.chdir(microDirname);
-  process.env.MICRO_NAME = serviceName;
-  setupNodeEnv();
-}
+};
 
-export const setServiceName = (name: string): string => {
-  process.env.MIQRO_SERVICE_NAME = name;
-  return process.env.MIQRO_SERVICE_NAME;
+export const loadConfigFile = (envFilePath: string, combined?: SimpleMap<string>, logger?: Logger): ConfigOutput => {
+  logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
+  const ret: ConfigOutput = {};
+  if (!existsSync(envFilePath)) {
+    throw new ConfigFileNotFoundError(`config file [${envFilePath}] doesnt exists!`);
+  } else {
+    logger.debug(`loading config from [${envFilePath}].`);
+    readFileSync(envFilePath).toString().split("\n")
+      .filter(value => value && value.length > 0 && value.substr(0, 1) !== "#")
+      .forEach((line) => {
+        const [key, val] = line.split("=");
+        ret[key] = val;
+      });
+    const keys = Object.keys(ret);
+    for (const key of keys) {
+      if (combined) {
+        combined[key] = ret[key];
+      }
+      Object.defineProperty(process.env, key, {
+        value: ret[key]
+      }); // this is for webpack
+    }
+  }
+  return ret;
+};
+
+const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `loadConfig nothing loaded [${configDirname}] env files dont exist!.`;
+
+export const loadConfig = (configDirname: string = ConfigPathResolver.getConfigDirname(), logger?: Logger): LoadConfigOut => {
+  if (LoaderCache.config === false) {
+    logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
+    const outputs: ConfigOutput[] = [];
+    const combined = {};
+    if (existsSync(configDirname)) {
+      const configFiles = readdirSync(configDirname);
+      for (const configFile of configFiles) {
+        const configFilePath = resolve(configDirname, configFile);
+        const ext = extname(configFilePath);
+        if (ext === ".env") {
+          outputs.push(loadConfigFile(configFilePath, combined, logger));
+        }
+      }
+      if (configFiles.length === 0) {
+        logger.debug(MISSED_TO_RUNMIQRO_INIT(configDirname));
+      }
+    } else {
+      logger.debug(MISSED_TO_RUNMIQRO_INIT(configDirname));
+    }
+    const ret = {combined, outputs};
+    LoaderCache.config = ret;
+    return ret;
+  } else {
+    return LoaderCache.config;
+  }
+
+};
+
+export const loadMiqroRC = (path = ConfigPathResolver.getMiqroRCFilePath(), logger?: Logger): MiqroRC | null => {
+  if (LoaderCache.rc === false) {
+    logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
+    LoaderCache.rc = null;
+    Util.setupNodeEnv();
+    if (existsSync(path)) {
+      logger.debug(`loading [${path}]`);
+      const o = JSON.parse(readFileSync(path).toString());
+      if (o && typeof o === "object") {
+        Util.parseOptions(path, o, [
+          {name: "configDirname", type: "string", required: true}
+        ], "no_extra");
+        o.configDirname = resolve(ConfigPathResolver.getBaseDirname(), o.configDirname);
+        const ret = o as MiqroRC;
+        LoaderCache.rc = ret;
+        return ret;
+      } else {
+        return LoaderCache.rc;
+      }
+    } else {
+      return LoaderCache.rc;
+    }
+  } else {
+    return LoaderCache.rc;
+  }
 };
