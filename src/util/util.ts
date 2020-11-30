@@ -3,7 +3,7 @@ import {getLogger, Logger, LoggerFormatter} from "./logger";
 import {request} from "./request";
 import {RequestOptions, RequestResponse} from "./request_common";
 import {checkEnvVariables, ParseOption, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes} from "./option-parser";
-import {loadConfig, initLoggerFactory} from "./loader";
+import {loadConfig} from "./loader";
 
 
 export type ConfigOutput = SimpleMap<string>;
@@ -28,10 +28,6 @@ export abstract class Util {
 
   public static loadConfig(configDirname: string = ConfigPathResolver.getConfigDirname(), logger?: Logger): LoadConfigOut {
     return loadConfig(configDirname, logger);
-  }
-
-  public static initLoggerFactory(modulePath: string = ConfigPathResolver.getCustomLoggerFactoryPath(), logger?: Logger): void {
-    return initLoggerFactory(modulePath, logger);
   }
 
   public static checkEnvVariables(requiredEnvVariables: string[], defaults?: string[]): string[] {
