@@ -16,8 +16,8 @@
     "prepare": "npm run build",
     "prebuild": "rm -Rf dist;",
     "build": "tsc",
-    "test": "NODE_ENV=test nyc mocha test/*.test.ts",
-    "testfile": "NODE_ENV=test nyc mocha",
+    "test": "LOG_LEVEL=debug NODE_ENV=test nyc mocha test/*.test.ts",
+    "testfile": "LOG_LEVEL=debug NODE_ENV=test nyc mocha",
     "lint": "eslint ./src --ext ts",
     "fixlint": "eslint ./src --ext ts --fix"
   },
