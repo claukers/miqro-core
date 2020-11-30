@@ -11,7 +11,7 @@ import {
   LoggerWriteEventArgs,
   setLoggerFactory,
   Util,
-  LoaderCache
+  LoaderCache, initLoggerFactory
 } from "../src/util";
 
 process.env.NODE_ENV = "test";
@@ -89,6 +89,7 @@ describe("Util loader tests", () => {
   });
 
   it("getConfig with multiple env files should override", () => {
+    LogContainer.clear();
     LoaderCache.config = false;
     const old = process.env.MIQRO_DIRNAME;
     process.env.MIQRO_DIRNAME = resolve(__dirname, "data3");
@@ -104,12 +105,38 @@ describe("Util loader tests", () => {
   });
 
   it("loadConfig with .miqrorc file should change defaults con ConfigPathLoader", () => {
+    LogContainer.clear();
     LoaderCache.config = false;
     LoaderCache.rc = false;
     const cwd = process.cwd();
     process.chdir(resolve(__dirname, "data"));
     Util.loadConfig();
     strictEqual(ConfigPathResolver.getConfigDirname(), resolve(__dirname, "data", "blo", "test"));
+    process.chdir(cwd);
+  });
+
+  it("loadConfig with .miqrorc and log.js with initLoggerFactory", (done) => {
+    LogContainer.clear();
+    LoaderCache.config = false;
+    LoaderCache.rc = false;
+    LoaderCache.loggerFactory = false;
+    const cwd = process.cwd();
+    process.chdir(resolve(__dirname, "data4"));
+    Util.loadConfig();
+    strictEqual(ConfigPathResolver.getConfigDirname(), resolve(__dirname, "data4", "blo", "test"));
+    initLoggerFactory();
+
+    const logger = Util.getLogger("bla", ({identifier, level, message}): string => `${identifier} bll ${level} ${message}`);
+    strictEqual(logger !== undefined, true);
+    strictEqual(logger !== null, true);
+    logger.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
+      strictEqual(out, "blo bll debug bli");
+      LoaderCache.config = false;
+      LoaderCache.rc = false;
+      LoaderCache.loggerFactory = false;
+      done();
+    });
+    logger.debug("bli");
     process.chdir(cwd);
   });
 });
