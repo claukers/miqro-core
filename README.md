@@ -79,4 +79,3 @@ const resultWithoutExtra = parseOptions("person", data, [
   { name: "likes", type: "array", required: true, arrayType: "string" }
 ], "remove_extra");
 ```
-
