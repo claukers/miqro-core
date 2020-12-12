@@ -21,7 +21,13 @@ describe("Util loader tests", () => {
   it("getLogger without log.js and without loadConfig should work", () => {
     LogContainer.clear();
     LoaderCache.clear();
+    process.env.LOG_LEVEL_bla = "trace";
     const logger = Util.getLogger("bla");
+    logger.info("info");
+    logger.warn("warn");
+    logger.error("error");
+    logger.debug("debug");
+    logger.trace("trace");
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
   });

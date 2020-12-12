@@ -133,10 +133,32 @@ export class Logger extends EventEmitter implements Logger {
   }
 }
 
-export const ConsoleTransport: LoggerTransport = {
-  write: async ({level, out}: LoggerTransportWriteArgs): Promise<void> => {
-    console[level](out);
-  }
+export const ConsoleTransport: (color?: boolean) => LoggerTransport = (color = true) => {
+  return {
+    write: async ({level, out}: LoggerTransportWriteArgs): Promise<void> => {
+      if (color) {
+        switch (level) {
+          case "warn":
+            console.warn("\x1b[33m%s\x1b[0m", out);
+            break;
+          case "error":
+            console.error("\x1b[31m%s\x1b[0m", out);
+            break;
+          case "trace":
+            console.trace("\x1b[34m%s\x1b[0m", out);
+            break;
+          case "debug":
+            console.debug("\x1b[36m%s\x1b[0m", out);
+            break;
+          default:
+            console[level](out);
+            break;
+        }
+      } else {
+        console[level](out);
+      }
+    }
+  };
 };
 
 export const FileTransport: (filePath?: string) => LoggerTransport = (filePath = process.env.LOG_FILE) => {
@@ -178,7 +200,7 @@ export const getLogger = (identifier?: string, options?: { formatter?: LoggerFor
 export type LoggerFactory = (args: { identifier: string, level: LogLevel; options?: { transports?: LoggerTransport[]; formatter?: LoggerFormatter; } }) => Logger;
 
 export const defaultLoggerTransports: () => LoggerTransport[] = () => [
-  ConsoleTransport,
+  ConsoleTransport(),
   FileTransport()
 ];
 
