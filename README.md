@@ -39,6 +39,15 @@ logger.debug("debuglog");
 //   ],
 //   formmater: ...
 // });
+// this logger will respect env var LOG_LEVEL_MyIdentifier
+// const logger = getLogger("MyIdentifier", {
+//   transports: [
+//     {
+//       write: ...
+//     }
+//   ],
+//   formmater: ...
+// });
 
 // this is a wrapper for https|http request method using a Promise that follows redirects
 const response = await request({
