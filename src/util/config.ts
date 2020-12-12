@@ -16,7 +16,7 @@ export const setServiceName = (name: string): string => {
 };
 
 export interface MiqroRC {
-  configDirname: string;
+  configDirname?: string;
   loggerFactory?: string;
 }
 
@@ -50,7 +50,7 @@ export abstract class ConfigPathResolver {
 
   public static getConfigDirname(): string {
     const miqroRCConfig = loadMiqroRC();
-    if (miqroRCConfig) {
+    if (miqroRCConfig && miqroRCConfig.configDirname) {
       return resolve(miqroRCConfig.configDirname, `${process.env.NODE_ENV}`);
     } else {
       return resolve(ConfigPathResolver.getBaseDirname(), `config`, `${process.env.NODE_ENV}`);
