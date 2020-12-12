@@ -1,3 +1,4 @@
 {
-  "configDirname": "blo/"
+  "configDirname": "blo/",
+  "loggerFactory": "log.js"
 }

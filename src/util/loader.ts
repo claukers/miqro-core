@@ -142,9 +142,11 @@ export const loadMiqroRC = (path = ConfigPathResolver.getMiqroRCFilePath(), logg
       const o = JSON.parse(readFileSync(path).toString());
       if (o && typeof o === "object") {
         Util.parseOptions(path, o, [
-          {name: "configDirname", type: "string", required: true}
+          {name: "configDirname", type: "string", required: true},
+          {name: "loggerFactory", type: "string", required: false}
         ], "no_extra");
         o.configDirname = resolve(ConfigPathResolver.getBaseDirname(), o.configDirname);
+        o.loggerFactory = o.loggerFactory ? resolve(ConfigPathResolver.getBaseDirname(), o.loggerFactory) : undefined;
         const ret = o as MiqroRC;
         LoaderCache.rc = ret;
         return ret;

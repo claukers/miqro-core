@@ -1,6 +1,6 @@
 import {format} from "util";
 import {EventEmitter} from "events";
-import {createWriteStream, WriteStream} from "fs";
+import {createWriteStream} from "fs";
 import {resolve} from "path";
 import {ConfigPathResolver} from "./config";
 
@@ -42,7 +42,6 @@ export const defaultLoggerFormatter: LoggerFormatter =
     `${message}`;
 
 export const LoggerEvents = {
-  write: "write",
   error: "error"
 };
 
@@ -52,32 +51,46 @@ export interface WriteArgs {
   optionalParams: any[]
 }
 
-export interface LoggerWriteEventArgs extends WriteArgs {
+export interface LoggerTransportWriteArgs extends WriteArgs {
   out: string;
 }
 
-export class Logger extends EventEmitter implements Logger {
-  protected readonly _formatter: LoggerFormatter;
+export interface LoggerTransport {
+  write(args: LoggerTransportWriteArgs): Promise<void> | void;
+}
 
-  constructor(protected readonly identifier: string, protected readonly level: LogLevel, formatter?: LoggerFormatter) {
+export class Logger extends EventEmitter implements Logger {
+
+  protected readonly options: { transports: LoggerTransport[]; formatter: LoggerFormatter; };
+
+  constructor(protected readonly identifier: string, protected readonly level: LogLevel, options?: { transports?: LoggerTransport[]; formatter?: LoggerFormatter; }) {
     super();
     if (!LOG_LEVEL_MAP[level]) {
       throw new Error(`Unknown level [${level}]`);
     }
-    this._formatter = formatter ? formatter : defaultLoggerFormatter;
+    this.options = {
+      transports: options && options.transports !== undefined ? options.transports : defaultLoggerTransports(),
+      formatter: options && options.formatter !== undefined ? options.formatter : defaultLoggerFormatter,
+    };
   }
 
   protected write(args: WriteArgs): void {
     try {
-      const eventArgs: LoggerWriteEventArgs = {
-        out: this._formatter({
+      const eventArgs: LoggerTransportWriteArgs = {
+        out: this.options.formatter({
           identifier: this.identifier,
           level: args.level,
           message: format(args.message, ...args.optionalParams)
         }),
         ...args
       };
-      this.emit(LoggerEvents.write, eventArgs);
+      const tR = [];
+      for (const transport of this.options.transports) {
+        tR.push(transport.write(eventArgs));
+      }
+      Promise.all(tR).catch((e) => {
+        this.emit(LoggerEvents.error, e);
+      });
     } catch (e) {
       this.emit(LoggerEvents.error, e);
     }
@@ -120,45 +133,32 @@ export class Logger extends EventEmitter implements Logger {
   }
 }
 
-export class ConsoleLogger extends Logger {
-  constructor(identifier: string, level: LogLevel, formatter?: LoggerFormatter) {
-    super(identifier, level, formatter);
-    this.on(LoggerEvents.write, ({out, level}: LoggerWriteEventArgs) => {
-      try {
-        console[level](out);
-      } catch (e) {
-        this.emit(LoggerEvents.error, e);
-      }
-    });
+export const ConsoleTransport: LoggerTransport = {
+  write: async ({level, out}: LoggerTransportWriteArgs): Promise<void> => {
+    console[level](out);
   }
-}
+};
 
-export class DefaultLogger extends ConsoleLogger {
-  private fileHandler: WriteStream | undefined;
-
-  constructor(identifier: string, level: LogLevel, formatter?: LoggerFormatter) {
-    super(identifier, level, formatter);
-    this.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
-      try {
-        if (process.env.LOG_FILE && !this.fileHandler) {
-          const path = resolve(process.env.LOG_FILE);
-          this.fileHandler = createWriteStream(path, {flags: "a"})
-        }
-        if (this.fileHandler) {
-          this.fileHandler.write(`${out}\n`, (err) => {
+export const FileTransport: (filePath?: string) => LoggerTransport = (filePath = process.env.LOG_FILE) => {
+  const fileHandler = filePath ? createWriteStream(resolve(filePath), {flags: "a"}) : null;
+  return {
+    write: async ({out}: LoggerTransportWriteArgs): Promise<void> => {
+      if (fileHandler) {
+        return new Promise((resolve, reject) => {
+          fileHandler.write(`${out}\n`, (err) => {
             if (err) {
-              this.emit(LoggerEvents.error, err);
+              reject(err);
+            } else {
+              resolve();
             }
           });
-        }
-      } catch (e) {
-        this.emit(LoggerEvents.error, e);
+        });
       }
-    });
-  }
-}
+    }
+  };
+};
 
-export const getLogger = (identifier?: string, formatter?: LoggerFormatter): Logger => {
+export const getLogger = (identifier?: string, options?: { formatter?: LoggerFormatter, transports?: LoggerTransport[] }): Logger => {
   if (typeof identifier !== "string" && typeof identifier !== undefined) {
     throw new Error("Bad log identifier");
   } else if (identifier === undefined) {
@@ -169,16 +169,21 @@ export const getLogger = (identifier?: string, formatter?: LoggerFormatter): Log
   } else {
     const factory = getLoggerFactory();
     const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info") as LogLevel;
-    const logger = factory({identifier, level, formatter});
+    const logger = factory({identifier, level, options});
     LogContainer.set(identifier, logger);
     return logger;
   }
 };
 
-export type LoggerFactory = (args: { identifier: string, formatter?: LoggerFormatter, level: LogLevel; }) => Logger;
+export type LoggerFactory = (args: { identifier: string, level: LogLevel; options?: { transports?: LoggerTransport[]; formatter?: LoggerFormatter; } }) => Logger;
 
-export const defaultLoggerFactory: LoggerFactory = ({identifier, formatter, level}): Logger => {
-  return new DefaultLogger(identifier, level, formatter);
+export const defaultLoggerTransports: () => LoggerTransport[] = () => [
+  ConsoleTransport,
+  FileTransport()
+];
+
+export const defaultLoggerFactory: LoggerFactory = ({identifier, options, level}): Logger => {
+  return new Logger(identifier, level, options);
 };
 
 let customLoggerFactory: LoggerFactory;

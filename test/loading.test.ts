@@ -9,8 +9,7 @@ import {
   LoaderCache,
   LogContainer,
   Logger,
-  LoggerEvents,
-  LoggerWriteEventArgs,
+  LoggerTransportWriteArgs,
   setLoggerFactory,
   Util
 } from "../src/util";
@@ -31,35 +30,42 @@ describe("Util loader tests", () => {
     LogContainer.clear();
     LoaderCache.clear();
     process.env.LOG_LEVEL_bla = "info";
-    const logger = Util.getLogger("bla", ({level, message}): string => `bla ${level} ${message}`);
+    const logger = Util.getLogger("bla", {
+      transports: [{
+        write: ({out}: LoggerTransportWriteArgs) => {
+          strictEqual(out, "bla info blo");
+          done();
+        }
+      }], formatter: ({level, message}): string => `bla ${level} ${message}`
+    });
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
-    logger.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
-      strictEqual(out, "bla info blo");
-      done();
-    });
     logger.debug("ignore this");
     logger.info("blo");
-
   });
 
   it("getLogger with custom factory and formatting", (done) => {
     LogContainer.clear();
     LoaderCache.clear();
     const old = getLoggerFactory();
-    const fakeFactory = fake(({identifier, level, formatter}) => {
-      return new Logger("ble", "debug", formatter);
+    const fakeFactory = fake(({identifier, options, level}) => {
+      return new Logger("ble", "debug", options);
     })
     setLoggerFactory(fakeFactory);
-    const logger = Util.getLogger("bla", ({level, message}): string => `bla ${level} ${message}`);
+    const logger = Util.getLogger("bla", {
+      transports: [
+        {
+          write: ({out}: LoggerTransportWriteArgs) => {
+            strictEqual(fakeFactory.callCount, 1);
+            strictEqual(out, "bla debug blo");
+            setLoggerFactory(old);
+            setTimeout(done, 100);
+          }
+        }
+      ], formatter: ({level, message}): string => `bla ${level} ${message}`
+    });
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
-    logger.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
-      strictEqual(fakeFactory.callCount, 1);
-      strictEqual(out, "bla debug blo");
-      setLoggerFactory(old);
-      done();
-    });
     logger.debug("blo");
   });
 
@@ -125,15 +131,20 @@ describe("Util loader tests", () => {
     Util.loadConfig();
     strictEqual(ConfigPathResolver.getConfigDirname(), resolve(__dirname, "data4", "blo", "test"));
     initLoggerFactory();
-
-    const logger = Util.getLogger("bla", ({identifier, level, message}): string => `${identifier} bll ${level} ${message}`);
+    const logger = Util.getLogger("bla", {
+      transports: [
+        {
+          write: ({out}: LoggerTransportWriteArgs) => {
+            strictEqual(out, "blo bll debug bli");
+            LoaderCache.clear();
+            setTimeout(done, 100);
+          }
+        }
+      ],
+      formatter: ({identifier, level, message}): string => `${identifier} bll ${level} ${message}`
+    });
     strictEqual(logger !== undefined, true);
     strictEqual(logger !== null, true);
-    logger.on(LoggerEvents.write, ({out}: LoggerWriteEventArgs) => {
-      strictEqual(out, "blo bll debug bli");
-      LoaderCache.clear();
-      done();
-    });
     logger.debug("bli");
     process.chdir(cwd);
   });

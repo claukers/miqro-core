@@ -6,22 +6,20 @@ this module provides helpers functions to develop nodejs applications like **log
 const {
   request,
   loadConfig,
-  DefaultLogger,
-  overrideConfig,
+  loadConfigFile,
   getLogger,
-  getComponentLogger,
   isFeatureEnabled,
   parseOptions,
 } = require("@miqro/core");
 
 // this should load env files in config/$NODE_ENV/*.env into process.env
-const output = loadConfig();
+loadConfig();
 
 // this should load env files in directoryPath into process.env
 loadConfig(directoryPath);
 
 // force the load of an env file into process.env
-overrideConfig("other.env");
+loadConfigFile("other.env");
 
 // this will throw if ENV_VAR_A doesnt exists
 checkEnvVariables(["ENV_VAR_A"]);
@@ -33,7 +31,14 @@ logger.warn("warnlog");
 logger.error("errorlog");
 logger.debug("debuglog");
 // this logger will NOT respect env var LOG_LEVEL_MyIdentifier and will be force to use debug
-// const logger = new DefaultLogger("MyIdentifier", "debug");
+// const logger = new Logger("MyIdentifier", "debug", {
+//   transports: [
+//     {
+//       write: ...
+//     }
+//   ],
+//   formmater: ...
+// });
 
 // this is a wrapper for https|http request method using a Promise that follows redirects
 const response = await request({
@@ -73,35 +78,5 @@ const resultWithoutExtra = parseOptions("person", data, [
   { name: "age", type: "number", required: true },
   { name: "likes", type: "array", required: true, arrayType: "string" }
 ], "remove_extra");
-```
-
-###### custom logger
-
-```javascript
-...
-const myFormatter = ({identifier, level, message}) => 
-    `${new Date().toISOString()} ${process.pid} ` +
-      `[${identifier}] ` +
-      `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
-      `${message}`;
-const logger = new Logger(identifier, level, myFormatter);
-logger.on(LoggerEvents.write, ({level, out}) => {
-    ...
-    console.log(out);
-    ...
-});
-logger.on(LoggerEvents.write, ({level, out}) => {
-    ...
-});
-...
-```
-
-###### custom factory for getLogger(...)
-```javascript
-...
-setLoggerFactory(({identifier, level, formatter})=>{
-  ...
-});
-...
 ```
 

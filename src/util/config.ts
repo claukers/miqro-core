@@ -17,6 +17,7 @@ export const setServiceName = (name: string): string => {
 
 export interface MiqroRC {
   configDirname: string;
+  loggerFactory?: string;
 }
 
 export interface SequelizeRC {
@@ -39,7 +40,12 @@ export abstract class ConfigPathResolver {
   }
 
   public static getCustomLoggerFactoryPath(): string {
-    return resolve(ConfigPathResolver.getConfigDirname(), `log.js`);
+    const miqroRCConfig = loadMiqroRC();
+    if (miqroRCConfig && miqroRCConfig.loggerFactory) {
+      return resolve(miqroRCConfig.loggerFactory);
+    } else {
+      return resolve(ConfigPathResolver.getConfigDirname(), `log.js`);
+    }
   }
 
   public static getConfigDirname(): string {
