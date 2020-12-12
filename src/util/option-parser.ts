@@ -1,5 +1,5 @@
-import { ConfigPathResolver } from "./config";
-import { ParseOptionsError } from "./error";
+import {ConfigPathResolver} from "./config";
+import {ParseOptionsError} from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
@@ -83,7 +83,16 @@ const isValueType = (
         } else {
           for (let i = 0; i < value.length; i++) {
             const v = value[i];
-            const aiType = isValueType({ name: `${name}.${attrName}`, attrName: `[${i}]`, type: arrayType, value: v, nestedOptions, enumValues, arrayMaxLength, arrayMinLength })
+            const aiType = isValueType({
+              name: `${name}.${attrName}`,
+              attrName: `[${i}]`,
+              type: arrayType,
+              value: v,
+              nestedOptions,
+              enumValues,
+              arrayMaxLength,
+              arrayMinLength
+            })
             if (!aiType.isType) {
               isType = false;
               break;
@@ -120,7 +129,13 @@ const isValueType = (
         parsedValue: parsedValue !== null ? parsedValue : value
       };
     case "enum":
-      const enumCheck = isValueType({ name: `${name}.${attrName}`, attrName: `enumList`, type: "array", value: enumValues, arrayType: "string" });
+      const enumCheck = isValueType({
+        name: `${name}.${attrName}`,
+        attrName: `enumList`,
+        type: "array",
+        value: enumValues,
+        arrayType: "string"
+      });
       if (enumCheck.isType && enumValues && enumValues.length > 0) {
         enumCheck.isType = enumValues.indexOf(value) !== -1;
       } else {
@@ -160,7 +175,7 @@ export const parseOptions = (
     } else if (!exists && option.required) {
       throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
     }
-    const { isType, parsedValue } = isValueType({
+    const {isType, parsedValue} = isValueType({
       name,
       attrName: option.name,
       type: option.type,
@@ -174,7 +189,8 @@ export const parseOptions = (
     });
     if (!isType) {
       throw new ParseOptionsError(
-        `${name}.${option.name} not ${option.type}${option.type === "array" && option.arrayMinLength !== undefined ? `${option.arrayMinLength}:` : ""}${option.type === "array" && option.arrayMaxLength !== undefined ? `:${option.arrayMaxLength}` : ""}` +
+        `${name}.${option.name} not ${option.type}` +
+        `${option.type === "array" && option.arrayMinLength !== undefined ? `${option.arrayMinLength}:` : ""}${option.type === "array" && option.arrayMaxLength !== undefined ? `:${option.arrayMaxLength}` : ""}` +
         `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : (option.type === "nested" ? " as defined!" : (option.type === "enum" ? ` as defined. valid values [${option.enumValues}]` : ""))}`,
         `${name}.${option.name}`
       );
