@@ -25,7 +25,7 @@ export interface RequestOptions {
   socketPath?: string;
   ignoreRedirect?: boolean;
   maxRedirects?: number;
-  __redirectCount?: number;
+  locations?: string[];
   timeout?: number;
   headers?: http.OutgoingHttpHeaders;
   data?: any;
@@ -34,6 +34,7 @@ export interface RequestOptions {
 export interface RequestResponse {
   url: string;
   redirectedUrl: string | null;
+  locations: string[];
   headers: http.IncomingHttpHeaders,
   status: number;
   response: http.IncomingMessage;

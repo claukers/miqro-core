@@ -295,7 +295,7 @@ describe('lib.Util.request func tests', function () {
   it('simple get /hello?format=txt happy path over unixsocket', (done) => {
     (async () => {
       try {
-        const {data, status, redirectedUrl} = await Util.request({
+        const {data, status, redirectedUrl, locations} = await Util.request({
           url: "/hello?format=txt&otherQ=1",
           socketPath: SOCKET_PATH,
           method: "get"
@@ -344,12 +344,13 @@ describe('lib.Util.request func tests', function () {
 
   it('simple get follow redirect with no host', (done) => {
     (async () => {
-      const {url, redirectedUrl, status, data} = await Util.request({
+      const {url, redirectedUrl, status, data, locations} = await Util.request({
         url: "http://localhost:8080/redirectNoHostHandler",
         method: "get"
       });
       strictEqual(status, 200);
       strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=3");
+      strictEqual(locations[0], redirectedUrl);
       strictEqual(url, "http://localhost:8080/redirectNoHostHandler");
       strictEqual(data, "hello2");
     })().then(done).catch(done);

@@ -131,13 +131,13 @@ const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req:
 
               logger.debug(`redirecting to [${location}] from [${options.url}]`);
               if (options.url !== location) {
-                if(options.__redirectCount !== undefined && options.maxRedirects !== undefined && options.__redirectCount > options.maxRedirects) {
+                if (options.locations !== undefined && options.maxRedirects !== undefined && options.locations.length > options.maxRedirects) {
                   reject(new Error(`too many redirects to [${location}] from [${options.url}][${status}]`));
                 }
                 request({
                   ...options,
                   url: location,
-                  __redirectCount: options.__redirectCount ? options.__redirectCount + 1 : 1
+                  locations: options.locations ? options.locations.concat(location) : [location]
                 }).then((ret) => {
                   const redirectedUrl = ret.url;
                   resolve({
@@ -168,6 +168,7 @@ const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req:
                 url: options.url,
                 response: res,
                 status,
+                locations: options.locations ? options.locations : [],
                 redirectedUrl: null,
                 headers: res.headers,
                 request: req,
