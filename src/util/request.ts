@@ -130,27 +130,35 @@ const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req:
               }
 
               logger.debug(`redirecting to [${location}] from [${options.url}]`);
-              request({
-                ...options,
-                url: location
-              }).then((ret) => {
-                const redirectedUrl = ret.url;
-                resolve({
-                  ...ret,
-                  url: options.url,
-                  redirectedUrl
-                });
-              }).catch((e4: any) => {
-                if (e4.response && e4.status && e4.headers && e4.data) {
-                  const err = new ResponseError(e4.status, e4.response, e4.headers, options.url, location, e4.data, responseBuffer);
-                  err.stack = e4.stack;
-                  reject(err);
-                } else {
-                  (e4 as any).redirectedUrl = location;
-                  (e4 as any).url = options.url;
-                  reject(e4);
+              if (options.url !== location) {
+                if(options.__redirectCount !== undefined && options.maxRedirects !== undefined && options.__redirectCount > options.maxRedirects) {
+                  reject(new Error(`too many redirects to [${location}] from [${options.url}][${status}]`));
                 }
-              });
+                request({
+                  ...options,
+                  url: location,
+                  __redirectCount: options.__redirectCount ? options.__redirectCount + 1 : 1
+                }).then((ret) => {
+                  const redirectedUrl = ret.url;
+                  resolve({
+                    ...ret,
+                    url: options.url,
+                    redirectedUrl
+                  });
+                }).catch((e4: any) => {
+                  if (e4.response && e4.status && e4.headers && e4.data) {
+                    const err = new ResponseError(e4.status, e4.response, e4.headers, options.url, location, e4.data, responseBuffer);
+                    err.stack = e4.stack;
+                    reject(err);
+                  } else {
+                    (e4 as any).redirectedUrl = location;
+                    (e4 as any).url = options.url;
+                    reject(e4);
+                  }
+                });
+              } else {
+                reject(new Error(`bad redirect to [${location}] from [${options.url}][${status}]`));
+              }
             } catch (e5) {
               reject(new ResponseError(status, res, res.headers, options.url, location, data, responseBuffer));
             }

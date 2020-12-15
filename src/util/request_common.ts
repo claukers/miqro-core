@@ -24,6 +24,8 @@ export interface RequestOptions {
   query?: ParsedUrlQueryInput;
   socketPath?: string;
   ignoreRedirect?: boolean;
+  maxRedirects?: number;
+  __redirectCount?: number;
   timeout?: number;
   headers?: http.OutgoingHttpHeaders;
   data?: any;
