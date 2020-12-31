@@ -6,7 +6,7 @@ import {
   fake,
   getLoggerFactory,
   initLoggerFactory,
-  LoaderCache,
+  LoaderCache, loadSequelizeRC,
   LogContainer,
   Logger,
   LoggerTransportWriteArgs,
@@ -17,6 +17,15 @@ import {
 process.env.NODE_ENV = "test";
 
 describe("Util loader tests", () => {
+
+  it("loadSequelizeRC happy path", () => {
+    LogContainer.clear();
+    LoaderCache.clear();
+    const cwd = process.cwd();
+    process.chdir(resolve(__dirname, "data5"));
+    loadSequelizeRC();
+    process.chdir(cwd);
+  });
 
   it("getLogger without log.js and without loadConfig should work", () => {
     LogContainer.clear();

@@ -4,7 +4,7 @@ import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
 import {existsSync, readdirSync, readFileSync} from "fs";
 import {ConfigPathResolver, LoadConfigOut, MiqroRC, SequelizeRC} from "./config";
 import {ConfigFileNotFoundError} from "./error";
-import {SimpleMap} from "./option-parser";
+import {parseOptions, SimpleMap} from "./option-parser";
 
 const LOADER_IDENTIFIER = "loader";
 
@@ -56,16 +56,18 @@ export const loadSequelizeRC = (sequelizercPath: string = ConfigPathResolver.get
       // noinspection SpellCheckingInspection
       /* eslint-disable  @typescript-eslint/no-var-requires */
       const sequelizerc = require(sequelizercPath);
-      const modelsFolder = sequelizerc["models-path"];
-      if (!existsSync(modelsFolder)) {
-        throw new ConfigFileNotFoundError(`missing .sequelizerc["models-path"]=[${modelsFolder}] file. maybe you didnt init your db config.`);
-      }
+      parseOptions(sequelizercPath, sequelizerc, [
+        {name: "config", type: "string", required: true},
+        {name: "migrations-path", type: "string", required: true},
+        {name: "seeders-path", type: "string", required: true},
+        {name: "models-path", type: "string", required: true}
+      ], "no_extra");
       const ret = {
         sequelizercPath,
         dbConfigFilePath: sequelizerc.config,
         migrationsFolder: sequelizerc["migrations-path"],
         seedersFolder: sequelizerc["seeders-path"],
-        modelsFolder
+        modelsFolder: sequelizerc["models-path"]
       };
       LoaderCache.sequelizeRC = ret;
       return ret;
