@@ -73,7 +73,7 @@ export const loadSequelizeRC = (sequelizercPath: string = ConfigPathResolver.get
       return ret;
     }
   } else {
-    throw new ConfigFileNotFoundError(`missing .sequelizerc file. maybe you didnt init your db config.`);
+    return LoaderCache.sequelizeRC as SequelizeRC;
   }
 };
 
