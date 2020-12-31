@@ -16,17 +16,20 @@ export const LoaderCache: {
   rc: MiqroRC | null | false;
   // noinspection SpellCheckingInspection
   sequelizeRC: SequelizeRC | null | false;
+  extra: SimpleMap<any>;
   clear: () => void;
 } = {
   config: false,
   loggerFactory: false,
   rc: false,
   sequelizeRC: false,
+  extra: {},
   clear: () => {
     LoaderCache.config = false;
     LoaderCache.loggerFactory = false;
     LoaderCache.rc = false;
     LoaderCache.sequelizeRC = false;
+    LoaderCache.extra = {};
   }
 };
 
