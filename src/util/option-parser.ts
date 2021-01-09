@@ -16,6 +16,7 @@ export interface NestedParseOption {
 
 export interface ParseOption {
   name: string;
+  description?: string;
   type: ParseSimpleType;
   arrayType?: ParseSimpleType;
   arrayMinLength?: number;
