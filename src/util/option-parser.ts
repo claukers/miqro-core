@@ -18,7 +18,7 @@ export interface ParseOption extends ParseOptionValueType {
   name: string;
   required: boolean;
   description?: string;
-  defaultValue?: string;
+  defaultValue?: any;
 }
 
 export interface ParseOptionValueType {
