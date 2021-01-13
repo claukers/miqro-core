@@ -799,6 +799,162 @@ describe('lib.Util.parseOptions unit tests', function () {
     test().then(done).catch(done);
   });
 
+  it('simple {number: undefined} no_extra defautlValue', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      
+      const { number } = Util.parseOptions("argName", {
+        number: undefined
+      }, [
+        { name: "number", type: "number", required: false, defaultValue: 33 },
+        { name: "string", type: "string", required: false },
+        { name: "boolean", type: "boolean", required: false },
+        { name: "object", type: "object", required: false },
+        { name: "stringArray", type: "array", arrayType: "string", required: false },
+        { name: "numberArray", type: "array", arrayType: "number", required: false }
+      ], "no_extra");
+      strictEqual(number, 33);
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {} no_extra defautlValue', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      
+      const { number } = Util.parseOptions("argName", {
+      }, [
+        { name: "number", type: "number", required: false, defaultValue: 33 },
+        { name: "string", type: "string", required: false },
+        { name: "boolean", type: "boolean", required: false },
+        { name: "object", type: "object", required: false },
+        { name: "stringArray", type: "array", arrayType: "string", required: false },
+        { name: "numberArray", type: "array", arrayType: "number", required: false }
+      ], "no_extra");
+      strictEqual(number, 33);
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {number} no_extra numberMax', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        const { number } = Util.parseOptions("argName", {
+          number: 33
+        }, [
+          { name: "number", type: "number", required: false, numberMax: 32 },
+          { name: "string", type: "string", required: false },
+          { name: "boolean", type: "boolean", required: false },
+          { name: "object", type: "object", required: false },
+          { name: "stringArray", type: "array", arrayType: "string", required: false },
+          { name: "numberArray", type: "array", arrayType: "number", required: false }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch(e) {
+        strictEqual(e.message, "argName.number not number:32");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {number} no_extra numberMax happy path', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const { number } = Util.parseOptions("argName", {
+        number: 33
+      }, [
+        { name: "number", type: "number", required: false, numberMax: 33 },
+        { name: "string", type: "string", required: false },
+        { name: "boolean", type: "boolean", required: false },
+        { name: "object", type: "object", required: false },
+        { name: "stringArray", type: "array", arrayType: "string", required: false },
+        { name: "numberArray", type: "array", arrayType: "number", required: false }
+      ], "no_extra");
+      strictEqual(number, 33);
+      
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {number} no_extra numberMin', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        const { number } = Util.parseOptions("argName", {
+          number: 33
+        }, [
+          { name: "number", type: "number", required: false, numberMin: 34 },
+          { name: "string", type: "string", required: false },
+          { name: "boolean", type: "boolean", required: false },
+          { name: "object", type: "object", required: false },
+          { name: "stringArray", type: "array", arrayType: "string", required: false },
+          { name: "numberArray", type: "array", arrayType: "number", required: false }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch(e) {
+        strictEqual(e.message, "argName.number not number34:");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {string} no_extra stringMinLength', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        const { string } = Util.parseOptions("argName", {
+          string: "1"
+        }, [
+          { name: "string", type: "string", required: false, stringMinLength: 2 }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch(e) {
+        strictEqual(e.message, "argName.string not string2:");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {string} no_extra stringMaxLength', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        const { string } = Util.parseOptions("argName", {
+          string: "12"
+        }, [
+          { name: "string", type: "string", required: false, stringMaxLength: 1 },
+        ], "no_extra");
+        strictEqual(true, false);  
+      } catch(e) {
+        strictEqual(e.message, "argName.string not string:1");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple {string} no_extra stringMaxLength happy path', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const { string } = Util.parseOptions("argName", {
+        string: "1"
+      }, [
+        { name: "string", type: "string", required: false, stringMaxLength: 1 },
+      ], "no_extra");
+      strictEqual(string, "1");
+      
+    };
+    test().then(done).catch(done);
+  });
+
   it('simple {number: undefined} no_extra with ignore undefined', (done) => {
 
     const test = async () => {
