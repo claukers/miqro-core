@@ -132,7 +132,7 @@ const isValueType = (
     case "number": {
       let isType = !isNaN(value);
       const parsedValue = isType ? parseInt(value, 10) : value;
-      if (isType && numberMin !== undefined && parsedValue <= numberMin) {
+      if (isType && numberMin !== undefined && parsedValue < numberMin) {
         isType = false;
       }
       if (isType && numberMax !== undefined && parsedValue > numberMax) {
@@ -169,7 +169,7 @@ const isValueType = (
     case "string":{
       let isType = typeof value === type;
       const parsedValue = value;
-      if (isType && stringMinLength !== undefined && parsedValue.length <= stringMinLength) {
+      if (isType && stringMinLength !== undefined && parsedValue.length < stringMinLength) {
         isType = false;
       }
       if (isType && stringMaxLength !== undefined && parsedValue.length > stringMaxLength) {

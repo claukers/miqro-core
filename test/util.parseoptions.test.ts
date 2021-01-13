@@ -889,17 +889,25 @@ describe('lib.Util.parseOptions unit tests', function () {
         const { number } = Util.parseOptions("argName", {
           number: 33
         }, [
-          { name: "number", type: "number", required: false, numberMin: 34 },
-          { name: "string", type: "string", required: false },
-          { name: "boolean", type: "boolean", required: false },
-          { name: "object", type: "object", required: false },
-          { name: "stringArray", type: "array", arrayType: "string", required: false },
-          { name: "numberArray", type: "array", arrayType: "number", required: false }
+          { name: "number", type: "number", required: false, numberMin: 34 }
         ], "no_extra");
         strictEqual(false, true);
       } catch(e) {
         strictEqual(e.message, "argName.number not number34:");
       }
+    };
+    test().then(done).catch(done);
+  });
+  it('simple {number} no_extra numberMin 0 and defaultValue 0 happy path', (done) => {
+
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const { number } = Util.parseOptions("argName", {
+        number: 0
+      }, [
+        { name: "number", type: "number", required: false, numberMin: 0, defaultValue: 0 }
+      ], "no_extra");
+      strictEqual(number, 0);
     };
     test().then(done).catch(done);
   });
