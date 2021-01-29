@@ -8,10 +8,6 @@
     "type": "git",
     "url": "https://github.com/claukers/miqro-core.git"
   },
-  "bin": {
-    "core": "dist/cli/cli.js",
-    "miqro-core": "dist/cli/cli.js"
-  },
   "scripts": {
     "prepare": "npm run build",
     "prebuild": "rm -Rf dist;",
