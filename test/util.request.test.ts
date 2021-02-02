@@ -228,6 +228,18 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
+  it('simple post /post/sum happy path with utf-8', (done) => {
+    (async () => {
+      const resp = await Util.request({
+        url: "http://localhost:8080/post/sum",
+        method: "POST",
+        data: [{val: 1, ñ: "ññññ"}, {val: 2}]
+      });
+      strictEqual(resp.data, "3");
+      strictEqual(resp.status, 200);
+    })().then(done).catch(done);
+  });
+
   it('simple post /hello happy path over unix socket', (done) => {
     (async () => {
       const {data, status} = await Util.request({

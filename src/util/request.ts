@@ -1,10 +1,10 @@
-import {getLogger, Logger} from "./logger";
+import { getLogger, Logger } from "./logger";
 import http from "http";
-import {format as urlFormat, parse as urlParse, UrlWithStringQuery} from "url";
+import { format as urlFormat, parse as urlParse, UrlWithStringQuery } from "url";
 import https from "https";
-import {RequestOptions, RequestResponse, ResponseError} from "./request_common";
-import {gunzipSync} from "zlib";
-import {parse as parseQuery, stringify as stringifyQuery} from "querystring";
+import { RequestOptions, RequestResponse, ResponseError } from "./request_common";
+import { gunzipSync } from "zlib";
+import { parse as parseQuery, stringify as stringifyQuery } from "querystring";
 
 const DEFAULT_USER_AGENT = "curl/7.69.1";
 const CONTENT_TYPE_HEADER = "Content-Type";
@@ -29,7 +29,7 @@ export const request = (options: RequestOptions, logger?: Logger): Promise<Reque
           options.headers["Content-Type"] = TEXT_TYPE;
         }
         const data = options.data ? !isJSON ? options.data : JSON.stringify(options.data) : undefined;
-        const contentLength = data ? data.length : 0;
+        const contentLength = data ? Buffer.from(data).length : 0;
         const urlO: UrlWithStringQuery = urlParse(options.url);
         if (urlO.protocol === null) {
           urlO.protocol = "http:";
@@ -42,8 +42,8 @@ export const request = (options: RequestOptions, logger?: Logger): Promise<Reque
               ...options.query,
               ...parseQuery(urlO.query)
             } : {
-              ...options.query
-            });
+                ...options.query
+              });
             const req: http.ClientRequest = requestModule({
               agent: false,
               path: `${urlO.pathname}${queryStr ? `?${queryStr}` : ""}${urlO.hash ? urlO.hash : ""}`,
