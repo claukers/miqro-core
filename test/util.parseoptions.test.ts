@@ -1,5 +1,6 @@
 import { strictEqual } from "assert";
 import { describe, it } from 'mocha';
+import { inspect } from "util";
 
 describe('lib.Util.parseOptions unit tests', function () {
 
@@ -73,6 +74,55 @@ describe('lib.Util.parseOptions unit tests', function () {
       }, [
         { name: "stringArray", type: "array", arrayType: "string", required: false, arrayMinLength: 0, arrayMaxLength: 2 },
       ], "no_extra");
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple allowNull false default happy path', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        const ret = Util.parseOptions("argName", {
+          number: null
+        }, [
+          { name: "number", type: "number", required: true }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.number not number");
+        strictEqual(e.argAttr, "argName.number");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple allowNull false happy path', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        const ret = Util.parseOptions("argName", {
+          number: null
+        }, [
+          { name: "number", type: "number", required: true, allowNull: false }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.number not number");
+        strictEqual(e.argAttr, "argName.number");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple allowNull happy path', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const { number } = Util.parseOptions("argName", {
+        number: null
+      }, [
+        { name: "number", type: "number", required: true, allowNull: true }
+      ], "no_extra");
+      strictEqual(number, null);
     };
     test().then(done).catch(done);
   });
@@ -803,7 +853,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
     const test = async () => {
       const { Util } = require("../src/util/util");
-      
+
       const { number } = Util.parseOptions("argName", {
         number: undefined
       }, [
@@ -823,7 +873,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
     const test = async () => {
       const { Util } = require("../src/util/util");
-      
+
       const { number } = Util.parseOptions("argName", {
       }, [
         { name: "number", type: "number", required: false, defaultValue: 33 },
@@ -854,7 +904,7 @@ describe('lib.Util.parseOptions unit tests', function () {
           { name: "numberArray", type: "array", arrayType: "number", required: false }
         ], "no_extra");
         strictEqual(false, true);
-      } catch(e) {
+      } catch (e) {
         strictEqual(e.message, "argName.number not number:32");
       }
     };
@@ -876,7 +926,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         { name: "numberArray", type: "array", arrayType: "number", required: false }
       ], "no_extra");
       strictEqual(number, 33);
-      
+
     };
     test().then(done).catch(done);
   });
@@ -892,7 +942,7 @@ describe('lib.Util.parseOptions unit tests', function () {
           { name: "number", type: "number", required: false, numberMin: 34 }
         ], "no_extra");
         strictEqual(false, true);
-      } catch(e) {
+      } catch (e) {
         strictEqual(e.message, "argName.number not number34:");
       }
     };
@@ -923,7 +973,7 @@ describe('lib.Util.parseOptions unit tests', function () {
           { name: "string", type: "string", required: false, stringMinLength: 2 }
         ], "no_extra");
         strictEqual(false, true);
-      } catch(e) {
+      } catch (e) {
         strictEqual(e.message, "argName.string not string2:");
       }
     };
@@ -940,8 +990,8 @@ describe('lib.Util.parseOptions unit tests', function () {
         }, [
           { name: "string", type: "string", required: false, stringMaxLength: 1 },
         ], "no_extra");
-        strictEqual(true, false);  
-      } catch(e) {
+        strictEqual(true, false);
+      } catch (e) {
         strictEqual(e.message, "argName.string not string:1");
       }
     };
@@ -958,7 +1008,7 @@ describe('lib.Util.parseOptions unit tests', function () {
         { name: "string", type: "string", required: false, stringMaxLength: 1 },
       ], "no_extra");
       strictEqual(string, "1");
-      
+
     };
     test().then(done).catch(done);
   });

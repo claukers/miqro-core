@@ -1,5 +1,5 @@
-import {ConfigPathResolver} from "./config";
-import {ParseOptionsError} from "./error";
+import { ConfigPathResolver } from "./config";
+import { ParseOptionsError } from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
@@ -23,6 +23,7 @@ export interface ParseOption extends ParseOptionValueType {
 
 export interface ParseOptionValueType {
   type: ParseSimpleType;
+  allowNull?: boolean;
   arrayType?: ParseSimpleType;
   arrayMinLength?: number;
   arrayMaxLength?: number;
@@ -55,6 +56,7 @@ const isValueType = (
     arrayMaxLength,
     numberMax,
     numberMin,
+    allowNull,
     stringMaxLength,
     stringMinLength
   }: IsValueTypeArgs): { isType: boolean; parsedValue: any; } => {
@@ -70,123 +72,131 @@ const isValueType = (
     }
   }
 
-  switch (type) {
-    case "nested":
-      if (!nestedOptions) {
-        throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
-      }
-      const pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode);
-      return {
-        isType: pValue !== null,
-        parsedValue: pValue === null ? value : pValue
-      };
-    case "array":
-      const parsedList: SimpleTypes[] = [];
-      let isType = value instanceof Array;
-      if (isType) {
-        if (arrayType === undefined) {
-          for (const v of value) {
-            parsedList.push(v);
-          }
-        } else {
-          for (let i = 0; i < value.length; i++) {
-            const v = value[i];
-            const aiType = isValueType({
-              name: `${name}.${attrName}`,
-              attrName: `[${i}]`,
-              type: arrayType,
-              value: v,
-              numberMin,
-              numberMax,
-              stringMinLength,
-              stringMaxLength,
-              nestedOptions,
-              enumValues,
-              arrayMaxLength,
-              arrayMinLength
-            });
-            if (!aiType.isType) {
-              isType = false;
-              break;
-            } else {
-              parsedList.push(aiType.parsedValue);
+  if (allowNull && value === null) {
+    return {
+      isType: true,
+      parsedValue: null
+    };
+  } else {
+    switch (type) {
+      case "nested":
+        if (!nestedOptions) {
+          throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
+        }
+        const pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode);
+        return {
+          isType: pValue !== null,
+          parsedValue: pValue === null ? value : pValue
+        };
+      case "array":
+        const parsedList: SimpleTypes[] = [];
+        let isType = value instanceof Array;
+        if (isType) {
+          if (arrayType === undefined) {
+            for (const v of value) {
+              parsedList.push(v);
+            }
+          } else {
+            for (let i = 0; i < value.length; i++) {
+              const v = value[i];
+              const aiType = isValueType({
+                name: `${name}.${attrName}`,
+                attrName: `[${i}]`,
+                type: arrayType,
+                value: v,
+                numberMin,
+                numberMax,
+                allowNull,
+                stringMinLength,
+                stringMaxLength,
+                nestedOptions,
+                enumValues,
+                arrayMaxLength,
+                arrayMinLength
+              });
+              if (!aiType.isType) {
+                isType = false;
+                break;
+              } else {
+                parsedList.push(aiType.parsedValue);
+              }
             }
           }
         }
+        if (isType && arrayMinLength !== undefined && parsedList.length < arrayMinLength) {
+          isType = false;
+        }
+        if (isType && arrayMaxLength !== undefined && parsedList.length > arrayMaxLength) {
+          isType = false;
+        }
+        return {
+          isType,
+          parsedValue: isType ? parsedList : value
+        };
+      case "any":
+        return {
+          isType: true,
+          parsedValue: value
+        };
+      case "number": {
+        let isType = value === null ? false : !isNaN(value);
+        const parsedValue = isType ? parseInt(value, 10) : value;
+        if (isType && numberMin !== undefined && parsedValue < numberMin) {
+          isType = false;
+        }
+        if (isType && numberMax !== undefined && parsedValue > numberMax) {
+          isType = false;
+        }
+        return {
+          isType,
+          parsedValue
+        };
       }
-      if (isType && arrayMinLength !== undefined && parsedList.length < arrayMinLength) {
-        isType = false;
+      case "boolean":
+        const parsedValue = value === "true" || value === true ? true : value === "false" || value === false ? false : null;
+        return {
+          isType: parsedValue !== null,
+          parsedValue: parsedValue !== null ? parsedValue : value
+        };
+      case "enum":
+        const enumCheck = isValueType({
+          name: `${name}.${attrName}`,
+          attrName: `enumList`,
+          type: "array",
+          value: enumValues,
+          arrayType: "string"
+        });
+        if (enumCheck.isType && enumValues && enumValues.length > 0) {
+          enumCheck.isType = enumValues.indexOf(value) !== -1;
+        } else {
+          throw new ParseOptionsError(`options.enumValues not a string array`);
+        }
+        return {
+          isType: enumCheck.isType,
+          parsedValue: value
+        };
+      case "string": {
+        let isType = typeof value === type;
+        const parsedValue = value;
+        if (isType && stringMinLength !== undefined && parsedValue.length < stringMinLength) {
+          isType = false;
+        }
+        if (isType && stringMaxLength !== undefined && parsedValue.length > stringMaxLength) {
+          isType = false;
+        }
+        return {
+          isType,
+          parsedValue
+        };
       }
-      if (isType && arrayMaxLength !== undefined && parsedList.length > arrayMaxLength) {
-        isType = false;
-      }
-      return {
-        isType,
-        parsedValue: isType ? parsedList : value
-      };
-    case "any":
-      return {
-        isType: true,
-        parsedValue: value
-      };
-    case "number": {
-      let isType = !isNaN(value);
-      const parsedValue = isType ? parseInt(value, 10) : value;
-      if (isType && numberMin !== undefined && parsedValue < numberMin) {
-        isType = false;
-      }
-      if (isType && numberMax !== undefined && parsedValue > numberMax) {
-        isType = false;
-      }
-      return {
-        isType,
-        parsedValue
-      };
+      case "object":
+        return {
+          isType: typeof value === type,
+          parsedValue: value
+        };
+      default:
+        throw new ParseOptionsError(`unsupported type ${type}`);
     }
-    case "boolean":
-      const parsedValue = value === "true" || value === true ? true : value === "false" || value === false ? false : null;
-      return {
-        isType: parsedValue !== null,
-        parsedValue: parsedValue !== null ? parsedValue : value
-      };
-    case "enum":
-      const enumCheck = isValueType({
-        name: `${name}.${attrName}`,
-        attrName: `enumList`,
-        type: "array",
-        value: enumValues,
-        arrayType: "string"
-      });
-      if (enumCheck.isType && enumValues && enumValues.length > 0) {
-        enumCheck.isType = enumValues.indexOf(value) !== -1;
-      } else {
-        throw new ParseOptionsError(`options.enumValues not a string array`);
-      }
-      return {
-        isType: enumCheck.isType,
-        parsedValue: value
-      };
-    case "string":{
-      let isType = typeof value === type;
-      const parsedValue = value;
-      if (isType && stringMinLength !== undefined && parsedValue.length < stringMinLength) {
-        isType = false;
-      }
-      if (isType && stringMaxLength !== undefined && parsedValue.length > stringMaxLength) {
-        isType = false;
-      }
-      return {
-        isType,
-        parsedValue
-      };
-    }
-    case "object":
-      return {
-        isType: typeof value === type,
-        parsedValue: value
-      };
-    default:
-      throw new ParseOptionsError(`unsupported type ${type}`);
   }
 };
 
@@ -203,7 +213,7 @@ export const parseOptions = (
   }
   for (const option of options) {
     const value = arg[option.name];
-    if(value === undefined && option.defaultValue !== undefined) {
+    if (value === undefined && option.defaultValue !== undefined) {
       ret[option.name] = option.defaultValue;
       continue;
     }
@@ -213,13 +223,14 @@ export const parseOptions = (
     } else if (!exists && option.required) {
       throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
     }
-    const {isType, parsedValue} = isValueType({
+    const { isType, parsedValue } = isValueType({
       name,
       attrName: option.name,
       type: option.type,
       value: value,
       numberMin: option.numberMin,
       numberMax: option.numberMax,
+      allowNull: option.allowNull,
       stringMinLength: option.stringMinLength,
       stringMaxLength: option.stringMaxLength,
       arrayType: option.arrayType,
