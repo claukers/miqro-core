@@ -182,7 +182,6 @@ const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req:
           }
         }
       } catch (e) {
-        logger.error(e);
         reject(e);
       }
     };
