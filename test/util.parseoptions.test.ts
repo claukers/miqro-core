@@ -296,6 +296,96 @@ describe('lib.Util.parseOptions unit tests', function () {
     };
     test().then(done).catch(done);
   });
+
+  it('simple valid check no_extra with enum and multiple', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const ret = Util.parseOptions("argName", {
+        number: 1,
+        string: "string",
+        boolean: false,
+        object: {},
+        stringArray: ["", ""],
+        numberArray: [1, 2, 3]
+      }, [
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        {
+          name: "object", type: "multiple", required: true, multipleOptions: [
+            { type: "string" },
+            { type: "object" }
+          ]
+        },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
+      ], "no_extra");
+      strictEqual(Object.keys(ret).length, 6);
+      strictEqual(ret.number, 1);
+      strictEqual(ret.string, "string");
+      strictEqual(ret.boolean, false);
+      strictEqual(typeof ret.object, "object");
+      strictEqual(ret.stringArray.length, 2);
+      strictEqual(ret.numberArray.length, 3);
+
+      const ret2 = Util.parseOptions("argName", {
+        number: 1,
+        string: "string",
+        boolean: false,
+        object: "bla",
+        stringArray: ["", ""],
+        numberArray: [1, 2, 3]
+      }, [
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        {
+          name: "object", type: "multiple", required: true, multipleOptions: [
+            { type: "string" },
+            { type: "object" }
+          ]
+        },
+        { name: "stringArray", type: "array", arrayType: "string", required: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
+      ], "no_extra");
+      strictEqual(Object.keys(ret).length, 6);
+      strictEqual(ret2.number, 1);
+      strictEqual(ret2.string, "string");
+      strictEqual(ret2.boolean, false);
+      strictEqual(ret2.object, "bla");
+      strictEqual(ret2.stringArray.length, 2);
+      strictEqual(ret2.numberArray.length, 3);
+
+      try {
+        Util.parseOptions("argName", {
+          number: 1,
+          string: "string",
+          boolean: false,
+          object: "bla",
+          stringArray: ["", ""],
+          numberArray: [1, 2, 3]
+        }, [
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          {
+            name: "object", type: "multiple", required: true, multipleOptions: [
+              { type: "number" },
+              { type: "object" }
+            ]
+          },
+          { name: "stringArray", type: "array", arrayType: "string", required: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
+        ], "no_extra");
+        strictEqual(true, false);
+      } catch (e) {
+        strictEqual(e.message, "argName.object not multiple as defined.");
+      }
+
+    };
+    test().then(done).catch(done);
+  });
+
   it('simple valid check no_extra with enum in array', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
@@ -324,6 +414,62 @@ describe('lib.Util.parseOptions unit tests', function () {
     };
     test().then(done).catch(done);
   });
+
+  it('simple valid check no_extra with enum in array with forceArray', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const ret = Util.parseOptions("argName", {
+        number: 1,
+        string: "string",
+        boolean: true,
+        object: {},
+        stringArray: "object",
+        numberArray: [1, 2, 3]
+      }, [
+        { name: "number", type: "number", required: true },
+        { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+        { name: "boolean", type: "boolean", required: true },
+        { name: "object", type: "object", required: true },
+        { name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"], forceArray: true },
+        { name: "numberArray", type: "array", arrayType: "number", required: true }
+      ], "no_extra");
+      strictEqual(Object.keys(ret).length, 6);
+      strictEqual(ret.number, 1);
+      strictEqual(ret.string, "string");
+      strictEqual(ret.boolean, true);
+      strictEqual(typeof ret.object, "object");
+      strictEqual(ret.stringArray.length, 1);
+      strictEqual(ret.numberArray.length, 3);
+    };
+    test().then(done).catch(done);
+  });
+
+  it('simple invalid check no_extra with enum in array with forceArray', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      try {
+        Util.parseOptions("argName", {
+          number: 1,
+          string: "string",
+          boolean: true,
+          object: {},
+          stringArray: "object",
+          numberArray: 1
+        }, [
+          { name: "number", type: "number", required: true },
+          { name: "string", type: "enum", required: true, enumValues: ["string", "number"] },
+          { name: "boolean", type: "boolean", required: true },
+          { name: "object", type: "object", required: true },
+          { name: "stringArray", type: "array", arrayType: "enum", required: true, enumValues: ["object", "function"], forceArray: true },
+          { name: "numberArray", type: "array", arrayType: "number", required: true }
+        ], "no_extra");
+      } catch (e) {
+        strictEqual(e.message, "argName.numberArray not array of number");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
   it('simple invalid check no_extra with enum in array', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");

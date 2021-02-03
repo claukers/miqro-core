@@ -3,7 +3,7 @@ import { ParseOptionsError } from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
-export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array" | "enum";
+export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array" | "enum" | "multiple";
 
 export interface SimpleMap<T2> {
   [key: string]: T2;
@@ -14,15 +14,21 @@ export interface NestedParseOption {
   mode: ParseOptionsMode;
 }
 
-export interface ParseOption extends ParseOptionValueType {
-  name: string;
+export interface BasicParseOption extends ParseOptionValueType {
   required: boolean;
+  description?: string;
+}
+
+export interface ParseOption extends BasicParseOption {
+  name: string;
   description?: string;
   defaultValue?: any;
 }
 
 export interface ParseOptionValueType {
   type: ParseSimpleType;
+  multipleOptions?: BasicParseOption[];
+  forceArray?: boolean;
   allowNull?: boolean;
   arrayType?: ParseSimpleType;
   arrayMinLength?: number;
@@ -48,9 +54,11 @@ const isValueType = (
     attrName,
     type,
     value,
+    multipleOptions,
     arrayType,
     nestedOptions,
     enumValues,
+    forceArray,
     parseJSON,
     arrayMinLength,
     arrayMaxLength,
@@ -78,7 +86,36 @@ const isValueType = (
       parsedValue: null
     };
   } else {
+
+    if (forceArray && type === "array" && !(value instanceof Array)) {
+      value = [value];
+    } else if (forceArray && type !== "array") {
+      throw new ParseOptionsError(`unsupported type ${type} with forceArray`);
+    }
+
     switch (type) {
+      case "multiple": {
+        if (!multipleOptions) {
+          throw new ParseOptionsError(`unsupported type ${type} without multipleOptions`);
+        }
+        for (let i = 0; i < multipleOptions.length; i++) {
+          const basicOption = multipleOptions[i];
+          const aiType = isValueType({
+            ...basicOption,
+            forceArray,
+            name,
+            attrName,
+            value
+          });
+          if (aiType.isType) {
+            return aiType;
+          }
+        }
+        return {
+          isType: false,
+          parsedValue: value
+        };
+      }
       case "nested":
         if (!nestedOptions) {
           throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
@@ -103,10 +140,12 @@ const isValueType = (
                 name: `${name}.${attrName}`,
                 attrName: `[${i}]`,
                 type: arrayType,
+                forceArray: false,
                 value: v,
                 numberMin,
                 numberMax,
                 allowNull,
+                multipleOptions,
                 stringMinLength,
                 stringMaxLength,
                 nestedOptions,
@@ -162,6 +201,7 @@ const isValueType = (
         const enumCheck = isValueType({
           name: `${name}.${attrName}`,
           attrName: `enumList`,
+          forceArray: false,
           type: "array",
           value: enumValues,
           arrayType: "string"
@@ -227,10 +267,11 @@ export const parseOptions = (
       name,
       attrName: option.name,
       type: option.type,
-      value: value,
+      value,
       numberMin: option.numberMin,
       numberMax: option.numberMax,
       allowNull: option.allowNull,
+      multipleOptions: option.multipleOptions,
       stringMinLength: option.stringMinLength,
       stringMaxLength: option.stringMaxLength,
       arrayType: option.arrayType,
@@ -238,7 +279,8 @@ export const parseOptions = (
       enumValues: option.enumValues,
       parseJSON: option.parseJSON,
       arrayMaxLength: option.arrayMaxLength,
-      arrayMinLength: option.arrayMinLength
+      arrayMinLength: option.arrayMinLength,
+      forceArray: option.forceArray
     });
     if (!isType) {
       throw new ParseOptionsError(
@@ -246,7 +288,10 @@ export const parseOptions = (
         `${option.type === "number" && option.numberMin !== undefined ? `${option.numberMin}:` : ""}${option.type === "number" && option.numberMax !== undefined ? `:${option.numberMax}` : ""}` +
         `${option.type === "string" && option.stringMinLength !== undefined ? `${option.stringMinLength}:` : ""}${option.type === "string" && option.stringMaxLength !== undefined ? `:${option.stringMaxLength}` : ""}` +
         `${option.type === "array" && option.arrayMinLength !== undefined ? `${option.arrayMinLength}:` : ""}${option.type === "array" && option.arrayMaxLength !== undefined ? `:${option.arrayMaxLength}` : ""}` +
-        `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : (option.type === "nested" ? " as defined!" : (option.type === "enum" ? ` as defined. valid values [${option.enumValues}]` : ""))}`,
+        `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : ""}` +
+        `${option.type === "nested" ? " as defined!" : ""}` +
+        `${option.type === "enum" ? ` as defined. valid values [${option.enumValues}]` : ""}` +
+        `${option.type === "multiple" ? ` as defined.` : ""}`,
         `${name}.${option.name}`
       );
     }
@@ -277,7 +322,6 @@ export const parseOptions = (
       throw new ParseOptionsError(`unsupported mode ${mode}`);
   }
 };
-
 
 export const checkEnvVariables = (requiredEnvVariables: string[], defaults?: string[]): string[] => {
   if (defaults && defaults.length !== requiredEnvVariables.length) {
