@@ -243,6 +243,15 @@ const isValueType = (
   }
 };
 
+export const parseOptionMap2ParseOptionList = (map: SimpleMap<NoNameParseOption>): ParseOption[] => {
+  return Object.keys(map).map(name => {
+    return {
+      ...map[name],
+      name
+    };
+  });
+}
+
 export const parseOptions = (
   name: string,
   arg: SimpleMap<SimpleTypes>,
@@ -255,12 +264,7 @@ export const parseOptions = (
     throw new ParseOptionsError(`invalid ${name}`, name);
   }
   if (!(options instanceof Array)) {
-    options = Object.keys(options).map(name => {
-      return {
-        ...(options as SimpleMap<NoNameParseOption>)[name],
-        name
-      };
-    });
+    options = parseOptionMap2ParseOptionList(options);
   }
   for (const option of options) {
     const value = arg[option.name];
