@@ -10,7 +10,7 @@ export interface SimpleMap<T2> {
 }
 
 export interface NestedParseOption {
-  options: ParseOption[];
+  options: ParseOption[] | SimpleMap<ParseOption>;
   mode: ParseOptionsMode;
 }
 
@@ -19,10 +19,13 @@ export interface BasicParseOption extends ParseOptionValueType {
   description?: string;
 }
 
-export interface ParseOption extends BasicParseOption {
-  name: string;
+export interface NoNameParseOption extends BasicParseOption {
   description?: string;
   defaultValue?: any;
+}
+
+export interface ParseOption extends NoNameParseOption {
+  name: string;
 }
 
 export interface ParseOptionValueType {
@@ -243,13 +246,21 @@ const isValueType = (
 export const parseOptions = (
   name: string,
   arg: SimpleMap<SimpleTypes>,
-  options: ParseOption[],
+  options: ParseOption[] | SimpleMap<NoNameParseOption>,
   mode: ParseOptionsMode = "no_extra",
   ignoreUndefined = false
 ): SimpleMap<SimpleTypes> => {
   const ret: SimpleMap<SimpleTypes> = {};
   if (!arg || typeof arg !== "object") {
     throw new ParseOptionsError(`invalid ${name}`, name);
+  }
+  if (!(options instanceof Array)) {
+    options = Object.keys(options).map(name => {
+      return {
+        ...(options as SimpleMap<NoNameParseOption>)[name],
+        name
+      };
+    });
   }
   for (const option of options) {
     const value = arg[option.name];

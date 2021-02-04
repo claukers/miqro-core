@@ -1,9 +1,9 @@
-import {ConfigPathResolver, LoadConfigOut, setServiceName, setupNodeEnv} from "./config";
-import {getLogger, Logger, LoggerFormatter, LoggerTransport} from "./logger";
-import {request} from "./request";
-import {RequestOptions, RequestResponse} from "./request_common";
-import {checkEnvVariables, ParseOption, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes} from "./option-parser";
-import {loadConfig} from "./loader";
+import { ConfigPathResolver, LoadConfigOut, setServiceName, setupNodeEnv } from "./config";
+import { getLogger, Logger, LoggerFormatter, LoggerTransport } from "./logger";
+import { request } from "./request";
+import { RequestOptions, RequestResponse } from "./request_common";
+import { checkEnvVariables, NoNameParseOption, ParseOption, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes } from "./option-parser";
+import { loadConfig } from "./loader";
 
 
 export type ConfigOutput = SimpleMap<string>;
@@ -37,7 +37,7 @@ export abstract class Util {
   public static parseOptions(
     name: string,
     arg: SimpleMap<SimpleTypes>,
-    options: ParseOption[],
+    options: ParseOption[] | SimpleMap<NoNameParseOption>,
     mode: ParseOptionsMode = "no_extra",
     ignoreUndefined = false,
   ): SimpleMap<SimpleTypes> {

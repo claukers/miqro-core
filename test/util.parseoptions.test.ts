@@ -604,6 +604,72 @@ describe('lib.Util.parseOptions unit tests', function () {
     };
     test().then(done).catch(done);
   });
+  it('simple valid check no_extra with enum in nested and simplemap as options', (done) => {
+    const test = async () => {
+      const { Util } = require("../src/util/util");
+      const ret = Util.parseOptions("argName", {
+        number: 1,
+        string: "string",
+        boolean: true,
+        object: {},
+        stringArray: ["object", "function"],
+        numberArray: [1, 2, 3],
+        nested: {
+          stringArray2: ["object", "function"],
+        }
+      }, {
+        number: {
+          type: "number",
+          required: true,
+        },
+        string: {
+          type: "enum",
+          required: true,
+          enumValues: ["string", "number"]
+        },
+        boolean: {
+          type: "boolean",
+          required: true
+        },
+        object: {
+          type: "object",
+          required: true
+        },
+        stringArray: {
+          type: "array",
+          arrayType: "enum",
+          required: true,
+          enumValues: ["object", "function"]
+        },
+        numberArray: {
+          type: "array",
+          arrayType: "number",
+          required: true
+        },
+        nested: {
+          type: "nested", required: true, nestedOptions: {
+            options: {
+              stringArray2: {
+                type: "array",
+                arrayType: "enum",
+                required: true,
+                enumValues: ["object", "function"]
+              }
+            },
+            mode: "no_extra"
+          }
+        }
+      }, "no_extra");
+      strictEqual(Object.keys(ret).length, 7);
+      strictEqual(ret.number, 1);
+      strictEqual(ret.string, "string");
+      strictEqual(ret.boolean, true);
+      strictEqual(typeof ret.object, "object");
+      strictEqual(ret.stringArray.length, 2);
+      strictEqual(ret.numberArray.length, 3);
+    };
+    test().then(done).catch(done);
+  });
   it('simple valid check no_extra with enum in nested', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
