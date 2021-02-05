@@ -10,7 +10,7 @@ export interface SimpleMap<T2> {
 }
 
 export interface NestedParseOption {
-  options: ParseOption[] | SimpleMap<ParseOption>;
+  options: ParseOption[] | ParseOptionMap;
   mode: ParseOptionsMode;
 }
 
@@ -243,7 +243,9 @@ const isValueType = (
   }
 };
 
-export const parseOptionMap2ParseOptionList = (map: SimpleMap<NoNameParseOption>): ParseOption[] => {
+export type ParseOptionMap = SimpleMap<NoNameParseOption>;
+
+export const parseOptionMap2ParseOptionList = (map: ParseOptionMap): ParseOption[] => {
   return Object.keys(map).map(name => {
     return {
       ...map[name],
@@ -255,7 +257,7 @@ export const parseOptionMap2ParseOptionList = (map: SimpleMap<NoNameParseOption>
 export const parseOptions = (
   name: string,
   arg: SimpleMap<SimpleTypes>,
-  options: ParseOption[] | SimpleMap<NoNameParseOption>,
+  options: ParseOption[] | ParseOptionMap,
   mode: ParseOptionsMode = "no_extra",
   ignoreUndefined = false
 ): SimpleMap<SimpleTypes> => {
