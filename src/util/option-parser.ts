@@ -3,7 +3,8 @@ import { ParseOptionsError } from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
-export type ParseSimpleType = "string" | "boolean" | "number" | "object" | "any" | "nested" | "array" | "enum" | "multiple";
+export type ParseSimpleTypeWithOutOptions = "string" | "boolean" | "number" | "object" | "any" | "array";
+export type ParseSimpleType = "nested" | "enum" | "multiple" | ParseSimpleTypeWithOutOptions;
 
 export interface SimpleMap<T2> {
   [key: string]: T2;
@@ -243,14 +244,19 @@ const isValueType = (
   }
 };
 
-export type ParseOptionMap = SimpleMap<NoNameParseOption>;
+export type ParseOptionMap = SimpleMap<NoNameParseOption | ParseSimpleTypeWithOutOptions>;
 
 export const parseOptionMap2ParseOptionList = (map: ParseOptionMap): ParseOption[] => {
   return Object.keys(map).map(name => {
-    return {
-      ...map[name],
-      name
-    };
+    const val = map[name];
+    return typeof val !== "object" ? {
+      name,
+      required: true,
+      type: val
+    } : {
+        ...val,
+        name
+      };
   });
 }
 

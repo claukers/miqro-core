@@ -2,7 +2,7 @@ import { ConfigPathResolver, LoadConfigOut, setServiceName, setupNodeEnv } from 
 import { getLogger, Logger, LoggerFormatter, LoggerTransport } from "./logger";
 import { request } from "./request";
 import { RequestOptions, RequestResponse } from "./request_common";
-import { checkEnvVariables, NoNameParseOption, ParseOption, ParseOptionMap, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes } from "./option-parser";
+import { checkEnvVariables, ParseOption, ParseOptionMap, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes } from "./option-parser";
 import { loadConfig } from "./loader";
 
 
