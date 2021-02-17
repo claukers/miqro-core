@@ -1,5 +1,5 @@
 export const isFeatureEnabled = (feature: string, defaults = false): boolean => {
-  const featureToggleName = `FEATURE_TOGGLE_${feature.toUpperCase()}`;
+  const featureToggleName = `${feature.toUpperCase()}`;
   if (process.env[featureToggleName] === undefined) {
     return defaults;
   } else {
