@@ -14,10 +14,10 @@ describe('FeatureToggle func tests', function () {
     strictEqual(FeatureToggle.isFeatureEnabled("MY_FEATURE"), true);
   });
 
-  it("happy path undefined", () => {
+  it("happy path undefined enabled by default", () => {
     const {isFeatureEnabled} = require("../src");
     delete process.env["MY_FEATURE"];
-    strictEqual(isFeatureEnabled("MY_FEATURE"), false);
+    strictEqual(isFeatureEnabled("MY_FEATURE"), true);
   });
 
   it("happy path false", () => {
