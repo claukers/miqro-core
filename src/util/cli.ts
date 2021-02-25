@@ -1,10 +1,10 @@
-import {SimpleMap} from "./option-parser";
+import {Map} from "./parser";
 import {Logger} from "./logger";
 
 export type CB<T> = () => T;
 
 // noinspection SpellCheckingInspection
-export type CMDMapType = SimpleMap<{ cb: CB<void> | CB<Promise<void>>; description: string }>
+export type CMDMapType = Map<{ cb: CB<void> | CB<Promise<void>>; description: string }>
 
 export abstract class CLIUtil {
   // noinspection SpellCheckingInspection

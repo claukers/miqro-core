@@ -2,11 +2,11 @@ import { ConfigPathResolver, LoadConfigOut, setServiceName, setupNodeEnv } from 
 import { getLogger, Logger, LoggerFormatter, LoggerTransport } from "./logger";
 import { request } from "./request";
 import { RequestOptions, RequestResponse } from "./request_common";
-import { checkEnvVariables, ParseOption, ParseOptionMap, parse, ParseOptionsMode, SimpleMap, SimpleTypes } from "./parser";
+import { checkEnvVariables, ParseOption, ParseOptionMap, parse, ParseOptionsMode, Map, SimpleTypes } from "./parser";
 import { loadConfig } from "./loader";
 
 
-export type ConfigOutput = SimpleMap<string>;
+export type ConfigOutput = Map<string>;
 
 export abstract class Util {
 
@@ -36,21 +36,21 @@ export abstract class Util {
 
   public static parseOptions(
     name: string,
-    arg: SimpleMap<SimpleTypes>,
+    arg: Map<SimpleTypes>,
     options: ParseOption[] | ParseOptionMap,
     mode: ParseOptionsMode = "no_extra",
     ignoreUndefined = false,
-  ): SimpleMap<SimpleTypes> {
+  ): Map<SimpleTypes> {
     return Util.parse(name, arg, options, mode, ignoreUndefined);
   }
 
   public static parse(
     name: string,
-    arg: SimpleMap<SimpleTypes>,
+    arg: Map<SimpleTypes>,
     options: ParseOption[] | ParseOptionMap,
     mode: ParseOptionsMode = "no_extra",
     ignoreUndefined = false,
-  ): SimpleMap<SimpleTypes> {
+  ): Map<SimpleTypes> {
     return parse(name, arg, options, mode, ignoreUndefined);
   }
 

@@ -2,13 +2,15 @@ import { ConfigPathResolver } from "./config";
 import { ParseOptionsError } from "./error";
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
-export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
+export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | Map<SimpleTypes>;
 export type ParseSimpleTypeWithOutOptions = "string" | "boolean" | "number" | "object" | "any" | "array";
 export type ParseSimpleType = "nested" | "enum" | "multiple" | ParseSimpleTypeWithOutOptions;
 
-export interface SimpleMap<T2> {
-  [key: string]: T2;
+export interface Map<T> {
+  [key: string]: T;
 }
+
+export interface SimpleMap<T> extends Map<T> { }
 
 export interface NestedParseOption {
   options: ParseOption[] | ParseOptionMap;
@@ -244,7 +246,7 @@ const isValueType = (
   }
 };
 
-export type ParseOptionMap = SimpleMap<NoNameParseOption | ParseSimpleTypeWithOutOptions>;
+export type ParseOptionMap = Map<NoNameParseOption | ParseSimpleTypeWithOutOptions>;
 
 export const parseOptionMap2ParseOptionList = (map: ParseOptionMap): ParseOption[] => {
   return Object.keys(map).map(name => {
@@ -262,12 +264,12 @@ export const parseOptionMap2ParseOptionList = (map: ParseOptionMap): ParseOption
 
 export const parse = (
   name: string,
-  arg: SimpleMap<SimpleTypes>,
+  arg: Map<SimpleTypes>,
   options: ParseOption[] | ParseOptionMap,
   mode: ParseOptionsMode = "no_extra",
   ignoreUndefined = false
-): SimpleMap<SimpleTypes> => {
-  const ret: SimpleMap<SimpleTypes> = {};
+): Map<SimpleTypes> => {
+  const ret: Map<SimpleTypes> = {};
   if (!arg || typeof arg !== "object") {
     throw new ParseOptionsError(`invalid ${name}`, name);
   }

@@ -4,7 +4,7 @@ import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
 import {existsSync, readdirSync, readFileSync} from "fs";
 import {ConfigPathResolver, LoadConfigOut, MiqroRC, SequelizeRC} from "./config";
 import {ConfigFileNotFoundError} from "./error";
-import {parse, SimpleMap} from "./parser";
+import {parse, Map} from "./parser";
 
 const LOADER_IDENTIFIER = "loader";
 
@@ -16,7 +16,7 @@ export const LoaderCache: {
   rc: MiqroRC | null | false;
   // noinspection SpellCheckingInspection
   sequelizeRC: SequelizeRC | null | false;
-  extra: SimpleMap<any>;
+  extra: Map<any>;
   clear: () => void;
 } = {
   config: false,
@@ -80,7 +80,7 @@ export const loadSequelizeRC = (sequelizercPath: string = ConfigPathResolver.get
   }
 };
 
-export const loadConfigFile = (envFilePath: string, combined?: SimpleMap<string>, logger?: Logger): ConfigOutput => {
+export const loadConfigFile = (envFilePath: string, combined?: Map<string>, logger?: Logger): ConfigOutput => {
   logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
   const ret: ConfigOutput = {};
   if (!existsSync(envFilePath)) {
