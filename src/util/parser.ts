@@ -346,6 +346,8 @@ export const parse = (
   }
 };
 
+export const parseOptions = parse;
+
 export const checkEnvVariables = (requiredEnvVariables: string[], defaults?: string[]): string[] => {
   if (defaults && defaults.length !== requiredEnvVariables.length) {
     throw new Error(`defaults cannot be a different length of requiredEnvVariabled`);

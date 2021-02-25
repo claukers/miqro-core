@@ -34,6 +34,16 @@ export abstract class Util {
     return checkEnvVariables(requiredEnvVariables, defaults);
   }
 
+  public static parseOptions(
+    name: string,
+    arg: SimpleMap<SimpleTypes>,
+    options: ParseOption[] | ParseOptionMap,
+    mode: ParseOptionsMode = "no_extra",
+    ignoreUndefined = false,
+  ): SimpleMap<SimpleTypes> {
+    return Util.parse(name, arg, options, mode, ignoreUndefined);
+  }
+
   public static parse(
     name: string,
     arg: SimpleMap<SimpleTypes>,
