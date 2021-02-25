@@ -1,4 +1,4 @@
-import {SimpleMap, SimpleTypes} from "./option-parser";
+import {SimpleMap, SimpleTypes} from "./parser";
 
 export interface VerifyTokenService {
   verify(args: { token: string }): Promise<Session | null>;
@@ -17,11 +17,10 @@ export interface Session extends NoTokenSession {
 export * from "./util";
 export * from "./test_helper";
 export * from "./group";
-export * from "./option-parser";
+export * from "./parser";
 export * from "./request";
 export * from "./request_common";
 
-export * from "./stopwatch";
 export * from "./logger";
 export * from "./error";
 export * from "./cli";

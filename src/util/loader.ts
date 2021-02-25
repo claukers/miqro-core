@@ -4,7 +4,7 @@ import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
 import {existsSync, readdirSync, readFileSync} from "fs";
 import {ConfigPathResolver, LoadConfigOut, MiqroRC, SequelizeRC} from "./config";
 import {ConfigFileNotFoundError} from "./error";
-import {parseOptions, SimpleMap} from "./option-parser";
+import {parse, SimpleMap} from "./parser";
 
 const LOADER_IDENTIFIER = "loader";
 
@@ -59,7 +59,7 @@ export const loadSequelizeRC = (sequelizercPath: string = ConfigPathResolver.get
       // noinspection SpellCheckingInspection
       /* eslint-disable  @typescript-eslint/no-var-requires */
       const sequelizerc = require(sequelizercPath);
-      parseOptions(sequelizercPath, sequelizerc, [
+      parse(sequelizercPath, sequelizerc, [
         {name: "config", type: "string", required: true},
         {name: "migrations-path", type: "string", required: true},
         {name: "seeders-path", type: "string", required: true},
@@ -146,7 +146,7 @@ export const loadMiqroRC = (path = ConfigPathResolver.getMiqroRCFilePath(), logg
       logger.debug(`loading .miqrorc from [${path}]`);
       const o = JSON.parse(readFileSync(path).toString());
       if (o && typeof o === "object") {
-        Util.parseOptions(path, o, [
+        Util.parse(path, o, [
           {name: "configDirname", type: "string", required: false},
           {name: "loggerFactory", type: "string", required: false}
         ], "no_extra");

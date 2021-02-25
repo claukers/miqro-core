@@ -124,7 +124,7 @@ const isValueType = (
         if (!nestedOptions) {
           throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
         }
-        const pValue = parseOptions(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode);
+        const pValue = parse(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode);
         return {
           isType: pValue !== null,
           parsedValue: pValue === null ? value : pValue
@@ -260,7 +260,7 @@ export const parseOptionMap2ParseOptionList = (map: ParseOptionMap): ParseOption
   });
 }
 
-export const parseOptions = (
+export const parse = (
   name: string,
   arg: SimpleMap<SimpleTypes>,
   options: ParseOption[] | ParseOptionMap,

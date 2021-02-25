@@ -2,7 +2,7 @@ import { ConfigPathResolver, LoadConfigOut, setServiceName, setupNodeEnv } from 
 import { getLogger, Logger, LoggerFormatter, LoggerTransport } from "./logger";
 import { request } from "./request";
 import { RequestOptions, RequestResponse } from "./request_common";
-import { checkEnvVariables, ParseOption, ParseOptionMap, parseOptions, ParseOptionsMode, SimpleMap, SimpleTypes } from "./option-parser";
+import { checkEnvVariables, ParseOption, ParseOptionMap, parse, ParseOptionsMode, SimpleMap, SimpleTypes } from "./parser";
 import { loadConfig } from "./loader";
 
 
@@ -34,14 +34,14 @@ export abstract class Util {
     return checkEnvVariables(requiredEnvVariables, defaults);
   }
 
-  public static parseOptions(
+  public static parse(
     name: string,
     arg: SimpleMap<SimpleTypes>,
     options: ParseOption[] | ParseOptionMap,
     mode: ParseOptionsMode = "no_extra",
     ignoreUndefined = false,
   ): SimpleMap<SimpleTypes> {
-    return parseOptions(name, arg, options, mode, ignoreUndefined);
+    return parse(name, arg, options, mode, ignoreUndefined);
   }
 
   public static getLogger(identifier: string, options?: { formatter?: LoggerFormatter, transports?: LoggerTransport[] }): Logger {

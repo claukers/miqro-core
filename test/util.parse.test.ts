@@ -2,13 +2,13 @@ import { strictEqual } from "assert";
 import { describe, it } from 'mocha';
 import { inspect } from "util";
 
-describe('lib.Util.parseOptions unit tests', function () {
+describe('lib.Util.parse unit tests', function () {
 
   it('simple invalid check minLength no_extra', (done) => {
     const test = async () => {
       try {
         const { Util } = require("../src/util/util");
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           stringArray: ["", ""]
         }, [
           { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMinLength: 3 },
@@ -25,7 +25,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       try {
         const { Util } = require("../src/util/util");
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           stringArray: ["", ""]
         }, [
           { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMaxLength: 1 },
@@ -42,7 +42,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       try {
         const { Util } = require("../src/util/util");
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           stringArray: ["", ""]
         }, [
           { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMinLength: 0, arrayMaxLength: 1 },
@@ -58,7 +58,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check maxLength and minLength', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         stringArray: ["", ""]
       }, [
         { name: "stringArray", type: "array", arrayType: "string", required: true, arrayMinLength: 0, arrayMaxLength: 2 },
@@ -70,7 +70,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check maxLength and minLength required false', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
       }, [
         { name: "stringArray", type: "array", arrayType: "string", required: false, arrayMinLength: 0, arrayMaxLength: 2 },
       ], "no_extra");
@@ -82,7 +82,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: null
         }, [
           { name: "number", type: "number", required: true }
@@ -100,7 +100,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: null
         }, [
           { name: "number", type: "number", required: true, allowNull: false }
@@ -117,7 +117,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple allowNull happy path', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const { number } = Util.parseOptions("argName", {
+      const { number } = Util.parse("argName", {
         number: null
       }, [
         { name: "number", type: "number", required: true, allowNull: true }
@@ -131,7 +131,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        Util.parseOptions("argName", null, [
+        Util.parse("argName", null, [
           { name: "number", type: "number", required: true },
           { name: "string", type: "string", required: true },
           { name: "boolean", type: "boolean", required: true },
@@ -150,7 +150,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum and parseJSON', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: false,
@@ -180,7 +180,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with array and parseJSON', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: false,
@@ -211,7 +211,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with array nested and parseJSON', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: false,
@@ -243,7 +243,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       try {
         const { Util } = require("../src/util/util");
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: false,
@@ -271,7 +271,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: false,
@@ -300,7 +300,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum and multiple', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: false,
@@ -328,7 +328,7 @@ describe('lib.Util.parseOptions unit tests', function () {
       strictEqual(ret.stringArray.length, 2);
       strictEqual(ret.numberArray.length, 3);
 
-      const ret2 = Util.parseOptions("argName", {
+      const ret2 = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: false,
@@ -357,7 +357,7 @@ describe('lib.Util.parseOptions unit tests', function () {
       strictEqual(ret2.numberArray.length, 3);
 
       try {
-        Util.parseOptions("argName", {
+        Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: false,
@@ -389,7 +389,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum in array', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -418,7 +418,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum in array with forceArray', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -448,7 +448,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        Util.parseOptions("argName", {
+        Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: true,
@@ -474,7 +474,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: true,
@@ -501,7 +501,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: true,
@@ -543,7 +543,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: true,
@@ -584,7 +584,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: 1,
           string: "not valid",
           boolean: true,
@@ -607,7 +607,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum in nested and simplemap as options', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -673,7 +673,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra with enum in nested', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -718,7 +718,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -746,7 +746,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check with nested array and no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -787,7 +787,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check nested no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -825,7 +825,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple valid check nested add_extra and no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         string: "string",
         boolean: true,
@@ -867,7 +867,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const ret = Util.parseOptions("argName", {
+        const ret = Util.parse("argName", {
           number: 1,
           string: "string",
           boolean: true,
@@ -903,7 +903,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       try {
         const { Util } = require("../src/util/util");
-        Util.parseOptions("argName", {
+        Util.parse("argName", {
           number: "number",
           string: "string",
           boolean: true,
@@ -931,7 +931,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       try {
         const { Util } = require("../src/util/util");
-        Util.parseOptions("argName", {
+        Util.parse("argName", {
           number: 1,
           extraKey: "bla",
           string: "string",
@@ -960,7 +960,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
 
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         extraKey: "bla",
         string: "string",
@@ -992,7 +992,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
 
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: 1,
         extraKey: "bla",
         string: "string",
@@ -1025,7 +1025,7 @@ describe('lib.Util.parseOptions unit tests', function () {
   it('simple {} no_extra', (done) => {
     const test = async () => {
       const { Util } = require("../src/util/util");
-      Util.parseOptions("argName", {}, [
+      Util.parse("argName", {}, [
         { name: "number", type: "number", required: false },
         { name: "string", type: "string", required: false },
         { name: "boolean", type: "boolean", required: false },
@@ -1042,7 +1042,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        Util.parseOptions("argName", {
+        Util.parse("argName", {
           number: undefined
         }, [
           { name: "number", type: "number", required: false },
@@ -1066,7 +1066,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
 
-      const { number } = Util.parseOptions("argName", {
+      const { number } = Util.parse("argName", {
         number: undefined
       }, [
         { name: "number", type: "number", required: false, defaultValue: 33 },
@@ -1086,7 +1086,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
 
-      const { number } = Util.parseOptions("argName", {
+      const { number } = Util.parse("argName", {
       }, [
         { name: "number", type: "number", required: false, defaultValue: 33 },
         { name: "string", type: "string", required: false },
@@ -1105,7 +1105,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const { number } = Util.parseOptions("argName", {
+        const { number } = Util.parse("argName", {
           number: 33
         }, [
           { name: "number", type: "number", required: false, numberMax: 32 },
@@ -1127,7 +1127,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const { number } = Util.parseOptions("argName", {
+      const { number } = Util.parse("argName", {
         number: 33
       }, [
         { name: "number", type: "number", required: false, numberMax: 33 },
@@ -1148,7 +1148,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const { number } = Util.parseOptions("argName", {
+        const { number } = Util.parse("argName", {
           number: 33
         }, [
           { name: "number", type: "number", required: false, numberMin: 34 }
@@ -1164,7 +1164,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const { number } = Util.parseOptions("argName", {
+      const { number } = Util.parse("argName", {
         number: 0
       }, [
         { name: "number", type: "number", required: false, numberMin: 0, defaultValue: 0 }
@@ -1179,7 +1179,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const { string } = Util.parseOptions("argName", {
+        const { string } = Util.parse("argName", {
           string: "1"
         }, [
           { name: "string", type: "string", required: false, stringMinLength: 2 }
@@ -1197,7 +1197,7 @@ describe('lib.Util.parseOptions unit tests', function () {
     const test = async () => {
       const { Util } = require("../src/util/util");
       try {
-        const { string } = Util.parseOptions("argName", {
+        const { string } = Util.parse("argName", {
           string: "12"
         }, [
           { name: "string", type: "string", required: false, stringMaxLength: 1 },
@@ -1214,7 +1214,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const { string } = Util.parseOptions("argName", {
+      const { string } = Util.parse("argName", {
         string: "1"
       }, [
         { name: "string", type: "string", required: false, stringMaxLength: 1 },
@@ -1229,7 +1229,7 @@ describe('lib.Util.parseOptions unit tests', function () {
 
     const test = async () => {
       const { Util } = require("../src/util/util");
-      const ret = Util.parseOptions("argName", {
+      const ret = Util.parse("argName", {
         number: undefined
       }, [
         { name: "number", type: "number", required: false },
