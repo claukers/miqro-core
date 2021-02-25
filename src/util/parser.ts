@@ -10,6 +10,7 @@ export interface Map<T> {
   [key: string]: T;
 }
 
+/* eslint-disable  @typescript-eslint/no-empty-interface */
 export interface SimpleMap<T> extends Map<T> { }
 
 export interface NestedParseOption {
