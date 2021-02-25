@@ -345,7 +345,8 @@ describe('lib.Util.request func tests', function () {
       const {url, redirectedUrl, status, data} = await Util.request({
         url: "/redirect",
         method: "get",
-        socketPath: SOCKET_PATH
+        socketPath: SOCKET_PATH,
+        followRedirect: true
       });
       strictEqual(status, 200);
       strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=2");
@@ -358,7 +359,8 @@ describe('lib.Util.request func tests', function () {
     (async () => {
       const {url, redirectedUrl, status, data, locations} = await Util.request({
         url: "http://localhost:8080/redirectNoHostHandler",
-        method: "get"
+        method: "get",
+        followRedirect: true
       });
       strictEqual(status, 200);
       strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=3");
@@ -373,7 +375,8 @@ describe('lib.Util.request func tests', function () {
       try {
         await Util.request({
           url: "http://localhost:8080/redirectWithDifferentHostHandler",
-          method: "get"
+          method: "get",
+          followRedirect: true
         });
         strictEqual(true, false);
       } catch (e) {
@@ -388,14 +391,13 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
-  it('simple get ignoreRedirect:true throws', (done) => {
+  it('simple get ignore redirects by default throws', (done) => {
     (async () => {
       try {
         await Util.request({
           url: "/redirect",
           method: "get",
-          socketPath: SOCKET_PATH,
-          ignoreRedirect: true
+          socketPath: SOCKET_PATH
         });
         strictEqual(true, false);
       } catch ({url, redirectedUrl, status, name}) {

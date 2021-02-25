@@ -23,7 +23,7 @@ export interface RequestOptions {
   method?: string;
   query?: ParsedUrlQueryInput;
   socketPath?: string;
-  ignoreRedirect?: boolean;
+  followRedirect?: boolean;
   maxRedirects?: number;
   locations?: string[];
   timeout?: number;

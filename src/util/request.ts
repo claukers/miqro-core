@@ -20,6 +20,9 @@ export const request = (options: RequestOptions, logger?: Logger): Promise<Reque
         if (!options.headers) {
           options.headers = {};
         }
+        if (!options.maxRedirects) {
+          options.maxRedirects = 10;
+        }
         const isJSON: boolean = typeof options.data !== "string";
 
         const noType = (options.headers[CONTENT_TYPE_HEADER] === undefined && options.headers[CONTENT_TYPE_HEADER.toLowerCase()] === undefined && options.headers[CONTENT_TYPE_HEADER.toUpperCase()] === undefined);
@@ -116,7 +119,7 @@ const requestCallback = (urlO: UrlWithStringQuery, options: RequestOptions, req:
           const err = new ResponseError(status, res, res.headers, options.url, null, data, responseBuffer);
           reject(err);
         } else {
-          if (status >= 300 && status <= 400 && !options.ignoreRedirect && res.headers["location"]) {
+          if (status >= 300 && status <= 400 && options.followRedirect && res.headers["location"]) {
             let location = res.headers["location"];
             try {
               const loURL = urlParse(location);
