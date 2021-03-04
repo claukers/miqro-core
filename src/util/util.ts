@@ -54,7 +54,7 @@ export abstract class Util {
     return parse(name, arg, options, mode, ignoreUndefined);
   }
 
-  public static getLogger(identifier: string, options?: { formatter?: LoggerFormatter, transports?: LoggerTransport[] }): Logger {
-    return getLogger(identifier, options);
+  public static getLogger(identifier: string, options?: { formatter?: LoggerFormatter, transports?: LoggerTransport[] }, useCache = true): Logger {
+    return getLogger(identifier, options, useCache);
   }
 }

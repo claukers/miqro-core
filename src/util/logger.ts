@@ -1,8 +1,8 @@
-import {format} from "util";
-import {EventEmitter} from "events";
-import {createWriteStream} from "fs";
-import {resolve} from "path";
-import {ConfigPathResolver} from "./config";
+import { format } from "util";
+import { EventEmitter } from "events";
+import { createWriteStream } from "fs";
+import { resolve } from "path";
+import { ConfigPathResolver } from "./config";
 
 export type LogContainer = Map<string, Logger>;
 
@@ -11,13 +11,13 @@ export const LogContainer: LogContainer = new Map<string, Logger>();
 export type LogLevel = "error" | "warn" | "info" | "debug" | "trace";
 
 const LOG_LEVEL_MAP =
-  {
-    "error": 1,
-    "warn": 2,
-    "info": 3,
-    "debug": 4,
-    "trace": 5,
-  };
+{
+  "error": 1,
+  "warn": 2,
+  "info": 3,
+  "debug": 4,
+  "trace": 5,
+};
 
 export interface Logger {
   log(message?: any, ...optionalParams: any[]): void;
@@ -36,7 +36,7 @@ export interface Logger {
 export type LoggerFormatter = (args: { identifier: string, level: LogLevel, message: string }) => string;
 
 export const defaultLoggerFormatter: LoggerFormatter =
-  ({identifier, level, message}) => `${new Date().toISOString()} ${process.pid} ` +
+  ({ identifier, level, message }) => `${new Date().toISOString()} ${process.pid} ` +
     `[${identifier}] ` +
     `${level !== "info" ? (level === "error" || level === "warn" ? `[${level.toUpperCase()}] ` : `[${level}] `) : ""}` +
     `${message}`;
@@ -99,43 +99,43 @@ export class Logger extends EventEmitter implements Logger {
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public debug(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "debug";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public error(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "error";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public info(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "info";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public log(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "info";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public trace(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "trace";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public warn(message?: any, ...optionalParams: any[]): void {
     const level: LogLevel = "warn";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({level, message, optionalParams}) : undefined;
+    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
   }
 }
 
 export const ConsoleTransport: (color?: boolean) => LoggerTransport = (color = true) => {
   return {
-    write: async ({level, out}: LoggerTransportWriteArgs): Promise<void> => {
+    write: async ({ level, out }: LoggerTransportWriteArgs): Promise<void> => {
       if (color) {
         switch (level) {
           case "warn":
@@ -162,9 +162,9 @@ export const ConsoleTransport: (color?: boolean) => LoggerTransport = (color = t
 };
 
 export const FileTransport: (filePath?: string) => LoggerTransport = (filePath = process.env.LOG_FILE) => {
-  const fileHandler = filePath ? createWriteStream(resolve(filePath), {flags: "a"}) : null;
+  const fileHandler = filePath ? createWriteStream(resolve(filePath), { flags: "a" }) : null;
   return {
-    write: async ({out}: LoggerTransportWriteArgs): Promise<void> => {
+    write: async ({ out }: LoggerTransportWriteArgs): Promise<void> => {
       if (fileHandler) {
         return new Promise((resolve, reject) => {
           fileHandler.write(`${out}\n`, (err) => {
@@ -180,19 +180,21 @@ export const FileTransport: (filePath?: string) => LoggerTransport = (filePath =
   };
 };
 
-export const getLogger = (identifier?: string, options?: { formatter?: LoggerFormatter, transports?: LoggerTransport[] }): Logger => {
+export const getLogger = (identifier?: string, options?: { formatter?: LoggerFormatter, transports?: LoggerTransport[] }, useCache = true): Logger => {
   if (typeof identifier !== "string" && typeof identifier !== undefined) {
     throw new Error("Bad log identifier");
   } else if (identifier === undefined) {
     identifier = ConfigPathResolver.getServiceName();
   }
-  if (LogContainer.has(identifier)) {
+  if (useCache && LogContainer.has(identifier)) {
     return LogContainer.get(identifier) as Logger;
   } else {
     const factory = getLoggerFactory();
     const level = (process.env[`LOG_LEVEL_${identifier}`] || process.env.LOG_LEVEL || "info") as LogLevel;
-    const logger = factory({identifier, level, options});
-    LogContainer.set(identifier, logger);
+    const logger = factory({ identifier, level, options });
+    if (useCache) {
+      LogContainer.set(identifier, logger);
+    }
     return logger;
   }
 };
@@ -204,7 +206,7 @@ export const defaultLoggerTransports: () => LoggerTransport[] = () => [
   FileTransport()
 ];
 
-export const defaultLoggerFactory: LoggerFactory = ({identifier, options, level}): Logger => {
+export const defaultLoggerFactory: LoggerFactory = ({ identifier, options, level }): Logger => {
   return new Logger(identifier, level, options);
 };
 
