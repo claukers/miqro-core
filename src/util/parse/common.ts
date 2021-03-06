@@ -4,10 +4,10 @@ export interface Map<T> {
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
 export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | Map<SimpleTypes>;
-export type ParseSimpleTypeWithOutOptions = "string" | "boolean" | "number" | "object" | "any" | "array" | string;
-export type ParseSimpleType = "nested" | "enum" | "multiple" | ParseSimpleTypeWithOutOptions;
+export type ParseOptionTypeWithOutOptions = "string" | "boolean" | "number" | "object" | "any" | "array" | string;
+export type ParseOptionType = "regex" | "nested" | "enum" | "multiple" | ParseOptionTypeWithOutOptions;
 
-export type ParseOptionMap = Map<NoNameParseOption | ParseSimpleTypeWithOutOptions>;
+export type ParseOptionMap = Map<NoNameParseOption | ParseOptionTypeWithOutOptions>;
 
 export interface NestedParseOption {
   options: ParseOption[] | ParseOptionMap;
@@ -29,12 +29,13 @@ export interface ParseOption extends NoNameParseOption {
 }
 
 export interface ParseOptionValueType {
-  type: ParseSimpleType;
+  type: ParseOptionType;
   options?: any;
+  regex?: string;
   multipleOptions?: BasicParseOption[];
   forceArray?: boolean;
   allowNull?: boolean;
-  arrayType?: ParseSimpleType;
+  arrayType?: ParseOptionType;
   arrayMinLength?: number;
   arrayMaxLength?: number;
   numberMax?: number;
