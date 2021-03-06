@@ -64,7 +64,7 @@ export interface ParseValueArgs extends ParseOptionValueType {
   value: any;
 }
 
-export interface ParseValueValidatorResponse { isType: boolean; parsedValue: any; };
+export interface ParseValueValidatorResponse { isType: boolean; parsedValue: any; }
 
 export type ParseValueValidator = (args: ParseValueArgs, parser: ParserCB) => ParseValueValidatorResponse;
 

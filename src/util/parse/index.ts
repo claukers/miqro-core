@@ -19,6 +19,7 @@ export * from "./enum";
 export * from "./nested";
 export * from "./number";
 export * from "./object";
+export * from "./regex";
 export * from "./string";
 
 export class Parser {
