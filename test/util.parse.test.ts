@@ -21,6 +21,18 @@ describe('lib.Util.parse unit tests', function () {
     test().then(done).catch(done);
   });
 
+  it('regex parser', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      const ret = parse("argName", {
+        bla: "AA-BB-123"
+      }, [
+        { name: "bla", type: "regex", regex: "AA-BB-\\d" },
+      ], "no_extra");
+    };
+    test().then(done).catch(done);
+  });
+
   it('custom parser AA-BB-#', (done) => {
     const test = async () => {
       const { parse, registerParser, unRegisterParser } = require("../src");
@@ -79,7 +91,7 @@ describe('lib.Util.parse unit tests', function () {
       }, [
         { name: "bla", type: "AA-BB-#" },
       ], "no_extra");
-      
+
       try {
         parse("argName", {
           bla: "AA-BB-123"

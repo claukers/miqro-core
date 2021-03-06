@@ -8,6 +8,7 @@ import { parseMultiple } from "./multiple";
 import { parseNested } from "./nested";
 import { parseNumber } from "./number";
 import { parseObject } from "./object";
+import { parseRegex } from "./regex";
 import { parseString } from "./string";
 
 export * from "./any";
@@ -46,6 +47,7 @@ export class Parser {
     this.registerParser("number", parseNumber);
     this.registerParser("object", parseObject);
     this.registerParser("string", parseString);
+    this.registerParser("regex", parseRegex);
   }
   public registerParser(t: string, parser: ParseValueValidator): void {
     this.parsers[t] = parser;
@@ -122,6 +124,7 @@ export class Parser {
         name,
         attrName: option.name,
         type: option.type,
+        regex: option.regex,
         value,
         numberMin: option.numberMin,
         numberMax: option.numberMax,

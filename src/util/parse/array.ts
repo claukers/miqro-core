@@ -14,6 +14,7 @@ export const parseArray: ParseValueValidator = ({
   nestedOptions,
   enumValues,
   options,
+  regex,
   arrayMaxLength,
   arrayMinLength
 }: ParseValueArgs, parser) => {
@@ -32,6 +33,7 @@ export const parseArray: ParseValueValidator = ({
           attrName: `[${i}]`,
           type: arrayType,
           options,
+          regex,
           forceArray: false,
           value: v,
           numberMin,
