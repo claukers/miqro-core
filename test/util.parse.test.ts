@@ -4,6 +4,116 @@ import { inspect } from "util";
 
 describe('lib.Util.parse unit tests', function () {
 
+  it('custom parser doesnt exists', (done) => {
+    const test = async () => {
+      try {
+        const { parse } = require("../src");
+        const ret = parse("argName", {
+          bla: "bla"
+        }, [
+          { name: "bla", type: "blo" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type blo");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
+  it('custom parser register and unregister', (done) => {
+    const test = async () => {
+      const { parse, registerParser, unRegisterParser } = require("../src");
+      try {
+        parse("argName", {
+          bla: "bla"
+        }, [
+          { name: "bla", type: "blo" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type blo");
+      }
+
+      registerParser("blo", ({
+        value
+      }: any) => {
+        return {
+          isType: true,
+          parsedValue: "afhsakjf"
+        }
+      });
+
+      const ret = parse("argName", {
+        bla: "bla"
+      }, [
+        { name: "bla", type: "blo" },
+      ], "no_extra");
+      strictEqual(ret.bla, "afhsakjf");
+      unRegisterParser("blo");
+
+      try {
+        parse("argName", {
+          bla: "bla"
+        }, [
+          { name: "bla", type: "blo" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type blo");
+      }
+
+    };
+    test().then(done).catch(done);
+  });
+
+  it('custom parser register and unregister with custom instance', (done) => {
+    const test = async () => {
+      const { Parser } = require("../src");
+      const parser = new Parser();
+      try {
+        parser.parse("argName", {
+          bla: "bla"
+        }, [
+          { name: "bla", type: "blo" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type blo");
+      }
+
+      parser.registerParser("blo", ({
+        value
+      }: any) => {
+        return {
+          isType: true,
+          parsedValue: "afhsakjf"
+        }
+      });
+
+      const ret = parser.parse("argName", {
+        bla: "bla"
+      }, [
+        { name: "bla", type: "blo" },
+      ], "no_extra");
+      strictEqual(ret.bla, "afhsakjf");
+      parser.unRegisterParser("blo");
+
+      try {
+        parser.parse("argName", {
+          bla: "bla"
+        }, [
+          { name: "bla", type: "blo" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type blo");
+      }
+
+    };
+    test().then(done).catch(done);
+  });
+
   it('simple invalid check minLength no_extra', (done) => {
     const test = async () => {
       try {
