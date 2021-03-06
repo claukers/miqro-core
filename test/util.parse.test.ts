@@ -21,6 +21,103 @@ describe('lib.Util.parse unit tests', function () {
     test().then(done).catch(done);
   });
 
+  it('custom parser AA-BB-#', (done) => {
+    const test = async () => {
+      const { parse, registerParser, unRegisterParser } = require("../src");
+      registerParser("AA-BB-#", ({ value }: any) => {
+        return {
+          isType: /AA-BB-\d/.test(value),
+          parseValue: value
+        }
+      });
+      const ret = parse("argName", {
+        bla: "AA-BB-123"
+      }, [
+        { name: "bla", type: "AA-BB-#" },
+      ], "no_extra");
+
+      try {
+        parse("argName", {
+          bla: "BB-AA-123"
+        }, [
+          { name: "bla", type: "AA-BB-#" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.bla not AA-BB-#");
+      }
+
+      unRegisterParser("AA-BB-#");
+
+      try {
+        parse("argName", {
+          bla: "AA-BB-123"
+        }, [
+          { name: "bla", type: "AA-BB-#" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type AA-BB-#");
+      }
+    };
+
+    test().then(done).catch(done);
+  });
+
+  it('custom parser AA-BB-# on custom instance', (done) => {
+    const test = async () => {
+      const { Parser, parse } = require("../src");
+      const parser = new Parser();
+      parser.registerParser("AA-BB-#", ({ value }: any) => {
+        return {
+          isType: /AA-BB-\d/.test(value),
+          parseValue: value
+        }
+      });
+      const ret = parser.parse("argName", {
+        bla: "AA-BB-123"
+      }, [
+        { name: "bla", type: "AA-BB-#" },
+      ], "no_extra");
+      
+      try {
+        parse("argName", {
+          bla: "AA-BB-123"
+        }, [
+          { name: "bla", type: "AA-BB-#" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type AA-BB-#");
+      }
+
+      try {
+        parser.parse("argName", {
+          bla: "BB-AA-123"
+        }, [
+          { name: "bla", type: "AA-BB-#" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.bla not AA-BB-#");
+      }
+
+      parser.unRegisterParser("AA-BB-#");
+
+      try {
+        parser.parse("argName", {
+          bla: "AA-BB-123"
+        }, [
+          { name: "bla", type: "AA-BB-#" },
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "unsupported type AA-BB-#");
+      }
+    };
+    test().then(done).catch(done);
+  });
+
   it('custom parser register and unregister', (done) => {
     const test = async () => {
       const { parse, registerParser, unRegisterParser } = require("../src");
