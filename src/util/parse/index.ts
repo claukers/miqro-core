@@ -95,6 +95,7 @@ export class Parser {
     // run parser
     return parser(args, this.parserCB);
   }
+  /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public parse(
     name: string,
     arg: any,

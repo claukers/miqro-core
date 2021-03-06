@@ -16,6 +16,7 @@ export const unRegisterParser = (t: string): void => {
   return defaultParser.unRegisterParser(t);
 }
 
+/* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
 export const parse = (
   name: string,
   arg: any,
