@@ -4,24 +4,156 @@ import { inspect } from "util";
 
 describe('lib.Util.parse unit tests', function () {
 
-  it('custom parser doesnt exists', (done) => {
-    const test = async () => {
-      try {
+  describe('lib.Util.parse unit tests decimals', function () {
+    it('minDecimal', (done) => {
+      const test = async () => {
         const { parse } = require("../src");
         const ret = parse("argName", {
-          bla: "bla"
+          bla: "1.2"
         }, [
-          { name: "bla", type: "blo" },
+          { name: "bla", type: "number", numberMinDecimals: 1 },
         ], "no_extra");
-        strictEqual(false, true);
-      } catch (e) {
-        strictEqual(e.message, "unsupported type blo");
-      }
-    };
-    test().then(done).catch(done);
+        strictEqual(ret.bla, 1.2);
+        try {
+          parse("argName", {
+            bla: "1"
+          }, [
+            { name: "bla", type: "number", numberMinDecimals: 1 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number min decimals[1]");
+        }
+        try {
+          parse("argName", {
+            bla: "1.223"
+          }, [
+            { name: "bla", type: "number", numberMinDecimals: 4 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number min decimals[4]");
+        }
+        const ret2 = parse("argName", {
+          bla: "1231231.2234"
+        }, [
+          { name: "bla", type: "number", numberMinDecimals: 4 },
+        ], "no_extra");
+        strictEqual(ret2.bla, 1231231.2234);
+      };
+      test().then(done).catch(done);
+    });
+
+    it('maxDecimal', (done) => {
+      const test = async () => {
+        const { parse } = require("../src");
+        const ret = parse("argName", {
+          bla: "1.2"
+        }, [
+          { name: "bla", type: "number", numberMaxDecimals: 1 },
+        ], "no_extra");
+        strictEqual(ret.bla, 1.2);
+        try {
+          parse("argName", {
+            bla: "1.23"
+          }, [
+            { name: "bla", type: "number", numberMaxDecimals: 1 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number max decimals[1]");
+        }
+        try {
+          parse("argName", {
+            bla: "1231.223"
+          }, [
+            { name: "bla", type: "number", numberMaxDecimals: 2 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number max decimals[2]");
+        }
+        const ret2 = parse("argName", {
+          bla: "1231231.2234"
+        }, [
+          { name: "bla", type: "number", numberMaxDecimals: 4 },
+        ], "no_extra");
+        strictEqual(ret2.bla, 1231231.2234);
+      };
+      test().then(done).catch(done);
+    });
+
+    it('maxDecimal && minDecimal', (done) => {
+      const test = async () => {
+        const { parse } = require("../src");
+        const ret = parse("argName", {
+          bla: "1.2"
+        }, [
+          { name: "bla", type: "number", numberMinDecimals: 1, numberMaxDecimals: 1 },
+        ], "no_extra");
+        strictEqual(ret.bla, 1.2);
+        try {
+          parse("argName", {
+            bla: "1.23"
+          }, [
+            { name: "bla", type: "number", numberMinDecimals: 0, numberMaxDecimals: 1 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number min decimals[0] max decimals[1]");
+        }
+        try {
+          parse("argName", {
+            bla: "1231.223"
+          }, [
+            { name: "bla", type: "number", numberMaxDecimals: 1 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number max decimals[1]");
+        }
+        const ret2 = parse("argName", {
+          bla: "1231231.2234"
+        }, [
+          { name: "bla", type: "number", numberMinDecimals: 0, numberMaxDecimals: 4 },
+        ], "no_extra");
+        strictEqual(ret2.bla, 1231231.2234);
+
+        const ret3 = parse("argName", {
+          bla: "1231231.2234"
+        }, [
+          { name: "bla", type: "number", numberMinDecimals: 4, numberMaxDecimals: 4 },
+        ], "no_extra");
+        strictEqual(ret3.bla, 1231231.2234);
+      };
+      test().then(done).catch(done);
+    });
+
+    it('noDecimal', (done) => {
+      const test = async () => {
+        const { parse } = require("../src");
+        try {
+          parse("argName", {
+            bla: "1231.223"
+          }, [
+            { name: "bla", type: "number", numberMaxDecimals: 0 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.bla not number max decimals[0]");
+        }
+        const ret = parse("argName", {
+          bla: "1231"
+        }, [
+          { name: "bla", type: "number", numberMaxDecimals: 0 },
+        ], "no_extra");
+        strictEqual(ret.bla, 1231);
+      };
+      test().then(done).catch(done);
+    });
   });
 
-  it('regex parser', (done) => {
+  /*it('regex parser', (done) => {
     const test = async () => {
       const { parse } = require("../src");
       const ret = parse("argName", {
@@ -1461,5 +1593,5 @@ describe('lib.Util.parse unit tests', function () {
       strictEqual(Object.keys(ret).length, 0);
     };
     test().then(done).catch(done);
-  });
+  });*/
 });

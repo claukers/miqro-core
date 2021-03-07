@@ -39,6 +39,8 @@ export interface ParseOptionValueType {
   arrayMinLength?: number;
   arrayMaxLength?: number;
   numberMax?: number;
+  numberMaxDecimals?: number;
+  numberMinDecimals?: number;
   numberMin?: number;
   stringMaxLength?: number;
   stringMinLength?: number;
@@ -64,7 +66,7 @@ export interface ParseValueArgs extends ParseOptionValueType {
   value: any;
 }
 
-export interface ParseValueValidatorResponse { isType: boolean; parsedValue: any; }
+export interface ParseValueValidatorResponse { isType: boolean; parsedValue: any; message?: string; }
 
 export type ParseValueValidator = (args: ParseValueArgs, parser: ParserCB) => ParseValueValidatorResponse;
 

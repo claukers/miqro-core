@@ -123,12 +123,14 @@ export class Parser {
       } else if (!exists && option.required) {
         throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
       }
-      const { isType, parsedValue } = this.parseValue({
+      const { isType, parsedValue, message } = this.parseValue({
         name,
         attrName: option.name,
         type: option.type,
         regex: option.regex,
         value,
+        numberMaxDecimals: option.numberMaxDecimals,
+        numberMinDecimals: option.numberMinDecimals,
         numberMin: option.numberMin,
         numberMax: option.numberMax,
         allowNull: option.allowNull,
@@ -146,12 +148,12 @@ export class Parser {
       });
       if (!isType) {
         throw new ParseOptionsError(
-          `${name}.${option.name} not ${option.type}` +
-          `${option.type === "number" && option.numberMin !== undefined ? `${option.numberMin}:` : ""}${option.type === "number" && option.numberMax !== undefined ? `:${option.numberMax}` : ""}` +
+          `${name}.${option.name} not ${option.type}${message ? `: ${message}.` : ""}` +
+          `${option.type === "number" && option.numberMin !== undefined ? `${option.numberMin}:` : ""}${option.type === "number" && option.numberMax !== undefined ? `:${option.numberMax}` : ""}${option.numberMinDecimals !== undefined ? ` min decimals[${option.numberMinDecimals}]`: ""}${option.numberMaxDecimals !== undefined ? ` max decimals[${option.numberMaxDecimals}]`: ""}` +
           `${option.type === "string" && option.stringMinLength !== undefined ? `${option.stringMinLength}:` : ""}${option.type === "string" && option.stringMaxLength !== undefined ? `:${option.stringMaxLength}` : ""}` +
           `${option.type === "array" && option.arrayMinLength !== undefined ? `${option.arrayMinLength}:` : ""}${option.type === "array" && option.arrayMaxLength !== undefined ? `:${option.arrayMaxLength}` : ""}` +
           `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : ""}` +
-          `${option.type === "nested" ? " as defined!" : ""}` +
+          `${option.type === "nested" ? ` as defined!` : ""}` +
           `${option.type === "enum" ? ` as defined. valid values [${option.enumValues}]` : ""}` +
           `${option.type === "multiple" ? ` as defined.` : ""}`,
           `${name}.${option.name}`
