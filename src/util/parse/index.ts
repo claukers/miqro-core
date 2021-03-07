@@ -24,21 +24,8 @@ export * from "./string";
 
 export class Parser {
   protected parsers: Map<ParseValueValidator>;
-  protected parserCB: ParserCB;
   constructor() {
     this.parsers = {};
-    const parseCB = (
-      name: string,
-      arg: any,
-      options: ParseOption[] | ParseOptionMap,
-      mode?: ParseOptionsMode,
-      ignoreUndefined?: boolean
-    ) => this.parse(name, arg, options, mode, ignoreUndefined);
-    const parseValueCB = (args: ParseValueArgs): ParseValueValidatorResponse => this.parseValue(args);
-    this.parserCB = {
-      parse: parseCB,
-      parseValue: parseValueCB
-    };
     this.registerParser("any", parseAny);
     this.registerParser("array", parseArray);
     this.registerParser("boolean", parseBoolean);
@@ -93,7 +80,21 @@ export class Parser {
       }
     }
     // run parser
-    return parser(args, this.parserCB);
+    return parser(args, this.__newParserCB());
+  }
+  private __newParserCB(): ParserCB {
+    const parseCB = (
+      name: string,
+      arg: any,
+      options: ParseOption[] | ParseOptionMap,
+      mode?: ParseOptionsMode,
+      ignoreUndefined?: boolean
+    ) => this.parse(name, arg, options, mode, ignoreUndefined);
+    const parseValueCB = (args: ParseValueArgs): ParseValueValidatorResponse => this.parseValue(args);
+    return {
+      parse: parseCB,
+      parseValue: parseValueCB
+    };
   }
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public parse(
