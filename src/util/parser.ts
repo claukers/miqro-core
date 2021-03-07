@@ -1,5 +1,6 @@
 import { ConfigPathResolver } from "./config";
 import { Parser, ParseOptionsMode, Map, ParseOption, ParseOptionMap, ParseValueValidator } from "./parse";
+import { ParseValueArgs } from "./parse/common";
 
 export * from "./parse";
 
@@ -14,6 +15,12 @@ export const registerParser = (t: string, parser: ParseValueValidator): void => 
 
 export const unRegisterParser = (t: string): void => {
   return defaultParser.unRegisterParser(t);
+}
+
+export const parseValue = (
+  args: ParseValueArgs
+): Map<any> => {
+  return defaultParser.parseValue(args);
 }
 
 /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
