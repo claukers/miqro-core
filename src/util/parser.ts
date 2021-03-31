@@ -38,7 +38,7 @@ export const parseOptions = parse;
 
 export const checkEnvVariables = (requiredEnvVariables: string[], defaults?: string[]): string[] => {
   if (defaults && defaults.length !== requiredEnvVariables.length) {
-    throw new Error(`defaults cannot be a different length of requiredEnvVariabled`);
+    throw new Error(`defaults cannot be a different length of requiredEnvVariables`);
   }
   return requiredEnvVariables.map((envName, index) => {
     if (process.env[envName] === undefined && !defaults) {
