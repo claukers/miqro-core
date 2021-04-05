@@ -4,7 +4,7 @@ import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
 import {existsSync, readdirSync, readFileSync} from "fs";
 import {ConfigPathResolver, LoadConfigOut, MiqroRC} from "./config";
 import {ConfigFileNotFoundError} from "./error";
-import {parse, Map} from "./parser";
+import {Map} from "./parser";
 
 const LOADER_IDENTIFIER = "loader";
 

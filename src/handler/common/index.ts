@@ -1,5 +1,4 @@
-import { ParseOption, ParseOptionMap, ParseOptionsError, ParseOptionsMode } from "../../util";
-import { OutgoingHttpHeaders } from "http";
+import { ParseOptionsError } from "../../util";
 import { Context } from "./context";
 
 export type Method = "get" | "post" | "put" | "delete" | "patch" | "options" | "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "OPTIONS";

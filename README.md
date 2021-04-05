@@ -37,8 +37,16 @@ logger.debug("debuglog");
 // this is a wrapper for https|http request method using a Promise that follows redirects
 const response = await request({
     url:...,
-    ignoreRedirect: false,
-    ....
+    method: ...,
+    query: {
+      ...
+    },
+    headers: {
+      ...
+    },
+    followRedirect: false, // defaults to false
+    maxRedirects: // defaults to 10
+    data: ...
 });
 
 // this will check if BODY_PARSER env var is set to 'true'.
@@ -48,32 +56,10 @@ if(isFeatureEnabled("body_parser")) {
 
 const data = {
   name: "aa",
-  age: 0,
+  age: "0",
   likes:["cc", "dd"],
   extra: "bb"
 };
-// this will throw a ParseOptionError with a message like person.extra is not expected.
-/*const { name, age } = parseOptions("person", data, [
-  { name: "name", type: "string", required: true },
-  { name: "age", type: "number", required: true },
-  { name: "likes", type: "array", required: true, arrayType: "string" }
-], "no_extra");*/
-
-// this will not and "resultWithExtra" will have any extra attrs data may have
-const resultWithExtra = parse("person", data, [
-  { name: "name", type: "string", required: true },
-  { name: "age", type: "number", required: true },
-  { name: "likes", type: "array", required: true, arrayType: "string" }
-], "add_extra");
-
-// neither will this, but this will discard the extra attrs in data in "resultWithoutExtra"
-const resultWithoutExtra = parse("person", data, [
-  { name: "name", type: "string", required: true },
-  { name: "age", type: "number", required: true },
-  { name: "likes", type: "array", required: true, arrayType: "string" }
-], "remove_extra");
-
-// another way of using parse
 const parsed = parse("person", data, {
   name: "string",
   age: "number",
@@ -82,5 +68,6 @@ const parsed = parse("person", data, {
     type: "array",
     arrayType: "string"
   }
-}, "no_extra")
+}, "remove_extra");
+
 ```
