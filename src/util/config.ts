@@ -20,15 +20,6 @@ export interface MiqroRC {
   loggerFactory?: string;
 }
 
-export interface SequelizeRC {
-  // noinspection SpellCheckingInspection
-  sequelizercPath: string;
-  dbConfigFilePath: string;
-  migrationsFolder: string;
-  seedersFolder: string;
-  modelsFolder: string;
-}
-
 export abstract class ConfigPathResolver {
 
   public static getMiqroRCFilePath(): string {

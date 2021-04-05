@@ -2,33 +2,28 @@ import {extname, resolve} from "path";
 import {ConfigOutput, Util} from "./util";
 import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
 import {existsSync, readdirSync, readFileSync} from "fs";
-import {ConfigPathResolver, LoadConfigOut, MiqroRC, SequelizeRC} from "./config";
+import {ConfigPathResolver, LoadConfigOut, MiqroRC} from "./config";
 import {ConfigFileNotFoundError} from "./error";
 import {parse, Map} from "./parser";
 
 const LOADER_IDENTIFIER = "loader";
-
 
 // noinspection SpellCheckingInspection
 export const LoaderCache: {
   config: LoadConfigOut | false;
   loggerFactory: boolean;
   rc: MiqroRC | null | false;
-  // noinspection SpellCheckingInspection
-  sequelizeRC: SequelizeRC | null | false;
   extra: Map<any>;
   clear: () => void;
 } = {
   config: false,
   loggerFactory: false,
   rc: false,
-  sequelizeRC: false,
   extra: {},
   clear: () => {
     LoaderCache.config = false;
     LoaderCache.loggerFactory = false;
     LoaderCache.rc = false;
-    LoaderCache.sequelizeRC = false;
     LoaderCache.extra = {};
   }
 };
@@ -46,39 +41,6 @@ export const initLoggerFactory = (modulePath: string = ConfigPathResolver.getCus
   }
 };
 
-export const loadSequelizeRC = (sequelizercPath: string = ConfigPathResolver.getSequelizeRCFilePath(), logger?: Logger): SequelizeRC => {
-  if (LoaderCache.sequelizeRC === false) {
-    LoaderCache.sequelizeRC = null;
-    logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
-    // noinspection SpellCheckingInspection
-    if (!existsSync(sequelizercPath)) {
-      // noinspection SpellCheckingInspection
-      throw new ConfigFileNotFoundError(`missing .sequelizerc file. maybe you didnt init your db config.`);
-    } else {
-      logger.debug(`loading sequelize config from [${sequelizercPath}]`);
-      // noinspection SpellCheckingInspection
-      /* eslint-disable  @typescript-eslint/no-var-requires */
-      const sequelizerc = require(sequelizercPath);
-      parse(sequelizercPath, sequelizerc, [
-        {name: "config", type: "string", required: true},
-        {name: "migrations-path", type: "string", required: true},
-        {name: "seeders-path", type: "string", required: true},
-        {name: "models-path", type: "string", required: true}
-      ], "no_extra");
-      const ret = {
-        sequelizercPath,
-        dbConfigFilePath: sequelizerc.config,
-        migrationsFolder: sequelizerc["migrations-path"],
-        seedersFolder: sequelizerc["seeders-path"],
-        modelsFolder: sequelizerc["models-path"]
-      };
-      LoaderCache.sequelizeRC = ret;
-      return ret;
-    }
-  } else {
-    return LoaderCache.sequelizeRC as SequelizeRC;
-  }
-};
 
 export const loadConfigFile = (envFilePath: string, combined?: Map<string>, logger?: Logger): ConfigOutput => {
   logger = logger ? logger : getLogger(LOADER_IDENTIFIER);

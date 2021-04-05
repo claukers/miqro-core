@@ -1,9 +1,9 @@
 import { after, before, describe, it } from 'mocha';
-import { request, Util } from "../src/";
+import { App, Context, request, Util } from "../src/";
 import { existsSync, unlinkSync } from "fs";
 import { Server } from "http";
 import { strictEqual } from "assert";
-import { App, middleware, Context } from "@miqro/handlers";
+import { middleware } from "@miqro/handlers";
 
 
 describe('lib.Util.request func tests', function () {
