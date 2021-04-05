@@ -2,6 +2,7 @@
 
 this module provides helpers functions to develop nodejs applications like **logging**, **config** and **request parsing**
 
+
 ```javascript
 const {
   request,
@@ -71,4 +72,15 @@ const resultWithoutExtra = parse("person", data, [
   { name: "age", type: "number", required: true },
   { name: "likes", type: "array", required: true, arrayType: "string" }
 ], "remove_extra");
+
+// another way of using parse
+const parsed = parse("person", data, {
+  name: "string",
+  age: "number",
+  likes: {
+    required: true,
+    type: "array",
+    arrayType: "string"
+  }
+}, "no_extra")
 ```
