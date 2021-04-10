@@ -32,6 +32,32 @@ describe("Util loader tests", () => {
     strictEqual(logger !== null, true);
   });
 
+  it("getLogger with custom transport level", (done) => {
+    LogContainer.clear();
+    LoaderCache.clear();
+    const commonWrite = fake(({out})=> {
+      strictEqual(out, "bla debug blo");
+    });
+    const customLevelWrite = fake(({out})=> {
+      strictEqual(out, "bla debug blo");
+    });
+    process.env.LOG_LEVEL_bla = "info";
+    const logger = Util.getLogger("bla", {
+      transports: [{
+        write: commonWrite
+      }, {
+        level: "debug",
+        write: customLevelWrite
+      }], formatter: ({level, message}): string => `bla ${level} ${message}`
+    });
+    strictEqual(logger !== undefined, true);
+    strictEqual(logger !== null, true);
+    logger.debug("blo");
+    strictEqual(commonWrite.callCount, 0);
+    strictEqual(customLevelWrite.callCount, 1);
+    done(); 
+  });
+
   it("getLogger with custom formatting", (done) => {
     LogContainer.clear();
     LoaderCache.clear();

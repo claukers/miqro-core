@@ -56,6 +56,7 @@ export interface LoggerTransportWriteArgs extends WriteArgs {
 }
 
 export interface LoggerTransport {
+  level?: LogLevel;
   write(args: LoggerTransportWriteArgs): Promise<void> | void;
 }
 
@@ -86,7 +87,9 @@ export class Logger extends EventEmitter implements Logger {
       };
       const tR = [];
       for (const transport of this.options.transports) {
-        tR.push(transport.write(eventArgs));
+        if (LOG_LEVEL_MAP[transport.level ? transport.level : this.level] >= LOG_LEVEL_MAP[args.level]) {
+          tR.push(transport.write(eventArgs));
+        }
       }
       Promise.all(tR).catch((e) => {
         this.emit(LoggerEvents.error, e);
@@ -98,43 +101,38 @@ export class Logger extends EventEmitter implements Logger {
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public debug(message?: any, ...optionalParams: any[]): void {
-    const level: LogLevel = "debug";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
+    return this.write({ level: "debug", message, optionalParams });
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public error(message?: any, ...optionalParams: any[]): void {
-    const level: LogLevel = "error";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
+    return this.write({ level: "error", message, optionalParams });
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public info(message?: any, ...optionalParams: any[]): void {
-    const level: LogLevel = "info";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
+    return this.write({ level: "info", message, optionalParams });
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public log(message?: any, ...optionalParams: any[]): void {
-    const level: LogLevel = "info";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
+    return this.write({ level: "info", message, optionalParams });
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public trace(message?: any, ...optionalParams: any[]): void {
-    const level: LogLevel = "trace";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
+    return this.write({ level: "trace", message, optionalParams });
   }
 
   /* eslint-disable  @typescript-eslint/explicit-module-boundary-types */
   public warn(message?: any, ...optionalParams: any[]): void {
-    const level: LogLevel = "warn";
-    return LOG_LEVEL_MAP[this.level] >= LOG_LEVEL_MAP[level] ? this.write({ level, message, optionalParams }) : undefined;
+    return this.write({ level: "warn", message, optionalParams });
   }
 }
 
-export const ConsoleTransport: (color?: boolean) => LoggerTransport = (color = true) => {
+export const ConsoleTransport: (color?: boolean, level?: LogLevel) => LoggerTransport = (color = true, level?: LogLevel) => {
   return {
+    level,
     write: async ({ level, out }: LoggerTransportWriteArgs): Promise<void> => {
       if (color) {
         switch (level) {
@@ -161,9 +159,10 @@ export const ConsoleTransport: (color?: boolean) => LoggerTransport = (color = t
   };
 };
 
-export const FileTransport: (filePath?: string) => LoggerTransport = (filePath = process.env.LOG_FILE) => {
+export const FileTransport: (filePath?: string, level?: LogLevel) => LoggerTransport = (filePath = process.env.LOG_FILE, level?: LogLevel) => {
   const fileHandler = filePath ? createWriteStream(resolve(filePath), { flags: "a" }) : null;
   return {
+    level,
     write: async ({ out }: LoggerTransportWriteArgs): Promise<void> => {
       if (fileHandler) {
         return new Promise((resolve, reject) => {
