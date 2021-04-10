@@ -36,7 +36,7 @@ describe("Util loader tests", () => {
     LogContainer.clear();
     LoaderCache.clear();
     const commonWrite = fake(({out})=> {
-      strictEqual(out, "bla debug blo");
+      strictEqual(false, true, "bad state");
     });
     const customLevelWrite = fake(({out})=> {
       strictEqual(out, "bla debug blo");
