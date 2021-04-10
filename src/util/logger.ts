@@ -69,6 +69,9 @@ export class Logger extends EventEmitter implements Logger {
     if (!LOG_LEVEL_MAP[level]) {
       throw new Error(`Unknown level [${level}]`);
     }
+    this.on(LoggerEvents.error, (e) => {
+      console.error(e);
+    });
     this.options = {
       transports: options && options.transports !== undefined ? options.transports : defaultLoggerTransports(),
       formatter: options && options.formatter !== undefined ? options.formatter : defaultLoggerFormatter,
@@ -88,7 +91,11 @@ export class Logger extends EventEmitter implements Logger {
       const tR = [];
       for (const transport of this.options.transports) {
         if (LOG_LEVEL_MAP[transport.level ? transport.level : this.level] >= LOG_LEVEL_MAP[args.level]) {
-          tR.push(transport.write(eventArgs));
+          try {
+            tR.push(transport.write(eventArgs));
+          } catch(e2) {
+            this.emit(LoggerEvents.error, e2);
+          }
         }
       }
       Promise.all(tR).catch((e) => {
