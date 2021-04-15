@@ -11,7 +11,7 @@ export const parseNested: ParseValueValidator = ({
   if (!nestedOptions) {
     throw new ParseOptionsError(`unsupported type ${type} without nestedOptions`);
   }
-  const pValue = parser.parse(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode);
+  const pValue = parser.parse(`${name}.${attrName}`, value, nestedOptions.options, nestedOptions.mode, nestedOptions.ignoreUndefined);
   return {
     isType: pValue !== null,
     parsedValue: pValue === null ? value : pValue

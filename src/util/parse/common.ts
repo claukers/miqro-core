@@ -10,6 +10,7 @@ export type ParseOptionType = "regex" | "nested" | "enum" | "multiple" | ParseOp
 export type ParseOptionMap = Map<NoNameParseOption | ParseOptionTypeWithOutOptions>;
 
 export interface NestedParseOption {
+  ignoreUndefined?: boolean;
   options: ParseOption[] | ParseOptionMap;
   mode: ParseOptionsMode;
 }
