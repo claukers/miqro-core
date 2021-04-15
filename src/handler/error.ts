@@ -2,12 +2,16 @@ import { BAD_REQUEST, ERROR_RESPONSE, FORBIDDEN, NOT_FOUND, UNAUTHORIZED, Contex
 
 export const DefaultErrorHandler = (): ErrorHandler => {
   return async (e: Error, ctx: Context) => {
-    if (!e.name || e.name === "Error") {
+    ctx.logger.error(e);
+    if (!e || !e.name || e.name === "Error") {
       if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
-        await ctx.end(ERROR_RESPONSE(`${e.message}. You are seeing this message because NODE_ENV === "development" || NODE_ENV === "test"`));
+        await ctx.end(ERROR_RESPONSE(`${e && e.message ? e.message : String(e)}. You are seeing this message because NODE_ENV === "development" || NODE_ENV === "test"${e && e.stack ? ` ${e.stack}` : ""}`));
         return false;
       }
     } else {
+      ctx.logger.warn("===");
+      ctx.logger.warn(e);
+      ctx.logger.warn("===");
       if (e.name === "SequelizeConnectionAcquireTimeoutError") {
         ctx.logger.error(`${e.name}: ${e.message}`);
       }
@@ -33,7 +37,6 @@ export const DefaultErrorHandler = (): ErrorHandler => {
       }
       return false;
     }
-    ctx.logger.warn(`cannot create error response for error message[${e.message}] so not sending error response`);
     return true;
   };
 };

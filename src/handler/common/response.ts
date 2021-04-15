@@ -60,7 +60,7 @@ export const BAD_REQUEST = (message = "BAD REQUEST"): Response => {
   }
 }
 
-export const ERROR_RESPONSE = (message: string): Response => {
+export const ERROR_RESPONSE = (message = "SERVER ERROR"): Response => {
   return {
     headers: {
       ["Content-Type"]: JSON_CONTENT_TYPE

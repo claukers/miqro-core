@@ -1,5 +1,5 @@
 import { createServer, RequestListener, Server } from "http";
-import { Router, NOT_FOUND, Context, DefaultErrorHandler, ErrorHandler } from "./handler";
+import { Router, NOT_FOUND, Context, DefaultErrorHandler, ErrorHandler, ERROR_RESPONSE } from "./handler";
 
 export class App extends Router {
   public readonly listener: RequestListener;
@@ -14,13 +14,17 @@ export class App extends Router {
       try {
         await this.run(ctx);
         if (!ctx.res.headersSent) {
-          await ctx.end(NOT_FOUND());
+          ctx.end(NOT_FOUND());
         }
       } catch (e) {
         try {
           await this.handleError(e, ctx);
         } catch (e2) {
-          this.errorHandler(e, ctx).catch(e => ctx.logger.error(e));
+          this.errorHandler(e, ctx).then(()=>{
+            if (!ctx.res.headersSent) {
+              ctx.end(ERROR_RESPONSE());
+            }
+          }).catch(e => ctx.logger.error(e));
         }
       }
     };
