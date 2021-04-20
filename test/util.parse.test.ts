@@ -5,6 +5,24 @@ import { inspect } from "util";
 describe('lib.Util.parse unit tests', function () {
 
   describe('lib.Util.parse unit tests decimals', function () {
+
+    it('no_extra test', (done) => {
+      const test = async () => {
+        try {
+          const { parse } = require("../src");
+          parse("argName", {
+            blaasd: "1"
+          }, [
+            { name: "bla", type: "number", defaultValue: 1 },
+          ], "no_extra");
+          strictEqual(false, true);
+        } catch (e) {
+          strictEqual(e.message, "argName.blaasd option not valid [blaasd]");
+        }
+      };
+      test().then(done).catch(done);
+    });
+
     it('minDecimal', (done) => {
       const test = async () => {
         const { parse } = require("../src");

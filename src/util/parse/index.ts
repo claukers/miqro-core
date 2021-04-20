@@ -164,14 +164,11 @@ export class Parser {
     switch (mode) {
       case "no_extra":
         const argKeys = Object.keys(arg);
-        const hasExtra = Object.keys(ret).length !== argKeys.length;
-        if (hasExtra) {
-          for (const argKey of argKeys) {
-            if (ignoreUndefined && arg[argKey] === undefined) {
-              continue;
-            } else if (!ret.hasOwnProperty(argKey)) {
-              throw new ParseOptionsError(`${name}.${argKey} option not valid [${argKey}]`, `${name}.${argKey}`);
-            }
+        for (const argKey of argKeys) {
+          if (ignoreUndefined && arg[argKey] === undefined) {
+            continue;
+          } else if (!ret.hasOwnProperty(argKey)) {
+            throw new ParseOptionsError(`${name}.${argKey} option not valid [${argKey}]`, `${name}.${argKey}`);
           }
         }
         return ret;
