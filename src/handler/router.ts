@@ -1,3 +1,4 @@
+import { inspect } from "util";
 import { Method, Handler, normalizePath, Context, ErrorHandler } from "./common";
 
 interface RouterHandler {
@@ -84,10 +85,10 @@ export class Router {
       ctx.logger.debug(`avoiding next handlers because handler returned false.`);
       return false;
     } else if (shouldContinue !== true && shouldContinue !== undefined) {
-      ctx.logger.debug(`pushing to results [${shouldContinue}]`);
+      ctx.logger.debug("pushing to results [%s]", inspect(shouldContinue));
       ctx.results.push(shouldContinue);
     } else {
-      ctx.logger.debug(`NOT pushing to results [${shouldContinue}]`);
+      ctx.logger.debug("NOT pushing to results [%s]", String(shouldContinue));
     }
     return true;
   };

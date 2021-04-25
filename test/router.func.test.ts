@@ -27,11 +27,13 @@ describe("router functional tests", function () {
     const router2 = new Router();
     router.use(router2, "/bli/blu");
 
-    router2.get("/blubli", async (ctx) => {
+    router2.get("/blubli", [async (ctx) => {
+      return "OK2";
+    }, async (ctx) => {
       ctx.json({
-        status: "OK2"
+        status: ctx.results[0]
       });
-    });
+    }]);
 
     FuncTestHelper(app, {
       url: `/api/bla`,
