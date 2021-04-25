@@ -14,15 +14,19 @@ export const parseMultiple: ParseValueValidator = ({
   }
   for (let i = 0; i < multipleOptions.length; i++) {
     const basicOption = multipleOptions[i];
-    const aiType = parser.parseValue({
-      ...basicOption,
-      forceArray,
-      name,
-      attrName,
-      value
-    });
-    if (aiType.isType) {
-      return aiType;
+    try {
+      const aiType = parser.parseValue({
+        ...basicOption,
+        forceArray,
+        name,
+        attrName,
+        value
+      });
+      if (aiType.isType) {
+        return aiType;
+      }
+    } catch (e) {
+      continue;
     }
   }
   return {
