@@ -3,7 +3,33 @@ import { request, Util } from "../src/";
 import { existsSync, unlinkSync } from "fs";
 import { Server } from "http";
 import { strictEqual } from "assert";
-import { App, Context, middleware } from "@miqro/handlers";
+import { App, Context } from "../src";
+
+const middleware = async (ctx: Context) => {
+  return new Promise<boolean>((resolve, reject) => {
+    try {
+      let cLength = 0;
+      const buffers: Buffer[] = [];
+      const isJSON = ctx.headers['content-type'] && ctx.headers['content-type'].indexOf("json") !== -1;
+      const endListener = () => {
+        const responseBuffer: Buffer = Buffer.concat(buffers);
+        ctx.buffer = responseBuffer;
+        ctx.body = isJSON ? JSON.parse(ctx.buffer.toString()) : ctx.buffer.toString();
+        resolve(true);
+      };
+      ctx.req.on('error', err => {
+        reject(err);
+      });
+      ctx.req.on('data', chunk => {
+        cLength += chunk.length;
+        buffers.push(chunk);
+      });
+      ctx.req.on('end', endListener);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 
 describe('lib.Util.request func tests', function () {
@@ -28,13 +54,13 @@ describe('lib.Util.request func tests', function () {
       const redirectHandler = async (ctx: Context) => {
         ctx.redirect(`http://localhost:${PORT}/hello?format=txt&otherQ=2`, undefined, 302);
       }
-      app.use(middleware());
+      app.use(middleware);
       app.catch(async (e: Error) => {
         console.error("=app=");
         console.error(e);
         console.error("==");
       });
-      appPort.use(middleware());
+      appPort.use(middleware);
       appPort.catch(async (e: Error) => {
         console.error("=appPort=");
         console.error(e);
