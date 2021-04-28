@@ -46,7 +46,7 @@ describe("app error func tests", function () {
           data: response.data
         }));
         strictEqual(response.status, 503);
-        strictEqual(response.data.message.indexOf(c.message), 0);
+        strictEqual(response.data.indexOf(c.message), 0);
         done();
       });
     });
@@ -65,7 +65,7 @@ describe("app error func tests", function () {
           data: response.data
         }));
         strictEqual(response.status, 503);
-        strictEqual(response.data.message.indexOf(c.message), 0);
+        strictEqual(response.data.indexOf(c.message), 0);
         done();
       });
     });
@@ -84,7 +84,7 @@ describe("app error func tests", function () {
           data: response.data
         }));
         strictEqual(response.status, 503);
-        strictEqual(response.data.message, "SERVER ERROR");
+        strictEqual(response.data, "SERVER ERROR");
         done();
       });
     });

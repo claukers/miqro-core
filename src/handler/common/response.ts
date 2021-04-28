@@ -6,69 +6,46 @@ export interface Response<T = any> {
   headers: OutgoingHttpHeaders;
 }
 
-const JSON_CONTENT_TYPE = "application/json; charset=utf-8";
+const TEXT_HEADERS = {
+  ["Content-Type"]: "plain/text; charset=utf-8"
+}
 
 export const NOT_FOUND = (message = "NOT FOUND"): Response => {
   return {
-    headers: {
-      ["Content-Type"]: JSON_CONTENT_TYPE
-    },
+    headers: TEXT_HEADERS,
     status: 404,
-    body: JSON.stringify({
-      success: false,
-      message
-    })
+    body: message
   }
 };
 
 export const FORBIDDEN = (message = "FORBIDDEN"): Response => {
   return {
-    headers: {
-      ["Content-Type"]: JSON_CONTENT_TYPE
-    },
+    headers: TEXT_HEADERS,
     status: 403,
-    body: JSON.stringify({
-      success: false,
-      message
-    })
+    body: message
   }
 }
 
 export const UNAUTHORIZED = (message = "UNAUTHORIZED"): Response => {
   return {
-    headers: {
-      ["Content-Type"]: JSON_CONTENT_TYPE
-    },
+    headers: TEXT_HEADERS,
     status: 401,
-    body: JSON.stringify({
-      success: false,
-      message
-    })
+    body: message
   }
 }
 
 export const BAD_REQUEST = (message = "BAD REQUEST"): Response => {
   return {
-    headers: {
-      ["Content-Type"]: JSON_CONTENT_TYPE
-    },
+    headers: TEXT_HEADERS,
     status: 400,
-    body: JSON.stringify({
-      success: false,
-      message
-    })
+    body: message
   }
 }
 
 export const ERROR_RESPONSE = (message = "SERVER ERROR"): Response => {
   return {
-    headers: {
-      ["Content-Type"]: JSON_CONTENT_TYPE
-    },
+    headers: TEXT_HEADERS,
     status: 503,
-    body: JSON.stringify({
-      success: false,
-      message
-    })
+    body: message
   }
 }
