@@ -12,7 +12,7 @@ export type ParseOptionMap = Map<NoNameParseOption | ParseOptionTypeWithOutOptio
 export interface NestedParseOption {
   ignoreUndefined?: boolean;
   options: ParseOption[] | ParseOptionMap;
-  mode: ParseOptionsMode;
+  mode?: ParseOptionsMode;
 }
 
 export interface BasicParseOption extends ParseOptionValueType {
