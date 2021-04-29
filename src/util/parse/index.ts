@@ -118,9 +118,9 @@ export class Parser {
         continue;
       }
       const exists = ignoreUndefined ? value !== undefined : arg.hasOwnProperty(option.name);
-      if (!exists && !option.required) {
+      if (!exists && option.required === false) {
         continue;
-      } else if (!exists && option.required) {
+      } else if (!exists && (option.required === true || option.required === undefined)) {
         throw new ParseOptionsError(`${name}.${option.name} not defined`, `${name}.${option.name}`);
       }
       const { isType, parsedValue, message } = this.parseValue({
@@ -149,7 +149,7 @@ export class Parser {
       if (!isType) {
         throw new ParseOptionsError(
           `${name}.${option.name} not ${option.type}${message ? `: ${message}.` : ""}` +
-          `${option.type === "number" && option.numberMin !== undefined ? `${option.numberMin}:` : ""}${option.type === "number" && option.numberMax !== undefined ? `:${option.numberMax}` : ""}${option.numberMinDecimals !== undefined ? ` min decimals[${option.numberMinDecimals}]`: ""}${option.numberMaxDecimals !== undefined ? ` max decimals[${option.numberMaxDecimals}]`: ""}` +
+          `${option.type === "number" && option.numberMin !== undefined ? `${option.numberMin}:` : ""}${option.type === "number" && option.numberMax !== undefined ? `:${option.numberMax}` : ""}${option.numberMinDecimals !== undefined ? ` min decimals[${option.numberMinDecimals}]` : ""}${option.numberMaxDecimals !== undefined ? ` max decimals[${option.numberMaxDecimals}]` : ""}` +
           `${option.type === "string" && option.stringMinLength !== undefined ? `${option.stringMinLength}:` : ""}${option.type === "string" && option.stringMaxLength !== undefined ? `:${option.stringMaxLength}` : ""}` +
           `${option.type === "array" && option.arrayMinLength !== undefined ? `${option.arrayMinLength}:` : ""}${option.type === "array" && option.arrayMaxLength !== undefined ? `:${option.arrayMaxLength}` : ""}` +
           `${option.type === "array" && option.arrayType ? (option.arrayType !== "enum" ? ` of ${option.arrayType}` : ` of ${option.arrayType} as defined. valid values [${option.enumValues}]`) : ""}` +

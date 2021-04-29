@@ -16,7 +16,7 @@ export interface NestedParseOption {
 }
 
 export interface BasicParseOption extends ParseOptionValueType {
-  required: boolean;
+  required?: boolean;
   description?: string;
 }
 
