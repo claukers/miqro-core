@@ -68,7 +68,7 @@ export const loadConfigFile = (envFilePath: string, combined?: Map<string>, logg
   return ret;
 };
 
-const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `no config loaded. env files in [${configDirname}] dont exist!.`;
+const MISSED_TO_RUNMIQRO_INIT = (configDirname: string): string => `no config loaded. env files in [${configDirname}] doesnt exist!.`;
 
 export const loadConfig = (configDirname: string = ConfigPathResolver.getConfigDirname(), logger?: Logger): LoadConfigOut => {
   if (LoaderCache.config === false) {
