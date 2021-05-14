@@ -80,20 +80,21 @@ export class Logger extends EventEmitter implements Logger {
 
   protected write(args: WriteArgs): void {
     try {
-      const eventArgs: LoggerTransportWriteArgs = {
-        out: this.options.formatter({
-          identifier: this.identifier,
-          level: args.level,
-          message: format(args.message, ...args.optionalParams)
-        }),
-        ...args
-      };
+      let eventArgs: LoggerTransportWriteArgs | undefined = undefined;
       const tR = [];
       for (const transport of this.options.transports) {
         if (LOG_LEVEL_MAP[transport.level ? transport.level : this.level] >= LOG_LEVEL_MAP[args.level]) {
           try {
+            eventArgs = eventArgs ? eventArgs : {
+              out: this.options.formatter({
+                identifier: this.identifier,
+                level: args.level,
+                message: format(args.message, ...args.optionalParams)
+              }),
+              ...args
+            };
             tR.push(transport.write(eventArgs));
-          } catch(e2) {
+          } catch (e2) {
             this.emit(LoggerEvents.error, e2);
           }
         }
