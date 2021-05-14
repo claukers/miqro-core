@@ -85,7 +85,7 @@ export class Router {
       // ctx.logger.debug(`avoiding next handlers because handler returned false.`);
       return false;
     } else if (shouldContinue !== true && shouldContinue !== undefined) {
-      ctx.logger.debug("pushing to results [%s]", inspect(shouldContinue));
+      ctx.logger.trace("pushing to results [%s]", inspect(shouldContinue));
       ctx.results.push(shouldContinue);
     } /*else {
       // ctx.logger.debug("NOT pushing to results [%s]", String(shouldContinue));
