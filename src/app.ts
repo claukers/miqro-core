@@ -10,7 +10,7 @@ export class App extends Router {
     this.errorHandler = DefaultErrorHandler();
     this.listener = async (req, res) => {
       const ctx = new Context(req, res);
-      ctx.logger.debug(`request received`);
+      ctx.logger.trace(`request received`);
       try {
         await this.run(ctx);
         if (!ctx.res.headersSent) {
