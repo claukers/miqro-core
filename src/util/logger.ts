@@ -151,10 +151,10 @@ export const ConsoleTransport: (color?: boolean, level?: LogLevel) => LoggerTran
             console.error("\x1b[31m%s\x1b[0m", out);
             break;
           case "trace":
-            console.trace("\x1b[34m%s\x1b[0m", out);
+            console.log("\x1b[34m%s\x1b[0m", out);
             break;
           case "debug":
-            console.debug("\x1b[36m%s\x1b[0m", out);
+            console.log("\x1b[36m%s\x1b[0m", out);
             break;
           default:
             console[level](out);
