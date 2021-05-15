@@ -1,7 +1,7 @@
-import {ForbiddenError, ParseOptionsError} from "./error";
-import {Logger} from "./logger";
-import {Util} from "./util";
-import {Session} from "./index";
+import { ForbiddenError, ParseOptionsError } from "./error";
+import { Logger } from "./logger";
+import { Util } from "./util";
+import { Session } from "./index";
 
 export type GroupPolicyType = "at_least_one" | "all";
 
@@ -64,12 +64,11 @@ export abstract class GroupPolicyValidator {
     }
     const ret = groupPolicyCheck(session, options);
     if (!ret) {
-      (logger as Logger).warn(`unauthorized token[${session.token}] with groups[${session.groups.toString()}]` +
+      (logger as Logger).warn(`groups[${session.groups.toString()}]` +
         ` not on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
       throw new ForbiddenError(`Invalid session. You are not permitted to do this!`);
     } else {
-      (logger as Logger).debug(`authorized token[${session.token}] with groups[${session.groups.toString()}]` +
-        ` on correct groups [${options.groups.toString()}] with policy [${options.groupPolicy}]`);
+      (logger as Logger).trace("on correct groups");
       return true;
     }
   }

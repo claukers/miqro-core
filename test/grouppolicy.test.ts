@@ -11,6 +11,7 @@ describe('GroupPolicyValidator func tests', function () {
       info: console.log,
       debug: console.log,
       warn: console.warn,
+      trace: console.log,
       error: console.error
     }).catch((e: Error) => {
       strictEqual(e.message, "Invalid session. You are not permitted to do this!");
@@ -26,6 +27,7 @@ describe('GroupPolicyValidator func tests', function () {
       info: console.log,
       debug: console.log,
       warn: console.warn,
+      trace: console.log,
       error: console.error
     }).then((ret: boolean) => {
       strictEqual(ret, true);
@@ -41,6 +43,7 @@ describe('GroupPolicyValidator func tests', function () {
       info: console.log,
       debug: console.log,
       warn: console.warn,
+      trace: console.log,
       error: console.error
     }).then((ret: boolean) => {
       strictEqual(ret, true);
@@ -56,6 +59,7 @@ describe('GroupPolicyValidator func tests', function () {
       info: console.log,
       debug: console.log,
       warn: console.warn,
+      trace: console.log,
       error: console.error
     }).catch((e: Error) => {
       strictEqual(e.message, "Invalid session. You are not permitted to do this!");
@@ -72,6 +76,7 @@ describe('GroupPolicyValidator func tests', function () {
       info: console.log,
       debug: console.log,
       warn: console.warn,
+      trace: console.log,
       error: console.error
     }).catch((e: Error) => {
       strictEqual(e.message, "policy [invalid_policy] not implemented!!");
