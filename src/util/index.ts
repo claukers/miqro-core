@@ -1,7 +1,8 @@
+import { Context } from "../handler";
 import {Map, SimpleTypes} from "./parser";
 
 export interface VerifyTokenService {
-  verify(args: { token: string }): Promise<Session | null>;
+  verify(args: { token: string, ctx: Context }): Promise<Session | null>;
 }
 
 export interface NoTokenSession extends Map<SimpleTypes> {
