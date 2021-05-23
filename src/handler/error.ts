@@ -1,7 +1,7 @@
 import { BAD_REQUEST, ERROR_RESPONSE, FORBIDDEN, NOT_FOUND, UNAUTHORIZED, Context, ErrorHandler } from "./common";
 
-export const DefaultErrorHandler = (): ErrorHandler => {
-  return async (e: Error, ctx: Context) => {
+export const DefaultErrorHandler = (): ErrorHandler<boolean> => {
+  return async (e: Error, ctx: Context): Promise<boolean> => {
     if (!e || !e.name || e.name === "Error") {
       if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
         ctx.logger.error(e);
