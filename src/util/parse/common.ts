@@ -78,9 +78,13 @@ export const parseOptionMap2ParseOptionList = (map: ParseOptionMap): ParseOption
       name,
       required: true,
       type: val
+    } : val.required === undefined ? {
+      ...val,
+      required: true,
+      name
     } : {
-        ...val,
-        name
-      };
+      ...val,
+      name
+    };
   });
 }
