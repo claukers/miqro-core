@@ -20,12 +20,12 @@ export class App extends Router {
         try {
           await this.handleError(e, ctx);
         } catch (e2) {
-          this.errorHandler(e, ctx).then(()=>{
+          this.errorHandler(e, ctx).then(() => {
             if (!ctx.res.headersSent) {
               ctx.logger.error(e);
               ctx.end(ERROR_RESPONSE());
             }
-          }).catch(e => ctx.logger.error(e));
+          }).catch((e: Error) => ctx.logger.error(e));
         }
       }
     };

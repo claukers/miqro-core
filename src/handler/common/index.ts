@@ -6,9 +6,8 @@ export type Method = "get" | "post" | "put" | "delete" | "patch" | "options" | "
 export * from "./context";
 export * from "./response";
 
-export type Handler = (ctx: Context) => Promise<boolean | void | any> | HandlerFunction;
-type HandlerFunction = (ctx: Context) => boolean | void | any;
+export type Handler<T = boolean | void | any> = ((ctx: Context) => Promise<T>) | ((ctx: Context) => T);
 
-export type ErrorHandler = (e: Error, ctx: Context) => Promise<boolean | void | any>;
+export type ErrorHandler<T = boolean | void | any> = ((e: Error, ctx: Context) => Promise<T>) | ((e: Error, ctx: Context) => T);
 
 export const BadRequestError = ParseOptionsError;
