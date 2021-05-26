@@ -201,19 +201,16 @@ export const matchTokenizePath = (checkOnlyTokens: boolean, tokens: PathToken[],
       if (checkOnlyTokens && i >= tokens.length) {
         break;
       }
-      if (i === ctxTokens.length - 1 && couldBeUsingOptional) {
-        break;
-      } else {
-        // check
-        if (tokens[i].wild || ctxToken.toLocaleLowerCase() === tokens[i].token.toLocaleLowerCase()) {
-          // check pass
-          if (tokens[i].wild) {
-            const paramKey = tokens[i].token.substring(1, tokens[i].token.length - (tokens[i].optional ? 1 : 0));
-            params[paramKey] = ctxToken;
-          }
-          continue;
+
+      if (tokens[i].wild || ctxToken.toLocaleLowerCase() === tokens[i].token.toLocaleLowerCase()) {
+        // check pass
+        if (tokens[i].wild) {
+          const paramKey = tokens[i].token.substring(1, tokens[i].token.length - (tokens[i].optional ? 1 : 0));
+          params[paramKey] = ctxToken;
         }
+        continue;
       }
+
       return {
         match: false,
         params: {}

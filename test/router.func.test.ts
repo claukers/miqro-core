@@ -13,6 +13,28 @@ describe("router functional tests", function () {
     const app = new App();
     const router = new Router();
     app.use(router, "/api");
+    router.get("/user/:name/:bla?", async (ctx) => {
+      ctx.json({
+        params: ctx.params
+      });
+    });
+    FuncTestHelper(app, {
+      url: `/api/user/blo`,
+      method: "get"
+    }, (res) => {
+      let { status, data, headers } = res;
+      console.log(inspect({ status, data, headers }));
+      strictEqual(status, 200);
+      strictEqual(data.params.name, "blo");
+      strictEqual(data.params.bla, undefined);
+      done();
+    });
+  });
+
+  it("router2 token path", (done) => {
+    const app = new App();
+    const router = new Router();
+    app.use(router, "/api");
     router.get("/user/:name/:bla/asd", async (ctx) => {
       ctx.json({
         params: ctx.params
