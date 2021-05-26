@@ -201,8 +201,9 @@ export const matchTokenizePath = (checkOnlyTokens: boolean, tokens: PathToken[],
       if (checkOnlyTokens && i >= tokens.length) {
         break;
       }
-
-      if (i < ctxTokens.length - 1 || (i === ctxTokens.length - 1 && !couldBeUsingOptional)) {
+      if (i === ctxTokens.length - 1 && couldBeUsingOptional) {
+        break;
+      } else {
         // check
         if (tokens[i].wild || ctxToken.toLocaleLowerCase() === tokens[i].token.toLocaleLowerCase()) {
           // check pass
