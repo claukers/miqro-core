@@ -9,6 +9,28 @@ process.env.LOG_LEVEL = "debug";
 describe("router functional tests", function () {
   this.timeout(10000);
 
+  it("router2 token path", (done) => {
+    const app = new App();
+    const router = new Router();
+    app.use(router, "/api");
+    router.get("/user/:name/:bla/asd", async (ctx) => {
+      ctx.json({
+        params: ctx.params
+      });
+    });
+    FuncTestHelper(app, {
+      url: `/api/user/bla/ble/asd`,
+      method: "get"
+    }, (res) => {
+      let { status, data, headers } = res;
+      console.log(inspect({ status, data, headers }));
+      strictEqual(status, 200);
+      strictEqual(data.params.name, "bla");
+      strictEqual(data.params.bla, "ble");
+      done();
+    });
+  });
+
   it("nested simple happy path", (done) => {
     const app = new App();
     const router = new Router();
@@ -70,7 +92,7 @@ describe("router functional tests", function () {
           strictEqual(headers['content-type'], "plain/text; charset=utf-8");
           strictEqual(headers['content-length'], "3");
           strictEqual(status, 400);
-  
+
           strictEqual(data, "blo");
 
           FuncTestHelper(app, {

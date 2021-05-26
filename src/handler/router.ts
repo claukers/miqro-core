@@ -1,10 +1,12 @@
 import { inspect } from "util";
-import { Method, Handler, normalizePath, Context, ErrorHandler } from "./common";
+import { Map } from "../util";
+import { Method, Handler, normalizePath, Context, ErrorHandler, PathToken, tokenizePath, matchTokenizePath } from "./common";
 
-interface RouterHandler {
+export interface RouterHandler {
   handler: Handler | Handler[] | Router;
   method?: Method;
   path?: string;
+  tokens: PathToken[]
 }
 
 export class Router {
@@ -31,17 +33,21 @@ export class Router {
   public use(handler: Array<Handler> | Handler | Router, path?: string, method?: Method): Router {
     if (handler instanceof Array) {
       for (const h of handler) {
+        const nPath = path !== undefined ? normalizePath(path) : undefined;
         this.handlers.push({
           handler: h,
           method,
-          path: path !== undefined ? normalizePath(path) : undefined
+          path: nPath,
+          tokens: tokenizePath(nPath)
         });
       }
     } else {
+      const nPath = path !== undefined ? normalizePath(path) : undefined;
       this.handlers.push({
         handler,
         method,
-        path: path !== undefined ? normalizePath(path) : undefined
+        path: nPath,
+        tokens: tokenizePath(nPath)
       });
     }
     return this;
@@ -58,23 +64,16 @@ export class Router {
   }
   protected isMatch(ctx: Context, h: RouterHandler, prePath?: string): boolean {
     if ((h.method === undefined || h.method.toLocaleLowerCase() === ctx.method.toLocaleLowerCase())) {
-      if (typeof h.handler === "function" || h.handler instanceof Array) {
-        // the paths have been already normalized
-        if (prePath === "/" || prePath === undefined) {
-          if ((h.path === undefined || h.path.toLocaleLowerCase() === ctx.path.toLocaleLowerCase())) {
-            return true;
-          }
-        } else {
-          if ((h.path === undefined || `${prePath ? prePath : "/"}${h.path.substring(1)}` === ctx.path.toLocaleLowerCase())) {
-            return true;
-          }
-        }
-      } else {
-        // Router
-        if ((h.path === undefined || ctx.path.indexOf(`${prePath ? prePath : "/"}${h.path.substring(1)}`) === 0)) {
-          return true;
-        }
+
+      if (h.path === undefined) {
+        return true;
       }
+
+      const ret = typeof h.handler === "function" || h.handler instanceof Array ?
+        matchTokenizePath(false, h.tokens, ctx, prePath) :
+        matchTokenizePath(true, h.tokens, ctx, prePath);
+      ctx.params = ret.params;
+      return ret.match;
     }
     return false;
   }

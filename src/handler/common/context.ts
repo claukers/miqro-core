@@ -1,4 +1,4 @@
-import { defaultLoggerFormatter, getLogger, Logger, Session, SimpleMap } from "../../util";
+import { defaultLoggerFormatter, getLogger, Logger, Map, Session, SimpleMap } from "../../util";
 import { IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, ServerResponse } from "http";
 import { ParsedUrlQuery, parse as queryParse } from "querystring";
 import { URL } from "url";
@@ -40,6 +40,7 @@ export class Context {
   public readonly headers: IncomingHttpHeaders;
   public readonly cookies: SimpleMap<string>;
   public query: ParsedUrlQuery;
+  public params: Map<string | undefined> = {}; // the router will fill this
   public buffer: Buffer; // empty buffer. middleware must read it
   public readonly remoteAddress?: string;
   public body: any; // a middleware will fill this reading the buffer
@@ -137,5 +138,94 @@ export class Context {
         ['Location']: url
       }
     })
+  }
+}
+
+export interface PathToken {
+  optional: boolean;
+  wild: boolean;
+  token: string;
+}
+
+export const tokenizePath = (path?: string): PathToken[] => {
+  if (path === undefined) {
+    return [];
+  }
+  const tokens = path.split("/").filter(p => p).map(token => {
+    const wild = token[0] === ":";
+    const optional = token[token.length - 1] === "?";
+    return {
+      optional,
+      wild,
+      token
+    }
+  });
+  tokens.forEach((token, i) => token.optional)
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i].optional && i != tokens.length - 1) {
+      throw new Error("cannot set a path token as optional that's not the last one");
+    }
+  }
+  return tokens;
+}
+
+export const matchTokenizePath = (checkOnlyTokens: boolean, tokens: PathToken[], ctx: Context, prePath?: string): {
+  match: boolean;
+  params: Map<string | undefined>
+} => {
+  if (prePath !== "/" && prePath !== undefined) {
+    tokens = (prePath.split("/").filter(p => p).map(s => {
+      return {
+        optional: false,
+        token: s,
+        wild: false
+      };
+    }) as PathToken[]).concat(tokens);
+  }
+
+  const ctxTokens = ctx.path.split("/").filter(p => p);
+  const lastTokenIsOptional = tokens[tokens.length - 1].optional;
+  const couldBeUsingOptional = (lastTokenIsOptional &&
+    (
+      (!checkOnlyTokens && tokens.length - 1 === ctxTokens.length) ||
+      (checkOnlyTokens && tokens.length - 1 <= ctxTokens.length)
+    )
+  );
+
+  const params: Map<string | undefined> = {};
+
+  if ((!checkOnlyTokens && tokens.length === ctxTokens.length) || couldBeUsingOptional || (checkOnlyTokens && tokens.length <= ctxTokens.length)) {
+    // similiar count of tokens
+    for (let i = 0; i < ctxTokens.length; i++) {
+      const ctxToken = ctxTokens[i];
+      if (checkOnlyTokens && i >= tokens.length) {
+        break;
+      }
+
+      if (i < ctxTokens.length - 1 || (i === ctxTokens.length - 1 && !couldBeUsingOptional)) {
+        // check
+        if (tokens[i].wild || ctxToken.toLocaleLowerCase() === tokens[i].token.toLocaleLowerCase()) {
+          // check pass
+          if (tokens[i].wild) {
+            const paramKey = tokens[i].token.substring(1, tokens[i].token.length - (tokens[i].optional ? 1 : 0));
+            params[paramKey] = ctxToken;
+          }
+          continue;
+        }
+      }
+      return {
+        match: false,
+        params: {}
+      };
+    }
+    return {
+      match: true,
+      params
+    };
+  } else {
+    return {
+      match: false,
+      params: {}
+    };
   }
 }
