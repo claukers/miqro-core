@@ -160,7 +160,6 @@ export const tokenizePath = (path?: string): PathToken[] => {
       token
     }
   });
-  tokens.forEach((token, i) => token.optional)
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i].optional && i != tokens.length - 1) {
       throw new Error("cannot set a path token as optional that's not the last one");

@@ -1,5 +1,4 @@
 import { inspect } from "util";
-import { Map } from "../util";
 import { Method, Handler, normalizePath, Context, ErrorHandler, PathToken, tokenizePath, matchTokenizePath } from "./common";
 
 export interface RouterHandler {
