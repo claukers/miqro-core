@@ -183,7 +183,7 @@ export const matchTokenizePath = (checkOnlyTokens: boolean, tokens: PathToken[],
   }
 
   const ctxTokens = ctx.path.split("/").filter(p => p);
-  const lastTokenIsOptional = tokens[tokens.length - 1].optional;
+  const lastTokenIsOptional = tokens.length > 0 ? tokens[tokens.length - 1].optional : false;
   const couldBeUsingOptional = (lastTokenIsOptional &&
     (
       (!checkOnlyTokens && tokens.length - 1 === ctxTokens.length) ||
