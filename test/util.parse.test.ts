@@ -1,5 +1,6 @@
 import { strictEqual } from "assert";
-import { describe, it } from 'mocha';
+import { describe, it, utils } from 'mocha';
+import { URL } from "url";
 import { inspect } from "util";
 
 describe('lib.Util.parse unit tests', function () {
@@ -171,7 +172,100 @@ describe('lib.Util.parse unit tests', function () {
     });
   });
 
-  /*it('regex parser', (done) => {
+  it('mail happy path no dmoain 2', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      try {
+        parse("argName", {
+          bla: "as@d@asd"
+        }, [
+          { name: "bla", type: "email" }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.bla not email");
+      }
+
+    };
+    test().then(done).catch(done);
+  });
+
+  it('mail happy path no dmoain', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      try {
+        parse("argName", {
+          bla: "asd@asd"
+        }, [
+          { name: "bla", type: "email" }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.bla not email");
+      }
+
+    };
+    test().then(done).catch(done);
+  });
+
+  it('email happy path', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      const { bla } = parse("argName", {
+        bla: "asd@asd.dds"
+      }, [
+        { name: "bla", type: "email" }
+      ], "no_extra");
+      strictEqual(typeof bla === "string", true);
+    };
+    test().then(done).catch(done);
+  });
+
+  it('email happy path sub dmoain', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      const { bla } = parse("argName", {
+        bla: "asasd-sda.d@asd.d20ds.asd.asd"
+      }, [
+        { name: "bla", type: "email" }
+      ], "no_extra");
+      strictEqual(typeof bla === "string", true);
+    };
+    test().then(done).catch(done);
+  });
+
+  it('url happy path no protocol', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      try {
+        parse("argName", {
+          bla: "localhost/asd"
+        }, [
+          { name: "bla", type: "url" }
+        ], "no_extra");
+        strictEqual(false, true);
+      } catch (e) {
+        strictEqual(e.message, "argName.bla not url");
+      }
+
+    };
+    test().then(done).catch(done);
+  });
+
+  it('url happy path', (done) => {
+    const test = async () => {
+      const { parse } = require("../src");
+      const { bla } = parse("argName", {
+        bla: "http://localhost/asd"
+      }, [
+        { name: "bla", type: "url" }
+      ], "no_extra");
+      strictEqual(bla instanceof URL, true);
+    };
+    test().then(done).catch(done);
+  });
+
+  it('regex parser', (done) => {
     const test = async () => {
       const { parse } = require("../src");
       const ret = parse("argName", {
@@ -1611,5 +1705,5 @@ describe('lib.Util.parse unit tests', function () {
       strictEqual(Object.keys(ret).length, 0);
     };
     test().then(done).catch(done);
-  });*/
+  });
 });
