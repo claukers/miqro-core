@@ -57,7 +57,7 @@ export const request = (options: RequestOptions, l?: Logger): Promise<RequestRes
             }, (res: http.IncomingMessage) => {
               try {
                 const buffers: Buffer[] = [];
-                let responseLength: number = 0;
+                let responseLength = 0;
                 const chunkListener = (chunk: Buffer) => {
                   responseLength += chunk.length;
                   if (options.maxResponse && options.maxResponse < responseLength) {
