@@ -33,7 +33,11 @@ export const request = (options: RequestOptions, l?: Logger): Promise<RequestRes
         const data = options.data ? !isJSON ? options.data : JSON.stringify(options.data) : undefined;
         const contentLength = data ? Buffer.from(data).length : 0;
 
-        const { protocol, queryStr, hash, pathname, hostname, port } = parseRedirectLocation(options.url, options.query, options.socketPath);
+        const { socketPath, protocol, queryStr, hash, pathname, hostname, port } = parseRedirectLocation(options.url, options.query, options.socketPath);
+
+        if (!socketPath && !hostname) {
+          throw new Error(`Bad url ${options.url}`);
+        }
 
         switch (protocol) {
           case "https:":
