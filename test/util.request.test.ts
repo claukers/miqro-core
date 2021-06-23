@@ -146,16 +146,44 @@ describe('lib.Util.request func tests', function () {
       server.close();
       serverPort.close();
     })().then(done).catch(done);
-  })
+  });
+
+  it('simple get follow redirect', (done) => {
+    (async () => {
+      try {
+        console.log("gads");
+        const { url, redirectedUrl, status, data } = await Util.request({
+          url: "/redirect",
+          method: "get",
+          socketPath: SOCKET_PATH,
+          followRedirect: true
+        });
+        strictEqual(status, 200);
+        strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=2");
+        strictEqual(url, "/redirect");
+        strictEqual(data, "hello2");
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
+    })().then(done).catch(done);
+  });
 
   it('simple get /hello?format=txt happy path', (done) => {
     (async () => {
-      const { data, status, buffer, headers } = await Util.request({
-        url: "http://localhost:8080/hello?format=txt&otherQ=1",
-        method: "get"
-      });
-      strictEqual(data, "hello");
-      strictEqual(status, 200);
+      try {
+        console.log("gehin");
+        const { data, status, buffer, headers } = await Util.request({
+          url: "http://localhost:8080/hello?format=txt&otherQ=1",
+          method: "get"
+        });
+        strictEqual(data, "hello");
+        strictEqual(status, 200);
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
+
     })().then(done).catch(done);
   });
 
@@ -292,22 +320,6 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
-
-  /*it('simple get /compressHello?format=txt with gzip encoding happy path over unixsocket url act as path', (done) => {
-    (async () => {
-      const { data, status, headers, buffer } = await Util.request({
-        url: "http://localhost:8080/compressHello?format=txt&otherQ=1",
-        method: "get",
-        headers: {
-          ["Accept-Encoding"]: "gzip"
-        }
-      });
-      strictEqual(data, "hello");
-      strictEqual(headers["content-encoding"], "gzip");
-      strictEqual(status, 200);
-    })().then(done).catch(done);
-  });*/
-
   it('simple get /hello?format=txt happy path over unixsocket url act as path', (done) => {
     (async () => {
       const { data, status } = await Util.request({
@@ -329,6 +341,31 @@ describe('lib.Util.request func tests', function () {
       strictEqual(data.ble, 2);
       strictEqual(status, 200);
     })().then(done).catch(done);
+  });
+
+  it('simple get /hello?format=json happy path maxResponse', (done) => {
+    (async () => {
+      const { data, status } = await Util.request({
+        url: "http://localhost:8080/hello?format=json&otherQ=1",
+        method: "get",
+        maxResponse: 9,
+      });
+      strictEqual(data.ble, 2);
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });
+
+  it('simple get /hello?format=json happy path maxResponse too big', (done) => {
+    Util.request({
+      url: "http://localhost:8080/hello?format=json&otherQ=1",
+      method: "get",
+      maxResponse: 8,
+    }).then(() => {
+      done(new Error("bad state"))
+    }).catch(e => {
+      strictEqual(e.message, "response too big maxResponse 8 < 9");
+      done();
+    });
   });
 
   it('simple get /hello?format=json happy path over unixsocket', (done) => {
@@ -379,36 +416,6 @@ describe('lib.Util.request func tests', function () {
     })().then(done).catch(done);
   });
 
-  it('simple get follow redirect', (done) => {
-    (async () => {
-      const { url, redirectedUrl, status, data } = await Util.request({
-        url: "/redirect",
-        method: "get",
-        socketPath: SOCKET_PATH,
-        followRedirect: true
-      });
-      strictEqual(status, 200);
-      strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=2");
-      strictEqual(url, "/redirect");
-      strictEqual(data, "hello2");
-    })().then(done).catch(done);
-  });
-
-  it('simple get follow redirect with no host', (done) => {
-    (async () => {
-      const { url, redirectedUrl, status, data, locations } = await Util.request({
-        url: "http://localhost:8080/redirectNoHostHandler",
-        method: "get",
-        followRedirect: true
-      });
-      strictEqual(status, 200);
-      strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=3");
-      strictEqual(locations[0], redirectedUrl);
-      strictEqual(url, "http://localhost:8080/redirectNoHostHandler");
-      strictEqual(data, "hello2");
-    })().then(done).catch(done);
-  });
-
   it('simple get follow redirect with different host and ECONNREFUSED', (done) => {
     (async () => {
       try {
@@ -448,4 +455,38 @@ describe('lib.Util.request func tests', function () {
 
     })().then(done).catch(done);
   });
+
+
+
+  it('simple get follow redirect with no host', (done) => {
+    (async () => {
+      console.log("gads");
+      const { url, redirectedUrl, status, data, locations } = await Util.request({
+        url: "http://localhost:8080/redirectNoHostHandler",
+        method: "get",
+        followRedirect: true
+      });
+      strictEqual(status, 200);
+      strictEqual(redirectedUrl, "http://localhost:8080/hello?format=txt&otherQ=3");
+      strictEqual(locations[0], "http://localhost:8080/redirectNoHostHandler");
+      strictEqual(locations[1], redirectedUrl);
+      strictEqual(url, "http://localhost:8080/redirectNoHostHandler");
+      strictEqual(data, "hello2");
+    })().then(done).catch(done);
+  });
+
+  /*it('simple get /compressHello?format=txt with gzip encoding happy path over unixsocket url act as path', (done) => {
+    (async () => {
+      const { data, status, headers, buffer } = await Util.request({
+        url: "http://localhost:8080/compressHello?format=txt&otherQ=1",
+        method: "get",
+        headers: {
+          ["Accept-Encoding"]: "gzip"
+        }
+      });
+      strictEqual(data, "hello");
+      strictEqual(headers["content-encoding"], "gzip");
+      strictEqual(status, 200);
+    })().then(done).catch(done);
+  });*/
 });
