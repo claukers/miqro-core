@@ -11,7 +11,7 @@ const TEXT_TYPE = "plain/text;charset=utf-8";
 
 export const request = (options: RequestOptions, l?: Logger): Promise<RequestResponse> => {
   const logger = l ? l : getLogger("request");
-  if (options.method?.toLowerCase() === "get" && options.data !== undefined) {
+  if ((options.method && options.method.toLowerCase() === "get" || !options.method) && options.data !== undefined) {
     return Promise.reject(new Error("cannot send data on method get"));
   } else {
     return new Promise((resolve, reject) => {
