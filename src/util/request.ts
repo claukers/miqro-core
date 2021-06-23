@@ -153,6 +153,7 @@ export const request = (options: RequestOptions, l?: Logger): Promise<RequestRes
                             return;
                           }
                         });
+                        return;
                       } catch (e5) {
                         reject(new ResponseError(status, res.headers, options.url, location, data, responseBuffer, options.locations ? options.locations : []));
                         return;
