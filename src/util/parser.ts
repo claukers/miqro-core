@@ -2,6 +2,26 @@ import { ConfigPathResolver } from "./config";
 import { Parser, ParseOptionsMode, Map, ParseOption, ParseOptionMap, ParseValueValidator } from "./parse";
 import { ParseValueArgs } from "./parse/common";
 
+export interface ParseOptions {
+  description?: string;
+  options: ParseOption[] | ParseOptionMap;
+  mode?: ParseOptionsMode;
+  ignoreUndefined?: boolean;
+}
+
+const NO_OPTIONS: ParseOptions[] = [{
+  options: [],
+  mode: "no_extra"
+}];
+
+const ADD_EXTRA: ParseOptions[] = [{
+  options: [],
+  mode: "add_extra"
+}];
+
+export const normalizeParseOptions = (option?: ParseOptions | false | ParseOptions[]): ParseOptions[] =>
+  option ? (option instanceof Array ? option : [option]) : (option === false ? NO_OPTIONS : ADD_EXTRA);
+
 export * from "./parse";
 
 /* eslint-disable  @typescript-eslint/no-empty-interface */

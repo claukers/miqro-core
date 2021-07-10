@@ -4,6 +4,7 @@ import { Context } from "./context";
 export type Method = "get" | "post" | "put" | "delete" | "patch" | "options" | "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "OPTIONS";
 
 export * from "./context";
+export * from "./proxyutils";
 export * from "./response";
 
 export type Handler<T = boolean | void | any> = ((ctx: Context) => Promise<T>) | ((ctx: Context) => T);
