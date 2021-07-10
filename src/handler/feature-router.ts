@@ -1,4 +1,4 @@
-import { getLogger, isFeatureEnabled, Logger, SimpleMap } from "../util";
+import { getLogger, isFeatureEnabled, Logger, Map } from "../util";
 import { Handler, Method } from "./common";
 import { Router } from "./router";
 
@@ -10,7 +10,7 @@ export interface FeatureRouterPathOptions {
   handler: FeatureHandler;
 }
 
-export type FeatureRouterOptions<T extends FeatureRouterPathOptions = FeatureRouterPathOptions> = SimpleMap<T>;
+export type FeatureRouterOptions<T extends FeatureRouterPathOptions = FeatureRouterPathOptions> = Map<T>;
 
 export const FEATURE_ROUTER_METHODS = ["get", "post", "put", "delete", "patch", "options"];
 

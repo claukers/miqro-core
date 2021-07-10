@@ -1,4 +1,4 @@
-import { defaultLoggerFormatter, getLogger, Logger, Map, Session, SimpleMap } from "../../util";
+import { defaultLoggerFormatter, getLogger, Logger, Map, Session } from "../../util";
 import { IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, ServerResponse } from "http";
 import { ParsedUrlQuery, parse as queryParse } from "querystring";
 import { URL } from "url";
@@ -38,7 +38,7 @@ export class Context {
   public readonly hash: string;
   public readonly method: string;
   public readonly headers: IncomingHttpHeaders;
-  public readonly cookies: SimpleMap<string>;
+  public readonly cookies: Map<string>;
   public query: ParsedUrlQuery;
   public params: Map<string | undefined> = {}; // the router will fill this
   public buffer: Buffer; // empty buffer. middleware must read it

@@ -24,9 +24,6 @@ export const normalizeParseOptions = (option?: ParseOptions | false | ParseOptio
 
 export * from "./parse";
 
-/* eslint-disable  @typescript-eslint/no-empty-interface */
-export interface SimpleMap<T> extends Map<T> { }
-
 const defaultParser = new Parser();
 
 export const registerParser = (t: string, parser: ParseValueValidator): void => {

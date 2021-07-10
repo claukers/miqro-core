@@ -3,7 +3,7 @@ import { parseAny } from "./any";
 import { parseArray } from "./array";
 import { parseBoolean } from "./boolean";
 import { parseOptionMap2ParseOptionList, Map, ParseOption, ParseOptionMap, ParseOptionsMode, ParseValueArgs, ParseValueValidator, ParseValueValidatorResponse, ParserCB } from "./common";
-import { parseEMail } from "./email";
+import { parseEmail } from "./email";
 import { parseEnum } from "./enum";
 import { parseMultiple } from "./multiple";
 import { parseNested } from "./nested";
@@ -41,7 +41,7 @@ export class Parser {
     this.registerParser("string", parseString);
     this.registerParser("regex", parseRegex);
     this.registerParser("url", parseURL);
-    this.registerParser("email", parseEMail);
+    this.registerParser("email", parseEmail);
   }
   public registerParser(t: string, parser: ParseValueValidator): void {
     this.parsers[t] = parser;

@@ -1,11 +1,6 @@
 export const isFeatureEnabled = (feature: string, defaults = true): boolean => {
   const featureToggleName = `${feature.toUpperCase()}`;
-  if (process.env[featureToggleName] === undefined) {
-    return defaults;
-  } else {
-    return process.env[featureToggleName] === "true";
-  }
-
+  return process.env[featureToggleName] === undefined ? defaults : process.env[featureToggleName] === "true";
 };
 
 export abstract class FeatureToggle {
