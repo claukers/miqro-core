@@ -10,7 +10,7 @@ export interface FeatureRouterPathOptions {
   handler: FeatureHandler;
 }
 
-export type FeatureRouterOptions = SimpleMap<FeatureRouterPathOptions>;
+export type FeatureRouterOptions<T extends FeatureRouterPathOptions = FeatureRouterPathOptions> = SimpleMap<T>;
 
 export const FEATURE_ROUTER_METHODS = ["get", "post", "put", "delete", "patch", "options"];
 
