@@ -7,7 +7,9 @@ this module provides helpers functions to develop nodejs applications like **log
 ##### Router
 
 ```javascript
-import { Router } from "@miqro/core";
+import { Router, App } from "@miqro/core";
+...
+const app = new App();
 ...
 const router = new Router();
 ...
