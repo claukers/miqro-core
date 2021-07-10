@@ -2,7 +2,7 @@ import { ParseOptionsError } from "../error";
 import { parseAny } from "./any";
 import { parseArray } from "./array";
 import { parseBoolean } from "./boolean";
-import { parseOptionMap2ParseOptionList, Map, ParseOption, ParseOptionMap, ParseOptionsMode, ParseValueArgs, ParseValueValidator, ParseValueValidatorResponse, ParserCB } from "./common";
+import { parseOptionMap2ParseOptionList, SimpleMap, ParseOption, ParseOptionMap, ParseOptionsMode, ParseValueArgs, ParseValueValidator, ParseValueValidatorResponse, ParserCB } from "./common";
 import { parseEmail } from "./email";
 import { parseEnum } from "./enum";
 import { parseMultiple } from "./multiple";
@@ -27,7 +27,7 @@ export * from "./url";
 export * from "./email";
 
 export class Parser {
-  protected parsers: Map<ParseValueValidator>;
+  protected parsers: SimpleMap<ParseValueValidator>;
   constructor() {
     this.parsers = {};
     this.registerParser("any", parseAny);
@@ -109,7 +109,7 @@ export class Parser {
     options: ParseOption[] | ParseOptionMap,
     mode: ParseOptionsMode = "no_extra",
     ignoreUndefined = false): any {
-    const ret: Map<any> = {};
+    const ret: SimpleMap<any> = {};
     if (!arg || typeof arg !== "object") {
       throw new ParseOptionsError(`invalid ${name}`, name);
     }

@@ -1,4 +1,4 @@
-import { defaultLoggerFormatter, getLogger, Logger, Map, Session } from "../../util";
+import { defaultLoggerFormatter, getLogger, Logger, SimpleMap, Session } from "../../util";
 import { IncomingHttpHeaders, IncomingMessage, OutgoingHttpHeaders, ServerResponse } from "http";
 import { ParsedUrlQuery, parse as queryParse } from "querystring";
 import { URL } from "url";
@@ -38,9 +38,9 @@ export class Context {
   public readonly hash: string;
   public readonly method: string;
   public readonly headers: IncomingHttpHeaders;
-  public readonly cookies: Map<string>;
+  public readonly cookies: SimpleMap<string>;
   public query: ParsedUrlQuery;
-  public params: Map<string | undefined> = {}; // the router will fill this
+  public params: SimpleMap<string | undefined> = {}; // the router will fill this
   public buffer: Buffer; // empty buffer. middleware must read it
   public readonly remoteAddress?: string;
   public body: any; // a middleware will fill this reading the buffer
@@ -170,7 +170,7 @@ export const tokenizePath = (path?: string): PathToken[] => {
 
 export const matchTokenizePath = (checkOnlyTokens: boolean, tokens: PathToken[], ctx: Context, prePath?: string): {
   match: boolean;
-  params: Map<string | undefined>
+  params: SimpleMap<string | undefined>
 } => {
   if (prePath !== "/" && prePath !== undefined) {
     tokens = (prePath.split("/").filter(p => p).map(s => {
@@ -191,7 +191,7 @@ export const matchTokenizePath = (checkOnlyTokens: boolean, tokens: PathToken[],
     )
   );
 
-  const params: Map<string | undefined> = {};
+  const params: SimpleMap<string | undefined> = {};
 
   if ((!checkOnlyTokens && tokens.length === ctxTokens.length) || couldBeUsingOptional || (checkOnlyTokens && tokens.length <= ctxTokens.length)) {
     // similiar count of tokens

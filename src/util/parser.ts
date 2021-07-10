@@ -1,5 +1,5 @@
 import { ConfigPathResolver } from "./config";
-import { Parser, ParseOptionsMode, Map, ParseOption, ParseOptionMap, ParseValueValidator } from "./parse";
+import { Parser, ParseOptionsMode, SimpleMap, ParseOption, ParseOptionMap, ParseValueValidator } from "./parse";
 import { ParseValueArgs } from "./parse/common";
 
 export interface ParseOptions {
@@ -36,7 +36,7 @@ export const unRegisterParser = (t: string): void => {
 
 export const parseValue = (
   args: ParseValueArgs
-): Map<any> => {
+): SimpleMap<any> => {
   return defaultParser.parseValue(args);
 }
 
@@ -47,7 +47,7 @@ export const parse = (
   options: ParseOption[] | ParseOptionMap,
   mode: ParseOptionsMode = "no_extra",
   ignoreUndefined = false
-): Map<any> => {
+): SimpleMap<any> => {
   return defaultParser.parse(name, arg, options, mode, ignoreUndefined);
 }
 

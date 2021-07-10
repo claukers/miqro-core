@@ -4,7 +4,7 @@ import {getLogger, Logger, LoggerFactory, setLoggerFactory} from "./logger";
 import {existsSync, readdirSync, readFileSync} from "fs";
 import {ConfigPathResolver, LoadConfigOut, MiqroRC} from "./config";
 import {ConfigFileNotFoundError} from "./error";
-import {Map} from "./parser";
+import {SimpleMap} from "./parser";
 
 const LOADER_IDENTIFIER = "loader";
 
@@ -13,7 +13,7 @@ export const LoaderCache: {
   config: LoadConfigOut | false;
   loggerFactory: boolean;
   rc: MiqroRC | null | false;
-  extra: Map<any>;
+  extra: SimpleMap<any>;
   clear: () => void;
 } = {
   config: false,
@@ -42,7 +42,7 @@ export const initLoggerFactory = (modulePath: string = ConfigPathResolver.getCus
 };
 
 
-export const loadConfigFile = (envFilePath: string, combined?: Map<string>, logger?: Logger): ConfigOutput => {
+export const loadConfigFile = (envFilePath: string, combined?: SimpleMap<string>, logger?: Logger): ConfigOutput => {
   logger = logger ? logger : getLogger(LOADER_IDENTIFIER);
   const ret: ConfigOutput = {};
   if (!existsSync(envFilePath)) {

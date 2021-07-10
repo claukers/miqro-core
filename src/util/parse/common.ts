@@ -1,13 +1,13 @@
-export interface Map<T> {
+export interface SimpleMap<T> {
   [key: string]: T;
 }
 
 export type ParseOptionsMode = "remove_extra" | "add_extra" | "no_extra";
-export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | Map<SimpleTypes>;
+export type SimpleTypes = string | boolean | number | Array<SimpleTypes> | SimpleMap<SimpleTypes>;
 export type ParseOptionTypeWithOutOptions = "string" | "boolean" | "number" | "object" | "any" | "array" | string;
 export type ParseOptionType = "regex" | "nested" | "enum" | "multiple" | ParseOptionTypeWithOutOptions;
 
-export type ParseOptionMap = Map<NoNameParseOption | ParseOptionTypeWithOutOptions>;
+export type ParseOptionMap = SimpleMap<NoNameParseOption | ParseOptionTypeWithOutOptions>;
 
 export interface NestedParseOption {
   ignoreUndefined?: boolean;
