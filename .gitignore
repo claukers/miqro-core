@@ -9,4 +9,3 @@ test/data/*.log
 .idea
 docs/
 .vscode/
-cors.js
