@@ -59,6 +59,9 @@ export const CORS = (options?: CORSOptions): Handler<void> => {
           // not allowed
           throw new BadRequestError(`bad origin`);
         }
+      } else {
+        ctx.setHeader("Access-Control-Allow-Origin", origins instanceof Array ? origins[0] : origins);
+        ctx.addVaryHeader("Origin");
       }
     }
 

@@ -196,4 +196,25 @@ describe("app cors func tests", function () {
       done();
     });
   });
+
+  it("happy path 6", (done) => {
+    const app = new App();
+    app.use(CORS({ origins: ["http://bla.com"] }));
+    app.get("/", (ctx: Context) => {
+      ctx.html("bla");
+    });
+    TestHelper(app, {
+      url: "/",
+      headers: {
+      },
+      method: "OPTIONS"
+    }, (response) => {
+      console.log(response.status);
+      console.log(response.headers);
+      strictEqual(response.status, 204);
+      strictEqual(response.headers.vary, "Origin");
+      strictEqual(response.headers["access-control-allow-origin"], "http://bla.com");
+      done();
+    });
+  });
 });
