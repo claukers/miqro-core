@@ -78,6 +78,13 @@ export class Context {
       })
     }, false);
   }
+  public addVaryHeader(value: number | string | ReadonlyArray<string>): void {
+    const c = this.res.getHeader("Vary");
+    const current = c ? c instanceof Array ? c.join(", ") : String(c) : "";
+    const nV = value instanceof Array ? value.join(", ") : String(value);
+    const newValue = current ? `${current}, ${nV}` : nV;
+    return this.res.setHeader("Vary", newValue.indexOf("*") !== -1 ? "*" : newValue);
+  }
   public setHeader(name: string, value: number | string | ReadonlyArray<string>): void {
     return this.res.setHeader(name, value);
   }
