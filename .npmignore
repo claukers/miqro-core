@@ -16,3 +16,4 @@ tsconfig.json
 .editorconfig
 .nycrc
 .github/
+cors.js
